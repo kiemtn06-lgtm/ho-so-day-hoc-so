@@ -13,6 +13,7 @@ window.HO_SO = {
       khoi: { 11: "https://phong-lam-bai-li11.onrender.com" } },
     { id: "de", ten: "Soạn đề", moTa: "Soạn đề theo ma trận và đặc tả",
       ghiChu: { 10: "Dùng skill soan-de-vat-li-10 trong Claude Code", 11: "Dùng skill soan-de-vat-li-11 trong Claude Code" }, khoi: {} },
+    { id: "mp", ten: "Mô phỏng", moTa: "Mô phỏng tương tác cho từng bài", khoi: {} },
     { id: "cb", ten: "Chatbot", moTa: "Hỏi đáp có trích nguồn SGK", khoi: {} },
     { id: "nb", ten: "NotebookLM", moTa: "Sổ tay đọc SGK (dùng cá nhân)", khoi: {} }
   ],

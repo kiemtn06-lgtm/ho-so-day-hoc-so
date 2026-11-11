@@ -304,6 +304,14 @@ ol.ys{margin:6px 0 0;padding-left:22px}
 .stat{background:var(--bg);border-radius:var(--rad);padding:8px 12px}
 .stat b{display:block;font-size:20px;font-weight:500}
 textarea{width:100%;resize:vertical}
+.wrap{overflow-x:auto}
+table.prog{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--bd)}
+table.prog th,table.prog td{padding:8px 10px;text-align:center;border-bottom:1px solid var(--bd)}
+table.prog th:first-child,table.prog td:first-child{text-align:left}
+table.prog th{font-weight:500;font-size:13px;color:var(--mu)}
+table.prog input{width:18px;height:18px;padding:0;accent-color:var(--ac);cursor:pointer}
+.bar{height:6px;background:var(--bd);border-radius:3px;margin-bottom:10px}
+.bar i{display:block;height:6px;background:var(--ac);border-radius:3px;transition:width .2s}
 .warn{background:var(--wabg);color:var(--wa);border-radius:var(--rad);padding:8px 12px;font-size:13px}
 ul.kt{margin:0;padding-left:20px}ul.kt li{margin-bottom:6px}
 .fm{text-align:center;font-size:20px;padding:8px 0}
@@ -377,6 +385,7 @@ window.HO_SO = {
       khoi: { 11: "https://phong-lam-bai-li11.onrender.com" } },
     { id: "de", ten: "Soạn đề", moTa: "Soạn đề theo ma trận và đặc tả",
       ghiChu: { 10: "Dùng skill soan-de-vat-li-10 trong Claude Code", 11: "Dùng skill soan-de-vat-li-11 trong Claude Code" }, khoi: {} },
+    { id: "mp", ten: "Mô phỏng", moTa: "Mô phỏng tương tác cho từng bài", khoi: {} },
     { id: "cb", ten: "Chatbot", moTa: "Hỏi đáp có trích nguồn SGK", khoi: {} },
     { id: "nb", ten: "NotebookLM", moTa: "Sổ tay đọc SGK (dùng cá nhân)", khoi: {} }
   ],
@@ -398,8 +407,9 @@ window.HO_SO = {
 <script>
 (function () {
   var CFG = window.HO_SO, DATA = window.HSDH_DATA || {}, KEY = "hsdh_v2";
-  var S = { st: {}, notes: {}, links: {}, lop: {}, pos: {}, lastLop: "" };
-  var V = { khoi: CFG.khoiMacDinh, page: "bai", ch: 0, bai: 0, tab: 0, fd: "", fm: "", ans: false, quiz: null, qkey: false, edit: "" };
+  var S = { st: {}, notes: {}, links: {}, lop: {}, pos: {}, lastLop: "", prog: {}, gc: {} };
+  var HOAT = [["ga", "Giáo án"], ["sl", "Slide"], ["bt", "Bài tập"], ["on", "Ôn tập"], ["de", "Đề"]];
+  var V = { khoi: CFG.khoiMacDinh, page: "tq", ch: 0, bai: 0, tab: 0, fd: "", fm: "", ans: false, quiz: null, qkey: false, edit: "" };
   var TABS = ["Trình chiếu", "Giáo án", "Bài tập", "Kiểm tra", "Ghi chú sau tiết"];
   var DANG = { tn: "Trắc nghiệm", ds: "Đúng sai", tln: "Trả lời ngắn", tl: "Tự luận" };
   var MUC = { nb: "Nhận biết", th: "Thông hiểu", vd: "Vận dụng", vdc: "Vận dụng cao" };
@@ -429,7 +439,7 @@ window.HO_SO = {
     $("chonKhoi").innerHTML = Object.keys(CFG.khoi).map(function (k) { return '<button data-a="khoi" data-k="' + k + '" class="' + (k === V.khoi ? "on" : "") + '">Khối ' + k + "</button>"; }).join("");
   }
   function renderTree() {
-    var h = "";
+    var h = '<button data-a="page" data-p="tq" class="' + (V.page === "tq" ? "on" : "") + '">Tổng quan khối ' + V.khoi + "</button>";
     chs().forEach(function (ch, i) {
       var d = dOf(ch);
       if (!d) { h += '<div class="ch no">' + (i + 1) + ". " + esc(ch.ten) + " · chưa có dữ liệu</div>"; return; }
@@ -440,7 +450,7 @@ window.HO_SO = {
       });
     });
     h += '<hr><button data-a="page" data-p="lop" class="' + (V.page === "lop" ? "on" : "") + '">Lớp học</button>';
-    h += '<button data-a="page" data-p="cc" class="' + (V.page === "cc" ? "on" : "") + '">Công cụ và sao lưu</button>';
+    h += '<button data-a="page" data-p="cc" class="' + (V.page === "cc" ? "on" : "") + '">Sao lưu dữ liệu</button>';
     $("tree").innerHTML = h;
   }
 
@@ -529,20 +539,43 @@ window.HO_SO = {
     h += "<h3>" + (V.edit ? "Sửa lớp " + esc(V.edit) : "Thêm lớp") + '</h3><div class="card"><div class="row"><input id="lTen" placeholder="Tên lớp (ví dụ 12A6)" value="' + esc(V.edit) + '"></div><textarea id="lDs" rows="8" placeholder="Mỗi dòng một học sinh">' + esc(V.edit ? S.lop[V.edit].join("\n") : "") + '</textarea><div class="row" style="margin:8px 0 0"><button data-a="saveLop">Lưu lớp</button><span id="lMsg" class="muted" role="status"></span></div></div>';
     return h;
   }
+  function progOf() {
+    var done = 0, total = chs().length * HOAT.length;
+    chs().forEach(function (_, i) { HOAT.forEach(function (a) { if (S.prog[V.khoi + "." + i + "." + a[0]]) done++; }); });
+    return { done: done, total: total, pct: total ? Math.round(done / total * 100) : 0 };
+  }
+  function pageTQ() {
+    var h = '<div class="head"><h2>Tổng quan · ' + esc(CFG.khoi[V.khoi].ten) + "</h2></div><h3>Công cụ</h3>" + toolsHTML();
+    var p = progOf();
+    h += '<div class="head" style="margin:22px 0 6px"><h3 style="margin:0">Tiến độ theo chương</h3><span class="sp"></span><span class="muted" id="tqPct">' + p.done + " / " + p.total + " mục (" + p.pct + '%)</span></div><div class="bar"><i id="tqBar" style="width:' + p.pct + '%"></i></div>';
+    h += '<div class="wrap"><table class="prog"><tr><th>Chương</th>' + HOAT.map(function (a) { return "<th>" + a[1] + "</th>"; }).join("") + "<th>Bài đã dạy</th></tr>";
+    chs().forEach(function (ch, i) {
+      var d = dOf(ch), day = "";
+      if (d) { var n = d.bai.filter(function (b) { return S.st[ch.duLieu + "." + b.ma] === 2; }).length; day = n + " / " + d.bai.length; }
+      h += "<tr><td>" + (i + 1) + ". " + (d ? '<button class="link" style="font-size:inherit" data-a="bai" data-ch="' + i + '" data-i="0">' + esc(ch.ten) + "</button>" : esc(ch.ten)) + "</td>" +
+        HOAT.map(function (a) { var k = V.khoi + "." + i + "." + a[0]; return '<td><input type="checkbox" data-c="prog" data-k="' + k + '"' + (S.prog[k] ? " checked" : "") + ' aria-label="' + esc(ch.ten + ": " + a[1]) + '"></td>'; }).join("") +
+        '<td class="muted">' + (day || "chưa có dữ liệu") + "</td></tr>";
+    });
+    h += '</table></div><h3>Ghi chú dạy học của khối</h3><textarea id="gcKhoi" rows="4" placeholder="Ghi chú cho khối này: lớp yếu phần nào, cần bổ sung gì">' + esc(S.gc[V.khoi] || "") + "</textarea>";
+    return h;
+  }
   function pageCC() {
-    var h = '<div class="head"><h2>Công cụ · Khối ' + V.khoi + '</h2></div><div class="grid">';
+    return '<div class="head"><h2>Sao lưu dữ liệu</h2></div><p class="muted">Trạng thái bài, tiến độ, ghi chú, danh sách lớp và liên kết được lưu trong trình duyệt của máy này. Sao lưu ra file để giữ bản dự phòng hoặc mang sang máy khác.</p><div class="row"><button data-a="xuat">Sao lưu ra file</button><label class="btn">Khôi phục từ file<input type="file" id="nhap" accept=".json" hidden></label><span id="ccMsg" class="muted" role="status"></span></div>';
+  }
+  function toolsHTML() {
+    var h = '<div class="grid">';
     CFG.congCu.forEach(function (t) {
       var url = S.links[V.khoi + "." + t.id] || (t.khoi || {})[V.khoi], note = t.ghiChu && t.ghiChu[V.khoi];
       h += '<div class="card"><b>' + esc(t.ten) + '</b> <span class="tag' + (url ? "" : " m") + '">' + (url ? "Dùng được" : note ? "Có skill" : "Chưa có") + '</span><div class="muted">' + esc(t.moTa) + (note ? "<br>" + esc(note) : "") + '</div><div class="row" style="margin:6px 0 0">' + (url ? '<a class="btn" target="_blank" rel="noopener" href="' + esc(url) + '">Mở</a>' : "") + '<button class="link" data-a="link" data-t="' + t.id + '">' + (url ? "Đổi liên kết" : "Gắn liên kết") + "</button></div></div>";
     });
-    h += '</div><h3>Sao lưu dữ liệu</h3><p class="muted">Trạng thái bài, ghi chú, danh sách lớp và liên kết được lưu trong trình duyệt của máy này. Sao lưu ra file để giữ bản dự phòng hoặc mang sang máy khác.</p><div class="row"><button data-a="xuat">Sao lưu ra file</button><label class="btn">Khôi phục từ file<input type="file" id="nhap" accept=".json" hidden></label><span id="ccMsg" class="muted" role="status"></span></div>';
-    return h;
+    return h + '</div><span id="ccMsg" class="muted" role="status"></span>';
   }
 
   function renderWork() {
     var w = $("work"), b = curBai();
     if (V.page === "lop") { w.innerHTML = pageLop(); return; }
     if (V.page === "cc") { w.innerHTML = pageCC(); return; }
+    if (V.page === "tq") { w.innerHTML = pageTQ(); return; }
     if (!b) { w.innerHTML = '<div class="head"><h2>' + esc(CFG.khoi[V.khoi].ten) + '</h2></div><p class="muted">Khối này chưa có chương nào có dữ liệu bài học. Hiện mới có Chương 2 (Khí lí tưởng) của Khối 12.</p>'; return; }
     var h = '<div class="head"><h2>' + esc(b.ten) + '</h2><span class="muted">SGK tr. ' + esc(b.trang_sgk || "") + '</span><span class="sp"></span>' + (curCh().baiGiang ? '<button class="go noprint" data-a="day">Dạy ngay</button>' : "") + "</div>";
     h += '<div class="tabs">' + TABS.map(function (t, i) { return '<button data-a="tab" data-i="' + i + '" class="' + (i === V.tab ? "on" : "") + '">' + t + "</button>"; }).join("") + "</div>";
@@ -605,7 +638,7 @@ window.HO_SO = {
       return;
     }
     var t = e.target.closest("[data-a]"); if (!t) return; var a = t.getAttribute("data-a"), b = curBai();
-    if (a === "khoi") { V.khoi = t.getAttribute("data-k"); V.page = "bai"; V.tab = 0; firstData(); render(); }
+    if (a === "khoi") { V.khoi = t.getAttribute("data-k"); V.page = "tq"; V.tab = 0; firstData(); render(); }
     else if (a === "bai") { V.page = "bai"; V.ch = +t.getAttribute("data-ch"); V.bai = +t.getAttribute("data-i"); V.quiz = null; render(); window.scrollTo(0, 0); }
     else if (a === "page") { V.page = t.getAttribute("data-p"); V.edit = ""; render(); }
     else if (a === "tab") { V.tab = +t.getAttribute("data-i"); renderWork(); }
@@ -651,11 +684,17 @@ window.HO_SO = {
       r.readAsText(f); return;
     }
     var c = t.getAttribute && t.getAttribute("data-c"); if (!c) return;
+    if (c === "prog") {
+      var pk = t.getAttribute("data-k"); if (t.checked) S.prog[pk] = 1; else delete S.prog[pk]; save();
+      var p = progOf(); $("tqPct").textContent = p.done + " / " + p.total + " mục (" + p.pct + "%)"; $("tqBar").style.width = p.pct + "%"; return;
+    }
     if (c === "fd") V.fd = t.value; else if (c === "fm") V.fm = t.value; else if (c === "ans") V.ans = t.checked;
     else if (c === "qn") { V.qn = +t.value; return; } else if (c === "qkey") V.qkey = t.checked;
     else if (c === "st") { S.st[bKey(curBai())] = +t.value; save(); renderTree(); return; }
     renderWork();
   });
+
+  document.addEventListener("input", function (e) { if (e.target.id === "gcKhoi") { S.gc[V.khoi] = e.target.value; save(); } });
 
   load(); if (!CFG.khoi[V.khoi]) V.khoi = Object.keys(CFG.khoi)[0]; firstData(); render();
 })();
