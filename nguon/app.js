@@ -34,12 +34,16 @@
   function renderTree() {
     var h = '<button data-a="page" data-p="tq" class="' + (V.page === "tq" ? "on" : "") + '">Tổng quan khối ' + V.khoi + "</button>";
     chs().forEach(function (ch, i) {
-      var d = dOf(ch);
-      if (!d) { h += '<div class="ch no">' + (i + 1) + ". " + esc(ch.ten) + " · chưa có dữ liệu</div>"; return; }
-      h += '<div class="ch">' + (i + 1) + ". " + esc(ch.ten) + "</div>";
-      d.bai.forEach(function (b, j) {
+      var d = dOf(ch), lt = ch.luyenTap || [];
+      if (!d && !lt.length) { h += '<div class="ch no">' + (i + 1) + ". " + esc(ch.ten) + " · chưa có dữ liệu</div>"; return; }
+      h += '<div class="ch">' + (i + 1) + ". " + esc(ch.ten) + (d ? "" : " · chỉ có bài luyện") + "</div>";
+      if (d) d.bai.forEach(function (b, j) {
         var on = V.page === "bai" && V.ch === i && V.bai === j;
         h += '<button data-a="bai" data-ch="' + i + '" data-i="' + j + '" class="' + (on ? "on" : "") + '"><i class="dot s' + (S.st[ch.duLieu + "." + b.ma] || 0) + '"></i>' + esc(b.ten) + "</button>";
+      });
+      lt.forEach(function (x, j) {
+        var on = V.page === "lt" && V.ch === i && V.lt === j;
+        h += '<button data-a="lt" data-ch="' + i + '" data-i="' + j + '" class="' + (on ? "on" : "") + '"><i class="ti-dot"></i>' + esc(x.ten) + "</button>";
       });
     });
     h += '<hr><button data-a="page" data-p="ph" class="' + (V.page === "ph" ? "on" : "") + '">Làm bài trực tuyến</button>';
@@ -208,7 +212,7 @@
       if (d) { var n = d.bai.filter(function (b) { return S.st[ch.duLieu + "." + b.ma] === 2; }).length; day = n + " / " + d.bai.length; }
       h += "<tr><td>" + (i + 1) + ". " + (d ? '<button class="link" style="font-size:inherit" data-a="bai" data-ch="' + i + '" data-i="0">' + esc(ch.ten) + "</button>" : esc(ch.ten)) + "</td>" +
         HOAT.map(function (a) { var k = V.khoi + "." + i + "." + a[0]; return '<td><input type="checkbox" data-c="prog" data-k="' + k + '"' + (S.prog[k] ? " checked" : "") + ' aria-label="' + esc(ch.ten + ": " + a[1]) + '"></td>'; }).join("") +
-        '<td class="muted">' + (day || "chưa có dữ liệu") + "</td></tr>";
+        '<td class="muted">' + (day || (ch.luyenTap && ch.luyenTap.length ? "có " + ch.luyenTap.length + " bài luyện" : "chưa có dữ liệu")) + "</td></tr>";
     });
     h += '</table></div><h3>Ghi chú dạy học của khối</h3><textarea id="gcKhoi" rows="4" placeholder="Ghi chú cho khối này: lớp yếu phần nào, cần bổ sung gì">' + esc(S.gc[V.khoi] || "") + "</textarea>";
     return h;
@@ -232,6 +236,16 @@
       h += '<div class="card"><b>' + esc(t.ten) + '</b> <span class="tag' + (url ? "" : " m") + '">' + (url ? "Dùng được" : note ? "Có skill" : "Chưa có") + '</span><div class="muted">' + esc(t.moTa) + (note ? "<br>" + esc(note) : "") + '</div><div class="row" style="margin:6px 0 0">' + (url ? '<a class="btn" target="_blank" rel="noopener" href="' + esc(url) + '">Mở</a>' : "") + '<button class="link" data-a="link" data-t="' + t.id + '">' + (url ? "Đổi liên kết" : "Gắn liên kết") + "</button></div></div>";
     });
     return h + '</div><span id="ccMsg" class="muted" role="status"></span>';
+  }
+
+  /* ---------- bài luyện nhúng (trang HTML riêng của từng chương) ---------- */
+  function pageLT() {
+    var ch = curCh(), lt = (ch && ch.luyenTap) || [], x = lt[V.lt || 0];
+    if (!x) return '<p class="muted">Chưa có bài luyện.</p>';
+    return '<div class="head"><h2>' + esc(ch.ten) + " · " + esc(x.ten) + '</h2><span class="sp"></span><a class="btn noprint" target="_blank" rel="noopener" href="' + esc(x.trang) + '">Mở toàn trang</a></div>' +
+      '<div class="row noprint">' + lt.map(function (y, j) { return '<button data-a="lt" data-ch="' + V.ch + '" data-i="' + j + '" class="chip' + (j === (V.lt || 0) ? " on" : "") + '">' + esc(y.ten) + "</button>"; }).join("") + "</div>" +
+      (x.ghiChu ? '<p class="muted noprint">' + esc(x.ghiChu) + "</p>" : "") +
+      '<iframe class="otf" title="' + esc(x.ten) + '" src="' + esc(x.trang) + '"></iframe>';
   }
 
   /* ---------- làm bài trực tuyến: phòng làm bài đặt trên Render, nhúng bảng điều khiển giáo viên ---------- */
@@ -354,6 +368,7 @@
     if (V.page === "lop") { w.innerHTML = pageLop(); return; }
     if (V.page === "cc") { w.innerHTML = pageCC(); return; }
     if (V.page === "tq") { w.innerHTML = pageTQ(); return; }
+    if (V.page === "lt") { w.innerHTML = pageLT(); return; }
     if (V.page === "ph") { w.innerHTML = pageLB(); return; }
     if (V.page === "hd") { w.innerHTML = pageHD(); var c = $("hdChat"), last = c && c.lastElementChild; if (last) last.scrollIntoView({ block: "nearest" }); var iq = $("hdQ"); if (iq) iq.focus(); return; }
     if (!b) { w.innerHTML = '<div class="head"><h2>' + esc(CFG.khoi[V.khoi].ten) + '</h2></div><p class="muted">Khối này chưa có chương nào có dữ liệu bài học. Hiện mới có Chương 2 (Khí lí tưởng) của Khối 12.</p>'; return; }
@@ -421,6 +436,7 @@
     if (a === "khoi") { V.khoi = t.getAttribute("data-k"); V.page = "tq"; V.tab = 0; IDX = null; V.chat = []; firstData(); render(); }
     else if (a === "bai") { V.page = "bai"; V.ch = +t.getAttribute("data-ch"); V.bai = +t.getAttribute("data-i"); V.quiz = null; render(); window.scrollTo(0, 0); }
     else if (a === "page") { V.page = t.getAttribute("data-p"); V.edit = ""; render(); }
+    else if (a === "lt") { V.page = "lt"; V.ch = +t.getAttribute("data-ch"); V.lt = +t.getAttribute("data-i"); render(); window.scrollTo(0, 0); }
     else if (a === "tab") { V.tab = +t.getAttribute("data-i"); if (t.getAttribute("data-ot")) V.ot = t.getAttribute("data-ot"); renderWork(); window.scrollTo(0, 0); }
     else if (a === "goOT") { if (firstOT()) { V.page = "bai"; V.tab = 4; V.ot = ""; render(); window.scrollTo(0, 0); } }
     else if (a === "lbTeacher") { V.lbEmbed = !V.lbEmbed; renderWork(); }

@@ -27,7 +27,9 @@ window.HO_SO = {
     11: { ten: "Vật lí 11", chuong: [
       { ten: "Dao động" }, { ten: "Sóng" }, { ten: "Điện trường" }, { ten: "Dòng điện, mạch điện" } ] },
     12: { ten: "Vật lí 12", chuong: [
-      { ten: "Vật lí nhiệt" },
+      { ten: "Vật lí nhiệt", luyenTap: [
+        { ten: "Luyện đúng sai", trang: "chuong-1-vat-li-nhiet/bai-day-dung-sai-vat-li-nhiet.html", ghiChu: "Trang luyện đúng sai Chương I. Phần giáo viên cần mật khẩu giáo viên của trang." },
+        { ten: "Luyện trả lời ngắn", trang: "chuong-1-vat-li-nhiet/bai-tra-loi-ngan-vat-li-nhiet.html", ghiChu: "Trang luyện trả lời ngắn Chương I. Phần giáo viên cần mật khẩu giáo viên của trang." } ] },
       { ten: "Khí lí tưởng", duLieu: "12-2", baiGiang: "bai-giang/k12-chuong2.html",
         /* trang Ôn tập nhúng trong hồ sơ: ngày ôn của từng bài, và các bài có phần Mở rộng ôn tập */
         onTap: "on-tap/k12-chuong2.html",
