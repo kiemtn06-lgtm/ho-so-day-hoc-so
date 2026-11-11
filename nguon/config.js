@@ -13,7 +13,7 @@ window.HO_SO = {
     { id: "on", ten: "Ôn tập", moTa: "Lịch ôn, thẻ ghi nhớ, đề tổng hợp (trang cho học sinh)",
       khoi: { 12: "https://k12-chatkhi-alfajores-8ed3b2.netlify.app" } },
     { id: "ph", ten: "Phòng làm bài", moTa: "Mở phòng, học sinh làm và nộp bài",
-      khoi: { 11: "https://phong-lam-bai-li11.onrender.com" } },
+      khoi: { 10: "https://phong-lam-bai-li10.onrender.com", 11: "https://phong-lam-bai-li11.onrender.com" } },
     { id: "de", ten: "Soạn đề", moTa: "Soạn đề theo ma trận và đặc tả",
       ghiChu: { 10: "Dùng skill soan-de-vat-li-10 trong Claude Code", 11: "Dùng skill soan-de-vat-li-11 trong Claude Code" }, khoi: {} },
     { id: "mp", ten: "Mô phỏng", moTa: "Mô phỏng tương tác cho từng bài", khoi: {} },
