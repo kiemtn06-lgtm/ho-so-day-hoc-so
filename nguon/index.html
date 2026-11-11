@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hồ sơ dạy học số</title>
+<link rel="stylesheet" href="lib/katex.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <h1 id="tieuDe">Hồ sơ dạy học số</h1>
+  <nav class="seg" id="chonKhoi" aria-label="Chọn khối"></nav>
+</header>
+<div class="layout">
+  <aside id="tree" aria-label="Chương và bài"></aside>
+  <main id="work"></main>
+</div>
+
+<div id="lenLop" hidden>
+  <div class="ll-bar">
+    <b id="llTen"></b>
+    <label>Lớp <select id="llLop"></select></label>
+    <button id="llGoi">Gọi tên</button><span id="llNguoi" class="ll-name" aria-live="polite"></span>
+    <span class="sp"></span>
+    <select id="llPhut" aria-label="Số phút"><option value="1">1 phút</option><option value="2">2 phút</option><option value="3" selected>3 phút</option><option value="5">5 phút</option><option value="10">10 phút</option></select>
+    <button id="llDem">Bấm giờ</button><span id="llGio" class="ll-time">03:00</span>
+    <button id="llGhi">Ghi chú</button>
+    <button id="llFs">Toàn màn hình</button>
+    <button id="llThoat">Thoát</button>
+  </div>
+  <div class="ll-note" id="llNote" hidden><textarea id="llText" rows="2" placeholder="Ghi chú nhanh cho tiết này (lưu kèm lớp và slide đang dạy)"></textarea><button id="llLuu">Lưu ghi chú</button><span id="llMsg" class="muted" role="status"></span></div>
+  <iframe id="llFrame" title="Trình chiếu bài giảng" allow="fullscreen"></iframe>
+</div>
+
+<script src="lib/katex.js"></script>
+<script src="data/k12-2.js"></script>
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
