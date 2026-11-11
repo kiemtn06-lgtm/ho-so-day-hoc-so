@@ -25,7 +25,11 @@ window.HO_SO = {
       { ten: "Dao động" }, { ten: "Sóng" }, { ten: "Điện trường" }, { ten: "Dòng điện, mạch điện" } ] },
     12: { ten: "Vật lí 12", chuong: [
       { ten: "Vật lí nhiệt" },
-      { ten: "Khí lí tưởng", duLieu: "12-2", baiGiang: "bai-giang/k12-chuong2.html" },
+      { ten: "Khí lí tưởng", duLieu: "12-2", baiGiang: "bai-giang/k12-chuong2.html",
+        /* trang Ôn tập nhúng trong hồ sơ: ngày ôn của từng bài, và các bài có phần Mở rộng ôn tập */
+        onTap: "on-tap/k12-chuong2.html",
+        onTapNgay: { B8: "n1", B9: "n1", B10: "n2", B11: "n2", B12: "n3", B13: "n3" },
+        onTapMoRong: ["B8", "B9", "B10", "B11", "B12"] },
       { ten: "Từ trường" },
       { ten: "Vật lí hạt nhân và phóng xạ" } ] }
   }

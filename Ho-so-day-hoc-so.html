@@ -318,6 +318,10 @@ textarea{width:100%;resize:vertical}
 .ed:empty::before{content:"Bấm để nhập";color:var(--mu)}
 .auto{background:var(--bg);border-radius:var(--rad);padding:8px 12px;margin:4px 0}
 @media print{.ed{border:0;padding:0;min-height:0}.ed:empty{display:none}}
+.chip{border-radius:20px;padding:4px 14px;color:var(--mu)}
+.chip.on{background:var(--acbg);color:var(--ac);border-color:var(--ac)}
+.otf{display:block;width:100%;height:calc(100vh - 150px);min-height:560px;border:1px solid var(--bd);border-radius:12px;background:#fff}
+#work:has(.otf){max-width:none}
 .wrap{overflow-x:auto}
 table.prog{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--bd)}
 table.prog th,table.prog td{padding:8px 10px;text-align:center;border-bottom:1px solid var(--bd)}
@@ -413,7 +417,11 @@ window.HO_SO = {
       { ten: "Dao động" }, { ten: "Sóng" }, { ten: "Điện trường" }, { ten: "Dòng điện, mạch điện" } ] },
     12: { ten: "Vật lí 12", chuong: [
       { ten: "Vật lí nhiệt" },
-      { ten: "Khí lí tưởng", duLieu: "12-2", baiGiang: "bai-giang/k12-chuong2.html" },
+      { ten: "Khí lí tưởng", duLieu: "12-2", baiGiang: "bai-giang/k12-chuong2.html",
+        /* trang Ôn tập nhúng trong hồ sơ: ngày ôn của từng bài, và các bài có phần Mở rộng ôn tập */
+        onTap: "on-tap/k12-chuong2.html",
+        onTapNgay: { B8: "n1", B9: "n1", B10: "n2", B11: "n2", B12: "n3", B13: "n3" },
+        onTapMoRong: ["B8", "B9", "B10", "B11", "B12"] },
       { ten: "Từ trường" },
       { ten: "Vật lí hạt nhân và phóng xạ" } ] }
   }
@@ -426,7 +434,7 @@ window.HO_SO = {
   var S = { st: {}, notes: {}, links: {}, lop: {}, pos: {}, lastLop: "", prog: {}, gc: {}, khbd: {} };
   var HOAT = [["ga", "Giáo án"], ["sl", "Slide"], ["bt", "Bài tập"], ["on", "Ôn tập"], ["de", "Đề"]];
   var V = { khoi: CFG.khoiMacDinh, page: "tq", ch: 0, bai: 0, tab: 0, fd: "", fm: "", ans: false, quiz: null, qkey: false, edit: "" };
-  var TABS = ["Trình chiếu", "SGK", "KHBD", "Bài tập", "Kiểm tra", "Ghi chú sau tiết"];
+  var TABS = ["Trình chiếu", "SGK", "KHBD", "Bài tập", "Ôn tập", "Kiểm tra", "Ghi chú sau tiết"];
   var DANG = { tn: "Trắc nghiệm", ds: "Đúng sai", tln: "Trả lời ngắn", tl: "Tự luận" };
   var MUC = { nb: "Nhận biết", th: "Thông hiểu", vd: "Vận dụng", vdc: "Vận dụng cao" };
   var ST = ["Chưa dạy", "Đang dạy", "Đã dạy"];
@@ -566,6 +574,22 @@ window.HO_SO = {
     h += '<p class="muted">' + qs.length + " / " + b.cau_hoi.length + " câu</p>";
     return h + qs.map(function (q, i) { return qHTML(q, i + 1, V.ans, true); }).join("");
   }
+  function otList(b) {
+    var ch = curCh(), n = b.ma.slice(1), l = [], ng = (ch.onTapNgay || {})[b.ma];
+    if (ng) l.push([ng, "Ngày " + ng.slice(1) + " · kiến thức, thẻ, luyện tập"]);
+    if ((ch.onTapMoRong || []).indexOf(b.ma) >= 0) l.push(["mr-" + n, "Mở rộng ôn tập Bài " + n]);
+    l.push(["n4", "Ngày 4 · luyện cả chương"], ["n5", "Ngày 5 · đề tổng hợp"], ["tq", "Tổng quan ôn tập"]);
+    return l;
+  }
+  function tabOnTap(b) {
+    var ch = curCh();
+    if (!ch.onTap) return '<p class="muted">Chương này chưa có trang ôn tập.</p>';
+    var l = otList(b); if (!l.some(function (x) { return x[0] === V.ot; })) V.ot = l[0][0];
+    return '<div class="row noprint">' + l.map(function (x) { return '<button data-a="ot" data-h="' + x[0] + '" class="chip' + (x[0] === V.ot ? " on" : "") + '">' + esc(x[1]) + "</button>"; }).join("") +
+      '<span class="sp"></span><a class="btn" target="_blank" rel="noopener" href="' + esc(ch.onTap) + "#" + V.ot + '">Mở toàn trang</a></div>' +
+      '<p class="muted noprint">Đây là trang ôn tập của học sinh, nhúng ngay trong hồ sơ. Phần đang khóa cần mã mở lớp hoặc đăng nhập giáo viên ở nút "Điều khiển lớp (GV)" trong trang.</p>' +
+      '<iframe class="otf" id="otFrame" title="Ôn tập" src="' + esc(ch.onTap) + "#" + V.ot + '"></iframe>';
+  }
   function tabKiemTra(b) {
     var pool = b.cau_hoi.filter(function (q) { return q.dang === "tn" && !(q.hinh || []).length; });
     var h = '<div class="row noprint">' + sel("qn", V.qn || 5, [[5, "5 câu"], [10, "10 câu"], [pool.length, "Tất cả " + pool.length + " câu"]]) +
@@ -575,7 +599,8 @@ window.HO_SO = {
       h += "<h3>Kiểm tra nhanh · " + esc(b.ten) + "</h3>" + qs.map(function (q, i) { return qHTML(q, i + 1, false, false); }).join("");
       if (V.qkey) h += '<h3>Đáp án</h3><table class="key"><tr>' + qs.map(function (q, i) { return "<td>" + (i + 1) + "</td>"; }).join("") + "</tr><tr>" + qs.map(function (q) { return "<td><b>" + esc(q.tn.dap_an) + "</b></td>"; }).join("") + "</tr></table>";
     } else h += '<p class="muted">Chọn số câu rồi bấm "Tạo đề trắc nghiệm nhanh". Đề lấy ngẫu nhiên từ ' + pool.length + " câu trắc nghiệm không có hình của bài.</p>";
-    var links = CFG.congCu.filter(function (t) { return (t.id === "on" || t.id === "ph") && (S.links[V.khoi + "." + t.id] || (t.khoi || {})[V.khoi]); });
+    var links = CFG.congCu.filter(function (t) { return t.id === "ph" && (S.links[V.khoi + "." + t.id] || (t.khoi || {})[V.khoi]); });
+    if (curCh().onTap) h += '<h3 class="noprint">Đề tổng hợp và ôn tập</h3><div class="row noprint"><button data-a="tab" data-i="4" data-ot="n5">Mở đề tổng hợp (Ngày 5) trong hồ sơ</button></div>';
     if (links.length) h += '<h3 class="noprint">Cho học sinh làm trực tuyến</h3><div class="row noprint">' + links.map(function (t) { return '<a class="btn" target="_blank" rel="noopener" href="' + esc(S.links[V.khoi + "." + t.id] || t.khoi[V.khoi]) + '">' + esc(t.ten) + "</a>"; }).join("") + "</div>";
     return h;
   }
@@ -621,9 +646,11 @@ window.HO_SO = {
   function pageCC() {
     return '<div class="head"><h2>Sao lưu dữ liệu</h2></div><p class="muted">Trạng thái bài, tiến độ, ghi chú, danh sách lớp và liên kết được lưu trong trình duyệt của máy này. Sao lưu ra file để giữ bản dự phòng hoặc mang sang máy khác.</p><div class="row"><button data-a="xuat">Sao lưu ra file</button><label class="btn">Khôi phục từ file<input type="file" id="nhap" accept=".json" hidden></label><span id="ccMsg" class="muted" role="status"></span></div>';
   }
+  function firstOT() { var c = chs(); for (var i = 0; i < c.length; i++) if (c[i].onTap && dOf(c[i])) { V.ch = i; V.bai = 0; return true; } return false; }
   function toolsHTML() {
-    var h = '<div class="grid">';
+    var h = '<div class="grid">', coOT = chs().some(function (c) { return c.onTap && dOf(c); });
     CFG.congCu.forEach(function (t) {
+      if (t.id === "on" && coOT) { h += '<div class="card"><b>' + esc(t.ten) + '</b> <span class="tag">Có trong hồ sơ</span><div class="muted">Lịch ôn, thẻ ghi nhớ, mở rộng ôn tập, đề tổng hợp</div><div class="row" style="margin:6px 0 0"><button data-a="goOT">Mở ôn tập</button></div></div>'; return; }
       var url = S.links[V.khoi + "." + t.id] || (t.khoi || {})[V.khoi], note = t.ghiChu && t.ghiChu[V.khoi];
       h += '<div class="card"><b>' + esc(t.ten) + '</b> <span class="tag' + (url ? "" : " m") + '">' + (url ? "Dùng được" : note ? "Có skill" : "Chưa có") + '</span><div class="muted">' + esc(t.moTa) + (note ? "<br>" + esc(note) : "") + '</div><div class="row" style="margin:6px 0 0">' + (url ? '<a class="btn" target="_blank" rel="noopener" href="' + esc(url) + '">Mở</a>' : "") + '<button class="link" data-a="link" data-t="' + t.id + '">' + (url ? "Đổi liên kết" : "Gắn liên kết") + "</button></div></div>";
     });
@@ -638,7 +665,7 @@ window.HO_SO = {
     if (!b) { w.innerHTML = '<div class="head"><h2>' + esc(CFG.khoi[V.khoi].ten) + '</h2></div><p class="muted">Khối này chưa có chương nào có dữ liệu bài học. Hiện mới có Chương 2 (Khí lí tưởng) của Khối 12.</p>'; return; }
     var h = '<div class="head"><h2>' + esc(b.ten) + '</h2><span class="muted">SGK tr. ' + esc(b.trang_sgk || "") + '</span><span class="sp"></span>' + (curCh().baiGiang ? '<button class="go noprint" data-a="day">Dạy ngay</button>' : "") + "</div>";
     h += '<div class="tabs">' + TABS.map(function (t, i) { return '<button data-a="tab" data-i="' + i + '" class="' + (i === V.tab ? "on" : "") + '">' + t + "</button>"; }).join("") + "</div>";
-    h += [tabTrinhChieu, tabSGK, tabKHBD, tabBaiTap, tabKiemTra, tabGhiChu][V.tab](b);
+    h += [tabTrinhChieu, tabSGK, tabKHBD, tabBaiTap, tabOnTap, tabKiemTra, tabGhiChu][V.tab](b);
     w.innerHTML = h;
   }
   function render() { renderHead(); renderTree(); renderWork(); }
@@ -700,8 +727,15 @@ window.HO_SO = {
     if (a === "khoi") { V.khoi = t.getAttribute("data-k"); V.page = "tq"; V.tab = 0; firstData(); render(); }
     else if (a === "bai") { V.page = "bai"; V.ch = +t.getAttribute("data-ch"); V.bai = +t.getAttribute("data-i"); V.quiz = null; render(); window.scrollTo(0, 0); }
     else if (a === "page") { V.page = t.getAttribute("data-p"); V.edit = ""; render(); }
-    else if (a === "tab") { V.tab = +t.getAttribute("data-i"); renderWork(); }
+    else if (a === "tab") { V.tab = +t.getAttribute("data-i"); if (t.getAttribute("data-ot")) V.ot = t.getAttribute("data-ot"); renderWork(); window.scrollTo(0, 0); }
+    else if (a === "goOT") { if (firstOT()) { V.page = "bai"; V.tab = 4; V.ot = ""; render(); window.scrollTo(0, 0); } }
     else if (a === "day") llOpen(b);
+    else if (a === "ot") {
+      V.ot = t.getAttribute("data-h");
+      document.querySelectorAll('[data-a="ot"]').forEach(function (x) { x.classList.toggle("on", x === t); });
+      var fr = $("otFrame"), lk = document.querySelector('#work a.btn[href^="' + curCh().onTap + '"]');
+      if (fr) fr.src = curCh().onTap + "#" + V.ot; if (lk) lk.href = curCh().onTap + "#" + V.ot;
+    }
     else if (a === "zoom") {
       var f = dOf(curCh()).sgk[t.getAttribute("data-k")], z = $("zoom");
       z.innerHTML = '<figure><img alt="' + esc(f.cap) + '" src="' + f.src + '"><figcaption>' + esc(f.cap) + " · SGK tr. " + esc(f.tr) + '</figcaption></figure><button data-a="unzoom">Đóng</button>';

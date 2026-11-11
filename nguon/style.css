@@ -57,6 +57,10 @@ textarea{width:100%;resize:vertical}
 .ed:empty::before{content:"Bấm để nhập";color:var(--mu)}
 .auto{background:var(--bg);border-radius:var(--rad);padding:8px 12px;margin:4px 0}
 @media print{.ed{border:0;padding:0;min-height:0}.ed:empty{display:none}}
+.chip{border-radius:20px;padding:4px 14px;color:var(--mu)}
+.chip.on{background:var(--acbg);color:var(--ac);border-color:var(--ac)}
+.otf{display:block;width:100%;height:calc(100vh - 150px);min-height:560px;border:1px solid var(--bd);border-radius:12px;background:#fff}
+#work:has(.otf){max-width:none}
 .wrap{overflow-x:auto}
 table.prog{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--bd)}
 table.prog th,table.prog td{padding:8px 10px;text-align:center;border-bottom:1px solid var(--bd)}
