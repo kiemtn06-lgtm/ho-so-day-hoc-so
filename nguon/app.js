@@ -42,7 +42,8 @@
         h += '<button data-a="bai" data-ch="' + i + '" data-i="' + j + '" class="' + (on ? "on" : "") + '"><i class="dot s' + (S.st[ch.duLieu + "." + b.ma] || 0) + '"></i>' + esc(b.ten) + "</button>";
       });
     });
-    h += '<hr><button data-a="page" data-p="lop" class="' + (V.page === "lop" ? "on" : "") + '">Lớp học</button>';
+    h += '<hr><button data-a="page" data-p="hd" class="' + (V.page === "hd" ? "on" : "") + '">Hỏi đáp</button>';
+    h += '<button data-a="page" data-p="lop" class="' + (V.page === "lop" ? "on" : "") + '">Lớp học</button>';
     h += '<button data-a="page" data-p="cc" class="' + (V.page === "cc" ? "on" : "") + '">Sao lưu dữ liệu</button>';
     $("tree").innerHTML = h;
   }
@@ -219,6 +220,7 @@
   function toolsHTML() {
     var h = '<div class="grid">', coOT = chs().some(function (c) { return c.onTap && dOf(c); });
     CFG.congCu.forEach(function (t) {
+      if (t.id === "cb" && chs().some(function (c) { return dOf(c); })) { h += '<div class="card"><b>' + esc(t.ten) + '</b> <span class="tag">Có trong hồ sơ</span><div class="muted">Hỏi đáp tra cứu trên dữ liệu bài, có ghi nguồn SGK</div><div class="row" style="margin:6px 0 0"><button data-a="page" data-p="hd">Mở hỏi đáp</button></div></div>'; return; }
       if (t.id === "on" && coOT) { h += '<div class="card"><b>' + esc(t.ten) + '</b> <span class="tag">Có trong hồ sơ</span><div class="muted">Lịch ôn, thẻ ghi nhớ, mở rộng ôn tập, đề tổng hợp</div><div class="row" style="margin:6px 0 0"><button data-a="goOT">Mở ôn tập</button></div></div>'; return; }
       var url = S.links[V.khoi + "." + t.id] || (t.khoi || {})[V.khoi], note = t.ghiChu && t.ghiChu[V.khoi];
       h += '<div class="card"><b>' + esc(t.ten) + '</b> <span class="tag' + (url ? "" : " m") + '">' + (url ? "Dùng được" : note ? "Có skill" : "Chưa có") + '</span><div class="muted">' + esc(t.moTa) + (note ? "<br>" + esc(note) : "") + '</div><div class="row" style="margin:6px 0 0">' + (url ? '<a class="btn" target="_blank" rel="noopener" href="' + esc(url) + '">Mở</a>' : "") + '<button class="link" data-a="link" data-t="' + t.id + '">' + (url ? "Đổi liên kết" : "Gắn liên kết") + "</button></div></div>";
@@ -226,11 +228,106 @@
     return h + '</div><span id="ccMsg" class="muted" role="status"></span>';
   }
 
+  /* ---------- hỏi đáp: tra cứu trên dữ liệu bài (không dùng AI) ---------- */
+  var IDX = null, IDF = {};
+  var STOP = {}; "la gi cua va cac nhung mot nao cho toi em hay hoi ve thi ma nhu duoc co khong ra sao vi tai neu voi tu den cung se bi boi nay kia giup xin biet muon can minh ban a o".split(" ").forEach(function (w) { STOP[w] = 1; });
+  var LOAI = { kt: "Kiến thức", ct: "Công thức", db: "Dạng bài", loi: "Lỗi hay mắc", the: "Câu hỏi nhanh", ch: "Câu hỏi luyện tập", md: "Câu hỏi mở đầu", hinh: "Hình trong SGK" };
+  var Y_DINH = [["ct", /cong thuc|he thuc|bieu thuc|phuong trinh/], ["loi", /\bloi\b|nham|sai lam|hay mac|luu y/], ["db", /dang bai|cach lam|cach giai|phuong phap|nhan biet/], ["ch", /vi du|bai tap|cau hoi|trac nghiem|dung sai|tu luan|luyen tap/], ["hinh", /\bhinh\b|do thi|\bbang\b|so do/], ["kt", /dinh nghia|khai niem|phat bieu|noi dung|la gi|the nao/]];
+  function nrm(s) {
+    return String(s == null ? "" : s).toLowerCase().replace(/đ/g, "d").normalize("NFD").replace(/[̀-ͯ]/g, "")
+      .replace(/\\[a-z]+/g, " ").replace(/[^a-z0-9]+/g, " ").trim();
+  }
+  function toks(n) { return n.split(" ").filter(function (w) { return w.length > 1 && !STOP[w]; }); }
+  function buildIdx() {
+    IDX = []; var df = {};
+    chs().forEach(function (ch, ci) {
+      var d = dOf(ch); if (!d) return;
+      d.bai.forEach(function (b, bi) {
+        function add(t, raw, html, extra) {
+          var n = nrm((extra || "") + " " + raw), tk = {}; toks(n).forEach(function (w) { tk[w] = 1; });
+          IDX.push({ t: t, ci: ci, bi: bi, so: b.ma.slice(1), src: LOAI[t] + " · " + b.ten.split(".")[0] + " · SGK tr. " + (b.trang_sgk || ""), raw: raw, html: html, n: " " + n + " ", tk: tk });
+          for (var w in tk) df[w] = (df[w] || 0) + 1;
+        }
+        var md = d.moDau && d.moDau[b.ma]; if (md) add("md", md[0], T(md[0]), b.ten);
+        b.kien_thuc.forEach(function (k) { add("kt", k.y, T(k.y), b.ten); });
+        b.cong_thuc.forEach(function (c) { add("ct", c.latex + " " + c.dieu_kien + " " + c.vi_du_so, '<div class="fm">' + km(c.latex, true) + "</div><div><b>Điều kiện:</b> " + T(c.dieu_kien) + "</div><div><b>Ví dụ:</b> " + T(c.vi_du_so) + "</div>", "công thức hệ thức " + b.ten); });
+        b.dang_bai.forEach(function (x) { add("db", x.dang + " " + x.nhan_biet + " " + x.cach_lam, "<b>" + T(x.dang) + "</b><div><b>Nhận biết:</b> " + T(x.nhan_biet) + "</div><div><b>Cách làm:</b> " + T(x.cach_lam) + "</div><div><b>Ví dụ:</b> " + viDu(b, x.vi_du) + "</div>", "dạng bài cách làm"); });
+        b.loi_hay_mac.forEach(function (k) { add("loi", k.y, T(k.y), "lỗi hay mắc nhầm sai " + b.ten); });
+        b.the.forEach(function (t) { add("the", t.mat_truoc + " " + t.mat_sau, "<b>" + T(t.mat_truoc) + "</b><div>" + T(t.mat_sau) + "</div>"); });
+        b.cau_hoi.forEach(function (q) {
+          var de = q.dang === "ds" ? (q.ds.dan || q.de) : q.de;
+          add("ch", de + " " + (q.dang === "tn" ? q.tn.phuong_an.join(" ") + " " + (q.tn.giai_thich || "") : ""), qHTML(q, "", true, true).replace("<b>Câu .</b> ", ""), DANG[q.dang]);
+        });
+        Object.keys(d.sgk || {}).filter(function (k) { return new RegExp("^[A-Z]" + b.ma.slice(1) + "-").test(k); }).forEach(function (k) {
+          var f = d.sgk[k]; add("hinh", f.cap, '<div>' + esc(f.cap) + ' · SGK tr. ' + esc(f.tr) + '</div><img class="hdimg" loading="lazy" alt="' + esc(f.cap) + '" src="' + f.src + '">', "hình đồ thị bảng");
+        });
+      });
+    });
+    IDF = {}; for (var w in df) IDF[w] = Math.log(1 + IDX.length / df[w]);
+  }
+  function timKiem(q) {
+    if (!IDX) buildIdx();
+    var n = nrm(q), mb = /\bbai (\d+)\b/.exec(n), so = mb ? mb[1] : null;
+    var words = toks(n.replace(/\bbai \d+\b/g, " ")), uniq = words.filter(function (w, i) { return words.indexOf(w) === i; });
+    var yd = null; Y_DINH.forEach(function (y) { if (!yd && y[1].test(n)) yd = y[0]; });
+    /* từ không có trong dữ liệu được tính trọng số cao nhất, để câu hỏi ngoài phạm vi không bị trả lời bừa */
+    var la = Math.log(1 + IDX.length), tong = 0; uniq.forEach(function (w) { tong += IDF[w] || la; });
+    if (!uniq.length && !so) return { hits: [], yd: yd, so: so };
+    var hits = [];
+    IDX.forEach(function (e) {
+      if (so && e.so !== so) return;
+      var s = 0, m = 0; uniq.forEach(function (w) { if (e.tk[w]) { s += IDF[w]; m += IDF[w]; } });
+      for (var i = 0; i < words.length - 1; i++) if (e.n.indexOf(" " + words[i] + " " + words[i + 1] + " ") >= 0) s += 1.5;
+      if (!uniq.length) s = 1; else if (tong && m / tong < 0.6) return;
+      if (s <= 0) return;
+      if (yd === e.t) s *= 1.6; else if (e.t === "ch" || e.t === "hinh") s *= 0.6;
+      if (e.t === "kt" || e.t === "the") s *= 1.15;
+      hits.push({ e: e, s: s });
+    });
+    hits.sort(function (a, b) { return b.s - a.s; });
+    return { hits: hits, yd: yd, so: so };
+  }
+  function muc(h) {
+    var e = h.e;
+    return '<div class="hit"><div class="src">' + esc(e.src) + ' <button class="link" data-a="bai" data-ch="' + e.ci + '" data-i="' + e.bi + '">Mở bài</button></div>' + e.html + "</div>";
+  }
+  function traLoi(q) {
+    var r = timKiem(q), hits = r.hits;
+    if (!hits.length) return "<div>Chưa tìm thấy nội dung khớp trong dữ liệu của khối " + V.khoi + ". Thử dùng từ khóa của bài, ví dụ: <i>đẳng nhiệt</i>, <i>công thức bài 11</i>, <i>lỗi hay mắc bài 9</i>.</div><div class=\"muted\">Khung này chỉ tra cứu nội dung đã có, không tự giải bài mới.</div>";
+    var top = hits[0].s, chinh = hits.filter(function (h, i) { return i < 3 && h.s >= top * 0.75; }), them = hits.slice(chinh.length, chinh.length + 5).filter(function (h) { return h.s >= top * 0.4; });
+    var h = "<div>" + (r.so ? "Trong Bài " + esc(r.so) + ", n" : "N") + "ội dung khớp nhất" + (r.yd ? " (" + LOAI[r.yd].toLowerCase() + ")" : "") + ":</div>" + chinh.map(muc).join("");
+    if (them.length) h += "<details><summary>Xem thêm " + them.length + " mục liên quan</summary>" + them.map(muc).join("") + "</details>";
+    return h;
+  }
+  function hoi(q) {
+    q = String(q || "").trim(); if (!q) { msg("hdMsg", "Nhập câu hỏi trước."); return; }
+    V.chat = V.chat || []; V.chat.push({ me: 1, html: esc(q) });
+    var api = CFG.chatbot && CFG.chatbot.api, local = traLoi(q);
+    if (!api) { V.chat.push({ html: local }); renderWork(); return; }
+    var i = V.chat.push({ html: '<span class="muted">Đang hỏi trợ lí AI…</span>' }) - 1; renderWork();
+    fetch(api, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ cau_hoi: q, ngu_canh: timKiem(q).hits.slice(0, 8).map(function (h) { return { nguon: h.e.src, noi_dung: h.e.raw }; }) }) })
+      .then(function (r) { return r.json(); })
+      .then(function (j) { V.chat[i].html = j && j.tra_loi ? T(j.tra_loi).replace(/\n/g, "<br>") + "<details><summary>Nguồn trong hồ sơ</summary>" + local + "</details>" : local; })
+      .catch(function () { V.chat[i].html = '<div class="muted">Không gọi được trợ lí AI, dùng kết quả tra cứu:</div>' + local; })
+      .then(function () { if (V.page === "hd") renderWork(); });
+  }
+  function pageHD() {
+    var co = chs().some(function (c) { return dOf(c); });
+    var h = '<div class="head"><h2>Hỏi đáp · ' + esc(CFG.khoi[V.khoi].ten) + '</h2></div>';
+    if (!co) return h + '<p class="muted">Khối này chưa có dữ liệu bài học để tra cứu.</p>';
+    h += '<p class="muted">Tra cứu trong dữ liệu các bài đã có (kiến thức, công thức, dạng bài, câu hỏi, lỗi hay mắc, hình SGK) và ghi rõ nguồn. Đây là tìm kiếm, chưa phải AI: không tự giải bài mới.</p>';
+    h += '<div class="row">' + ["Định luật Boyle phát biểu thế nào?", "Công thức bài 11", "Lỗi hay mắc khi dùng định luật Charles", "Cách làm bài toán bọt khí dưới nước", "Đồ thị đẳng tích có dạng gì?", "Động năng trung bình và nhiệt độ"].map(function (s) { return '<button class="chip" data-a="ask" data-q="' + esc(s) + '">' + esc(s) + "</button>"; }).join("") + "</div>";
+    h += '<div class="chat" id="hdChat">' + (V.chat || []).map(function (m) { return '<div class="msg' + (m.me ? " me" : "") + '">' + m.html + "</div>"; }).join("") + "</div>";
+    h += '<div class="row"><input id="hdQ" placeholder="Nhập câu hỏi về bài học" style="flex:1;min-width:200px" autocomplete="off"><button class="go" data-a="hoi">Hỏi</button>' + ((V.chat || []).length ? '<button data-a="xoaChat">Xóa hội thoại</button>' : "") + '<span id="hdMsg" class="muted" role="status"></span></div>';
+    return h;
+  }
+
   function renderWork() {
     var w = $("work"), b = curBai();
     if (V.page === "lop") { w.innerHTML = pageLop(); return; }
     if (V.page === "cc") { w.innerHTML = pageCC(); return; }
     if (V.page === "tq") { w.innerHTML = pageTQ(); return; }
+    if (V.page === "hd") { w.innerHTML = pageHD(); var c = $("hdChat"), last = c && c.lastElementChild; if (last) last.scrollIntoView({ block: "nearest" }); var iq = $("hdQ"); if (iq) iq.focus(); return; }
     if (!b) { w.innerHTML = '<div class="head"><h2>' + esc(CFG.khoi[V.khoi].ten) + '</h2></div><p class="muted">Khối này chưa có chương nào có dữ liệu bài học. Hiện mới có Chương 2 (Khí lí tưởng) của Khối 12.</p>'; return; }
     var h = '<div class="head"><h2>' + esc(b.ten) + '</h2><span class="muted">SGK tr. ' + esc(b.trang_sgk || "") + '</span><span class="sp"></span>' + (curCh().baiGiang ? '<button class="go noprint" data-a="day">Dạy ngay</button>' : "") + "</div>";
     h += '<div class="tabs">' + TABS.map(function (t, i) { return '<button data-a="tab" data-i="' + i + '" class="' + (i === V.tab ? "on" : "") + '">' + t + "</button>"; }).join("") + "</div>";
@@ -293,11 +390,14 @@
       return;
     }
     var t = e.target.closest("[data-a]"); if (!t) return; var a = t.getAttribute("data-a"), b = curBai();
-    if (a === "khoi") { V.khoi = t.getAttribute("data-k"); V.page = "tq"; V.tab = 0; firstData(); render(); }
+    if (a === "khoi") { V.khoi = t.getAttribute("data-k"); V.page = "tq"; V.tab = 0; IDX = null; V.chat = []; firstData(); render(); }
     else if (a === "bai") { V.page = "bai"; V.ch = +t.getAttribute("data-ch"); V.bai = +t.getAttribute("data-i"); V.quiz = null; render(); window.scrollTo(0, 0); }
     else if (a === "page") { V.page = t.getAttribute("data-p"); V.edit = ""; render(); }
     else if (a === "tab") { V.tab = +t.getAttribute("data-i"); if (t.getAttribute("data-ot")) V.ot = t.getAttribute("data-ot"); renderWork(); window.scrollTo(0, 0); }
     else if (a === "goOT") { if (firstOT()) { V.page = "bai"; V.tab = 4; V.ot = ""; render(); window.scrollTo(0, 0); } }
+    else if (a === "hoi") hoi($("hdQ").value);
+    else if (a === "ask") hoi(t.getAttribute("data-q"));
+    else if (a === "xoaChat") { V.chat = []; renderWork(); }
     else if (a === "day") llOpen(b);
     else if (a === "ot") {
       V.ot = t.getAttribute("data-h");
@@ -362,6 +462,7 @@
     renderWork();
   });
 
+  document.addEventListener("keydown", function (e) { if (e.key === "Enter" && e.target.id === "hdQ") { e.preventDefault(); hoi(e.target.value); } });
   document.addEventListener("input", function (e) {
     var t = e.target;
     if (t.id === "gcKhoi") { S.gc[V.khoi] = t.value; save(); }

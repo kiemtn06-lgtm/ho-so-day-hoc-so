@@ -6,6 +6,9 @@ window.HO_SO = {
   ten: "Hồ sơ dạy học số",
   namHoc: "2026-2027",
   khoiMacDinh: "12",
+  /* Hỏi đáp: để trống api thì tra cứu ngay trên dữ liệu bài (không AI).
+     Khi có máy chủ AI riêng, điền địa chỉ vào api: trang sẽ gửi {cau_hoi, ngu_canh} và hiện trường tra_loi nhận về. */
+  chatbot: { api: "" },
   congCu: [
     { id: "on", ten: "Ôn tập", moTa: "Lịch ôn, thẻ ghi nhớ, đề tổng hợp (trang cho học sinh)",
       khoi: { 12: "https://k12-chatkhi-alfajores-8ed3b2.netlify.app" } },

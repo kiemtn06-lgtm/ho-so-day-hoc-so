@@ -61,6 +61,14 @@ textarea{width:100%;resize:vertical}
 .chip.on{background:var(--acbg);color:var(--ac);border-color:var(--ac)}
 .otf{display:block;width:100%;height:calc(100vh - 150px);min-height:560px;border:1px solid var(--bd);border-radius:12px;background:#fff}
 #work:has(.otf){max-width:none}
+.chat{display:flex;flex-direction:column;gap:10px;margin:12px 0}
+.msg{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:10px 14px;max-width:100%}
+.msg.me{align-self:flex-end;background:var(--acbg);color:var(--ac);border-color:transparent;max-width:80%}
+.hit{border-top:1px solid var(--bd);margin-top:8px;padding-top:8px}
+.src{font-size:12px;color:var(--ok);background:var(--okbg);display:inline-flex;gap:10px;align-items:center;padding:1px 8px;border-radius:var(--rad);margin-bottom:4px}
+.hit .card{border:0;padding:0;margin:0;background:none}
+.hdimg{display:block;max-width:100%;max-height:220px;margin-top:6px;background:#fff;border-radius:var(--rad)}
+details summary{cursor:pointer;color:var(--ac);margin-top:8px;font-size:14px}
 .wrap{overflow-x:auto}
 table.prog{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--bd)}
 table.prog th,table.prog td{padding:8px 10px;text-align:center;border-bottom:1px solid var(--bd)}
