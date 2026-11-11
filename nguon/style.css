@@ -43,6 +43,20 @@ ol.ys{margin:6px 0 0;padding-left:22px}
 .stat{background:var(--bg);border-radius:var(--rad);padding:8px 12px}
 .stat b{display:block;font-size:20px;font-weight:500}
 textarea{width:100%;resize:vertical}
+.sgk{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.sgk figure,#zoom figure{margin:0;background:#fff;border:1px solid var(--bd);border-radius:12px;padding:10px}
+.sgk .img{display:block;width:100%;border:0;padding:0;background:none;cursor:zoom-in}
+.sgk img{display:block;max-width:100%;max-height:220px;margin:0 auto}
+.sgk figcaption,#zoom figcaption{font-size:13px;color:#1f1f1d;margin-top:6px;line-height:1.4}
+#zoom{position:fixed;inset:0;z-index:40;background:rgba(0,0,0,.8);display:flex;flex-direction:column;gap:12px;align-items:center;justify-content:center;padding:16px}
+#zoom[hidden]{display:none}
+#zoom img{display:block;max-width:92vw;max-height:76vh}
+#zoom figcaption{font-size:18px;text-align:center}
+.ed{border:1px dashed var(--bd);border-radius:var(--rad);padding:6px 10px;margin:4px 0 10px;min-height:34px;white-space:pre-wrap}
+.ed:focus{outline:2px solid var(--ac);border-style:solid}
+.ed:empty::before{content:"Bấm để nhập";color:var(--mu)}
+.auto{background:var(--bg);border-radius:var(--rad);padding:8px 12px;margin:4px 0}
+@media print{.ed{border:0;padding:0;min-height:0}.ed:empty{display:none}}
 .wrap{overflow-x:auto}
 table.prog{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--bd)}
 table.prog th,table.prog td{padding:8px 10px;text-align:center;border-bottom:1px solid var(--bd)}

@@ -11,7 +11,11 @@ const nd = JSON.parse(/<script type="application\/json" id="nd">([\s\S]*?)<\/scr
 let moDau = {};
 const md = /var MO_DAU = (\{[\s\S]*?\});/.exec(t);
 if (md) moDau = Function('return ' + md[1])();
-const out = { ten: ten || nd.meta.pham_vi, sach: nd.meta.bo_sach, moDau, bai: nd.bai };
+/* hình và bảng trong SGK (ảnh nhúng sẵn trong file nguồn): {mã: {cap, tr, src}} */
+let sgk = {};
+const sg = /<script type="application\/json" id="sg">([\s\S]*?)<\/script>/.exec(t);
+if (sg) sgk = JSON.parse(sg[1]);
+const out = { ten: ten || nd.meta.pham_vi, sach: nd.meta.bo_sach, moDau, bai: nd.bai, sgk };
 fs.mkdirSync(path.join(root, 'data'), { recursive: true });
 fs.writeFileSync(path.join(root, 'data', 'k' + ma + '.js'),
   'window.HSDH_DATA=window.HSDH_DATA||{};window.HSDH_DATA[' + JSON.stringify(ma) + ']=' + JSON.stringify(out) + ';\n');

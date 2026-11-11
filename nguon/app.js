@@ -1,9 +1,9 @@
 (function () {
   var CFG = window.HO_SO, DATA = window.HSDH_DATA || {}, KEY = "hsdh_v2";
-  var S = { st: {}, notes: {}, links: {}, lop: {}, pos: {}, lastLop: "", prog: {}, gc: {} };
+  var S = { st: {}, notes: {}, links: {}, lop: {}, pos: {}, lastLop: "", prog: {}, gc: {}, khbd: {} };
   var HOAT = [["ga", "Giáo án"], ["sl", "Slide"], ["bt", "Bài tập"], ["on", "Ôn tập"], ["de", "Đề"]];
   var V = { khoi: CFG.khoiMacDinh, page: "tq", ch: 0, bai: 0, tab: 0, fd: "", fm: "", ans: false, quiz: null, qkey: false, edit: "" };
-  var TABS = ["Trình chiếu", "Giáo án", "Bài tập", "Kiểm tra", "Ghi chú sau tiết"];
+  var TABS = ["Trình chiếu", "SGK", "KHBD", "Bài tập", "Kiểm tra", "Ghi chú sau tiết"];
   var DANG = { tn: "Trắc nghiệm", ds: "Đúng sai", tln: "Trả lời ngắn", tl: "Tự luận" };
   var MUC = { nb: "Nhận biết", th: "Thông hiểu", vd: "Vận dụng", vdc: "Vận dụng cao" };
   var ST = ["Chưa dạy", "Đang dạy", "Đã dạy"];
@@ -15,7 +15,7 @@
   function km(tex, disp) { try { return window.katex.renderToString(tex, { throwOnError: false, displayMode: !!disp }); } catch (e) { return esc(tex); } }
   function T(s) { return String(s == null ? "" : s).split(/(\$[^$]+\$)/).map(function (p) { return p.length > 2 && p[0] === "$" && p[p.length - 1] === "$" ? km(p.slice(1, -1)) : esc(p); }).join(""); }
   function vn(x) { return String(x).replace(".", ","); }
-  function okUrl(u) { return /^https?:\/\/[^\s]+$/i.test(u); }
+  function okUrl(u) { return /^(https?:\/\/|file:\/\/\/)\S+$/i.test(u); }
   function today() { return new Date().toLocaleDateString("vi-VN"); }
 
   function chs() { return CFG.khoi[V.khoi].chuong; }
@@ -77,12 +77,55 @@
     if (ch.baiGiang) h += '<a class="btn" target="_blank" rel="noopener" href="' + esc(ch.baiGiang) + "#" + b.ma + '">Mở riêng bài giảng ở tab mới</a>';
     return h;
   }
+  function tabSGK(b) {
+    var d = dOf(curCh()), n = b.ma.slice(1), sg = d.sgk || {}, url = S.links[V.khoi + ".sgk"];
+    var ids = Object.keys(sg).filter(function (k) { return new RegExp("^[A-Z]" + n + "-").test(k); });
+    var h = '<div class="card"><b>' + esc(d.sach ? "SGK Vật lí " + V.khoi + " – " + d.sach : "Sách giáo khoa") + "</b><div>" + esc(b.ten) + " · trang " + esc(b.trang_sgk || "") + '</div><div class="row noprint" style="margin:8px 0 0">' +
+      (url ? '<a class="btn" target="_blank" rel="noopener" href="' + esc(url) + '">Mở SGK</a>' : "") +
+      '<button class="link" data-a="link" data-t="sgk">' + (url ? "Đổi liên kết SGK" : "Gắn liên kết tới file hoặc trang SGK") + '</button><span id="ccMsg" class="muted" role="status"></span></div></div>';
+    h += "<h3>Hình và bảng trong SGK của bài (" + ids.length + ")</h3>";
+    if (!ids.length) return h + '<p class="muted">Chưa có hình SGK cho bài này.</p>';
+    h += '<p class="muted noprint">Bấm vào hình để phóng to, tiện chiếu lên lớp.</p><div class="sgk">' + ids.map(function (k) {
+      return '<figure><button class="img" data-a="zoom" data-k="' + esc(k) + '" aria-label="Phóng to ' + esc(sg[k].cap) + '"><img loading="lazy" alt="' + esc(sg[k].cap) + '" src="' + sg[k].src + '"></button><figcaption>' + esc(sg[k].cap) + ' <span class="muted">· SGK tr. ' + esc(sg[k].tr) + "</span></figcaption></figure>";
+    }).join("") + "</div>";
+    return h;
+  }
   function viDu(b, t) {
     var m = String(t).match(/B\d+(?:-B\d+)?-[A-Z]+\d+/), q = m && b.cau_hoi.filter(function (x) { return x.id === m[0]; })[0];
     return q ? T(q.dang === "ds" ? (q.ds.dan || q.de) : q.de) : T(t);
   }
-  function tabGiaoAn(b) {
-    var d = dOf(curCh()), md = d.moDau && d.moDau[b.ma], h = '<div class="row noprint"><button data-a="print">In khung giáo án</button><span class="muted">Khung nội dung sinh từ dữ liệu bài. Mục tiêu và tiến trình cụ thể do giáo viên bổ sung.</span></div>';
+  function ed(b, f, def) {
+    var v = (S.khbd[bKey(b)] || {})[f];
+    return '<div class="ed" contenteditable="true" data-f="' + f + '">' + esc(v != null ? v : def).replace(/\n/g, "<br>") + "</div>";
+  }
+  function hd(b, f, ten, mt, nd, sp, tc) {
+    return '<div class="card"><b>' + ten + "</b><div><b>a) Mục tiêu:</b></div>" + ed(b, f + "a", mt) + "<div><b>b) Nội dung:</b></div>" + nd + ed(b, f + "b", "") +
+      "<div><b>c) Sản phẩm:</b></div>" + ed(b, f + "c", sp) + "<div><b>d) Tổ chức thực hiện:</b></div>" + ed(b, f + "d", tc) + "</div>";
+  }
+  function tabKHBD(b) {
+    var d = dOf(curCh()), md = d.moDau && d.moDau[b.ma], n = b.ma.slice(1);
+    var hinh = Object.keys(d.sgk || {}).filter(function (k) { return new RegExp("^[A-Z]" + n + "-").test(k); }).map(function (k) { return d.sgk[k].cap.split(".").slice(0, 2).join("."); });
+    var buoc = function (a, c, e, g) { return "Bước 1. Chuyển giao nhiệm vụ: " + a + "\nBước 2. Thực hiện nhiệm vụ: " + c + "\nBước 3. Báo cáo, thảo luận: " + e + "\nBước 4. Kết luận, nhận định: " + g; };
+    var h = '<div class="row noprint"><button data-a="print">In KHBD</button><span class="muted">Khung theo Công văn 5512. Các ô viền đứt là bản nháp: bấm vào để sửa, nội dung tự lưu trên máy này.</span></div>';
+    h += '<div class="card"><div style="text-align:center"><b>KẾ HOẠCH BÀI DẠY</b><br>' + esc(b.ten) + "</div><div>Môn học: Vật lí · Lớp: " + V.khoi + " · SGK tr. " + esc(b.trang_sgk || "") + "</div><div>Thời gian thực hiện:</div>" + ed(b, "tg", "… tiết") + "</div>";
+    h += "<h3>I. Mục tiêu</h3><div class=\"card\"><b>1. Về kiến thức</b>" + ed(b, "kt", b.kien_thuc.map(function (k) { var m = k.y.match(/^([^:$]{4,80}):/); return "- " + (m ? m[1] : k.y.replace(/\$([^$]*)\$/g, function (x, s) { return /^[A-Za-z]{1,3}$/.test(s) ? s : "…"; }).split(/[.;]/)[0]) + "."; }).join("\n")) +
+      "<b>2. Về năng lực</b>" + ed(b, "nl", "- Năng lực vật lí: nhận thức vật lí (nêu, giải thích được nội dung bài); tìm hiểu thế giới tự nhiên (quan sát thí nghiệm, mô phỏng, xử lí số liệu); vận dụng kiến thức giải bài tập và tình huống thực tế.\n- Năng lực chung: tự chủ và tự học; giao tiếp và hợp tác khi làm việc nhóm; giải quyết vấn đề.") +
+      "<b>3. Về phẩm chất</b>" + ed(b, "pc", "- Chăm chỉ: tích cực thực hiện nhiệm vụ học tập.\n- Trung thực: ghi đúng số liệu, kết quả.\n- Trách nhiệm: hoàn thành phần việc trong nhóm.") + "</div>";
+    h += '<h3>II. Thiết bị dạy học và học liệu</h3><div class="card">' + ed(b, "tb", "- Máy tính, máy chiếu; bài giảng trình chiếu của bài (có mô phỏng và câu hỏi tương tác).\n- SGK Vật lí " + V.khoi + " (tr. " + (b.trang_sgk || "") + ")" + (hinh.length ? "; " + hinh.join(", ") : "") + ".\n- Phiếu học tập, phiếu bài tập của bài.") + "</div>";
+    h += "<h3>III. Tiến trình dạy học</h3>";
+    h += hd(b, "h1", "Hoạt động 1. Mở đầu", "Tạo tình huống có vấn đề, xác định nhiệm vụ học tập của bài.", md ? '<div class="auto">Câu hỏi mở đầu' + (md[1] ? " (SGK tr. " + esc(md[1]) + ")" : "") + ": " + T(md[0]) + "</div>" : "", "Câu trả lời, dự đoán ban đầu của học sinh.",
+      buoc("GV chiếu câu hỏi mở đầu, yêu cầu HS suy nghĩ và nêu dự đoán.", "HS làm việc cá nhân hoặc theo cặp.", "Gọi 2 đến 3 HS trả lời, HS khác nhận xét.", "GV ghi nhận các ý kiến, chưa kết luận, dẫn vào bài."));
+    h += hd(b, "h2", "Hoạt động 2. Hình thành kiến thức mới", "HS chiếm lĩnh các nội dung kiến thức trọng tâm của bài.", '<div class="auto"><ul class="kt">' + b.kien_thuc.map(function (k) { return "<li>" + T(k.y) + "</li>"; }).join("") + "</ul>" + b.cong_thuc.map(function (c) { return '<div class="fm">' + km(c.latex, true) + "</div><div>Điều kiện: " + T(c.dieu_kien) + "</div>"; }).join("") + "</div>", "Nội dung ghi vở, kết quả phiếu học tập, câu trả lời của HS.",
+      buoc("GV chiếu slide, thí nghiệm hoặc mô phỏng; giao câu hỏi và phiếu học tập.", "HS quan sát, thảo luận nhóm, ghi kết quả.", "Đại diện nhóm trình bày, các nhóm khác bổ sung.", "GV chốt kiến thức, công thức và điều kiện áp dụng."));
+    h += hd(b, "h3", "Hoạt động 3. Luyện tập", "Củng cố kiến thức, rèn kĩ năng giải các dạng bài của bài.", '<div class="auto">' + b.dang_bai.map(function (x, i) { return "<div><b>Dạng " + (i + 1) + ":</b> " + T(x.dang) + ". Cách làm: " + T(x.cach_lam) + "</div>"; }).join("") + "<div>Câu hỏi trắc nghiệm và bài tập: lấy ở tab Bài tập và phần Luyện tập trong bài giảng.</div></div>", "Bài làm, đáp án và lời giải của HS.",
+      buoc("GV nêu từng dạng bài, giao câu hỏi luyện tập.", "HS làm cá nhân, trao đổi với bạn bên cạnh.", "HS trình bày lời giải, lớp nhận xét.", "GV chữa bài, nhấn mạnh cách nhận dạng và cách làm."));
+    h += hd(b, "h4", "Hoạt động 4. Vận dụng", "Vận dụng kiến thức vào tình huống thực tế; nhận ra và tránh các lỗi hay mắc.", '<div class="auto"><div><b>Lỗi hay mắc cần lưu ý:</b></div><ul class="kt">' + b.loi_hay_mac.map(function (k) { return "<li>" + T(k.y) + "</li>"; }).join("") + "</ul></div>", "Lời giải bài vận dụng; phần tự đánh giá của HS.",
+      buoc("GV giao bài vận dụng và nhiệm vụ về nhà.", "HS làm tại lớp hoặc ở nhà.", "HS nộp bài, báo cáo ở tiết sau.", "GV nhận xét, tổng kết bài và dặn dò."));
+    h += "<h3>IV. Điều chỉnh, rút kinh nghiệm</h3><div class=\"card\">" + ed(b, "rk", "") + '<div class="muted noprint">Gợi ý: xem tab Ghi chú sau tiết của bài.</div></div>';
+    return h + '<h3>Phụ lục. Nội dung chi tiết của bài</h3>' + noiDung(b);
+  }
+  function noiDung(b) {
+    var d = dOf(curCh()), md = d.moDau && d.moDau[b.ma], h = "";
     if (md) h += "<h3>Câu hỏi mở đầu" + (md[1] ? " (SGK tr. " + esc(md[1]) + ")" : "") + '</h3><div class="card">' + T(md[0]) + "</div>";
     h += '<h3>Kiến thức trọng tâm</h3><div class="card"><ul class="kt">' + b.kien_thuc.map(function (k) { return "<li>" + T(k.y) + "</li>"; }).join("") + "</ul></div>";
     if (b.cong_thuc.length) h += "<h3>Công thức</h3>" + b.cong_thuc.map(function (c) { return '<div class="card"><div class="fm">' + km(c.latex, true) + "</div><div><b>Điều kiện:</b> " + T(c.dieu_kien) + "</div><div><b>Ví dụ:</b> " + T(c.vi_du_so) + "</div></div>"; }).join("");
@@ -172,7 +215,7 @@
     if (!b) { w.innerHTML = '<div class="head"><h2>' + esc(CFG.khoi[V.khoi].ten) + '</h2></div><p class="muted">Khối này chưa có chương nào có dữ liệu bài học. Hiện mới có Chương 2 (Khí lí tưởng) của Khối 12.</p>'; return; }
     var h = '<div class="head"><h2>' + esc(b.ten) + '</h2><span class="muted">SGK tr. ' + esc(b.trang_sgk || "") + '</span><span class="sp"></span>' + (curCh().baiGiang ? '<button class="go noprint" data-a="day">Dạy ngay</button>' : "") + "</div>";
     h += '<div class="tabs">' + TABS.map(function (t, i) { return '<button data-a="tab" data-i="' + i + '" class="' + (i === V.tab ? "on" : "") + '">' + t + "</button>"; }).join("") + "</div>";
-    h += [tabTrinhChieu, tabGiaoAn, tabBaiTap, tabKiemTra, tabGhiChu][V.tab](b);
+    h += [tabTrinhChieu, tabSGK, tabKHBD, tabBaiTap, tabKiemTra, tabGhiChu][V.tab](b);
     w.innerHTML = h;
   }
   function render() { renderHead(); renderTree(); renderWork(); }
@@ -236,6 +279,12 @@
     else if (a === "page") { V.page = t.getAttribute("data-p"); V.edit = ""; render(); }
     else if (a === "tab") { V.tab = +t.getAttribute("data-i"); renderWork(); }
     else if (a === "day") llOpen(b);
+    else if (a === "zoom") {
+      var f = dOf(curCh()).sgk[t.getAttribute("data-k")], z = $("zoom");
+      z.innerHTML = '<figure><img alt="' + esc(f.cap) + '" src="' + f.src + '"><figcaption>' + esc(f.cap) + " · SGK tr. " + esc(f.tr) + '</figcaption></figure><button data-a="unzoom">Đóng</button>';
+      z.hidden = false;
+    }
+    else if (a === "unzoom") { $("zoom").hidden = true; $("zoom").innerHTML = ""; }
     else if (a === "print") window.print();
     else if (a === "quiz") {
       var pool = b.cau_hoi.filter(function (q) { return q.dang === "tn" && !(q.hinh || []).length; }).map(function (q) { return q.id; });
@@ -258,7 +307,7 @@
     else if (a === "delLop") { var l = t.getAttribute("data-l"); if (!confirm("Xóa danh sách lớp " + l + "?")) return; delete S.lop[l]; if (V.edit === l) V.edit = ""; save(); renderWork(); }
     else if (a === "link") {
       var tid = t.getAttribute("data-t"), cur = S.links[V.khoi + "." + tid] || "";
-      var u = prompt("Dán địa chỉ (bắt đầu bằng http hoặc https). Để trống để xóa.", cur); if (u === null) return; u = u.trim();
+      var u = prompt("Dán địa chỉ (bắt đầu bằng http, https hoặc file:///). Để trống để xóa.", cur); if (u === null) return; u = u.trim();
       if (u && !okUrl(u)) { msg("ccMsg", "Địa chỉ không hợp lệ."); return; }
       if (u) S.links[V.khoi + "." + tid] = u; else delete S.links[V.khoi + "." + tid]; save(); renderWork();
     }
@@ -287,7 +336,11 @@
     renderWork();
   });
 
-  document.addEventListener("input", function (e) { if (e.target.id === "gcKhoi") { S.gc[V.khoi] = e.target.value; save(); } });
+  document.addEventListener("input", function (e) {
+    var t = e.target;
+    if (t.id === "gcKhoi") { S.gc[V.khoi] = t.value; save(); }
+    else if (t.classList && t.classList.contains("ed")) { var k = bKey(curBai()); (S.khbd[k] = S.khbd[k] || {})[t.getAttribute("data-f")] = t.innerText; save(); }
+  });
 
   load(); if (!CFG.khoi[V.khoi]) V.khoi = Object.keys(CFG.khoi)[0]; firstData(); render();
 })();
