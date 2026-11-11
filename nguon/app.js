@@ -274,10 +274,10 @@
     if (ptList().length) h += "<h3>Phòng làm bài có máy chủ</h3>";
     h += '<p class="muted">Một liên kết cố định cho cả khối: không phải tạo phòng mới mỗi lần. Mỗi buổi mới chỉ cần xóa kết quả cũ trong bảng điều khiển giáo viên.</p>';
     h += '<div class="grid"><div class="card"><b>Link cho học sinh</b><div class="urlbox">' + esc(u) + '</div><div class="row" style="margin:8px 0 0"><button data-a="lbCopy">Sao chép</button><button data-a="lbBig">Chiếu cỡ lớn</button><a class="btn" target="_blank" rel="noopener" href="' + esc(u) + '">Mở thử</a></div></div>' +
-      '<div class="card"><b>Giáo viên</b><div class="urlbox">' + esc(u) + '/teacher</div><div class="row" style="margin:8px 0 0"><button class="go" data-a="lbTeacher">' + (V.lbEmbed ? "Ẩn bảng điều khiển" : "Mở bảng điều khiển tại đây") + '</button><a class="btn" target="_blank" rel="noopener" href="' + esc(u) + '/teacher">Mở ở tab mới</a></div></div></div>';
+      '<div class="card"><b>Giáo viên</b><div class="urlbox">' + esc(u) + '/teacher</div><div class="row" style="margin:8px 0 0"><button class="go" data-a="lbTeacher">' + (V.lbEmbed !== false ? "Ẩn bảng điều khiển" : "Hiện bảng điều khiển tại đây") + '</button><a class="btn" target="_blank" rel="noopener" href="' + esc(u) + '/teacher">Mở ở tab mới</a></div></div></div>';
     h += '<div class="row" style="margin-top:12px"><button data-a="lbWake">Đánh thức máy chủ</button><button class="link" data-a="link" data-t="ph">Đổi liên kết</button><span id="lbMsg" class="muted" role="status"></span></div>';
     h += '<div class="card"><b>Mỗi buổi làm bài</b><ol class="ys" style="margin-top:6px"><li>Trước giờ học 5 phút: bấm "Đánh thức máy chủ" (gói miễn phí của Render tự ngủ sau khoảng 15 phút).</li><li>Mở bảng điều khiển giáo viên, tự nhập mật khẩu giáo viên vào khung đó.</li><li>Bấm "Làm lại từ đầu" (phòng khối 10, 11) hoặc "Xóa kết quả" (phòng Vật lí nhiệt khối 12) để bắt đầu buổi mới, rồi chiếu link cho học sinh.</li><li>Cuối buổi bấm "Tải kết quả (.csv)" để lưu điểm. Bài làm bị xóa khi máy chủ ngủ hoặc khởi động lại.</li></ol></div>';
-    if (V.lbEmbed) h += '<p class="muted">Bảng điều khiển của máy chủ phòng làm bài, hiển thị ngay trong hồ sơ. Mật khẩu bạn gõ vào khung này gửi thẳng tới máy chủ đó, hồ sơ không đọc và không lưu.</p><iframe class="otf" title="Bảng điều khiển giáo viên" src="' + esc(u) + '/teacher"></iframe>';
+    if (V.lbEmbed !== false) h += '<h3>Bảng điều khiển giáo viên</h3><p class="muted">Đây là trang giáo viên của máy chủ phòng làm bài, hiển thị ngay trong hồ sơ. Nhập mật khẩu giáo viên vào khung bên dưới để xem kết quả. Mật khẩu gửi thẳng tới máy chủ đó, hồ sơ không đọc và không lưu. Nếu khung báo lỗi hoặc trống, bấm "Đánh thức máy chủ", đợi khoảng 1 phút rồi bấm "Mở ở tab mới".</p><iframe class="otf" title="Bảng điều khiển giáo viên" src="' + esc(u) + '/teacher"></iframe>';
     return h;
   }
 
@@ -453,7 +453,7 @@
     else if (a === "lt") { V.page = "lt"; V.ch = +t.getAttribute("data-ch"); V.lt = +t.getAttribute("data-i"); render(); window.scrollTo(0, 0); }
     else if (a === "tab") { V.tab = +t.getAttribute("data-i"); if (t.getAttribute("data-ot")) V.ot = t.getAttribute("data-ot"); renderWork(); window.scrollTo(0, 0); }
     else if (a === "goOT") { if (firstOT()) { V.page = "bai"; V.tab = 4; V.ot = ""; render(); window.scrollTo(0, 0); } }
-    else if (a === "lbTeacher") { V.lbEmbed = !V.lbEmbed; renderWork(); }
+    else if (a === "lbTeacher") { V.lbEmbed = V.lbEmbed === false; renderWork(); }
     else if (a === "lbCopy") {
       var cu = t.getAttribute("data-u") || phUrl(), ok = function () { msg("lbMsg", "Đã sao chép link học sinh."); };
       if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(cu).then(ok, function () { msg("lbMsg", "Không sao chép được, hãy chọn và chép tay."); });
