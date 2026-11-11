@@ -414,10 +414,10 @@ window.HO_SO = {
      Khi có máy chủ AI riêng, điền địa chỉ vào api: trang sẽ gửi {cau_hoi, ngu_canh} và hiện trường tra_loi nhận về. */
   chatbot: { api: "" },
   congCu: [
-    { id: "on", ten: "Ôn tập", moTa: "Lịch ôn, thẻ ghi nhớ, đề tổng hợp (trang cho học sinh)",
-      khoi: { 12: "https://k12-chatkhi-alfajores-8ed3b2.netlify.app" } },
+    { id: "on", ten: "Ôn tập", moTa: "Lịch ôn, thẻ ghi nhớ, đề tổng hợp (trang cho học sinh)", khoi: {} },
+    /* Phòng làm bài: mỗi khối một máy chủ trên Render (link cố định). Khối 12 là phòng luyện tập Vật lí nhiệt. */
     { id: "ph", ten: "Phòng làm bài", moTa: "Mở phòng, học sinh làm và nộp bài",
-      khoi: { 10: "https://phong-lam-bai-li10.onrender.com", 11: "https://phong-lam-bai-li11.onrender.com" } },
+      khoi: { 10: "https://phong-lam-bai-li10.onrender.com", 11: "https://phong-lam-bai-li11.onrender.com", 12: "https://phong-luyen-vat-li-nhiet.onrender.com" } },
     { id: "de", ten: "Soạn đề", moTa: "Soạn đề theo ma trận và đặc tả",
       ghiChu: { 10: "Dùng skill soan-de-vat-li-10 trong Claude Code", 11: "Dùng skill soan-de-vat-li-11 trong Claude Code" }, khoi: {} },
     { id: "mp", ten: "Mô phỏng", moTa: "Mô phỏng tương tác cho từng bài", khoi: {} },
@@ -432,8 +432,8 @@ window.HO_SO = {
       { ten: "Dao động" }, { ten: "Sóng" }, { ten: "Điện trường" }, { ten: "Dòng điện, mạch điện" } ] },
     12: { ten: "Vật lí 12", chuong: [
       { ten: "Vật lí nhiệt", luyenTap: [
-        { ten: "Luyện đúng sai", trang: "chuong-1-vat-li-nhiet/bai-day-dung-sai-vat-li-nhiet.html", ghiChu: "Trang luyện đúng sai Chương I. Phần giáo viên cần mật khẩu giáo viên của trang." },
-        { ten: "Luyện trả lời ngắn", trang: "chuong-1-vat-li-nhiet/bai-tra-loi-ngan-vat-li-nhiet.html", ghiChu: "Trang luyện trả lời ngắn Chương I. Phần giáo viên cần mật khẩu giáo viên của trang." } ] },
+        { ten: "Luyện đúng sai", trang: "chuong-1-vat-li-nhiet/bai-day-dung-sai-vat-li-nhiet.html", ghiChu: "Bản xem và làm thử ngay trong hồ sơ. Để học sinh làm và giáo viên xem được kết quả cả lớp, dùng mục Làm bài trực tuyến." },
+        { ten: "Luyện trả lời ngắn", trang: "chuong-1-vat-li-nhiet/bai-tra-loi-ngan-vat-li-nhiet.html", ghiChu: "Bản xem và làm thử ngay trong hồ sơ. Để học sinh làm và giáo viên xem được kết quả cả lớp, dùng mục Làm bài trực tuyến." } ] },
       { ten: "Khí lí tưởng", duLieu: "12-2", baiGiang: "bai-giang/k12-chuong2.html",
         /* trang Ôn tập nhúng trong hồ sơ: ngày ôn của từng bài, và các bài có phần Mở rộng ôn tập */
         onTap: "on-tap/k12-chuong2.html",
@@ -623,7 +623,7 @@ window.HO_SO = {
       if (V.qkey) h += '<h3>Đáp án</h3><table class="key"><tr>' + qs.map(function (q, i) { return "<td>" + (i + 1) + "</td>"; }).join("") + "</tr><tr>" + qs.map(function (q) { return "<td><b>" + esc(q.tn.dap_an) + "</b></td>"; }).join("") + "</tr></table>";
     } else h += '<p class="muted">Chọn số câu rồi bấm "Tạo đề trắc nghiệm nhanh". Đề lấy ngẫu nhiên từ ' + pool.length + " câu trắc nghiệm không có hình của bài.</p>";
     if (curCh().onTap) h += '<h3 class="noprint">Đề tổng hợp và ôn tập</h3><div class="row noprint"><button data-a="tab" data-i="4" data-ot="n5">Mở đề tổng hợp (Ngày 5) trong hồ sơ</button></div>';
-    h += '<h3 class="noprint">Cho học sinh làm trực tuyến</h3><div class="row noprint"><button data-a="page" data-p="ph">' + (phUrl() ? "Mở phòng làm bài khối " + V.khoi : "Cài phòng làm bài khối " + V.khoi) + "</button></div>";
+    h += '<h3 class="noprint">Cho học sinh làm trực tuyến</h3><div class="row noprint"><button data-a="page" data-p="ph">' + (phUrl() || ptList().length ? "Mở phòng làm bài khối " + V.khoi : "Cài phòng làm bài khối " + V.khoi) + "</button></div>";
     return h;
   }
   function tabGhiChu(b) {
@@ -672,7 +672,7 @@ window.HO_SO = {
   function toolsHTML() {
     var h = '<div class="grid">', coOT = chs().some(function (c) { return c.onTap && dOf(c); });
     CFG.congCu.forEach(function (t) {
-      if (t.id === "ph") { var pu = phUrl(); h += '<div class="card"><b>' + esc(t.ten) + '</b> <span class="tag' + (pu ? "" : " m") + '">' + (pu ? "Dùng được" : "Chưa có") + '</span><div class="muted">' + esc(t.moTa) + '</div><div class="row" style="margin:6px 0 0"><button data-a="page" data-p="ph">' + (pu ? "Mở làm bài trực tuyến" : "Cài phòng làm bài") + "</button></div></div>"; return; }
+      if (t.id === "ph") { var pu = phUrl() || (ptList().length ? "tinh" : ""); h += '<div class="card"><b>' + esc(t.ten) + '</b> <span class="tag' + (pu ? "" : " m") + '">' + (pu ? "Dùng được" : "Chưa có") + '</span><div class="muted">' + esc(t.moTa) + '</div><div class="row" style="margin:6px 0 0"><button data-a="page" data-p="ph">' + (pu ? "Mở làm bài trực tuyến" : "Cài phòng làm bài") + "</button></div></div>"; return; }
       if (t.id === "cb") {
         var cl = S.links[V.khoi + ".cb"], coDL = chs().some(function (c) { return dOf(c); });
         h += '<div class="card"><b>' + esc(t.ten) + '</b> <span class="tag">' + (coDL ? "Có trong hồ sơ" : cl ? "Dùng được" : "Chưa có") + '</span><div class="muted">Hỏi đáp tra cứu trên dữ liệu bài, hoặc liên kết tới chatbot ngoài (NotebookLM, Gem, ChatGPT...)</div><div class="row" style="margin:6px 0 0">' +
@@ -701,16 +701,30 @@ window.HO_SO = {
     var t = CFG.congCu.filter(function (x) { return x.id === "ph"; })[0] || {};
     return String(S.links[V.khoi + ".ph"] || (t.khoi || {})[V.khoi] || "").replace(/\/+$/, "");
   }
+  /* phòng luyện tập tự chấm: trang HTML tĩnh nằm trong hồ sơ, chạy trên GitHub Pages, không cần máy chủ */
+  function ptList() { return (CFG.phongTinh || {})[V.khoi] || []; }
+  function ptUrl(x) { return String(CFG.congKhai || "").replace(/\/*$/, "/") + x.trang; }
+  function ptHTML() {
+    var ps = ptList(); if (!ps.length) return "";
+    var h = '<h3 style="margin-top:4px">Phòng luyện tập tự chấm</h3><p class="muted">Học sinh mở link, nhập tên và làm bài, trang tự chấm ngay. Chạy trên GitHub Pages nên không cần máy chủ và không phụ thuộc Netlify.</p><div class="grid">';
+    ps.forEach(function (x, i) {
+      var u = ptUrl(x);
+      h += '<div class="card"><b>' + esc(x.ten) + '</b><div class="muted">' + esc(x.moTa || "") + '</div><div class="urlbox">' + esc(u) + '</div><div class="row" style="margin:8px 0 0"><button data-a="lbCopy" data-u="' + esc(u) + '">Sao chép</button><button data-a="lbBig" data-u="' + esc(u) + '">Chiếu cỡ lớn</button><a class="btn" target="_blank" rel="noopener" href="' + esc(u) + '">Mở thử</a></div></div>';
+    });
+    h += '</div><p class="warn" style="margin-top:10px">Kết quả của mỗi học sinh chỉ lưu trên máy của em đó (chưa gửi về giáo viên), và ô "mật khẩu giáo viên" của trang chỉ kiểm tra ngay trong trình duyệt nên không phải bảo vệ thật. Muốn giáo viên xem kết quả cả lớp ở một nơi thì cần thêm máy chủ như phòng làm bài khối 10, 11.</p>';
+    return h;
+  }
   function pageLB() {
-    var u = phUrl(), h = '<div class="head"><h2>Làm bài trực tuyến · ' + esc(CFG.khoi[V.khoi].ten) + "</h2></div>";
+    var u = phUrl(), h = '<div class="head"><h2>Làm bài trực tuyến · ' + esc(CFG.khoi[V.khoi].ten) + "</h2></div>" + ptHTML();
     if (!u) {
-      return h + '<p class="warn">Khối ' + V.khoi + ' chưa có phòng làm bài. Khi triển khai xong (cùng cách với khối 10, 11), dán địa chỉ phòng vào đây để dùng ngay trong hồ sơ.</p><div class="row"><button class="go" data-a="link" data-t="ph">Gắn liên kết phòng làm bài</button><span id="ccMsg" class="muted" role="status"></span></div>';
+      return h + '<h3>Phòng làm bài có máy chủ</h3><p class="warn">Khối ' + V.khoi + ' chưa có phòng làm bài có máy chủ (xem kết quả cả lớp, mở từng câu). Khi triển khai xong (cùng cách với khối 10, 11), dán địa chỉ phòng vào đây để dùng ngay trong hồ sơ.</p><div class="row"><button class="go" data-a="link" data-t="ph">Gắn liên kết phòng làm bài</button><span id="ccMsg" class="muted" role="status"></span></div><span id="lbMsg" class="muted" role="status"></span>';
     }
-    h += '<p class="muted">Một liên kết cố định cho cả khối: không phải tạo phòng mới mỗi lần. Mỗi buổi mới chỉ cần bấm "Làm lại từ đầu" trong bảng điều khiển giáo viên.</p>';
+    if (ptList().length) h += "<h3>Phòng làm bài có máy chủ</h3>";
+    h += '<p class="muted">Một liên kết cố định cho cả khối: không phải tạo phòng mới mỗi lần. Mỗi buổi mới chỉ cần xóa kết quả cũ trong bảng điều khiển giáo viên.</p>';
     h += '<div class="grid"><div class="card"><b>Link cho học sinh</b><div class="urlbox">' + esc(u) + '</div><div class="row" style="margin:8px 0 0"><button data-a="lbCopy">Sao chép</button><button data-a="lbBig">Chiếu cỡ lớn</button><a class="btn" target="_blank" rel="noopener" href="' + esc(u) + '">Mở thử</a></div></div>' +
       '<div class="card"><b>Giáo viên</b><div class="urlbox">' + esc(u) + '/teacher</div><div class="row" style="margin:8px 0 0"><button class="go" data-a="lbTeacher">' + (V.lbEmbed ? "Ẩn bảng điều khiển" : "Mở bảng điều khiển tại đây") + '</button><a class="btn" target="_blank" rel="noopener" href="' + esc(u) + '/teacher">Mở ở tab mới</a></div></div></div>';
     h += '<div class="row" style="margin-top:12px"><button data-a="lbWake">Đánh thức máy chủ</button><button class="link" data-a="link" data-t="ph">Đổi liên kết</button><span id="lbMsg" class="muted" role="status"></span></div>';
-    h += '<div class="card"><b>Mỗi buổi làm bài</b><ol class="ys" style="margin-top:6px"><li>Trước giờ học 5 phút: bấm "Đánh thức máy chủ" (gói miễn phí của Render tự ngủ sau khoảng 15 phút).</li><li>Mở bảng điều khiển giáo viên, tự nhập mật khẩu giáo viên vào khung đó.</li><li>Bấm "Làm lại từ đầu" để bắt đầu buổi mới, rồi chiếu link cho học sinh.</li><li>Cuối buổi bấm "Tải kết quả (.csv)" để lưu điểm. Bài làm bị xóa khi máy chủ ngủ hoặc khởi động lại.</li></ol></div>';
+    h += '<div class="card"><b>Mỗi buổi làm bài</b><ol class="ys" style="margin-top:6px"><li>Trước giờ học 5 phút: bấm "Đánh thức máy chủ" (gói miễn phí của Render tự ngủ sau khoảng 15 phút).</li><li>Mở bảng điều khiển giáo viên, tự nhập mật khẩu giáo viên vào khung đó.</li><li>Bấm "Làm lại từ đầu" (phòng khối 10, 11) hoặc "Xóa kết quả" (phòng Vật lí nhiệt khối 12) để bắt đầu buổi mới, rồi chiếu link cho học sinh.</li><li>Cuối buổi bấm "Tải kết quả (.csv)" để lưu điểm. Bài làm bị xóa khi máy chủ ngủ hoặc khởi động lại.</li></ol></div>';
     if (V.lbEmbed) h += '<p class="muted">Bảng điều khiển của máy chủ phòng làm bài, hiển thị ngay trong hồ sơ. Mật khẩu bạn gõ vào khung này gửi thẳng tới máy chủ đó, hồ sơ không đọc và không lưu.</p><iframe class="otf" title="Bảng điều khiển giáo viên" src="' + esc(u) + '/teacher"></iframe>';
     return h;
   }
@@ -889,12 +903,12 @@ window.HO_SO = {
     else if (a === "goOT") { if (firstOT()) { V.page = "bai"; V.tab = 4; V.ot = ""; render(); window.scrollTo(0, 0); } }
     else if (a === "lbTeacher") { V.lbEmbed = !V.lbEmbed; renderWork(); }
     else if (a === "lbCopy") {
-      var cu = phUrl(), ok = function () { msg("lbMsg", "Đã sao chép link học sinh."); };
+      var cu = t.getAttribute("data-u") || phUrl(), ok = function () { msg("lbMsg", "Đã sao chép link học sinh."); };
       if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(cu).then(ok, function () { msg("lbMsg", "Không sao chép được, hãy chọn và chép tay."); });
       else msg("lbMsg", "Trình duyệt không cho sao chép, hãy chọn và chép tay.");
     }
     else if (a === "lbBig") {
-      var zz = $("zoom"); zz.innerHTML = '<div class="bigurl">Vào làm bài:<b>' + esc(phUrl().replace(/^https?:\/\//, "")) + "</b>Nhập họ tên và lớp, không cần tài khoản</div><button data-a=\"unzoom\">Đóng</button>"; zz.hidden = false;
+      var zz = $("zoom"); zz.innerHTML = '<div class="bigurl">Vào làm bài:<b>' + esc((t.getAttribute("data-u") || phUrl()).replace(/^https?:\/\//, "")) + "</b>Nhập họ tên, không cần tài khoản</div><button data-a=\"unzoom\">Đóng</button>"; zz.hidden = false;
     }
     else if (a === "lbWake") {
       var wu = phUrl(); msg("lbMsg", "Đang đánh thức máy chủ…");
