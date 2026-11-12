@@ -102,3 +102,4 @@ table.key{border-collapse:collapse}table.key td{border:1px solid var(--bd);paddi
 
 @media (max-width:760px){.layout{grid-template-columns:1fr}#tree{border-right:0;border-bottom:1px solid var(--bd)}}
 @media print{.top,#tree,.tabs,.noprint,#lenLop{display:none !important}.layout{display:block}#work{padding:0;max-width:none}body{background:#fff}.card{break-inside:avoid}}
+.qimg{margin:8px 0}.qimg img{max-width:min(100%,420px);max-height:260px;border-radius:8px;border:1px solid var(--bd);background:#fff}

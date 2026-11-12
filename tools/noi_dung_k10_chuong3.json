@@ -1,0 +1,129 @@
+{
+  "ghi_chu": "Vật lí 10, Chương III Động lực học. Câu hỏi, đáp án, lời giải và hình lấy tự động từ các trang bài giảng tương tác của giáo viên (trường nguon). Phần kien_thuc, cong_thuc, dang_bai, loi_hay_mac, the do Claude soạn ngày 12/11/2026 dựa trên slide bài giảng và SGK KNTT: GIÁO VIÊN CẦN ĐỌC DUYỆT LẠI. Sửa file này rồi chạy: node tools/build_du_lieu_roi.js tools/noi_dung_k10_chuong3.json ; node tools/dong_goi.js",
+  "ma": "10-3",
+  "ten": "Động lực học",
+  "sach": "Kết nối tri thức với cuộc sống",
+  "bai": [
+    {
+      "ma": "B13",
+      "ten": "Bài 13. Tổng hợp và phân tích lực. Cân bằng lực",
+      "trang_sgk": "56–59",
+      "nguon": "C:/Users/kieml/OneDrive/Fujitsu/Tài liệu 10/04_Chương III - Động lực học/bai-13-tong-hop-phan-tich-luc.html",
+      "moDau": ["Hai tàu kéo giống nhau dùng dây cáp kéo một tàu chở hàng bị chết máy. Tàu chở hàng sẽ chuyển động theo hướng nào? Làm thế nào để tính được độ lớn của lực kéo tác dụng lên tàu?", "56"],
+      "kien_thuc": [
+        { "y": "Tổng hợp lực: là phép thay thế các lực tác dụng đồng thời vào cùng một vật bằng một lực có tác dụng giống hệt như các lực ấy. Lực thay thế gọi là hợp lực. Về mặt toán học, hợp lực là tổng vectơ: $\\vec{F} = \\vec{F}_1 + \\vec{F}_2 + \\dots$", "dau": "" },
+        { "y": "Hai lực cùng phương: cùng chiều thì $F = F_1 + F_2$; ngược chiều thì $F = |F_1 - F_2|$ và hợp lực cùng chiều với lực lớn hơn.", "dau": "" },
+        { "y": "Hai lực đồng quy: dùng quy tắc hình bình hành. Hợp lực là đường chéo (kẻ từ điểm đồng quy) của hình bình hành có hai cạnh là hai lực thành phần.", "dau": "" },
+        { "y": "Các lực cân bằng: khi tổng hợp các lực tác dụng lên vật bằng 0 thì các lực đó cân bằng nhau, vật đứng yên hoặc chuyển động thẳng đều.", "dau": "" },
+        { "y": "Các lực không cân bằng: khi hợp lực khác 0 thì vận tốc của vật thay đổi (về độ lớn, về hướng).", "dau": "" },
+        { "y": "Phân tích lực: là phép thay thế một lực bằng hai lực thành phần có tác dụng giống hệt như lực ấy (ngược với tổng hợp lực). Thường phân tích thành hai lực vuông góc với nhau, theo hai phương mà lực có tác dụng.", "dau": "" },
+        { "y": "Vật trên mặt phẳng nghiêng góc $\\alpha$: trọng lực được phân tích thành $P_x = P\\sin\\alpha$ (song song mặt phẳng, kéo vật trượt xuống) và $P_y = P\\cos\\alpha$ (vuông góc mặt phẳng, ép vật vào mặt phẳng).", "dau": "" }
+      ],
+      "cong_thuc": [
+        { "latex": "\\vec{F} = \\vec{F}_1 + \\vec{F}_2 + \\vec{F}_3 + \\dots", "dieu_kien": "Cộng vectơ, không phải cộng độ lớn. Các lực cùng tác dụng lên một vật.", "vi_du_so": "Hai lực cùng phương, ngược chiều $400\\ \\mathrm{N}$ và $300\\ \\mathrm{N}$: hợp lực $100\\ \\mathrm{N}$, cùng chiều với lực $400\\ \\mathrm{N}$.", "dau": "" },
+        { "latex": "F^2 = F_1^2 + F_2^2 + 2F_1F_2\\cos\\alpha", "dieu_kien": "$\\alpha$ là góc giữa hai lực đồng quy. Khi $\\alpha = 90^\\circ$: $F = \\sqrt{F_1^2 + F_2^2}$.", "vi_du_so": "$F_1 = 6\\ \\mathrm{N}$, $F_2 = 8\\ \\mathrm{N}$, $\\alpha = 90^\\circ$ thì $F = \\sqrt{36 + 64} = 10\\ \\mathrm{N}$.", "dau": "" },
+        { "latex": "F = 2F_1\\cos\\dfrac{\\alpha}{2}", "dieu_kien": "Hai lực đồng quy có độ lớn bằng nhau ($F_1 = F_2$); hợp lực nằm trên đường phân giác của góc giữa hai lực.", "vi_du_so": "$F_1 = F_2 = 8000\\ \\mathrm{N}$, $\\alpha = 30^\\circ$ thì $F = 2 \\cdot 8000 \\cdot \\cos 15^\\circ \\approx 15\\,455\\ \\mathrm{N}$.", "dau": "" },
+        { "latex": "F_x = F\\cos\\theta,\\quad F_y = F\\sin\\theta", "dieu_kien": "$\\theta$ là góc giữa lực $\\vec{F}$ và trục Ox; hai thành phần vuông góc nhau.", "vi_du_so": "$F = 100\\ \\mathrm{N}$, $\\theta = 30^\\circ$ thì $F_x \\approx 86{,}6\\ \\mathrm{N}$, $F_y = 50\\ \\mathrm{N}$.", "dau": "" },
+        { "latex": "P_x = P\\sin\\alpha,\\quad P_y = P\\cos\\alpha", "dieu_kien": "Vật trên mặt phẳng nghiêng góc $\\alpha$; Ox song song mặt phẳng nghiêng, Oy vuông góc mặt phẳng nghiêng.", "vi_du_so": "$m = 1\\ \\mathrm{kg}$, $g = 9{,}8\\ \\mathrm{m/s^2}$, $\\alpha = 30^\\circ$ thì $P_x = 4{,}9\\ \\mathrm{N}$, $P_y \\approx 8{,}5\\ \\mathrm{N}$.", "dau": "" }
+      ],
+      "dang_bai": [
+        { "dang": "Tổng hợp hai lực cùng phương", "nhan_biet": "Hai lực cùng nằm trên một đường thẳng (cùng chiều hoặc ngược chiều).", "cach_lam": "Cùng chiều: cộng độ lớn. Ngược chiều: lấy độ lớn lớn trừ độ lớn nhỏ, hợp lực cùng chiều với lực lớn hơn.", "vi_du": "B13-TLN4", "dau": "" },
+        { "dang": "Tổng hợp hai lực đồng quy hợp nhau một góc", "nhan_biet": "Đề cho độ lớn hai lực và góc giữa chúng, hoặc cho hợp lực và hỏi góc.", "cach_lam": "Vẽ hình bình hành. Dùng $F^2 = F_1^2 + F_2^2 + 2F_1F_2\\cos\\alpha$; nếu $F_1 = F_2$ dùng $F = 2F_1\\cos\\dfrac{\\alpha}{2}$; nếu vuông góc dùng định lí Pythagore.", "vi_du": "B13-TL1", "dau": "" },
+        { "dang": "Nhận biết lực cân bằng, lực không cân bằng", "nhan_biet": "Đề mô tả trạng thái của vật: đứng yên, thẳng đều, nhanh dần, đổi hướng.", "cach_lam": "Vật đứng yên hoặc chuyển động thẳng đều thì hợp lực bằng 0. Vận tốc thay đổi thì hợp lực khác 0 và cùng hướng với lực lớn hơn (khi hai lực cùng phương).", "vi_du": "B13-DS1", "dau": "" },
+        { "dang": "Phân tích lực thành hai thành phần vuông góc", "nhan_biet": "Lực xiên góc so với phương chuyển động, hoặc vật trên mặt phẳng nghiêng.", "cach_lam": "Chọn hai trục vuông góc theo phương lực có tác dụng. Chiếu lực lên hai trục: thành phần kề góc dùng cos, thành phần đối góc dùng sin.", "vi_du": "B13-TL2", "dau": "" }
+      ],
+      "loi_hay_mac": [
+        { "y": "Cộng độ lớn $F = F_1 + F_2$ cho mọi trường hợp; hệ thức này chỉ đúng khi hai lực cùng hướng.", "dau": "" },
+        { "y": "Nhầm góc $\\alpha$ giữa hai lực với góc giữa một lực và hợp lực, hoặc dùng dấu trừ trước $2F_1F_2\\cos\\alpha$ (dấu trừ là của định lí cosin trong tam giác, với góc trong tam giác).", "dau": "" },
+        { "y": "Cho rằng vật cân bằng thì phải đứng yên; vật chuyển động thẳng đều cũng có hợp lực bằng 0.", "dau": "" },
+        { "y": "Trên mặt phẳng nghiêng viết ngược $P_x = P\\cos\\alpha$, $P_y = P\\sin\\alpha$. Cách kiểm tra: khi $\\alpha = 0$ (mặt ngang) thì thành phần kéo vật trượt phải bằng 0.", "dau": "" }
+      ],
+      "the": [
+        { "mat_truoc": "Tổng hợp lực là gì?", "mat_sau": "Thay các lực tác dụng đồng thời vào cùng một vật bằng một lực có tác dụng giống hệt như các lực ấy (hợp lực)." },
+        { "mat_truoc": "Hai lực cùng phương, ngược chiều: hợp lực có độ lớn và chiều thế nào?", "mat_sau": "$F = |F_1 - F_2|$, cùng chiều với lực lớn hơn." },
+        { "mat_truoc": "Quy tắc tìm hợp lực của hai lực đồng quy.", "mat_sau": "Quy tắc hình bình hành: hợp lực là đường chéo kẻ từ điểm đồng quy." },
+        { "mat_truoc": "Hai lực vuông góc $F_1$, $F_2$: độ lớn hợp lực?", "mat_sau": "$F = \\sqrt{F_1^2 + F_2^2}$." },
+        { "mat_truoc": "Điều kiện để các lực tác dụng lên một vật cân bằng nhau.", "mat_sau": "Hợp lực bằng 0: $\\vec{F}_1 + \\vec{F}_2 + \\dots = \\vec{0}$." },
+        { "mat_truoc": "Trọng lực của vật trên mặt phẳng nghiêng góc $\\alpha$ được phân tích thế nào?", "mat_sau": "$P_x = P\\sin\\alpha$ (kéo vật trượt xuống), $P_y = P\\cos\\alpha$ (ép vật vào mặt phẳng)." }
+      ]
+    },
+    {
+      "ma": "B14",
+      "ten": "Bài 14. Định luật 1 Newton",
+      "trang_sgk": "60–62",
+      "nguon": "C:/Users/kieml/OneDrive/Fujitsu/Tài liệu 10/04_Chương III - Động lực học/bai-14-dinh-luat-1-newton.html",
+      "moDau": ["Hai tàu Voyager đã tắt động cơ nhưng vẫn tiếp tục bay. Lực có phải là nguyên nhân làm cho vật chuyển động và duy trì chuyển động đó hay không?", "60"],
+      "kien_thuc": [
+        { "y": "Lực và chuyển động: lực không phải là nguyên nhân duy trì chuyển động. Lực làm thay đổi trạng thái chuyển động (thay đổi vận tốc) của vật.", "dau": "" },
+        { "y": "Thí nghiệm máng nghiêng của Galilei: nếu không có ma sát và máng thứ hai nằm ngang thì viên bi sẽ lăn mãi với vận tốc không đổi.", "dau": "" },
+        { "y": "Định luật 1 Newton: nếu một vật không chịu tác dụng của lực nào hoặc chịu tác dụng của các lực có hợp lực bằng không, thì vật đang đứng yên sẽ tiếp tục đứng yên, đang chuyển động sẽ tiếp tục chuyển động thẳng đều.", "dau": "" },
+        { "y": "Quán tính: là tính chất bảo toàn trạng thái đứng yên hay chuyển động của vật. Do có quán tính mà mọi vật đều có xu hướng bảo toàn vận tốc cả về hướng và độ lớn.", "dau": "" },
+        { "y": "Định luật 1 Newton còn được gọi là định luật quán tính. Khối lượng của vật càng lớn thì quán tính càng lớn, càng khó thay đổi vận tốc.", "dau": "" },
+        { "y": "Vận dụng quán tính: tra đầu búa vào cán, giật nhanh tờ giấy dưới cốc nước, hành khách bị xô khi xe đổi vận tốc; thắt dây an toàn và giữ khoảng cách an toàn khi tham gia giao thông.", "dau": "" }
+      ],
+      "cong_thuc": [
+        { "latex": "\\vec{F}_{hl} = \\vec{0}\\ \\Rightarrow\\ \\vec{a} = \\vec{0}\\quad(\\vec{v}\\ \\text{không đổi})", "dieu_kien": "Vật không chịu lực nào, hoặc các lực tác dụng lên vật có hợp lực bằng 0.", "vi_du_so": "Vật đang chuyển động với vận tốc $3\\ \\mathrm{m/s}$, nếu các lực tác dụng lên nó bỗng mất đi thì vật tiếp tục chuyển động thẳng đều với vận tốc $3\\ \\mathrm{m/s}$.", "dau": "" }
+      ],
+      "dang_bai": [
+        { "dang": "Nhận biết nội dung định luật 1 Newton, chuyển động theo quán tính", "nhan_biet": "Câu hỏi chọn phát biểu đúng, hoặc hỏi vật nào chuyển động theo quán tính.", "cach_lam": "Đối chiếu với định luật: hợp lực bằng 0 thì vật giữ nguyên vận tốc (đứng yên hoặc thẳng đều). Chuyển động theo quán tính là chuyển động tiếp diễn khi không còn lực (hoặc hợp lực bằng 0).", "vi_du": "B14-TN3", "dau": "" },
+        { "dang": "Từ trạng thái chuyển động suy ra hợp lực", "nhan_biet": "Đề mô tả vật đứng yên, thẳng đều, hoặc cho đồ thị vận tốc – thời gian.", "cach_lam": "Vận tốc không đổi (đứng yên, thẳng đều; đoạn nằm ngang trên đồ thị v–t) thì hợp lực bằng 0. Vận tốc thay đổi thì hợp lực khác 0.", "vi_du": "B14-TN5", "dau": "" },
+        { "dang": "Giải thích hiện tượng bằng quán tính", "nhan_biet": "Tình huống xe tăng tốc, phanh gấp, rẽ; tra búa; giật giấy; dây an toàn.", "cach_lam": "Nêu ba ý: (1) ban đầu vật và vật mang nó cùng trạng thái chuyển động; (2) một vật bị lực làm đổi vận tốc; (3) vật còn lại do quán tính giữ nguyên vận tốc cũ nên bị xô, ngả, văng theo hướng ngược lại so với vật mang.", "vi_du": "B14-TL3", "dau": "" }
+      ],
+      "loi_hay_mac": [
+        { "y": "Cho rằng phải có lực tác dụng thì vật mới chuyển động, ngừng tác dụng lực thì vật dừng lại (quan điểm của Aristotle). Thực tế vật dừng lại là do lực ma sát, lực cản.", "dau": "" },
+        { "y": "Coi quán tính là một lực (\"lực quán tính đẩy người về phía trước\"). Quán tính là tính chất của vật, không phải lực.", "dau": "" },
+        { "y": "Cho rằng vật đứng yên thì không chịu lực nào; thật ra vật có thể chịu nhiều lực nhưng hợp lực bằng 0.", "dau": "" },
+        { "y": "Cho rằng vật chuyển động càng nhanh thì quán tính càng lớn; mức quán tính phụ thuộc vào khối lượng của vật.", "dau": "" }
+      ],
+      "the": [
+        { "mat_truoc": "Phát biểu định luật 1 Newton.", "mat_sau": "Nếu vật không chịu lực nào hoặc chịu các lực có hợp lực bằng 0 thì vật đang đứng yên sẽ tiếp tục đứng yên, đang chuyển động sẽ tiếp tục chuyển động thẳng đều." },
+        { "mat_truoc": "Lực có phải là nguyên nhân duy trì chuyển động không?", "mat_sau": "Không. Lực là nguyên nhân làm thay đổi vận tốc (trạng thái chuyển động) của vật." },
+        { "mat_truoc": "Quán tính là gì?", "mat_sau": "Tính chất bảo toàn trạng thái đứng yên hay chuyển động của vật." },
+        { "mat_truoc": "Xe đang chạy thì phanh gấp, hành khách ngả về phía nào? Vì sao?", "mat_sau": "Ngả về phía trước: do quán tính, người có xu hướng giữ nguyên vận tốc cũ trong khi xe giảm tốc." },
+        { "mat_truoc": "Đại lượng nào cho biết mức quán tính của vật?", "mat_sau": "Khối lượng: khối lượng càng lớn, quán tính càng lớn." },
+        { "mat_truoc": "Vì sao tàu Voyager tắt động cơ vẫn bay mãi?", "mat_sau": "Trong không gian, lực cản và lực hấp dẫn rất nhỏ, hợp lực gần bằng 0 nên tàu chuyển động thẳng đều theo quán tính." }
+      ]
+    },
+    {
+      "ma": "B15",
+      "ten": "Bài 15. Định luật 2 Newton",
+      "trang_sgk": "63–66",
+      "nguon": "C:/Users/kieml/OneDrive/Fujitsu/Tài liệu 10/04_Chương III - Động lực học/bai-15-dinh-luat-2-newton.html",
+      "moDau": ["Đẩy một xe chở hàng cho nó chuyển động. Gia tốc của xe tăng hay giảm nếu: giữ nguyên lực đẩy nhưng khối lượng xe tăng lên; giữ nguyên khối lượng nhưng lực đẩy tăng lên?", "63"],
+      "kien_thuc": [
+        { "y": "Định luật 2 Newton: gia tốc của một vật cùng hướng với lực tác dụng lên vật. Độ lớn của gia tốc tỉ lệ thuận với độ lớn của lực và tỉ lệ nghịch với khối lượng của vật: $\\vec{a} = \\dfrac{\\vec{F}}{m}$.", "dau": "" },
+        { "y": "Khi vật chịu nhiều lực tác dụng thì $\\vec{F}$ là hợp lực của các lực đó: $\\vec{F} = \\vec{F}_1 + \\vec{F}_2 + \\vec{F}_3 + \\dots$", "dau": "" },
+        { "y": "Đơn vị lực: $1\\ \\mathrm{N} = 1\\ \\mathrm{kg \\cdot m/s^2}$, là độ lớn của lực gây ra gia tốc $1\\ \\mathrm{m/s^2}$ cho vật có khối lượng $1\\ \\mathrm{kg}$.", "dau": "" },
+        { "y": "Khối lượng và quán tính: khối lượng là đại lượng đặc trưng cho mức quán tính của vật. Cùng một lực, vật có khối lượng càng lớn thì gia tốc càng nhỏ, càng khó thay đổi vận tốc.", "dau": "" },
+        { "y": "Thí nghiệm minh hoạ (xe trượt trên đệm khí, hai cổng quang): đo thời gian $t$ đi quãng đường $s$ từ trạng thái nghỉ, tính $a = \\dfrac{2s}{t^2}$. Kết quả: khi khối lượng không đổi thì $a$ tỉ lệ thuận với $F$; khi lực không đổi thì $a$ tỉ lệ thuận với $\\dfrac{1}{m}$. Đồ thị là đường thẳng đi qua gốc tọa độ.", "dau": "" },
+        { "y": "Vật được kéo trên mặt phẳng ngang có ma sát: $F - F_{ms} = ma$ với $F_{ms} = \\mu mg$.", "dau": "" }
+      ],
+      "cong_thuc": [
+        { "latex": "\\vec{a} = \\dfrac{\\vec{F}}{m}\\ \\Leftrightarrow\\ \\vec{F} = m\\vec{a}", "dieu_kien": "$\\vec{F}$ là hợp lực tác dụng lên vật; $m$ tính bằng kg, $F$ bằng N, $a$ bằng $\\mathrm{m/s^2}$. Gia tốc cùng hướng với hợp lực.", "vi_du_so": "Quả bóng $0{,}50\\ \\mathrm{kg}$ chịu lực đá $250\\ \\mathrm{N}$: $a = \\dfrac{250}{0{,}5} = 500\\ \\mathrm{m/s^2}$.", "dau": "" },
+        { "latex": "1\\ \\mathrm{N} = 1\\ \\mathrm{kg \\cdot m/s^2}", "dieu_kien": "Định nghĩa đơn vị newton trong hệ SI.", "vi_du_so": "Lực $20\\ \\mathrm{N}$ gây gia tốc $0{,}4\\ \\mathrm{m/s^2}$ cho vật có khối lượng $m = \\dfrac{20}{0{,}4} = 50\\ \\mathrm{kg}$.", "dau": "" },
+        { "latex": "a = \\dfrac{2s}{t^2}", "dieu_kien": "Vật chuyển động thẳng nhanh dần đều từ trạng thái nghỉ ($v_0 = 0$), đi quãng đường $s$ trong thời gian $t$.", "vi_du_so": "$s = 0{,}5\\ \\mathrm{m}$, $t = 0{,}71\\ \\mathrm{s}$ thì $a \\approx 2{,}0\\ \\mathrm{m/s^2}$.", "dau": "" },
+        { "latex": "F - F_{ms} = ma,\\quad F_{ms} = \\mu mg", "dieu_kien": "Vật trượt trên mặt phẳng nằm ngang, lực kéo nằm ngang.", "vi_du_so": "$m = 80\\ \\mathrm{kg}$, $\\mu = 0{,}3$, $g = 9{,}8\\ \\mathrm{m/s^2}$, cần $a = 0{,}2\\ \\mathrm{m/s^2}$: $F = m(a + \\mu g) = 251{,}2\\ \\mathrm{N}$.", "dau": "" }
+      ],
+      "dang_bai": [
+        { "dang": "Tính gia tốc, lực hoặc khối lượng từ $F = ma$", "nhan_biet": "Đề cho hai trong ba đại lượng $F$, $m$, $a$.", "cach_lam": "Đổi đơn vị về kg, N, $\\mathrm{m/s^2}$ rồi dùng $a = \\dfrac{F}{m}$. Nếu có nhiều lực, tìm hợp lực trước.", "vi_du": "B15-TLN5", "dau": "" },
+        { "dang": "Kết hợp định luật 2 Newton với công thức động học", "nhan_biet": "Đề cho lực và thời gian tác dụng, hỏi vận tốc, quãng đường (hoặc ngược lại).", "cach_lam": "Bước 1: tìm $a$ từ $a = \\dfrac{F}{m}$ (hoặc từ $v = v_0 + at$, $s = v_0t + \\dfrac{1}{2}at^2$). Bước 2: thay vào công thức còn lại.", "vi_du": "B15-TN12", "dau": "" },
+        { "dang": "So sánh gia tốc khi thay đổi lực hoặc khối lượng", "nhan_biet": "Đề cho lực tăng, giảm bao nhiêu lần, khối lượng tăng, giảm bao nhiêu lần.", "cach_lam": "Dùng tỉ lệ: $a$ tỉ lệ thuận với $F$ và tỉ lệ nghịch với $m$, lập tỉ số $\\dfrac{a_2}{a_1} = \\dfrac{F_2}{F_1} \\cdot \\dfrac{m_1}{m_2}$.", "vi_du": "B15-TN6", "dau": "" },
+        { "dang": "Đọc đồ thị lực – gia tốc để tìm khối lượng", "nhan_biet": "Đề cho đồ thị là đường thẳng qua gốc tọa độ liên hệ $F$ và $a$.", "cach_lam": "Chọn một điểm rõ tọa độ trên đồ thị, tính $m = \\dfrac{F}{a}$; sau đó dùng $m$ cho các câu hỏi tiếp theo.", "vi_du": "B15-TLN1", "dau": "" }
+      ],
+      "loi_hay_mac": [
+        { "y": "Quên đổi khối lượng từ gam sang kilôgam trước khi thay vào $F = ma$.", "dau": "" },
+        { "y": "Thay một lực thành phần vào công thức thay cho hợp lực (ví dụ quên trừ lực ma sát, lực cản).", "dau": "" },
+        { "y": "Cho rằng lực luôn cùng hướng với vận tốc; hợp lực cùng hướng với gia tốc, có thể ngược hướng vận tốc (khi vật chuyển động chậm dần).", "dau": "" },
+        { "y": "Nhầm khối lượng (kg, đặc trưng cho mức quán tính) với trọng lượng (N, độ lớn của trọng lực).", "dau": "" }
+      ],
+      "the": [
+        { "mat_truoc": "Phát biểu định luật 2 Newton.", "mat_sau": "Gia tốc của vật cùng hướng với lực tác dụng; độ lớn gia tốc tỉ lệ thuận với độ lớn của lực và tỉ lệ nghịch với khối lượng: $\\vec{a} = \\dfrac{\\vec{F}}{m}$." },
+        { "mat_truoc": "$1\\ \\mathrm{N}$ bằng bao nhiêu theo đơn vị cơ bản?", "mat_sau": "$1\\ \\mathrm{N} = 1\\ \\mathrm{kg \\cdot m/s^2}$." },
+        { "mat_truoc": "Khối lượng đặc trưng cho điều gì của vật?", "mat_sau": "Mức quán tính của vật." },
+        { "mat_truoc": "Lực tăng 2 lần, khối lượng không đổi thì gia tốc thay đổi thế nào?", "mat_sau": "Tăng 2 lần ($a$ tỉ lệ thuận với $F$)." },
+        { "mat_truoc": "Khối lượng tăng 2 lần, lực không đổi thì gia tốc thay đổi thế nào?", "mat_sau": "Giảm 2 lần ($a$ tỉ lệ nghịch với $m$)." },
+        { "mat_truoc": "Vật chịu nhiều lực thì $\\vec{F}$ trong $\\vec{F} = m\\vec{a}$ là lực nào?", "mat_sau": "Hợp lực của tất cả các lực tác dụng lên vật." }
+      ]
+    }
+  ]
+}

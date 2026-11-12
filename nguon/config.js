@@ -22,7 +22,12 @@ window.HO_SO = {
   ],
   khoi: {
     10: { ten: "Vật lí 10", chuong: [
-      { ten: "Mở đầu" }, { ten: "Mô tả chuyển động" }, { ten: "Ba định luật Newton và một số lực" },
+      { ten: "Mở đầu" },
+      /* tên chương II, III theo SGK KNTT (Động học, Động lực học) */
+      { ten: "Động học", luyenTap: [
+        { ten: "Bài giảng Bài 12. Chuyển động ném (ném ngang)", trang: "bai-giang/k10-B12.html", ghiChu: "Bài giảng tương tác: bấm vào khung rồi dùng phím → để chuyển slide. Hai video thí nghiệm chỉ có trên máy giáo viên (thư mục bai-giang/Chuyendongnem-media), không đưa lên mạng." } ] },
+      /* mỗi bài một file bài giảng: {ma} được thay bằng mã bài (B13, B14, B15). Dữ liệu: node tools/build_du_lieu_roi.js tools/noi_dung_k10_chuong3.json */
+      { ten: "Động lực học", duLieu: "10-3", baiGiang: "bai-giang/k10-{ma}.html" },
       { ten: "Năng lượng, công, công suất" }, { ten: "Động lượng" }, { ten: "Chuyển động tròn" }, { ten: "Biến dạng của vật rắn" } ] },
     11: { ten: "Vật lí 11", chuong: [
       { ten: "Dao động" }, { ten: "Sóng" }, { ten: "Điện trường" }, { ten: "Dòng điện, mạch điện" } ] },

@@ -21,6 +21,10 @@
   function chs() { return CFG.khoi[V.khoi].chuong; }
   function dOf(ch) { return ch && ch.duLieu && DATA[ch.duLieu]; }
   function curCh() { return chs()[V.ch]; }
+  /* địa chỉ bài giảng của một bài: ch.baiGiang là một file cho cả chương, hoặc mẫu có {ma} khi mỗi bài một file */
+  function bgUrl(ch, b) { return String(ch.baiGiang).replace("{ma}", b.ma) + "#" + b.ma; }
+  /* ảnh của câu hỏi (trường anh), lấy từ dữ liệu chương */
+  function anhSrc(k) { for (var m in DATA) if (DATA[m].anh && DATA[m].anh[k]) return DATA[m].anh[k]; return ""; }
   function curBai() { var d = dOf(curCh()); return d ? d.bai[V.bai] : null; }
   function bKey(b) { return curCh().duLieu + "." + b.ma; }
   function firstData() { V.ch = 0; V.bai = 0; var c = chs(); for (var i = 0; i < c.length; i++) if (dOf(c[i])) { V.ch = i; return true; } return false; }
@@ -62,9 +66,10 @@
   }
   function qHTML(q, n, showAns, tags) {
     var h = '<div class="card">';
-    if (tags) h += '<div><span class="tag">' + DANG[q.dang] + '</span><span class="tag m">' + (MUC[q.muc] || esc(q.muc)) + "</span></div>";
+    if (tags) h += '<div><span class="tag">' + DANG[q.dang] + '</span>' + (q.muc ? '<span class="tag m">' + (MUC[q.muc] || esc(q.muc)) + "</span>" : "") + (q.nguon ? '<span class="tag m">' + esc(q.nguon) + "</span>" : "") + "</div>";
     h += "<b>Câu " + n + ".</b> " + T(q.dang === "ds" ? (q.ds.dan || q.de) : q.de);
     if ((q.hinh || []).length) h += ' <span class="muted">(có hình ' + esc(q.hinh.join(", ")) + ": xem trong bài giảng)</span>";
+    if (q.anh && anhSrc(q.anh)) h += '<div class="qimg"><img loading="lazy" alt="Hình của câu ' + n + '" src="' + anhSrc(q.anh) + '"></div>';
     if (q.dang === "tn") h += '<div class="opts">' + q.tn.phuong_an.map(function (p, k) { return "<div><b>" + "ABCD"[k] + ".</b> " + T(p) + "</div>"; }).join("") + "</div>";
     if (q.dang === "ds") h += '<ol class="ys" type="a">' + q.ds.y.map(function (y) { return "<li>" + T(y.noi_dung) + "</li>"; }).join("") + "</ol>";
     if (showAns) h += '<div class="ans">' + ansHTML(q) + "</div>";
@@ -80,7 +85,7 @@
     if (!pos.length) h += '<p class="muted">Chưa dạy bài này. Bấm "Dạy ngay" để mở chế độ lên lớp.</p>';
     else h += pos.map(function (k) { var p = S.pos[k], l = k.split("|")[1]; return '<div class="card">' + (l ? "Lớp <b>" + esc(l) + "</b>" : "Chưa chọn lớp") + ": dừng ở slide " + (p.i + 1) + " / " + p.n + "</div>"; }).join("");
     h += '<div class="card">Chế độ lên lớp gồm: trình chiếu chữ lớn, gọi tên ngẫu nhiên, bấm giờ, ghi chú nhanh. Lần sau mở lại sẽ tiếp tục từ slide đang dạy của lớp đã chọn.</div>';
-    if (ch.baiGiang) h += '<a class="btn" target="_blank" rel="noopener" href="' + esc(ch.baiGiang) + "#" + b.ma + '">Mở riêng bài giảng ở tab mới</a>';
+    if (ch.baiGiang) h += '<a class="btn" target="_blank" rel="noopener" href="' + esc(bgUrl(ch, b)) + '">Mở riêng bài giảng ở tab mới</a>';
     return h;
   }
   function tabSGK(b) {
@@ -404,7 +409,7 @@
     $("llNguoi").textContent = ""; $("llNote").hidden = true; $("llText").value = "";
     llStop(); LL.left = +$("llPhut").value * 60; $("llGio").textContent = fmt(LL.left); $("llGio").classList.remove("het");
     var p = S.pos[b.ma + "|" + $("llLop").value];
-    $("llFrame").src = ch.baiGiang + "#" + b.ma + (p && p.i ? "@" + p.i : "");
+    $("llFrame").src = bgUrl(ch, b) + (p && p.i ? "@" + p.i : "");
     $("lenLop").hidden = false;
     var k = bKey(b); if (!S.st[k]) { S.st[k] = 1; save(); }
     setTimeout(function () { try { $("llFrame").focus(); } catch (e) {} }, 600);
