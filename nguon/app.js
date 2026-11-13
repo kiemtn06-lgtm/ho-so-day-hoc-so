@@ -437,7 +437,7 @@
   function llStop() { if (LL.tm) { clearInterval(LL.tm); LL.tm = null; } $("llDem").textContent = "Bấm giờ"; }
   function beep() { try { var a = new (window.AudioContext || window.webkitAudioContext)(), o = a.createOscillator(), g = a.createGain(); o.connect(g); g.connect(a.destination); o.frequency.value = 880; g.gain.value = 0.2; o.start(); setTimeout(function () { o.stop(); a.close(); }, 700); } catch (e) {} }
   function llClose() {
-    if (QR && confirm("Đang có phòng QR. Kết thúc phòng và lưu danh sách có mặt?")) qrEnd(); else if (QR) { clearInterval(QR.tm); QR = null; $("llQrBox").hidden = true; }
+    if (QR && confirm("Đang có phòng QR. Kết thúc phòng và lưu danh sách có mặt?")) qrEnd(); else if (QR) { clearInterval(QR.tm); QR = null; $("llQrBox").hidden = true; $("llQr").textContent = "Phòng QR"; }
     llStop(); if (document.fullscreenElement) document.exitFullscreen();
     $("llFrame").src = "about:blank"; $("lenLop").hidden = true; LL.b = null; render();
   }
@@ -458,10 +458,11 @@
   function qrJoinUrl() { return S.srv.url.replace(/\/+$/, "") + "/?c=" + QR.code; }
   function qrSvg(text) { try { var q = qrcode(0, "M"); q.addData(text); q.make(); return q.createSvgTag({ cellSize: 6, margin: 1, scalable: true }); } catch (e) { return ""; } }
   function qrDraw() {
-    var box = $("llQrBox"); if (!QR) { box.hidden = true; return; }
+    var box = $("llQrBox"); if (!QR) { box.hidden = true; $("llQr").textContent = "Phòng QR"; return; }
+    var jj = QR.st; $("llQr").textContent = "Phòng QR" + (jj ? " · " + jj.joined.length + "/" + jj.total + (jj.hands.length ? " · ✋" + jj.hands.length : "") : "");
     var j = QR.st, h = '<div class="qh"><b>Phòng tương tác</b><span style="flex:1"></span><button data-qa="hide">Ẩn</button></div>';
     h += '<div class="qcode">' + QR.code + '</div><div class="qsvg' + (QR.big ? " big" : "") + '" data-qa="zoom" title="Bấm để phóng to / thu nhỏ">' + QR.svg + '</div><div class="qurl">' + esc(qrJoinUrl()) + "</div>";
-    if (!j) { box.innerHTML = h + '<p>Đang kết nối...</p>'; box.className = QR.big ? "wide" : ""; box.hidden = false; return; }
+    if (!j) { box.innerHTML = h + '<p>Đang kết nối...</p>'; box.className = QR.big ? "wide" : ""; box.hidden = !QR.vis; return; }
     var pc = j.total ? Math.round(100 * j.joined.length / j.total) : 0;
     h += '<p style="margin:8px 0 2px">Có mặt: <b>' + j.joined.length + "/" + j.total + '</b></p><div class="qbar"><i style="width:' + pc + '%"></i></div>';
     h += '<p style="margin:8px 0 2px">Giơ tay: <b>' + j.hands.length + "</b></p>";
@@ -474,14 +475,14 @@
       else if (j.q.answers) h += "<div>" + Object.keys(j.q.answers).map(function (n) { return esc(n) + ": " + esc(j.q.answers[n]); }).join("<br>") + "</div>";
     }
     h += '<div class="qh" style="margin-top:10px"><button data-qa="end">Kết thúc phòng và lưu có mặt</button></div>';
-    box.innerHTML = h; box.className = QR.big ? "wide" : ""; box.hidden = false;
+    box.innerHTML = h; box.className = QR.big ? "wide" : ""; box.hidden = !QR.vis;
   }
   function qrPoll() {
     if (!QR) return;
     srvCall("GET", "/api/t/state?code=" + QR.code).then(function (j) { if (!QR) return; QR.st = j; qrDraw(); }, function (e) { msg("llMsg", e.message); });
   }
   function qrOpen() {
-    if (QR) { var b = $("llQrBox"); b.hidden = !b.hidden; return; }
+    if (QR) { QR.vis = !QR.vis; qrDraw(); return; }
     var lp = $("llLop").value, ds = S.lop[lp] || [];
     if (!lp || !ds.length) { msg("llMsg", "Chọn lớp có danh sách học sinh trước."); return; }
     if (!S.srv.url) S.srv.url = (window.HO_SO && window.HO_SO.tuongTac) || "";
@@ -489,13 +490,13 @@
     if (!S.srv.pass) { var pw = prompt("Mật khẩu giáo viên của máy chủ:", ""); if (!pw) return; S.srv.pass = pw; }
     save(); msg("llMsg", "Đang mở phòng... (máy chủ miễn phí có thể mất khoảng 1 phút để thức dậy)");
     srvCall("POST", "/api/t/open", { lop: lp, bai: LL.b ? LL.b.ten : "", roster: ds }).then(function (j) {
-      QR = { code: j.code, lop: lp, bai: LL.b ? LL.b.ma : "", st: null, big: false, svg: "", tm: null };
+      QR = { code: j.code, lop: lp, bai: LL.b ? LL.b.ma : "", st: null, big: false, svg: "", tm: null, vis: true };
       QR.svg = qrSvg(qrJoinUrl()); qrDraw(); qrPoll(); QR.tm = setInterval(qrPoll, 2000);
     }, function (e) { if (/mật khẩu/i.test(e.message)) { S.srv.pass = ""; save(); } msg("llMsg", e.message + " Kiểm tra địa chỉ máy chủ và mật khẩu rồi bấm lại."); });
   }
   function qrEnd() {
     if (!QR) return Promise.resolve();
-    var q = QR; QR = null; clearInterval(q.tm); $("llQrBox").hidden = true;
+    var q = QR; QR = null; clearInterval(q.tm); $("llQrBox").hidden = true; $("llQr").textContent = "Phòng QR";
     return srvCall("GET", "/api/t/export?code=" + q.code).then(function (x) {
       var tl = {}, qn = (x.qlog || []).length;
       (x.qlog || []).forEach(function (r) { Object.keys(r.answers || {}).forEach(function (n) { tl[n] = (tl[n] || 0) + 1; }); });
@@ -512,7 +513,7 @@
     if (!qa && qd) qa = qd.getAttribute("data-qa");
     if (qa && QR) {
       var nm = e.target.getAttribute("data-n");
-      if (qa === "hide") $("llQrBox").hidden = true;
+      if (qa === "hide") { QR.vis = false; qrDraw(); }
       else if (qa === "zoom") { QR.big = !QR.big; qrDraw(); }
       else if (qa === "call") { qrNote(nm); qrCtl({ action: "call", name: nm }); }
       else if (qa === "drop") qrCtl({ action: "dropHand", name: nm });
