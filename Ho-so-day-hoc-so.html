@@ -383,7 +383,7 @@ table.key{border-collapse:collapse}table.key td{border:1px solid var(--bd);paddi
   <div class="ll-bar">
     <b id="llTen"></b>
     <label>Lớp <select id="llLop"></select></label>
-    <button id="llGoi">Gọi tên</button><span id="llNguoi" class="ll-name" aria-live="polite"></span>
+    <button id="llGoi">Gọi tên</button><span id="llNguoi" class="ll-name" aria-live="polite"></span><span id="llCham" hidden><button id="llD1" title="Trình bày tốt">+1</button> <button id="llD2" title="Trình bày được">+0,5</button> <button id="llD0" title="Chưa đạt">0</button> <button id="llD" title="Bỏ qua, không ghi">Bỏ qua</button></span>
     <span class="sp"></span>
     <select id="llPhut" aria-label="Số phút"><option value="1">1 phút</option><option value="2">2 phút</option><option value="3" selected>3 phút</option><option value="5">5 phút</option><option value="10">10 phút</option></select>
     <button id="llDem">Bấm giờ</button><span id="llGio" class="ll-time">03:00</span>
@@ -458,7 +458,7 @@ window.HO_SO = {
 <script>
 (function () {
   var CFG = window.HO_SO, DATA = window.HSDH_DATA || {}, KEY = "hsdh_v2";
-  var S = { st: {}, notes: {}, links: {}, lop: {}, pos: {}, lastLop: "", prog: {}, gc: {}, khbd: {} };
+  var S = { st: {}, notes: {}, links: {}, lop: {}, pos: {}, lastLop: "", prog: {}, gc: {}, khbd: {}, pv: [] };
   var HOAT = [["ga", "Giáo án"], ["sl", "Slide"], ["bt", "Bài tập"], ["on", "Ôn tập"], ["de", "Đề"]];
   var V = { khoi: CFG.khoiMacDinh, page: "tq", ch: 0, bai: 0, tab: 0, fd: "", fm: "", ans: false, quiz: null, qkey: false, edit: "" };
   var TABS = ["Trình chiếu", "SGK", "KHBD", "Bài tập", "Ôn tập", "Kiểm tra", "Ghi chú sau tiết"];
@@ -657,8 +657,20 @@ window.HO_SO = {
   function pageLop() {
     var h = '<div class="head"><h2>Lớp học</h2></div><p class="warn">Danh sách lớp chỉ lưu trong trình duyệt của máy này để dùng cho nút "Gọi tên" khi lên lớp. Chỉ nên nhập tên, không nhập điểm hay thông tin cá nhân khác.</p>';
     lopNames().forEach(function (l) { h += '<div class="card"><div class="row" style="margin:0"><b>' + esc(l) + '</b><span class="muted">' + S.lop[l].length + ' học sinh</span><span class="sp"></span><button class="link" data-a="editLop" data-l="' + esc(l) + '">Sửa</button><button class="link" data-a="delLop" data-l="' + esc(l) + '">Xóa</button></div></div>'; });
+    h += pvTongHop();
     h += "<h3>" + (V.edit ? "Sửa lớp " + esc(V.edit) : "Thêm lớp") + '</h3><div class="card"><div class="row"><input id="lTen" placeholder="Tên lớp (ví dụ 12A6)" value="' + esc(V.edit) + '"></div><textarea id="lDs" rows="8" placeholder="Mỗi dòng một học sinh">' + esc(V.edit ? S.lop[V.edit].join("\n") : "") + '</textarea><div class="row" style="margin:8px 0 0"><button data-a="saveLop">Lưu lớp</button><span id="lMsg" class="muted" role="status"></span></div></div>';
     return h;
+  }
+  function pvTongHop() {
+    if (!S.pv.length) return '<h3>Phát biểu trên lớp</h3><p class="muted">Chưa có ghi nhận. Vào chế độ lên lớp, bấm "Gọi tên" rồi chấm điểm cho em được gọi.</p>';
+    var h = '<h3>Phát biểu trên lớp</h3>';
+    lopNames().forEach(function (l) {
+      var m = {}; S.pv.forEach(function (r) { if (r.lop !== l) return; var o = m[r.hs] = m[r.hs] || { n: 0, d: 0 }; o.n++; o.d += r.diem; });
+      var ks = Object.keys(m).sort(function (a, b) { return m[b].d - m[a].d; });
+      if (!ks.length) return;
+      h += '<div class="card"><b>' + esc(l) + '</b><table class="tbl" style="width:100%;margin-top:6px"><tr><th align="left">Học sinh</th><th>Lần được gọi</th><th>Tổng điểm</th></tr>' + ks.map(function (k) { return "<tr><td>" + esc(k) + '</td><td align="center">' + m[k].n + '</td><td align="center">' + String(m[k].d).replace(".", ",") + "</td></tr>"; }).join("") + "</table></div>";
+    });
+    return h + '<div class="row"><button data-a="pvCsv">Xuất CSV</button><button class="link" data-a="pvUndo">Xóa lần ghi gần nhất</button><button class="link" data-a="pvDel">Xóa toàn bộ ghi nhận</button></div>';
   }
   function progOf() {
     var done = 0, total = chs().length * HOAT.length;
@@ -858,13 +870,13 @@ window.HO_SO = {
   function msg(id, m) { var e = $(id); if (e) { e.textContent = m; setTimeout(function () { if (e) e.textContent = ""; }, 3500); } }
 
   /* ---------- chế độ lên lớp ---------- */
-  var LL = { b: null, i: 0, n: 0, called: [], tm: null, left: 0 };
+  var LL = { b: null, i: 0, n: 0, called: [], tm: null, left: 0, cur: "" };
   function fmt(s) { return ("0" + Math.floor(s / 60)).slice(-2) + ":" + ("0" + s % 60).slice(-2); }
   function llOpen(b) {
     var ch = curCh(); LL.b = b; LL.called = []; LL.i = 0; LL.n = 0;
     $("llTen").textContent = b.ten;
     $("llLop").innerHTML = '<option value="">(chưa chọn)</option>' + lopNames().map(function (l) { return '<option' + (l === S.lastLop ? " selected" : "") + ">" + esc(l) + "</option>"; }).join("");
-    $("llNguoi").textContent = ""; $("llNote").hidden = true; $("llText").value = "";
+    $("llNguoi").textContent = ""; $("llCham").hidden = true; LL.cur = ""; $("llNote").hidden = true; $("llText").value = "";
     llStop(); LL.left = +$("llPhut").value * 60; $("llGio").textContent = fmt(LL.left); $("llGio").classList.remove("het");
     var p = S.pos[b.ma + "|" + $("llLop").value];
     $("llFrame").src = bgUrl(ch, b) + (p && p.i ? "@" + p.i : "");
@@ -900,8 +912,15 @@ window.HO_SO = {
       if (!ds.length) { $("llNguoi").textContent = "Chưa có danh sách lớp"; return; }
       if (LL.called.length >= ds.length) LL.called = [];
       var rest = ds.filter(function (n) { return LL.called.indexOf(n) < 0; }), pick = rest[Math.floor(Math.random() * rest.length)];
-      LL.called.push(pick); $("llNguoi").textContent = pick; return;
+      LL.called.push(pick); LL.cur = pick; $("llNguoi").textContent = pick; $("llCham").hidden = false; return;
     }
+    if (id === "llD1" || id === "llD2" || id === "llD0") {
+      if (!LL.cur) return;
+      var dv = { llD1: 1, llD2: 0.5, llD0: 0 }[id], lp = $("llLop").value;
+      S.pv.push({ lop: lp, hs: LL.cur, ngay: today(), bai: LL.b ? LL.b.ma : "", slide: LL.n ? LL.i + 1 : "", diem: dv });
+      save(); $("llNguoi").textContent = LL.cur + " (" + (dv === 1 ? "+1" : dv === 0.5 ? "+0,5" : "ghi nhận 0") + ")"; $("llCham").hidden = true; LL.cur = ""; return;
+    }
+    if (id === "llD") { $("llCham").hidden = true; LL.cur = ""; $("llNguoi").textContent = ""; return; }
     if (id === "llDem") {
       if (LL.tm) { llStop(); return; }
       if (LL.left <= 0) LL.left = +$("llPhut").value * 60;
@@ -963,6 +982,13 @@ window.HO_SO = {
       if (V.edit && V.edit !== ten) delete S.lop[V.edit];
       S.lop[ten] = ds2; V.edit = ""; save(); renderWork();
     }
+    else if (a === "pvCsv") {
+      var rows = ["Lớp,Học sinh,Ngày,Bài,Slide,Điểm"].concat(S.pv.map(function (r) { return [r.lop, r.hs, r.ngay, r.bai, r.slide, r.diem].map(function (x) { return '"' + String(x).replace(/"/g, '""') + '"'; }).join(","); }));
+      var bl = new Blob(["﻿" + rows.join("\r\n")], { type: "text/csv;charset=utf-8" }), an2 = document.createElement("a");
+      an2.href = URL.createObjectURL(bl); an2.download = "phat-bieu-tren-lop.csv"; an2.click(); setTimeout(function () { URL.revokeObjectURL(an2.href); }, 1000);
+    }
+    else if (a === "pvUndo") { S.pv.pop(); save(); renderWork(); }
+    else if (a === "pvDel") { if (!confirm("Xóa toàn bộ ghi nhận phát biểu?")) return; S.pv = []; save(); renderWork(); }
     else if (a === "editLop") { V.edit = t.getAttribute("data-l"); renderWork(); }
     else if (a === "delLop") { var l = t.getAttribute("data-l"); if (!confirm("Xóa danh sách lớp " + l + "?")) return; delete S.lop[l]; if (V.edit === l) V.edit = ""; save(); renderWork(); }
     else if (a === "link") {
