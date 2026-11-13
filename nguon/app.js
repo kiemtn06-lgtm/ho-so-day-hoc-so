@@ -205,9 +205,9 @@
   }
   function pvTongKet(l) {
     var m = {};
-    function g(n) { return m[n] = m[n] || { cm: 0, tl: 0, qn: 0, n: 0, d: 0 }; }
+    function g(n) { return m[n] = m[n] || { cm: 0, tl: 0, qn: 0, dg: 0, qk: 0, n: 0, d: 0 }; }
     (S.lop[l] || []).forEach(g);
-    S.cm.forEach(function (r) { if (r.lop !== l) return; var o = g(r.hs); o.cm++; o.tl += r.tl || 0; o.qn += r.qn || 0; });
+    S.cm.forEach(function (r) { if (r.lop !== l) return; var o = g(r.hs); o.cm++; o.tl += r.tl || 0; o.qn += r.qn || 0; o.dg += r.dg || 0; o.qk += r.qk || 0; });
     S.pv.forEach(function (r) { if (r.lop !== l) return; var o = g(r.hs); o.n++; o.d += r.diem; });
     return m;
   }
@@ -217,7 +217,7 @@
     lopNames().forEach(function (l) {
       var m = pvTongKet(l), ks = Object.keys(m).filter(function (k) { return m[k].cm || m[k].n; }).sort(function (a, b) { return m[b].d - m[a].d; });
       if (!ks.length) return; co = true;
-      h += '<div class="card"><b>' + esc(l) + '</b><table class="tbl" style="width:100%;margin-top:6px"><tr><th align="left">Học sinh</th><th>Buổi có mặt</th><th>Câu trả lời</th><th>Lần được gọi</th><th>Tổng điểm</th></tr>' + ks.map(function (k) { var o = m[k]; return "<tr><td>" + esc(k) + '</td><td align="center">' + o.cm + '</td><td align="center">' + o.tl + (o.qn ? "/" + o.qn : "") + '</td><td align="center">' + o.n + '</td><td align="center">' + String(o.d).replace(".", ",") + "</td></tr>"; }).join("") + "</table></div>";
+      h += '<div class="card"><b>' + esc(l) + '</b><table class="tbl" style="width:100%;margin-top:6px"><tr><th align="left">Học sinh</th><th>Buổi có mặt</th><th>Câu trả lời</th><th>Câu đúng</th><th>Lần được gọi</th><th>Tổng điểm</th></tr>' + ks.map(function (k) { var o = m[k]; return "<tr><td>" + esc(k) + '</td><td align="center">' + o.cm + '</td><td align="center">' + o.tl + (o.qn ? "/" + o.qn : "") + '</td><td align="center">' + (o.qk ? o.dg + "/" + o.qk : "–") + '</td><td align="center">' + o.n + '</td><td align="center">' + String(o.d).replace(".", ",") + "</td></tr>"; }).join("") + "</table></div>";
     });
     if (!co) h += '<p class="muted">Chưa có ghi nhận.</p>';
     return h + '<div class="row"><button data-a="pvCsv">Xuất chi tiết (CSV)</button><button data-a="pvCsv2">Xuất tổng hợp (CSV)</button><button class="link" data-a="pvUndo">Xóa lần chấm gần nhất</button><button class="link" data-a="pvDel">Xóa toàn bộ ghi nhận</button></div>';
@@ -420,7 +420,7 @@
   function msg(id, m) { var e = $(id); if (e) { e.textContent = m; setTimeout(function () { if (e) e.textContent = ""; }, 3500); } }
 
   /* ---------- chế độ lên lớp ---------- */
-  var LL = { b: null, i: 0, n: 0, called: [], tm: null, left: 0, cur: "" };
+  var LL = { b: null, i: 0, n: 0, called: [], tm: null, left: 0, cur: "", q: null, qk: "null" };
   function fmt(s) { return ("0" + Math.floor(s / 60)).slice(-2) + ":" + ("0" + s % 60).slice(-2); }
   function llOpen(b) {
     var ch = curCh(); LL.b = b; LL.called = []; LL.i = 0; LL.n = 0;
@@ -443,6 +443,7 @@
   }
   window.addEventListener("message", function (e) {
     var d = e.data; if (!d || d.hsdh !== "pos" || !LL.b || e.source !== $("llFrame").contentWindow || d.ma !== LL.b.ma) return;
+    var qk = JSON.stringify(d.q || null), qch = qk !== LL.qk; LL.qk = qk; LL.q = d.q || null; if (qch && QR) qrDraw();
     if (d.i === LL.i && d.n === LL.n) return;
     LL.i = d.i; LL.n = d.n; S.pos[LL.b.ma + "|" + $("llLop").value] = { i: d.i, n: d.n }; save();
   });
@@ -457,6 +458,42 @@
   function qrCtl(o) { return srvCall("POST", "/api/t/ctl?code=" + QR.code, o).then(function (j) { QR.st = j; qrDraw(); }, function (e) { msg("llMsg", e.message); }); }
   function qrJoinUrl() { return S.srv.url.replace(/\/+$/, "") + "/?c=" + QR.code; }
   function qrSvg(text) { try { var q = qrcode(0, "M"); q.addData(text); q.make(); return q.createSvgTag({ cellSize: 6, margin: 1, scalable: true }); } catch (e) { return ""; } }
+  function pc(a, b) { return b ? Math.round(100 * a / b) : 0; }
+  function qrKeyText(q) { return q.type === "tf" ? q.key.map(function (x, i) { return "abcdef".charAt(i) + ":" + (x ? "Đ" : "S"); }).join("  ") : q.type === "short" ? q.key.v : q.key; }
+  /* bảng phần trăm đúng/sai của câu hỏi nhanh đang mở hoặc vừa đóng */
+  function qrKq(j) {
+    var q = j.q, c = q.count, h = '<div style="margin-top:6px"><b>' + (q.open ? "Đang mở" : "Đã đóng") + "</b>: " + c + "/" + j.total + " em đã trả lời" + (q.label ? " · " + esc(q.label) : "") + "</div>";
+    if (q.key && q.dung != null) h += '<div style="font-size:18px;margin:4px 0">Đúng: <b style="color:#3fb950">' + pc(q.dung, c) + "%</b> (" + q.dung + "/" + c + ') · Sai: <b style="color:#ff6b6b">' + pc(c - q.dung, c) + "%</b></div>";
+    if (q.type === "mc") {
+      ["A", "B", "C", "D"].forEach(function (x) {
+        var n = (q.tally || {})[x] || 0, p = pc(n, c), ok = q.key === x, col = q.key ? (ok ? "#3fb950" : "#ff6b6b") : "#4c9aff";
+        h += '<div class="qrow"><b>' + x + (ok ? " ✓" : "") + '</b><div class="qbar2"><i style="width:' + p + "%;background:" + col + '"></i></div><span>' + p + "% (" + n + ")</span></div>";
+      });
+    } else if (q.type === "tf") {
+      (q.tally || []).forEach(function (t, i) {
+        var pd = pc(t.d, c), k = q.key ? q.key[i] : null;
+        h += '<div class="qrow"><b>' + "abcdef".charAt(i) + ')</b><div class="qbar2"><i style="width:' + pd + '%;background:#4c9aff"></i></div><span>Đ ' + pd + "%" + (k === true ? " ✓" : "") + " · S " + (c ? 100 - pd : 0) + "%" + (k === false ? " ✓" : "") + "</span></div>";
+      });
+    } else if (q.answers) {
+      h += "<div>" + Object.keys(q.answers).map(function (n) { var g = q.ok ? q.ok[n] : null; return (g === true ? "✓ " : g === false ? "✗ " : "") + esc(n) + ": " + esc(q.answers[n]); }).join("<br>") + "</div>";
+    }
+    if (q.key) {
+      h += '<div style="margin-top:6px">Đáp án đúng: <b style="color:#ffd166">' + esc(qrKeyText(q)) + (q.type === "short" && LL.q && LL.q.u ? " " + esc(LL.q.u) : "") + "</b></div>";
+      if (!q.open && q.e) h += '<div class="qurl" style="text-align:left">' + esc(q.e) + "</div>";
+    }
+    return h;
+  }
+  /* khóa đáp án của câu đang chiếu trên slide (nếu có) cho từng kiểu câu hỏi */
+  function qrAsk(kind) {
+    var lq = LL.q, o = { action: "question", type: kind, label: "Slide " + (LL.n ? LL.i + 1 : "") };
+    if (lq) {
+      if (kind === "mc" && lq.t === "mc") { o.key = "ABCD".charAt(lq.a); o.e = lq.e; }
+      else if (kind === "tf" && lq.t === "ds") { o.key = lq.y.map(function (x) { return !!x; }); o.e = lq.e; }
+      else if (kind === "short" && lq.t === "tln") { o.key = { v: String(lq.a), tol: lq.tol || 0 }; o.e = lq.e; }
+      if (o.key !== undefined) o.label += " · Câu " + lq.i;
+    }
+    qrCtl(o);
+  }
   function qrDraw() {
     var box = $("llQrBox"); if (!QR) { box.hidden = true; $("llQr").textContent = "Phòng QR"; return; }
     var jj = QR.st; $("llQr").textContent = "Phòng QR" + (jj ? " · " + jj.joined.length + "/" + jj.total + (jj.hands.length ? " · ✋" + jj.hands.length : "") : "");
@@ -467,13 +504,10 @@
     h += '<p style="margin:8px 0 2px">Có mặt: <b>' + j.joined.length + "/" + j.total + '</b></p><div class="qbar"><i style="width:' + pc + '%"></i></div>';
     h += '<p style="margin:8px 0 2px">Giơ tay: <b>' + j.hands.length + "</b></p>";
     j.hands.forEach(function (x) { h += '<div class="qh"><span style="flex:1">' + esc(x.name) + '</span><button data-qa="call" data-n="' + esc(x.name) + '">Gọi</button><button data-qa="drop" data-n="' + esc(x.name) + '">Hạ</button></div>'; });
-    h += '<p style="margin:10px 0 2px">Câu hỏi nhanh</p><div class="qh"><button data-qa="qmc">Trắc nghiệm A-D</button><button data-qa="qtf">Đúng/Sai a-d</button><button data-qa="qshort">Trả lời ngắn</button><button data-qa="qclose">Đóng câu</button></div>';
-    if (j.q) {
-      h += '<div>' + (j.q.open ? "Đang mở" : "Đã đóng") + ": " + j.q.count + "/" + j.total + " em đã trả lời</div>";
-      if (j.q.type === "mc") h += "<div>" + ["A", "B", "C", "D"].map(function (x) { return "<b>" + x + "</b>: " + ((j.q.tally || {})[x] || 0); }).join(" &nbsp; ") + "</div>";
-      else if (j.q.type === "tf") h += "<div>" + (j.q.tally || []).map(function (t, i) { return "<b>" + "abcd"[i] + ")</b> Đ " + t.d + " · S " + t.s; }).join("<br>") + "</div>";
-      else if (j.q.answers) h += "<div>" + Object.keys(j.q.answers).map(function (n) { return esc(n) + ": " + esc(j.q.answers[n]); }).join("<br>") + "</div>";
-    }
+    var ls = LL.q ? { mc: "trắc nghiệm", ds: "đúng/sai", tln: "trả lời ngắn" }[LL.q.t] : "";
+    h += '<p style="margin:10px 0 2px">Câu hỏi nhanh</p><div class="qh"><button data-qa="qauto"' + (LL.q ? "" : " disabled") + ' style="flex:1">' + (LL.q ? "Hỏi câu đang chiếu (" + ls + ", có đáp án)" : "Slide này chưa có câu hỏi sẵn") + '</button></div>';
+    h += '<div class="qh"><button data-qa="qmc">A-D</button><button data-qa="qtf">Đúng/Sai</button><button data-qa="qshort">Trả lời ngắn</button><button data-qa="qclose">Đóng câu</button></div>';
+    if (j.q) h += qrKq(j);
     h += '<div class="qh" style="margin-top:10px"><button data-qa="end">Kết thúc phòng và lưu có mặt</button></div>';
     box.innerHTML = h; box.className = QR.big ? "wide" : ""; box.hidden = !QR.vis;
   }
@@ -494,13 +528,19 @@
       QR.svg = qrSvg(qrJoinUrl()); qrDraw(); qrPoll(); QR.tm = setInterval(qrPoll, 2000);
     }, function (e) { if (/mật khẩu/i.test(e.message)) { S.srv.pass = ""; save(); } msg("llMsg", e.message + " Kiểm tra địa chỉ máy chủ và mật khẩu rồi bấm lại."); });
   }
+  function chamDung(r, v) {
+    if (r.type === "mc") return v === r.key;
+    if (r.type === "tf") return Array.isArray(v) && Array.isArray(r.key) && r.key.length === v.length && r.key.every(function (k, i) { return k === v[i]; });
+    var p = parseFloat(String(v).replace(",", ".")), q = parseFloat(String(r.key.v).replace(",", "."));
+    return isFinite(p) && isFinite(q) ? Math.abs(p - q) <= (r.key.tol || 0) + 1e-9 : String(v).trim().toLowerCase() === String(r.key.v).trim().toLowerCase();
+  }
   function qrEnd() {
     if (!QR) return Promise.resolve();
     var q = QR; QR = null; clearInterval(q.tm); $("llQrBox").hidden = true; $("llQr").textContent = "Phòng QR";
     return srvCall("GET", "/api/t/export?code=" + q.code).then(function (x) {
-      var tl = {}, qn = (x.qlog || []).length;
-      (x.qlog || []).forEach(function (r) { Object.keys(r.answers || {}).forEach(function (n) { tl[n] = (tl[n] || 0) + 1; }); });
-      Object.keys(x.joined || {}).forEach(function (n) { S.cm.push({ lop: q.lop, hs: n, ngay: today(), bai: q.bai, tl: tl[n] || 0, qn: qn }); });
+      var tl = {}, dg = {}, qn = (x.qlog || []).length, qk = 0;
+      (x.qlog || []).forEach(function (r) { if (r.key) qk++; Object.keys(r.answers || {}).forEach(function (n) { tl[n] = (tl[n] || 0) + 1; if (r.key && chamDung(r, r.answers[n])) dg[n] = (dg[n] || 0) + 1; }); });
+      Object.keys(x.joined || {}).forEach(function (n) { S.cm.push({ lop: q.lop, hs: n, ngay: today(), bai: q.bai, tl: tl[n] || 0, qn: qn, dg: dg[n] || 0, qk: qk }); });
       save(); srvCall("POST", "/api/t/ctl?code=" + q.code, { action: "end" }).catch(function () {});
       msg("llMsg", "Đã lưu có mặt của " + Object.keys(x.joined || {}).length + " em.");
     }, function (e) { msg("llMsg", "Không lưu được có mặt: " + e.message); });
@@ -517,7 +557,8 @@
       else if (qa === "zoom") { QR.big = !QR.big; qrDraw(); }
       else if (qa === "call") { qrNote(nm); qrCtl({ action: "call", name: nm }); }
       else if (qa === "drop") qrCtl({ action: "dropHand", name: nm });
-      else if (qa === "qmc" || qa === "qshort" || qa === "qtf") qrCtl({ action: "question", type: qa === "qmc" ? "mc" : qa === "qtf" ? "tf" : "short", label: "Slide " + (LL.n ? LL.i + 1 : "") });
+      else if (qa === "qauto") { if (LL.q) qrAsk({ mc: "mc", ds: "tf", tln: "short" }[LL.q.t]); }
+      else if (qa === "qmc" || qa === "qshort" || qa === "qtf") qrAsk(qa === "qmc" ? "mc" : qa === "qtf" ? "tf" : "short");
       else if (qa === "qclose") qrCtl({ action: "closeQ" });
       else if (qa === "end") { if (confirm("Kết thúc phòng và lưu danh sách có mặt?")) qrEnd(); }
       return;
@@ -613,8 +654,8 @@
       an2.href = URL.createObjectURL(bl); an2.download = "phat-bieu-tren-lop.csv"; an2.click(); setTimeout(function () { URL.revokeObjectURL(an2.href); }, 1000);
     }
     else if (a === "pvCsv2") {
-      var r2 = ["Lớp,Học sinh,Buổi có mặt,Câu trả lời,Số câu hỏi,Lần được gọi,Tổng điểm"];
-      lopNames().forEach(function (l) { var m = pvTongKet(l); Object.keys(m).forEach(function (k) { var o = m[k]; r2.push([l, k, o.cm, o.tl, o.qn, o.n, o.d].map(function (x) { return '"' + String(x).replace(/"/g, '""') + '"'; }).join(",")); }); });
+      var r2 = ["Lớp,Học sinh,Buổi có mặt,Câu trả lời,Số câu hỏi,Câu đúng,Số câu có đáp án,Lần được gọi,Tổng điểm"];
+      lopNames().forEach(function (l) { var m = pvTongKet(l); Object.keys(m).forEach(function (k) { var o = m[k]; r2.push([l, k, o.cm, o.tl, o.qn, o.dg, o.qk, o.n, o.d].map(function (x) { return '"' + String(x).replace(/"/g, '""') + '"'; }).join(",")); }); });
       var b2 = new Blob(["\uFEFF" + r2.join("\r\n")], { type: "text/csv;charset=utf-8" }), a3 = document.createElement("a");
       a3.href = URL.createObjectURL(b2); a3.download = "chuyen-can-tong-hop.csv"; a3.click(); setTimeout(function () { URL.revokeObjectURL(a3.href); }, 1000);
     }

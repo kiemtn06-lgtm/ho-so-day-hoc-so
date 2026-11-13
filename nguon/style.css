@@ -66,6 +66,12 @@ textarea{width:100%;resize:vertical}
 #llQrBox.wide{width:min(76vmin,560px)}
 #llQrBox .qurl{word-break:break-all;color:#b9c4cf;font-size:13px;text-align:center}
 #llQrBox .qh{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:4px 0}
+#llQrBox .qrow{display:flex;gap:6px;align-items:center;margin:3px 0}
+#llQrBox .qrow b{width:34px}
+#llQrBox .qrow span{min-width:92px;font-size:14px}
+#llQrBox .qbar2{flex:1;height:12px;background:#2b4560;border-radius:6px;overflow:hidden}
+#llQrBox .qbar2 i{display:block;height:100%}
+#llQrBox button:disabled{opacity:.5}
 #llQrBox .qbar{height:8px;background:#2b4560;border-radius:4px;overflow:hidden}
 #llQrBox .qbar i{display:block;height:100%;background:#3fb950}
 @media print{.ed{border:0;padding:0;min-height:0}.ed:empty{display:none}}
