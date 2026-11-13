@@ -11,6 +11,8 @@ window.HO_SO = {
   chatbot: { api: "" },
   /* Phòng tương tác trên lớp (học sinh quét QR). Điền địa chỉ Render sau khi đưa máy chủ lên, ví dụ https://phong-tuong-tac.onrender.com */
   tuongTac: "https://phong-tuong-tac.onrender.com",
+  /* Phòng làm bài có máy chủ bổ sung theo chương (ngoài phòng chính của khối ở mục "ph" phía trên) */
+  phongPhu: { 12: [{ ten: "Chương 2 · Chất khí", moTa: "265 câu: Buổi 1-6 và ngân hàng theo bài (Bài 8-12)", url: "https://phong-chuong-2-chat-khi.onrender.com" }] },
   congCu: [
     { id: "on", ten: "Ôn tập", moTa: "Lịch ôn, thẻ ghi nhớ, đề tổng hợp (trang cho học sinh)", khoi: {} },
     /* Phòng làm bài: mỗi khối một máy chủ trên Render (link cố định). Khối 12 là phòng luyện tập Vật lí nhiệt. */

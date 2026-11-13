@@ -291,12 +291,24 @@
     h += '</div><p class="warn" style="margin-top:10px">Kết quả của mỗi học sinh chỉ lưu trên máy của em đó (chưa gửi về giáo viên), và ô "mật khẩu giáo viên" của trang chỉ kiểm tra ngay trong trình duyệt nên không phải bảo vệ thật. Muốn giáo viên xem kết quả cả lớp ở một nơi thì cần thêm máy chủ như phòng làm bài khối 10, 11.</p>';
     return h;
   }
+  /* các phòng có máy chủ bổ sung của khối (mỗi phòng một link Render riêng): CFG.phongPhu[khối] = [{ten, moTa, url}] */
+  function ppHTML() {
+    var ps = (CFG.phongPhu || {})[V.khoi] || []; if (!ps.length) return "";
+    var h = '<h3 style="margin-top:14px">Phòng làm bài theo chương</h3><p class="muted">Mỗi phòng có link riêng. Trước giờ học 5 phút hãy mở link học sinh một lần để đánh thức máy chủ (gói miễn phí tự ngủ sau khoảng 15 phút).</p><div class="grid">';
+    ps.forEach(function (x) {
+      var u = String(x.url || "").replace(/\/+$/, "");
+      h += '<div class="card"><b>' + esc(x.ten) + '</b><div class="muted">' + esc(x.moTa || "") + '</div><div class="urlbox">' + esc(u) + '</div><div class="row" style="margin:8px 0 0"><button data-a="lbCopy" data-u="' + esc(u) + '">Sao chép</button><a class="btn" target="_blank" rel="noopener" href="' + esc(u) + '">Mở phòng học sinh</a><a class="btn" target="_blank" rel="noopener" href="' + esc(u) + '/teacher">Trang giáo viên</a></div></div>';
+    });
+    return h + "</div>";
+  }
   function pageLB() {
+    var pp = ppHTML();
     var u = phUrl(), h = '<div class="head"><h2>Làm bài trực tuyến · ' + esc(CFG.khoi[V.khoi].ten) + "</h2></div>" + ptHTML();
     if (!u) {
-      return h + '<h3>Phòng làm bài có máy chủ</h3><p class="warn">Khối ' + V.khoi + ' chưa có phòng làm bài có máy chủ (xem kết quả cả lớp, mở từng câu). Khi triển khai xong (cùng cách với khối 10, 11), dán địa chỉ phòng vào đây để dùng ngay trong hồ sơ.</p><div class="row"><button class="go" data-a="link" data-t="ph">Gắn liên kết phòng làm bài</button><span id="ccMsg" class="muted" role="status"></span></div><span id="lbMsg" class="muted" role="status"></span>';
+      return h + pp + '<h3>Phòng làm bài có máy chủ</h3><p class="warn">Khối ' + V.khoi + ' chưa có phòng làm bài có máy chủ (xem kết quả cả lớp, mở từng câu). Khi triển khai xong (cùng cách với khối 10, 11), dán địa chỉ phòng vào đây để dùng ngay trong hồ sơ.</p><div class="row"><button class="go" data-a="link" data-t="ph">Gắn liên kết phòng làm bài</button><span id="ccMsg" class="muted" role="status"></span></div><span id="lbMsg" class="muted" role="status"></span>';
     }
-    if (ptList().length) h += "<h3>Phòng làm bài có máy chủ</h3>";
+    h += pp;
+    if (ptList().length || pp) h += "<h3>Phòng làm bài có máy chủ</h3>";
     h += '<p class="muted">Một liên kết cố định cho cả khối: không phải tạo phòng mới mỗi lần. Mỗi buổi mới chỉ cần bấm "Làm lại từ đầu" trong bảng điều khiển giáo viên.</p>';
     h += '<div class="grid"><div class="card"><b>Link cho học sinh</b><div class="urlbox">' + esc(u) + '</div><div class="row" style="margin:8px 0 0"><button data-a="lbCopy">Sao chép</button><button data-a="lbBig">Chiếu cỡ lớn</button><a class="btn" target="_blank" rel="noopener" href="' + esc(u) + '">Mở thử</a></div></div>' +
       '<div class="card"><b>Giáo viên</b><div class="urlbox">' + esc(u) + '/teacher</div><div class="row" style="margin:8px 0 0"><button class="go" data-a="lbTeacher">' + (V.lbEmbed !== false ? "Ẩn bảng điều khiển" : "Hiện bảng điều khiển tại đây") + '</button><a class="btn" target="_blank" rel="noopener" href="' + esc(u) + '/teacher">Mở ở tab mới</a></div></div></div>';
