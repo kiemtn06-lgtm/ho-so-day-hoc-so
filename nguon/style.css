@@ -56,6 +56,18 @@ textarea{width:100%;resize:vertical}
 .ed:focus{outline:2px solid var(--ac);border-style:solid}
 .ed:empty::before{content:"Bấm để nhập";color:var(--mu)}
 .auto{background:var(--bg);border-radius:var(--rad);padding:8px 12px;margin:4px 0}
+#llQrBox{position:absolute;right:12px;top:64px;width:300px;max-height:calc(100% - 80px);overflow:auto;background:#14263bf2;color:#fff;border:1px solid #35526f;border-radius:12px;padding:12px;z-index:60;font-size:15px}
+#llQrBox[hidden]{display:none}
+#llQrBox button{background:#1f3b57;color:#fff;border:1px solid #35526f;font-size:15px;margin:2px 2px 2px 0}
+#llQrBox .qcode{font-size:34px;font-weight:600;letter-spacing:6px;color:#ffd166;text-align:center}
+#llQrBox .qsvg{background:#fff;border-radius:8px;padding:4px;margin:6px auto;width:200px;cursor:zoom-in}
+#llQrBox .qsvg.big{width:min(70vmin,520px);cursor:zoom-out}
+#llQrBox .qsvg svg{width:100%;height:auto;display:block}
+#llQrBox.wide{width:min(76vmin,560px)}
+#llQrBox .qurl{word-break:break-all;color:#b9c4cf;font-size:13px;text-align:center}
+#llQrBox .qh{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:4px 0}
+#llQrBox .qbar{height:8px;background:#2b4560;border-radius:4px;overflow:hidden}
+#llQrBox .qbar i{display:block;height:100%;background:#3fb950}
 @media print{.ed{border:0;padding:0;min-height:0}.ed:empty{display:none}}
 .chip{border-radius:20px;padding:4px 14px;color:var(--mu)}
 .chip.on{background:var(--acbg);color:var(--ac);border-color:var(--ac)}

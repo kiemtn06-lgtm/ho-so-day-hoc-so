@@ -27,15 +27,18 @@
     <span class="sp"></span>
     <select id="llPhut" aria-label="Số phút"><option value="1">1 phút</option><option value="2">2 phút</option><option value="3" selected>3 phút</option><option value="5">5 phút</option><option value="10">10 phút</option></select>
     <button id="llDem">Bấm giờ</button><span id="llGio" class="ll-time">03:00</span>
+    <button id="llQr">Phòng QR</button>
     <button id="llGhi">Ghi chú</button>
     <button id="llFs">Toàn màn hình</button>
     <button id="llThoat">Thoát</button>
   </div>
   <div class="ll-note" id="llNote" hidden><textarea id="llText" rows="2" placeholder="Ghi chú nhanh cho tiết này (lưu kèm lớp và slide đang dạy)"></textarea><button id="llLuu">Lưu ghi chú</button><span id="llMsg" class="muted" role="status"></span></div>
+  <div id="llQrBox" hidden></div>
   <iframe id="llFrame" title="Trình chiếu bài giảng" allow="fullscreen"></iframe>
 </div>
 
 <script src="lib/katex.js"></script>
+<script src="lib/qrcode.js"></script>
 <script src="data/k12-2.js"></script>
 <script src="data/k10-3.js"></script>
 <script src="config.js"></script>

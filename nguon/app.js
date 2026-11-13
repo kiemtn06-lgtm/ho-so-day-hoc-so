@@ -1,6 +1,6 @@
 (function () {
   var CFG = window.HO_SO, DATA = window.HSDH_DATA || {}, KEY = "hsdh_v2";
-  var S = { st: {}, notes: {}, links: {}, lop: {}, pos: {}, lastLop: "", prog: {}, gc: {}, khbd: {}, pv: [] };
+  var S = { st: {}, notes: {}, links: {}, lop: {}, pos: {}, lastLop: "", prog: {}, gc: {}, khbd: {}, pv: [], cm: [], srv: { url: "", pass: "" } };
   var HOAT = [["ga", "Giáo án"], ["sl", "Slide"], ["bt", "Bài tập"], ["on", "Ôn tập"], ["de", "Đề"]];
   var V = { khoi: CFG.khoiMacDinh, page: "tq", ch: 0, bai: 0, tab: 0, fd: "", fm: "", ans: false, quiz: null, qkey: false, edit: "" };
   var TABS = ["Trình chiếu", "SGK", "KHBD", "Bài tập", "Ôn tập", "Kiểm tra", "Ghi chú sau tiết"];
@@ -203,16 +203,24 @@
     h += "<h3>" + (V.edit ? "Sửa lớp " + esc(V.edit) : "Thêm lớp") + '</h3><div class="card"><div class="row"><input id="lTen" placeholder="Tên lớp (ví dụ 12A6)" value="' + esc(V.edit) + '"></div><textarea id="lDs" rows="8" placeholder="Mỗi dòng một học sinh">' + esc(V.edit ? S.lop[V.edit].join("\n") : "") + '</textarea><div class="row" style="margin:8px 0 0"><button data-a="saveLop">Lưu lớp</button><span id="lMsg" class="muted" role="status"></span></div></div>';
     return h;
   }
+  function pvTongKet(l) {
+    var m = {};
+    function g(n) { return m[n] = m[n] || { cm: 0, tl: 0, qn: 0, n: 0, d: 0 }; }
+    (S.lop[l] || []).forEach(g);
+    S.cm.forEach(function (r) { if (r.lop !== l) return; var o = g(r.hs); o.cm++; o.tl += r.tl || 0; o.qn += r.qn || 0; });
+    S.pv.forEach(function (r) { if (r.lop !== l) return; var o = g(r.hs); o.n++; o.d += r.diem; });
+    return m;
+  }
   function pvTongHop() {
-    if (!S.pv.length) return '<h3>Phát biểu trên lớp</h3><p class="muted">Chưa có ghi nhận. Vào chế độ lên lớp, bấm "Gọi tên" rồi chấm điểm cho em được gọi.</p>';
-    var h = '<h3>Phát biểu trên lớp</h3>';
+    if (!S.pv.length && !S.cm.length) return '<h3>Phát biểu và có mặt trên lớp</h3><p class="muted">Chưa có ghi nhận. Vào chế độ lên lớp: "Gọi tên" rồi chấm điểm, hoặc mở "Phòng QR" cho học sinh vào.</p>';
+    var h = '<h3>Phát biểu và có mặt trên lớp</h3>', co = false;
     lopNames().forEach(function (l) {
-      var m = {}; S.pv.forEach(function (r) { if (r.lop !== l) return; var o = m[r.hs] = m[r.hs] || { n: 0, d: 0 }; o.n++; o.d += r.diem; });
-      var ks = Object.keys(m).sort(function (a, b) { return m[b].d - m[a].d; });
-      if (!ks.length) return;
-      h += '<div class="card"><b>' + esc(l) + '</b><table class="tbl" style="width:100%;margin-top:6px"><tr><th align="left">Học sinh</th><th>Lần được gọi</th><th>Tổng điểm</th></tr>' + ks.map(function (k) { return "<tr><td>" + esc(k) + '</td><td align="center">' + m[k].n + '</td><td align="center">' + String(m[k].d).replace(".", ",") + "</td></tr>"; }).join("") + "</table></div>";
+      var m = pvTongKet(l), ks = Object.keys(m).filter(function (k) { return m[k].cm || m[k].n; }).sort(function (a, b) { return m[b].d - m[a].d; });
+      if (!ks.length) return; co = true;
+      h += '<div class="card"><b>' + esc(l) + '</b><table class="tbl" style="width:100%;margin-top:6px"><tr><th align="left">Học sinh</th><th>Buổi có mặt</th><th>Câu trả lời</th><th>Lần được gọi</th><th>Tổng điểm</th></tr>' + ks.map(function (k) { var o = m[k]; return "<tr><td>" + esc(k) + '</td><td align="center">' + o.cm + '</td><td align="center">' + o.tl + (o.qn ? "/" + o.qn : "") + '</td><td align="center">' + o.n + '</td><td align="center">' + String(o.d).replace(".", ",") + "</td></tr>"; }).join("") + "</table></div>";
     });
-    return h + '<div class="row"><button data-a="pvCsv">Xuất CSV</button><button class="link" data-a="pvUndo">Xóa lần ghi gần nhất</button><button class="link" data-a="pvDel">Xóa toàn bộ ghi nhận</button></div>';
+    if (!co) h += '<p class="muted">Chưa có ghi nhận.</p>';
+    return h + '<div class="row"><button data-a="pvCsv">Xuất chi tiết (CSV)</button><button data-a="pvCsv2">Xuất tổng hợp (CSV)</button><button class="link" data-a="pvUndo">Xóa lần chấm gần nhất</button><button class="link" data-a="pvDel">Xóa toàn bộ ghi nhận</button></div>';
   }
   function progOf() {
     var done = 0, total = chs().length * HOAT.length;
@@ -429,6 +437,7 @@
   function llStop() { if (LL.tm) { clearInterval(LL.tm); LL.tm = null; } $("llDem").textContent = "Bấm giờ"; }
   function beep() { try { var a = new (window.AudioContext || window.webkitAudioContext)(), o = a.createOscillator(), g = a.createGain(); o.connect(g); g.connect(a.destination); o.frequency.value = 880; g.gain.value = 0.2; o.start(); setTimeout(function () { o.stop(); a.close(); }, 700); } catch (e) {} }
   function llClose() {
+    if (QR && confirm("Đang có phòng QR. Kết thúc phòng và lưu danh sách có mặt?")) qrEnd(); else if (QR) { clearInterval(QR.tm); QR = null; $("llQrBox").hidden = true; }
     llStop(); if (document.fullscreenElement) document.exitFullscreen();
     $("llFrame").src = "about:blank"; $("lenLop").hidden = true; LL.b = null; render();
   }
@@ -438,8 +447,80 @@
     LL.i = d.i; LL.n = d.n; S.pos[LL.b.ma + "|" + $("llLop").value] = { i: d.i, n: d.n }; save();
   });
 
+  /* ---------- phòng QR: học sinh quét mã, giơ tay, trả lời nhanh ---------- */
+  var QR = null; /* { code, lop, bai, tm, st, svg, big } khi đang có phòng */
+  function srvCall(method, path, body) {
+    var u = S.srv.url.replace(/\/+$/, "") + path;
+    return fetch(u, { method: method, headers: { "Content-Type": "application/json", "x-teacher-pass": S.srv.pass }, body: body ? JSON.stringify(body) : undefined })
+      .then(function (r) { return r.json().then(function (j) { if (!r.ok) throw new Error(j.error || "Lỗi máy chủ"); return j; }); });
+  }
+  function qrCtl(o) { return srvCall("POST", "/api/t/ctl?code=" + QR.code, o).then(function (j) { QR.st = j; qrDraw(); }, function (e) { msg("llMsg", e.message); }); }
+  function qrJoinUrl() { return S.srv.url.replace(/\/+$/, "") + "/?c=" + QR.code; }
+  function qrSvg(text) { try { var q = qrcode(0, "M"); q.addData(text); q.make(); return q.createSvgTag({ cellSize: 6, margin: 1, scalable: true }); } catch (e) { return ""; } }
+  function qrDraw() {
+    var box = $("llQrBox"); if (!QR) { box.hidden = true; return; }
+    var j = QR.st, h = '<div class="qh"><b>Phòng tương tác</b><span style="flex:1"></span><button data-qa="hide">Ẩn</button></div>';
+    h += '<div class="qcode">' + QR.code + '</div><div class="qsvg' + (QR.big ? " big" : "") + '" data-qa="zoom" title="Bấm để phóng to / thu nhỏ">' + QR.svg + '</div><div class="qurl">' + esc(qrJoinUrl()) + "</div>";
+    if (!j) { box.innerHTML = h + '<p>Đang kết nối...</p>'; box.className = QR.big ? "wide" : ""; box.hidden = false; return; }
+    var pc = j.total ? Math.round(100 * j.joined.length / j.total) : 0;
+    h += '<p style="margin:8px 0 2px">Có mặt: <b>' + j.joined.length + "/" + j.total + '</b></p><div class="qbar"><i style="width:' + pc + '%"></i></div>';
+    h += '<p style="margin:8px 0 2px">Giơ tay: <b>' + j.hands.length + "</b></p>";
+    j.hands.forEach(function (x) { h += '<div class="qh"><span style="flex:1">' + esc(x.name) + '</span><button data-qa="call" data-n="' + esc(x.name) + '">Gọi</button><button data-qa="drop" data-n="' + esc(x.name) + '">Hạ</button></div>'; });
+    h += '<p style="margin:10px 0 2px">Câu hỏi nhanh</p><div class="qh"><button data-qa="qmc">Trắc nghiệm A-D</button><button data-qa="qshort">Trả lời ngắn</button><button data-qa="qclose">Đóng câu</button></div>';
+    if (j.q) {
+      h += '<div>' + (j.q.open ? "Đang mở" : "Đã đóng") + ": " + j.q.count + "/" + j.total + " em đã trả lời</div>";
+      if (j.q.type === "mc") h += "<div>" + ["A", "B", "C", "D"].map(function (x) { return "<b>" + x + "</b>: " + ((j.q.tally || {})[x] || 0); }).join(" &nbsp; ") + "</div>";
+      else if (j.q.answers) h += "<div>" + Object.keys(j.q.answers).map(function (n) { return esc(n) + ": " + esc(j.q.answers[n]); }).join("<br>") + "</div>";
+    }
+    h += '<div class="qh" style="margin-top:10px"><button data-qa="end">Kết thúc phòng và lưu có mặt</button></div>';
+    box.innerHTML = h; box.className = QR.big ? "wide" : ""; box.hidden = false;
+  }
+  function qrPoll() {
+    if (!QR) return;
+    srvCall("GET", "/api/t/state?code=" + QR.code).then(function (j) { if (!QR) return; QR.st = j; qrDraw(); }, function (e) { msg("llMsg", e.message); });
+  }
+  function qrOpen() {
+    if (QR) { var b = $("llQrBox"); b.hidden = !b.hidden; return; }
+    var lp = $("llLop").value, ds = S.lop[lp] || [];
+    if (!lp || !ds.length) { msg("llMsg", "Chọn lớp có danh sách học sinh trước."); return; }
+    if (!S.srv.url) S.srv.url = (window.HO_SO && window.HO_SO.tuongTac) || "";
+    if (!S.srv.url) { var u = prompt("Địa chỉ máy chủ phòng tương tác (ví dụ https://phong-tuong-tac.onrender.com hoặc http://192.168.1.5:3000):", ""); if (!u) return; S.srv.url = u.trim(); }
+    if (!S.srv.pass) { var pw = prompt("Mật khẩu giáo viên của máy chủ:", ""); if (!pw) return; S.srv.pass = pw; }
+    save(); msg("llMsg", "Đang mở phòng... (máy chủ miễn phí có thể mất khoảng 1 phút để thức dậy)");
+    srvCall("POST", "/api/t/open", { lop: lp, bai: LL.b ? LL.b.ten : "", roster: ds }).then(function (j) {
+      QR = { code: j.code, lop: lp, bai: LL.b ? LL.b.ma : "", st: null, big: false, svg: "", tm: null };
+      QR.svg = qrSvg(qrJoinUrl()); qrDraw(); qrPoll(); QR.tm = setInterval(qrPoll, 2000);
+    }, function (e) { if (/mật khẩu/i.test(e.message)) { S.srv.pass = ""; save(); } msg("llMsg", e.message + " Kiểm tra địa chỉ máy chủ và mật khẩu rồi bấm lại."); });
+  }
+  function qrEnd() {
+    if (!QR) return Promise.resolve();
+    var q = QR; QR = null; clearInterval(q.tm); $("llQrBox").hidden = true;
+    return srvCall("GET", "/api/t/export?code=" + q.code).then(function (x) {
+      var tl = {}, qn = (x.qlog || []).length;
+      (x.qlog || []).forEach(function (r) { Object.keys(r.answers || {}).forEach(function (n) { tl[n] = (tl[n] || 0) + 1; }); });
+      Object.keys(x.joined || {}).forEach(function (n) { S.cm.push({ lop: q.lop, hs: n, ngay: today(), bai: q.bai, tl: tl[n] || 0, qn: qn }); });
+      save(); srvCall("POST", "/api/t/ctl?code=" + q.code, { action: "end" }).catch(function () {});
+      msg("llMsg", "Đã lưu có mặt của " + Object.keys(x.joined || {}).length + " em.");
+    }, function (e) { msg("llMsg", "Không lưu được có mặt: " + e.message); });
+  }
+  function qrNote(name) { LL.cur = name; $("llNguoi").textContent = name; $("llCham").hidden = false; }
+
   /* ---------- sự kiện ---------- */
   document.addEventListener("click", function (e) {
+    var qa = e.target.getAttribute && e.target.getAttribute("data-qa"), qd = e.target.closest && e.target.closest("[data-qa]");
+    if (!qa && qd) qa = qd.getAttribute("data-qa");
+    if (qa && QR) {
+      var nm = e.target.getAttribute("data-n");
+      if (qa === "hide") $("llQrBox").hidden = true;
+      else if (qa === "zoom") { QR.big = !QR.big; qrDraw(); }
+      else if (qa === "call") { qrNote(nm); qrCtl({ action: "call", name: nm }); }
+      else if (qa === "drop") qrCtl({ action: "dropHand", name: nm });
+      else if (qa === "qmc" || qa === "qshort") qrCtl({ action: "question", type: qa === "qmc" ? "mc" : "short", label: "Slide " + (LL.n ? LL.i + 1 : "") });
+      else if (qa === "qclose") qrCtl({ action: "closeQ" });
+      else if (qa === "end") { if (confirm("Kết thúc phòng và lưu danh sách có mặt?")) qrEnd(); }
+      return;
+    }
+    if (e.target.id === "llQr") return qrOpen();
     var id = e.target.id;
     if (id === "llThoat") return llClose();
     if (id === "llFs") { var el = $("lenLop"); if (document.fullscreenElement) document.exitFullscreen(); else if (el.requestFullscreen) el.requestFullscreen(); return; }
@@ -454,15 +535,15 @@
       if (!ds.length) { $("llNguoi").textContent = "Chưa có danh sách lớp"; return; }
       if (LL.called.length >= ds.length) LL.called = [];
       var rest = ds.filter(function (n) { return LL.called.indexOf(n) < 0; }), pick = rest[Math.floor(Math.random() * rest.length)];
-      LL.called.push(pick); LL.cur = pick; $("llNguoi").textContent = pick; $("llCham").hidden = false; return;
+      LL.called.push(pick); LL.cur = pick; $("llNguoi").textContent = pick; $("llCham").hidden = false; if (QR) qrCtl({ action: "call", name: pick }); return;
     }
     if (id === "llD1" || id === "llD2" || id === "llD0") {
       if (!LL.cur) return;
       var dv = { llD1: 1, llD2: 0.5, llD0: 0 }[id], lp = $("llLop").value;
       S.pv.push({ lop: lp, hs: LL.cur, ngay: today(), bai: LL.b ? LL.b.ma : "", slide: LL.n ? LL.i + 1 : "", diem: dv });
-      save(); $("llNguoi").textContent = LL.cur + " (" + (dv === 1 ? "+1" : dv === 0.5 ? "+0,5" : "ghi nhận 0") + ")"; $("llCham").hidden = true; LL.cur = ""; return;
+      save(); $("llNguoi").textContent = LL.cur + " (" + (dv === 1 ? "+1" : dv === 0.5 ? "+0,5" : "ghi nhận 0") + ")"; $("llCham").hidden = true; LL.cur = ""; if (QR) qrCtl({ action: "uncall" }); return;
     }
-    if (id === "llD") { $("llCham").hidden = true; LL.cur = ""; $("llNguoi").textContent = ""; return; }
+    if (id === "llD") { $("llCham").hidden = true; LL.cur = ""; $("llNguoi").textContent = ""; if (QR) qrCtl({ action: "uncall" }); return; }
     if (id === "llDem") {
       if (LL.tm) { llStop(); return; }
       if (LL.left <= 0) LL.left = +$("llPhut").value * 60;
@@ -529,8 +610,14 @@
       var bl = new Blob(["﻿" + rows.join("\r\n")], { type: "text/csv;charset=utf-8" }), an2 = document.createElement("a");
       an2.href = URL.createObjectURL(bl); an2.download = "phat-bieu-tren-lop.csv"; an2.click(); setTimeout(function () { URL.revokeObjectURL(an2.href); }, 1000);
     }
+    else if (a === "pvCsv2") {
+      var r2 = ["Lớp,Học sinh,Buổi có mặt,Câu trả lời,Số câu hỏi,Lần được gọi,Tổng điểm"];
+      lopNames().forEach(function (l) { var m = pvTongKet(l); Object.keys(m).forEach(function (k) { var o = m[k]; r2.push([l, k, o.cm, o.tl, o.qn, o.n, o.d].map(function (x) { return '"' + String(x).replace(/"/g, '""') + '"'; }).join(",")); }); });
+      var b2 = new Blob(["\uFEFF" + r2.join("\r\n")], { type: "text/csv;charset=utf-8" }), a3 = document.createElement("a");
+      a3.href = URL.createObjectURL(b2); a3.download = "chuyen-can-tong-hop.csv"; a3.click(); setTimeout(function () { URL.revokeObjectURL(a3.href); }, 1000);
+    }
     else if (a === "pvUndo") { S.pv.pop(); save(); renderWork(); }
-    else if (a === "pvDel") { if (!confirm("Xóa toàn bộ ghi nhận phát biểu?")) return; S.pv = []; save(); renderWork(); }
+    else if (a === "pvDel") { if (!confirm("Xóa toàn bộ ghi nhận phát biểu?")) return; S.pv = []; S.cm = []; save(); renderWork(); }
     else if (a === "editLop") { V.edit = t.getAttribute("data-l"); renderWork(); }
     else if (a === "delLop") { var l = t.getAttribute("data-l"); if (!confirm("Xóa danh sách lớp " + l + "?")) return; delete S.lop[l]; if (V.edit === l) V.edit = ""; save(); renderWork(); }
     else if (a === "link") {
