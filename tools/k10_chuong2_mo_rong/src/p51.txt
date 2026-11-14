@@ -1,0 +1,32 @@
+#q B12 II 51
+Quả bóng A được thả rơi tự do, cùng lúc ném quả bóng B với tốc độ 15 m/s theo phương ngang cùng độ cao h = 10 m. Cho $g=10\ \text{m/s}^2$ thì:
+a) Thời gian rơi theo phương thẳng đứng của quả bóng A nhỏ hơn thời gian của quả bóng B.
+b) Tốc độ chạm đất của hai quả bóng là như nhau.
+c) Thời gian rơi của quả bóng B là 1 s.
+d) Tầm ném xa của quả bóng B là $L=15\sqrt{2}$ m.
+
+#q B12 II 51
+Một chiếc máy bay muốn thả hàng tiếp tế cho những người leo núi đang bị cô lập. Máy bay đang bay ở độ cao 235 m so với vị trí đứng của những người leo núi với tốc độ 250 km/h theo phương ngang. Lấy g = 9,8 m/s² và bỏ qua lực cản của không khí.
+[[IMG 51 1240 640 2010 1150]]
+a) Người quan sát đứng trên núi nhìn thấy quỹ đạo của gói hàng là một phần của Parabol.
+b) Người quan sát đứng trên máy bay nhìn thấy quỹ đạo của vật là một đường thẳng đứng.
+c) Thời gian rơi của gói hàng là 4,9 s.
+d) Để người nhận được hàng tiếp tế, máy bay phải thả hàng cách người một khoảng 480,9 m.
+
+#q B12 II 51
+Một viên đạn được bắn theo phương nằm ngang từ một khẩu súng đặt ở độ cao 45,0 m so với mặt đất. Vận tốc của viên đạn khi vừa ra khỏi nòng súng có độ lớn là 250 m/s. Lấy g = 9,8 m/s².
+[[IMG 51 1360 1630 2010 1800]]
+a) Viên đạn sau khi bay khỏi nòng súng chuyển động thẳng chậm dần đều.
+b) Thời gian từ lúc bắt đầu chuyển động đến khi chạm đất của viên đạn 3,03 s.
+c) Viên đạn rơi xuống đất cách điểm bắn theo phương nằm ngang 3125 m.
+d) Ngay trước khi chạm đất, vận tốc của viên đạn có độ lớn bằng 252 m/s.
+
+#q B12 III 51
+Một hòn bi lăn dọc theo một cạnh của một mặt bàn hình chữ nhật nằm ngang cao h = 1,25 m. Lấy g = 10 m/s². Thời gian rơi của viên bi là bao nhiêu giây?
+[[IMG 51 1630 2300 1960 2705]]
+
+#q B12 III 51
+Một vật được ném ngang từ độ cao h = 9 m, vận tốc ban đầu $v_0$. Vật bay xa 18 m, lấy g = 10 m/s². Tính $v_0$ theo đơn vị m/s? (Kết quả lấy đến 1 chữ số có nghĩa).
+
+#q B12 III 51
+Một quả cầu được ném theo phương ngang từ độ cao 80 m so với mặt đất với $v_0=30\ \text{m/s}$. Bỏ qua sức cản của không khí. Lấy $g=10\ \text{m/s}^2$. Xác định góc (tính theo đơn vị độ) giữa vận tốc chạm đất của vật hợp với phương ngang? (Kết quả lấy đến 1 chữ số có nghĩa).

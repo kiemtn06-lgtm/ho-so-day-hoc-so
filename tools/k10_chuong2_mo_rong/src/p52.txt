@@ -1,0 +1,25 @@
+#q B12 III 52
+Một máy bay ném bom đang bay theo phương ngang ở độ cao 2 km với $v_0=504\ \text{km/h}$. Bỏ qua sức cản của không khí. Hỏi viên phi công phải thả bom từ xa cách mục tiêu bao nhiêu km để bom rơi trúng mục tiêu? Biết bom được thả theo phương ngang, lấy g = 10 m/s².
+
+#q B12 III 52
+Một vật được ném theo phương ngang từ độ cao h so với mặt đất với vận tốc đầu 20 m/s, có tầm ném xa là 120 m. Bỏ qua sức cản của không khí. Lấy g = 10 m/s². Tính h theo đơn vị m.
+
+#q B12 III 52
+Một diễn viên đóng thế phải thực hiện một pha hành động khi điều khiển chiếc mô tô nhảy khỏi vách đá cao 50 m. Xe máy phải rời khỏi vách đá với tốc độ bao nhiêu m/s để tiếp đất tại vị trí cách chân vách đá 90 m. Lấy g = 9,8 m/s², bỏ qua lực cản của không khí và xem chuyển động của mô tô khi rời vách đá là chuyển động ném ngang? (Kết quả lấy đến 1 chữ số có nghĩa).
+
+#nhom B12 Chuyển động ném xiên
+#t B12 52
+## CHUYỂN ĐỘNG NÉM XIÊN
+### 1. Chuyển động ném
+**Bài toán: Khảo sát chuyển động của vật bị ném xiên từ độ cao h với vận tốc $\vec{v_0}$ xiên một góc α so với phương ngang.**
+- ***Chọn hệ trục tọa độ Oxy:***
++ *Gốc O là vị trí ném vật;*
++ *Trục Ox theo hướng vận tốc đầu;*
++ *Trục Oy thẳng đứng hướng xuống.*
++ *Gốc thời gian lúc ném.*
+[[IMG 52 505 1600 1680 2100]]
+Để khảo sát, ta phân tích chuyển động ném xiên thành hai chuyển động thành phần: chuyển động thành phần theo phương thẳng đứng Oy và chuyển động thành phần theo phương nằm ngang Ox:
+- ***Theo phương Ox:*** *$M_x$ chuyển động thẳng đều với vận tốc $v_x$:* $a_x=0;\ v_x=v_0\cos\alpha;\ d_x=(v_0\cos\alpha)t$ (1)
+- ***Theo phương Oy:*** *$M_y$ chuyển động thẳng biến đổi đều:* $a_y=-g;\ v_y=v_0\sin\alpha-gt;\ d_y=(v_0\sin\alpha)t-\dfrac{1}{2}gt^2$ (2)
+- *Phương trình quỹ đạo của vật:*
+$$d_y=-\dfrac{g}{2v_0^2\cos^2\alpha}x^2+\tan\alpha.x\quad(3)$$

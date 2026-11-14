@@ -1,0 +1,21 @@
+#t B10 38
+- Sự rơi của các vật khác nhau thì chuyển động khác nhau trong không khí.
+- *Nguyên nhân:* do lực cản của không khí. Lực cản càng nhỏ so với trọng lực tác dụng lên vật thì vật sẽ rơi càng nhanh và ngược lại.
+### 2. Sự rơi tự do
+- Sự rơi tự do là sự rơi **chỉ** dưới tác dụng của trọng lực.
+- Nếu vật rơi trong không khí mà độ lớn của lực cản không khí không đáng kể so với trọng lượng của vật thì cũng coi là rơi tự do.
+[[IMG 38 1630 840 1975 1450]]
+**• Đặc điểm của chuyển động rơi tự do**
++ *Phương và chiều của chuyển động rơi tự do:* Phương thẳng đứng, chiều từ trên xuống dưới.
++ *Tính chất của chuyển động rơi tự do:* là chuyển động thẳng nhanh dần đều.
++ *Gia tốc rơi tự do*
+✓ Ở cùng một nơi trên Trái Đất, mọi vật rơi tự do với cùng một gia tốc.
+✓ Kí hiệu: g
+✓ g phụ thuộc vào vĩ độ địa lí và độ cao.
+✓ Ở gần bề mặt Trái Đất, g = 9,8 m/s².
+**• Công thức rơi tự do**
+- Rơi tự do có các công thức của chuyển động nhanh dần đều không vận tốc ban đầu: $v_0=0$.
+Chọn thời điểm ban đầu $t_0=0$.
+⇒ Độ dịch chuyển, quãng đường đi được tại thời điểm t: $d=s=\dfrac{1}{2}gt^2$
+- Vận tốc tức thời tại thời điểm t: $v_t=g.t$
+- Mối liên hệ giữa vận tốc, gia tốc và quãng đường đi được: $v^2=2.g.s$

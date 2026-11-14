@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mở rộng cuối bài · Vật lí 10 Chương II</title>
+<link rel="stylesheet" href="../nguon/lib/katex.css">
+<script src="../nguon/lib/katex.js"></script>
+<script src="k10-c2-mr/du-lieu.js"></script>
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--ink:#14213d;--mut:#5b6474;--line:#dde2ea;--acc:#1d4ed8;--acc2:#b91c1c;--soft:#eef3ff;--ok:#15803d;--no:#b91c1c;--fs:18px}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:var(--fs)/1.55 "Segoe UI",Roboto,Arial,sans-serif}
+header{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid var(--line);padding:10px 16px}
+header h1{margin:0 0 6px;font-size:20px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.sp{flex:1}
+button,.btn{font:inherit;font-size:15px;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:999px;padding:6px 14px;cursor:pointer;text-decoration:none;display:inline-block}
+button:hover,.btn:hover{border-color:var(--acc)}
+.tab.on{background:var(--acc);border-color:var(--acc);color:#fff}
+main{max-width:1000px;margin:0 auto;padding:14px 16px 60px}
+.muted{color:var(--mut);font-size:15px}
+h2{color:var(--acc2);font-size:1.3em;margin:10px 0 4px}
+h3.dang{color:var(--acc2);font-size:1.1em;margin:22px 0 6px;border-left:5px solid var(--acc2);padding-left:10px}
+h3.lt-h{text-align:center;color:var(--acc2);font-size:1.05em;margin:10px 0}
+h4{color:var(--acc);margin:10px 0 4px;font-size:1em}
+.phan{font-weight:700;margin:18px 0 8px;padding:6px 12px;background:var(--soft);border-radius:8px}
+details.lt{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:6px 16px;margin:8px 0}
+details.lt>summary{cursor:pointer;font-weight:700;color:var(--acc);padding:4px 0}
+.q{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0;break-inside:avoid}
+.q p{margin:4px 0}.q .sub,.lt .sub{margin:2px 0 2px 1.2em}
+.qn{font-weight:700;color:var(--acc)}
+.tr{float:right;font-size:13px;color:var(--mut)}
+figure{margin:8px 0;text-align:center;display:flex;flex-wrap:wrap;gap:18px;justify-content:center;align-items:flex-end}
+figure img{max-width:100%;height:auto}
+.opts{display:grid;gap:4px 16px;margin-top:6px}
+.c4{grid-template-columns:repeat(4,minmax(0,1fr))}.c2{grid-template-columns:repeat(2,minmax(0,1fr))}.c1{grid-template-columns:1fr}
+.opt{display:flex;gap:6px;padding:3px 8px;border-radius:8px;cursor:pointer;border:1px solid transparent}
+.opt b{color:var(--acc)}.opt:hover{background:var(--soft)}
+.opt.chon{background:#fff7d6;border-color:#eab308}
+.ds{width:100%;border-collapse:collapse;margin-top:6px}
+.ds td{border:1px solid var(--line);padding:5px 8px;vertical-align:top}
+.ds td:first-child{width:2.2em;text-align:center;font-weight:700;color:var(--acc)}
+.ds td:last-child{width:6.5em;text-align:center;white-space:nowrap}
+.ds button{padding:2px 9px;font-size:14px}
+.ds button.on-d{background:var(--ok);color:#fff;border-color:var(--ok)}.ds button.on-s{background:var(--no);color:#fff;border-color:var(--no)}
+.ans{margin-top:6px;color:var(--mut);font-style:italic}
+.tw{overflow-x:auto}.tw table{border-collapse:collapse;margin:8px auto}.tw td{border:1px solid #b9c2d0;padding:5px 8px;vertical-align:top}
+.mb{text-align:center;margin:6px 0;overflow-x:auto}
+.note{background:#fff8e6;border:1px solid #f3d38a;border-radius:10px;padding:8px 12px;font-size:15px;margin:8px 0}
+@media (max-width:640px){.c4{grid-template-columns:repeat(2,minmax(0,1fr))}.c2{grid-template-columns:1fr}:root{--fs:16px}}
+@media print{header,.noprint{display:none!important}body{background:#fff}.q{border:none;padding:4px 0}details.lt{border:none}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Vật lí 10 · Chương II · Phần mở rộng cuối bài</h1>
+  <div class="row" id="tabs" role="tablist"></div>
+</header>
+<main id="main"></main>
+<script>
+(function(){
+  var MR=window.MR||{},ma=Object.keys(MR),$=function(i){return document.getElementById(i)};
+  var cur=(location.hash||'').replace('#','').toUpperCase();if(!MR[cur])cur=ma[0];
+  var fs=18;try{fs=+localStorage.getItem('mr-fs')||18}catch(e){}
+  function setFs(v){fs=Math.max(14,Math.min(30,v));document.documentElement.style.setProperty('--fs',fs+'px');try{localStorage.setItem('mr-fs',fs)}catch(e){}}
+  setFs(fs);
+  function tabs(){$('tabs').innerHTML=ma.map(function(m){return '<button class="tab'+(m===cur?' on':'')+'" role="tab" aria-selected="'+(m===cur)+'" data-m="'+m+'">Bài '+m.slice(1)+'</button>'}).join('')+
+    '<span class="sp"></span><button data-f="-2" title="Chữ nhỏ hơn">A−</button><button data-f="2" title="Chữ to hơn">A+</button><button data-p="1">In</button>'}
+  function cauHTML(c,n){
+    var h='<div class="q"><span class="tr">tr. '+c.tr+'</span><span class="qn">Câu '+n+'.</span> '+c.than.replace(/^<p>/,'');
+    if(c.lc.length)h+='<div class="opts c'+c.col+'">'+c.lc.map(function(o){return '<div class="opt"><b>'+o[0]+'.</b><span>'+o[1]+'</span></div>'}).join('')+'</div>';
+    if(c.ds.length)h+='<table class="ds">'+c.ds.map(function(o){return '<tr><td>'+o[0]+')</td><td>'+o[1]+'</td><td class="noprint"><button data-ds="d">Đ</button> <button data-ds="s">S</button></td></tr>'}).join('')+'</table>';
+    if(!c.lc.length&&!c.ds.length)h+='<div class="ans">Đáp số: ……………</div>';
+    return h+'</div>';
+  }
+  function ve(){
+    var B=MR[cur];if(!B)return;
+    var d=B.dem,h='<h2>'+B.ten+'</h2><div class="row noprint"><span class="muted">'+d.I+' câu trắc nghiệm · '+d.II+' câu đúng sai · '+d.III+' câu trả lời ngắn</span><span class="sp"></span>'+
+      '<a class="btn" href="'+B.word+'" download>Tải Word bài này</a><a class="btn" href="k10-c2-mr/word/Chuong2_Mo_rong_cuoi_bai_Bai8-12.docx" download>Tải Word cả chương</a></div>'+
+      '<div class="note noprint">Chép từ tài liệu scan (tr. 22–58), xếp theo bài. Bản gốc chưa có đáp án nên ở đây chưa có đáp án. Bấm vào phương án hoặc nút Đ/S để đánh dấu khi chữa bài trên lớp (không lưu lại).</div>';
+    B.nhom.forEach(function(g,gi){
+      if(B.nhom.length>1)h+='<h3 class="dang">Dạng '+(gi+1)+'. '+g.ten+'</h3>';
+      if(g.lt)h+='<details class="lt" open><summary>Tóm tắt lí thuyết</summary>'+g.lt+'</details>';
+      [['I','PHẦN I. Câu trắc nghiệm nhiều phương án lựa chọn'],['II','PHẦN II. Câu trắc nghiệm đúng sai'],['III','PHẦN III. Câu trắc nghiệm trả lời ngắn']].forEach(function(p){
+        if(!g[p[0]].length)return;
+        h+='<div class="phan">'+p[1]+'</div>'+g[p[0]].map(function(c,i){return cauHTML(c,i+1)}).join('');
+      });
+    });
+    $('main').innerHTML=h;
+    if(window.katex){
+      [].forEach.call(document.querySelectorAll('#main .m'),function(e){try{katex.render(e.textContent,e,{throwOnError:false})}catch(x){}});
+      [].forEach.call(document.querySelectorAll('#main .mb'),function(e){try{katex.render(e.textContent,e,{throwOnError:false,displayMode:true})}catch(x){}});
+    }
+    window.scrollTo(0,0);
+  }
+  document.addEventListener('click',function(e){
+    var t=e.target.closest('button,.opt');if(!t)return;
+    if(t.dataset.m){cur=t.dataset.m;history.replaceState(null,'','#'+cur);tabs();ve();return}
+    if(t.dataset.f){setFs(fs+ +t.dataset.f);return}
+    if(t.dataset.p){window.print();return}
+    if(t.dataset.ds){var r=t.parentNode;[].forEach.call(r.querySelectorAll('button'),function(b){if(b!==t)b.className=''});t.className=t.className?'':'on-'+t.dataset.ds;return}
+    if(t.classList.contains('opt')){var on=t.classList.contains('chon');[].forEach.call(t.parentNode.children,function(o){o.classList.remove('chon')});if(!on)t.classList.add('chon')}
+  });
+  window.addEventListener('hashchange',function(){var m=location.hash.replace('#','').toUpperCase();if(MR[m]&&m!==cur){cur=m;tabs();ve()}});
+  tabs();ve();
+})();
+</script>
+</body>
+</html>

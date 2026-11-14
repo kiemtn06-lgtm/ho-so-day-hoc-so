@@ -1,0 +1,32 @@
+#q B9 II 24
+Một quả cầu bắt đầu lăn từ đỉnh một dốc dài 100 m, sau 10 s thì nó đến chân dốc. Sau đó nó tiếp tục chuyển động trên mặt ngang được 50 m thì dừng lại. Chọn chiều dương là chiều chuyển động của quả cầu.
+[[IMG 25 640 165 1700 610]]
+a) Gia tốc của quả cầu khi lăn trên dốc là 2,5 m/s².
+b) Vận tốc của quả cầu tại chân dốc 20 m/s.
+c) Gia tốc của quả cầu khi lăn trên mặt ngang 4 m/s².
+d) Thời gian quả cầu lăn trên mặt ngang 5 s.
+
+#q B9 II 25
+Một ô tô chạy với tốc độ 54 km/h trên đoạn đường thẳng thì người lái xe hãm phanh cho ô tô chạy thẳng chậm dần đều. Sau khi chạy thêm 250 m thì tốc độ của ô tô chỉ còn 5 m/s.
+a) Vận tốc ban đầu của ô tô trước khi hãm phanh là 20 m/s.
+b) Gia tốc của ô tô là 0,4 m/s².
+c) Sau 25 s kể từ khi hãm phanh, xe đi được 250 m.
+d) Sau 37,5 s kể từ lúc hãm phanh, xe dừng hẳn.
+
+#q B8 II 25
+Một ô tô tải đang chạy trên đường thẳng với vận tốc 18 km/h thì tăng dần đều vận tốc. Sau 20 s ô tô đạt được vận tốc 36 km/h.
+a) Gia tốc của ô tô được xác định bằng biểu thức $a=\dfrac{v-v_0}{t}$.
+b) Gia tốc của ô tô là 2,5 m/s².
+c) Vận tốc ô tô đạt được sau 40 s là 20 m/s.
+d) Sau 60 s kể từ khi tăng tốc, ô tô đạt vận tốc 72 km/h.
+
+#q B9 II 25
+Một xe đạp đang đi với vận tốc 2 m/s thì xuống dốc chuyển động nhanh dần đều với gia tốc 0,2 m/s². Cùng lúc đó, một ô tô đang chạy với vận tốc 20 m/s lên dốc, chuyển động chậm dần đều với gia tốc 0,4 m/s². Chọn chiều từ chân dốc lên đỉnh dốc là chiều dương. Xác định vị trí hai xe gặp nhau trên dốc. Biết dốc dài 570 m.
+[[IMG 25 1340 1720 1960 2140]]
+a) Chuyển động của ô tô: $v_{01}=20\ \text{m/s};\ a_1=0{,}4\ \text{m/s}^2$.
+b) Chuyển động của xe đạp: $v_{02}=-2\ \text{m/s};\ a_2=-0{,}2\ \text{m/s}^2$.
+c) Phương trình độ dời của ô tô, xe đạp: $d_1=20t+0{,}2t^2$; $d_2=-2t-0{,}1t^2$.
+d) Vị trí hai xe gặp nhau cách chân dốc 420 m.
+
+#q B8 III 25
+Một người lái xe máy đang chạy xe với vận tốc 36 km/h thì nhìn thấy một cái hố sâu trước mặt. Người ấy kịp thời phanh gấp xe thì xe tiếp tục chạy thêm 3 s nữa mới dừng lại. Tính gia tốc trung bình của xe theo đơn vị m/s²? (kết quả lấy 1 chữ số sau dấu phẩy thập phân)

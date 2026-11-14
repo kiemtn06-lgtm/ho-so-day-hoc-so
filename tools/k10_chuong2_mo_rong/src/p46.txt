@@ -1,0 +1,42 @@
+#q B11 I 46
+Thả rơi tự do một vật từ đỉnh tháp thì thời gian vật chạm đất được xác định bằng $(2{,}0\pm0{,}1)\ \text{s}$. Nếu lấy gia tốc trọng trường tại nơi thả vật chính xác bằng 10 m/s² thì chiều cao của tháp là
+[[IMG 46 1590 310 1890 715]]
+A. $(20\pm0{,}1)\ \text{m}$
+B. $(20\pm0{,}5)\ \text{m}$
+C. $(20\pm1)\ \text{m}$
+D. $(20\pm2)\ \text{m}$
+
+#q B11 I 46
+Dùng một thước có chia độ đến milimét đo 5 lần khoảng cách d giữa hai điểm A và B đều cho cùng một giá trị là 1,345 m. Lấy sai số dụng cụ là một độ chia nhỏ nhất. Kết quả đo được viết là
+[[IMG 46 1420 800 1895 1205]]
+A. $d=(1345\pm2)$ (mm).
+B. $d=(1{,}345\pm0{,}001)$ (m).
+C. $d=(1345\pm3)$ (mm).
+D. $d=(1{,}345\pm0{,}0005)$ (m).
+
+#q B11 I 46
+Dùng một thước chia độ đến milimét để đo khoảng cách ℓ giữa hai điểm A, B và có kết quả đo là 600 mm. Lấy sai số dụng cụ là một độ chia nhỏ nhất. Cách ghi nào sau đây **không** đúng với số chữ số có nghĩa của phép đo?
+A. $\ell=(6{,}00\pm0{,}01)$ dm.
+B. $\ell=(0{,}6\pm0{,}001)$ m.
+C. $\ell=(60{,}0\pm0{,}1)$ cm.
+D. $\ell=(600\pm1)$ mm.
+
+#q B11 I 46
+Trong bài thực hành đo gia tốc RTD tại phòng thí nghiệm, một học sinh đo quãng đường vật rơi là $h=798\pm1$ (mm) và thời gian rơi là $t=0{,}404\pm0{,}005$ (s). Gia tốc RTD tại phòng thí nghiệm bằng: (Biết gia tốc RTD được tính theo công thức $g=2h/t^2$)
+A. $g=9{,}78\pm0{,}26\ \text{m/s}^2$.
+B. $g=9{,}87\pm0{,}026\ \text{m/s}^2$.
+C. $g=9{,}78\pm0{,}014\ \text{m/s}^2$.
+D. $g=9{,}87\pm0{,}014\ \text{m/s}^2$.
+
+#q B11 II 46
+Khi tiến hành thí nghiệm đo gia tốc trọng trường, chọn các phát biểu đúng hoặc sai:
+a) Để đo gia tốc rơi tự do trong phòng thí nghiệm, ta cần đo thể tích và quãng đường chuyển động của vật đó.
+b) Những dụng cụ chính để đo gia tốc rơi gồm: Đồng hồ đo thời gian hiện số và cổng quang điện, vật bằng thép hình trụ và máng đứng có gắn thước.
+c) Khi cắm cổng quang điện vào ổ cắm A, B cần chú ý xoay đúng khe định vị, cắm thẳng giắc cắm, không rung, lắc chân cắm.
+d) Cổng quang điện E để đo quãng đường rơi của vật.
+
+#q B11 II 46
+Khi tiến hành thí nghiệm đo gia tốc trọng trường **khi đo thời gian ta có bảng số liệu sau**
+|**Quãng đường**|**Lần 1**|**Lần 2**|**Lần 3**|**Lần 4**|**Lần 5**|**Thời gian trung bình** $\bar{t}$|
+|0,400|0,285|0,286|0,284|0,285|0,286| |
+a) Rơi tự do là chuyển động chậm dần đều.

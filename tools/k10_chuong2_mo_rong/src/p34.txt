@@ -1,0 +1,39 @@
+#q B9 I 34
+Hình bên là đồ thị vận tốc – thời gian của hai vật chuyển động thẳng cùng hướng, xuất phát từ cùng một vị trí, gốc thời gian là lúc hai vật bắt đầu chuyển động. Nhận xét **sai** là
+[[IMG 34 1490 440 1885 795]]
+A. Hai vật cùng chuyển động nhanh dần.
+B. Vật 1 bắt đầu chuyển động từ trạng thái nghỉ.
+C. Vật 2 chuyển động với gia tốc lớn hơn vật 1.
+D. Ở thời điểm $t_0$, vật 1 ở phía sau vật 2.
+
+#q B9 I 34
+Đồ thị vận tốc – thời gian của một vật chuyển động được biểu diễn như hình vẽ. Gọi $a_1$, $a_2$, $a_3$ lần lượt là gia tốc của vật trong các giai đoạn tương ứng là từ t = 0 đến $t_1=20\ \text{s}$; từ $t_1=20\ \text{s}$ đến $t_2=60\ \text{s}$; từ $t_2=60\ \text{s}$ đến $t_3=80\ \text{s}$. Giá trị của $a_1$, $a_2$, $a_3$ lần lượt là
+[[IMG 34 1360 760 1945 1208]]
+A. −1 m/s²; 0; 2 m/s².
+B. 1 m/s²; 0; −2 m/s².
+C. −1 m/s²; 2 m/s²; 0.
+D. 1 m/s²; 0; 2 m/s².
+
+#q B9 I 34
+Đồ thị vận tốc – thời gian của một vật chuyển động được biểu diễn như hình vẽ. Quãng đường vật đi được từ thời điểm t = 0 đến thời điểm t = 60 s là
+[[IMG 34 1450 1206 1870 1545]]
+A. 2,2 km.
+B. 1,1 km.
+C. 440 m.
+D. 1,2 km.
+
+#q B9 I 34
+Một vật chuyển động có đồ thị vận tốc – thời gian như hình vẽ. Quãng đường đi được trong giai đoạn chuyển động thẳng chậm dần đều là
+[[IMG 34 1240 1765 1835 2085]]
+A. 62,5 m.
+B. 75 m.
+C. 37,5 m.
+D. 100 m.
+
+#q B9 I 34
+Đồ thị vận tốc – thời gian ở Hình 9.5 mô tả chuyển động của một chú chó con đang chạy trong một ngõ thẳng và hẹp. Tính quãng đường đi được và độ dịch chuyển của chú chó sau 10 s.
+[[IMG 34 1210 2150 1960 2475]]
+A. S = 12 m, d = 9,5 m.
+B. S = 12,5 m, d = 9,5 m.
+C. S = 12 m, d = 9 m.
+D. S = 10 m, d = 9 m.

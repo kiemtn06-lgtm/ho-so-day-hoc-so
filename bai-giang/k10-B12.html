@@ -302,7 +302,7 @@ table.sum th{background:var(--soft)}
 <section class="slide" data-title="Luyện tập">
   <h2><span class="tag">Luyện tập</span> <span id="qn">Câu 1/5</span> <span style="margin-left:auto;font-size:24px">Điểm: <b id="qs">0</b></span></h2>
   <div class="panel" id="qbox" style="flex:1"></div>
-  <div style="margin-top:10px;display:flex;gap:10px"><button class="btn" id="qnext" style="display:none">Câu tiếp →</button><span class="hint" id="qfb" style="align-self:center"></span></div>
+  <div style="margin-top:10px;display:flex;gap:10px"><button class="btn ghost" id="qprev" style="display:none">← Câu trước</button><button class="btn" id="qnext" style="display:none">Câu tiếp →</button><span class="hint" id="qfb" style="align-self:center"></span></div>
 </section>
 
 <!-- 14 vận dụng -->
@@ -356,9 +356,10 @@ function go(i,back){
 function next(){
   const s=slides[cur], hid=[...s.querySelectorAll('.step')].find(e=>!e.classList.contains('show'));
   if(hid){hid.classList.add('show');return}
+  if(s.dataset.title==='Luyện tập'&&typeof qdone!=='undefined'&&!qdone&&picked[mi]!==undefined){$('#qnext').click();return}
   if(cur<slides.length-1)go(cur+1);
 }
-function prev(){ if(cur>0)go(cur-1,true) }
+function prev(){ if(slides[cur].dataset.title==='Luyện tập'&&typeof qback==='function'&&qback())return; if(cur>0)go(cur-1,true) }
 slides.forEach((s,i)=>{const d=document.createElement('div');d.textContent=(i+1)+'. '+s.dataset.title;d.onclick=()=>go(i);$('#toc').appendChild(d)});
 $('#bn').onclick=next;$('#bp').onclick=prev;
 $('#bt').onclick=()=>{const t=$('#toc');t.style.display=t.style.display=='block'?'none':'block'};
@@ -511,14 +512,18 @@ function draw3(){
   const tt=Math.min(t,tL);x3.clearRect(0,0,W,H);ground(x3,W,H,gy);
   x3.setLineDash([6,6]);x3.strokeStyle='#1d4ed8';x3.beginPath();for(let k=0;k<=50;k++){const q=tL*k/50;const a=OX+v0*q*SC,b=top+0.5*G*q*q*SC;k?x3.lineTo(a,b):x3.moveTo(a,b)}x3.stroke();x3.setLineDash([]);
   const px=OX+v0*tt*SC,py=top+0.5*G*tt*tt*SC,vx=v0,vy=G*tt,k=3.0;
-  arrow(x3,px,py,px+vx*k,py,'#16a34a','vx');arrow(x3,px,py,px,py+vy*k,'#dc2626','vy');arrow(x3,px,py,px+vx*k,py+vy*k,'#7c3aed','v');
+  const ex=px+vx*k,ey=py+vy*k;
+  if(vy*k>4){x3.setLineDash([7,6]);x3.lineWidth=2;x3.strokeStyle='#475569';x3.beginPath();x3.moveTo(ex,py);x3.lineTo(ex,ey);x3.moveTo(px,ey);x3.lineTo(ex,ey);x3.stroke();x3.setLineDash([]);x3.lineWidth=1}
+  arrow(x3,px,py,ex,py,'#16a34a','vₓ',(px+ex)/2-10,py-10);
+  arrow(x3,px,py,px,ey,'#dc2626','vᵧ',px-12,ey+28);
+  arrow(x3,px,py,ex,ey,'#7c3aed','v',ex+10,ey+24);
   ball(x3,px,py,10,'#facc15');
   const v=Math.hypot(vx,vy),ang=Math.atan2(vy,vx)*180/Math.PI;
   x3.fillStyle='#14213d';x3.font='bold 23px Segoe UI';x3.fillText(`v = ${v.toFixed(1).replace('.',',')} m/s   α = ${ang.toFixed(0)}°`,W-330,38);
   x3.fillText(`vₓ = ${vx} m/s (không đổi)   vᵧ = ${vy.toFixed(1).replace('.',',')} m/s`,W-520,70);
   $('#c3t').textContent=tt.toFixed(2);
 }
-function arrow(c,x,y,x2,y2,col,lab){c.strokeStyle=col;c.fillStyle=col;c.lineWidth=3;c.beginPath();c.moveTo(x,y);c.lineTo(x2,y2);c.stroke();const a=Math.atan2(y2-y,x2-x);if(Math.hypot(x2-x,y2-y)>2){c.beginPath();c.moveTo(x2,y2);c.lineTo(x2-12*Math.cos(a-.4),y2-12*Math.sin(a-.4));c.lineTo(x2-12*Math.cos(a+.4),y2-12*Math.sin(a+.4));c.fill()}c.font='bold 23px Segoe UI';c.fillText(lab,(x+x2)/2+8,(y+y2)/2-8);c.lineWidth=1}
+function arrow(c,x,y,x2,y2,col,lab,lx,ly){c.strokeStyle=col;c.fillStyle=col;c.lineWidth=3;c.beginPath();c.moveTo(x,y);c.lineTo(x2,y2);c.stroke();const a=Math.atan2(y2-y,x2-x);if(Math.hypot(x2-x,y2-y)>2){c.beginPath();c.moveTo(x2,y2);c.lineTo(x2-12*Math.cos(a-.4),y2-12*Math.sin(a-.4));c.lineTo(x2-12*Math.cos(a+.4),y2-12*Math.sin(a+.4));c.fill()}c.font='bold 23px Segoe UI';c.fillText(lab,lx??(x+x2)/2+8,ly??(y+y2)/2-8);c.lineWidth=1}
 $('#c3s').oninput=draw3;
 
 /* ---------- 13. practice ---------- */
@@ -528,12 +533,18 @@ const MC=[
  {q:"Quỹ đạo của vật ném ngang là",o:["đường thẳng","đường tròn","một nhánh parabol","đường elip"],a:2,e:"y = g x² / (2v₀²) là phương trình parabol."},
  {q:"Hai vật cùng độ cao: vật A thả rơi tự do, vật B ném ngang. Bỏ qua sức cản không khí, hai vật chạm đất",o:["A trước B","B trước A","cùng lúc","phụ thuộc v₀ của B"],a:2,e:"t = √(2h/g) giống nhau, không phụ thuộc v₀."},
  {q:"Với số liệu ở Câu 1, vận tốc khi chạm đất xấp xỉ",o:["20 m/s","30 m/s","36 m/s","50 m/s"],a:2,e:"v_y = gt = 30 m/s; v = √(20² + 30²) = √1300 ≈ 36 m/s"}];
-let mi=0,ms=0,ans=false;
-function showQ(){ans=false;const m=MC[mi];$('#qn').textContent=`Câu ${mi+1}/${MC.length}`;$('#qs').textContent=ms;$('#qfb').textContent='';$('#qnext').style.display='none';
+let mi=0,ms=0,picked=[],qdone=false;
+function qscore(){ms=picked.reduce((s,p,i)=>s+(p===MC[i].a?1:0),0);$('#qs').textContent=ms}
+function markQ(){const m=MC[mi],p=picked[mi];if(p===undefined)return;const os=$$('#qbox .opt');os[m.a].classList.add('good');if(p!==m.a)os[p].classList.add('wrong');
+  $('#qfb').textContent='Giải: '+m.e;$('#qnext').style.display='inline-block';$('#qnext').textContent=mi<MC.length-1?'Câu tiếp →':'Xem kết quả'}
+function showQ(){qdone=false;const m=MC[mi];$('#qn').textContent=`Câu ${mi+1}/${MC.length}`;qscore();$('#qfb').textContent='';$('#qnext').style.display='none';$('#qprev').style.display=mi>0?'inline-block':'none';
   $('#qbox').innerHTML=`<div style="font-size:27px;margin-bottom:10px">${m.q}</div>`+m.o.map((t,i)=>`<button class="opt" data-i="${i}">${'ABCD'[i]}. ${t}</button>`).join('');
-  $$('#qbox .opt').forEach(b=>b.onclick=()=>{if(ans)return;ans=true;const i=+b.dataset.i;sfx(i==m.a);if(i==m.a){ms++;b.classList.add('good')}else{b.classList.add('wrong');$$('#qbox .opt')[m.a].classList.add('good')}
-    $('#qs').textContent=ms;$('#qfb').textContent='Giải: '+m.e;$('#qnext').style.display='block';$('#qnext').textContent=mi<MC.length-1?'Câu tiếp →':'Xem kết quả'})}
-$('#qnext').onclick=()=>{if(mi<MC.length-1){mi++;showQ()}else{$('#qbox').innerHTML=`<div style="text-align:center;font-size:36px;margin-top:70px">Hoàn thành!<br><b style="font-size:70px;color:var(--pri)">${ms} / ${MC.length}</b></div><div style="text-align:center"><button class="btn" onclick="mi=0;ms=0;showQ()">Làm lại</button></div>`;$('#qnext').style.display='none';$('#qfb').textContent=''}};
+  $$('#qbox .opt').forEach(b=>b.onclick=()=>{if(picked[mi]!==undefined)return;const i=+b.dataset.i;picked[mi]=i;sfx(i==m.a);qscore();markQ()});
+  markQ()}
+function qres(){qdone=true;qscore();$('#qbox').innerHTML=`<div style="text-align:center;font-size:36px;margin-top:70px">Hoàn thành!<br><b style="font-size:70px;color:var(--pri)">${ms} / ${MC.length}</b></div><div style="text-align:center"><button class="btn" onclick="mi=0;picked=[];showQ()">Làm lại</button></div>`;$('#qnext').style.display='none';$('#qprev').style.display='inline-block';$('#qfb').textContent=''}
+function qback(){if(qdone){showQ();return true}if(mi>0){mi--;showQ();return true}return false}
+$('#qprev').onclick=qback;
+$('#qnext').onclick=()=>{if(mi<MC.length-1){mi++;showQ()}else qres()};
 showQ();
 
 /* ---------- slide hook ---------- */
@@ -608,5 +619,17 @@ upd();
       function thay(){if(!v.parentNode)return;var d=document.createElement('div');d.className='hsdh-novid';
         d.innerHTML='<b>Video thí nghiệm</b> không kèm theo bản trên mạng vì dung lượng lớn.<br>Trên máy giáo viên: chép thư mục <b>Chuyendongnem-media</b> (có '+v.getAttribute('src').split('/').pop()+') vào cạnh file bài giảng này để xem.';
         v.parentNode.replaceChild(d,v)}
-      v.addEventListener('error',thay);if(v.error)thay()})})();</script></body>
+      v.addEventListener('error',thay);if(v.error)thay()})})();</script><script>(function(){var MA="B12";
+  var st=document.createElement('style');st.textContent='#hsdhMR{position:fixed;right:14px;top:5px;z-index:9998;font:600 16px Segoe UI,sans-serif;background:#b91c1c;color:#fff;border:0;border-radius:999px;padding:6px 16px;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer;display:none}#hsdhMRk{position:fixed;inset:0;z-index:9999;background:rgba(15,23,42,.6);display:none;padding:2vh 2vw}#hsdhMRk iframe{width:100%;height:100%;border:0;border-radius:12px;background:#fff}#hsdhMRk button{position:absolute;bottom:calc(2vh + 12px);right:calc(2vw + 22px);box-shadow:0 2px 10px rgba(0,0,0,.3);font:600 16px Segoe UI,sans-serif;border:0;border-radius:999px;padding:6px 14px;background:#14213d;color:#fff;cursor:pointer}';
+  document.head.appendChild(st);
+  var b=document.createElement('button');b.id='hsdhMR';b.textContent='Mở rộng cuối bài';b.title='Bài tập mở rộng cuối bài (xếp theo bài)';
+  var k=document.createElement('div');k.id='hsdhMRk';k.innerHTML='<button type="button">Đóng ✕</button>';
+  document.body.appendChild(b);document.body.appendChild(k);
+  function dong(){k.style.display='none'}
+  b.onclick=function(e){e.stopPropagation();if(!k.querySelector('iframe')){var f=document.createElement('iframe');f.title='Mở rộng cuối bài';f.src='k10-chuong2-mo-rong.html#'+MA;k.appendChild(f)}k.style.display='block'};
+  k.querySelector('button').onclick=function(e){e.stopPropagation();dong()};
+  k.addEventListener('keydown',function(e){e.stopPropagation()},true);
+  document.addEventListener('keydown',function(e){if(k.style.display==='block'){if(e.key==='Escape')dong();e.stopPropagation()}},true);
+  setInterval(function(){try{b.style.display=(typeof cur!=='undefined'&&slides&&cur>=slides.length-2)?'block':'none'}catch(e){}},400);
+})();</script></body>
 </html>

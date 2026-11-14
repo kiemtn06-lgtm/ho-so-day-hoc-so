@@ -1,0 +1,21 @@
+#q B9 III 37
+Cho đồ thị của chuyển động như hình, tính gia tốc của vật trong 40 s kể từ khi bắt đầu chuyển động, lấy đơn vị m/s²? (kết quả lấy đến 0 chữ số phần thập phân)
+[[IMG 37 1125 265 1815 830]]
+
+#q B9 III 37
+Đồ thị vận tốc – thời gian trong hình bên dưới là của một xe bus và một xe máy đang chạy cùng chiều trên một đường thẳng. Xe bus đang đứng yên, bắt đầu chuyển động thì xe máy đi tới. Sau thời gian bao lâu thì xe bus đuổi kịp xe máy, lấy đơn vị giây? (kết quả lấy đến 0 chữ số phần thập phân)
+[[IMG 37 1095 900 1865 1265]]
+
+#q B9 III 37
+Một quả bóng bàn được bắn ra theo phương ngang với vận tốc đầu bằng không đến va chạm vào tường và bật lại trong khoảng thời gian rất ngắn. Hình bên là đồ thị (v – t) mô tả chuyển động của quả bóng trong 20 s đầu tiên. Tính quãng đường mà bóng bay được sau 20 s kể từ lúc bắt đầu chuyển động theo đơn vị dm? (kết quả lấy đến 0 chữ số phần thập phân)
+[[IMG 37 1090 1320 1850 1840]]
+
+#q B9 III 37
+Hai vật A và B chuyển động cùng chiều trên đường thẳng có đồ thị vận tốc – thời gian như hình vẽ. Biết ban đầu hai vật cách nhau 78 m. Hai vật có cùng vận tốc ở thời điểm nào, lấy đơn vị giây? (kết quả lấy đến 1 chữ số phần thập phân)
+[[IMG 37 1105 1905 1760 2315]]
+
+#t B10 37
+## SỰ RƠI TỰ DO
+### 1. Sự rơi trong không khí
+[[IMG 37 1595 2830 2005 3075]]
+- Sự rơi của các vật trong không khí là chuyển động thường gặp. VD: quả táo rơi từ trên cây xuống; chiếc lá rơi;...

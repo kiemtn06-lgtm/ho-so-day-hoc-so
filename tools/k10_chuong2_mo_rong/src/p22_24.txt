@@ -1,0 +1,131 @@
+#nhom B9 Phương trình và công thức của chuyển động thẳng biến đổi đều
+#q B8 I 22
+Vectơ gia tốc $\vec{a}$ có tính chất nào kể sau?
+A. Đặc trưng cho sự biến thiên của vận tốc.
+B. Cùng chiều với $\vec{v}$ nếu chuyển động nhanh dần.
+C. Ngược chiều với $\vec{v}$ nếu chuyển động chậm dần.
+D. Các tính chất A, B, C.
+
+#q B8 I 22
+Gia tốc là một đại lượng
+A. đại số, đặc trưng cho sự biến đổi nhanh hay chậm của chuyển động.
+B. đại số, đặc trưng cho tính không đổi của vận tốc.
+C. vectơ, đặc trưng cho sự biến đổi nhanh hay chậm của chuyển động.
+D. vectơ, đặc trưng cho sự biến đổi nhanh hay chậm của vận tốc.
+
+#q B9 I 22
+Trong chuyển động thẳng nhanh dần đều:
+A. Vận tốc tăng đến cực đại rồi giảm dần.
+B. Vận tốc của vật tỉ lệ với bình phương thời gian.
+C. Gia tốc tăng đều theo thời gian.
+D. Vận tốc tăng đều theo thời gian.
+
+#q B9 I 22
+Trong chuyển động biến đổi đều thì
+A. gia tốc là một đại lượng không đổi.
+B. gia tốc là đại lượng biến thiên theo thời gian.
+C. vận tốc là đại lượng không đổi.
+D. vận tốc là đại lượng biến thiên theo thời gian theo quy luật hàm bậc hai.
+
+#q B8 I 22
+(SBT-KNTT) Chuyển động nào sau đây là chuyển động biến đổi?
+A. Chuyển động có độ dịch chuyển tăng đều theo thời gian.
+B. Chuyển động có độ dịch chuyển giảm đều theo thời gian.
+C. Chuyển động có độ dịch chuyển không đổi theo thời gian.
+D. Chuyển động tròn đều.
+
+#q B8 I 23
+(SBT-KNTT) Chuyển động nào sau đây không phải là chuyển động biến đổi đều?
+A. Viên bi lăn xuống trên máng nghiêng.
+B. Vật rơi từ trên cao xuống đất.
+C. Hòn đá bị ném theo phương nằm ngang.
+D. Quả bóng được ném lên theo phương thẳng đứng.
+[[IMG 23 190 445 615 695]] [[IMG 23 630 430 815 790]] [[IMG 23 1160 500 1555 850]] [[IMG 23 1570 500 1700 850]]
+
+#q B9 I 23
+(SBT-KNTT) Công thức liên hệ giữa độ dịch chuyển, vận tốc và gia tốc của chuyển động nhanh dần đều là
+A. $v^2-v_0^2=ad$.
+B. $v^2-v_0^2=2ad$.
+C. $v-v_0=2ad$.
+D. $v_0^2-v^2=2ad$.
+
+#q B9 I 23
+(SBT-KNTT) Chuyển động thẳng chậm dần đều có tính chất nào sau đây?
+A. Độ dịch chuyển giảm dần đều theo thời gian.
+B. Vận tốc giảm đều theo thời gian.
+C. Gia tốc giảm đều theo thời gian.
+D. Cả 3 tính chất trên.
+
+#q B9 I 23
+(SBT-KNTT) Trong chuyển động thẳng biến đổi đều, gia tốc
+A. có giá trị bằng 0.
+B. là một hằng số khác 0.
+C. có giá trị biến thiên theo thời gian.
+D. chỉ thay đổi hướng chứ không thay đổi về độ lớn.
+
+#q B8 I 23
+(SBT-CTST) Một xe máy đang đứng yên, sau đó khởi động và bắt đầu tăng tốc. Nếu chọn chiều dương là chiều chuyển động của xe, nhận xét nào sau đây là **đúng**?
+A. $a>0,\ v>0$.
+B. $a<0,\ v<0$.
+C. $a>0,\ v<0$.
+D. $a<0,\ v>0$.
+
+#q B8 I 23
+Chọn câu **sai**. Chất điểm chuyển động theo một chiều với gia tốc $a=4\ \text{m/s}^2$ có nghĩa là
+A. Lúc đầu vận tốc bằng 0 thì sau 1 s vận tốc của nó bằng 4 m/s.
+B. Lúc vận tốc bằng 2 m/s thì sau 1 s vận tốc của nó bằng 6 m/s.
+C. Lúc vận tốc bằng 2 m/s thì sau 2 s vận tốc của nó bằng 8 m/s.
+D. Lúc vận tốc bằng 4 m/s thì sau 2 s vận tốc của nó bằng 12 m/s.
+
+#q B9 I 23
+Phương trình nào sau đây là phương trình độ dịch chuyển của một vật chuyển động thẳng chậm dần đều dọc theo trục Ox?
+A. $s=2t-3t^2$.
+B. $d=5t^2-2t$.
+C. $v=4-t$.
+D. $x=2-5t-t^2$.
+
+#q B9 I 23
+Một người bắt đầu chuyển động thẳng biến đổi đều từ trung tâm Tô Hoàng ra Cầu Giấy. Đến Cầu Giấy học sinh có vận tốc 2 m/s. Hỏi khi về đến nhà học sinh có vận tốc bao nhiêu? Biết rằng Cầu Giấy về đến nhà bằng ba lần từ trung tâm Tô Hoàng ra Cầu Giấy.
+A. 3 m/s
+B. 4 m/s
+C. 1 m/s
+D. 0,5 m/s
+
+#q B9 I 24
+Một máy bay chở khách muốn cất cánh được phải chạy trên đường băng dài 1,8 km để đạt được vận tốc 300 km/h. Máy bay có gia tốc không đổi tối thiểu là
+A. 50000 km/h²
+B. 50000 m/s²
+C. 25000 km/h²
+D. 25000 m/s²
+[[IMG 24 1255 215 1875 580]]
+
+#q B8 I 24
+Một xe lửa bắt đầu rời khỏi ga và chuyển động thẳng nhanh dần đều với gia tốc 0,1 m/s². Khoảng thời gian để xe đạt được vận tốc 36 km/h là:
+A. $t=360\ \text{s}$.
+B. $t=200\ \text{s}$.
+C. $t=300\ \text{s}$.
+D. $t=100\ \text{s}$.
+
+#q B9 I 24
+Một đoàn tàu rời ga chuyển động thẳng nhanh dần đều. Sau 1 phút tàu đạt tốc độ 40 km/h. Tính gia tốc và độ dời mà đoàn tàu đi được trong 1 phút đó.
+A. 0,1 m/s²; 300 m
+B. 0,3 m/s²; 330 m
+C. 0,2 m/s²; 340 m
+D. 0,185 m/s²; 333 m
+[[IMG 24 1295 785 1800 1100]]
+
+#q B9 I 24
+Quả cầu lăn từ đỉnh dốc dài 1 m, sau 10 s đến chân dốc. Sau đó quả cầu lăn trên mặt phẳng nằm ngang được 2 m thì dừng lại. Chiều dương là chiều chuyển động. Gia tốc của quả cầu trên dốc và trên mặt phẳng ngang lần lượt là
+A. −0,02 m/s²; 0,01 m/s².
+B. −0,01 m/s²; 0,02 m/s².
+C. 0,01 m/s²; −0,02 m/s².
+D. 0,02 m/s²; −0,01 m/s².
+[[IMG 24 1205 1105 1850 1450]]
+
+#q B9 I 24
+(SBT-CTST) Xét hai xe A và B chuyển động cùng nhau vào hầm Thủ Thiêm dài 1490 m. Xe A chuyển động với tốc độ ban đầu trước khi vào hầm là 60 km/h và chuyển động chậm dần đều với gia tốc 144 km/h², xe B chuyển động chậm dần đều với gia tốc 120 km/h² từ lúc bắt đầu chạy vào hầm với tốc độ 55 km/h. Nhận định nào sau đây là đúng về thời gian chuyển động của hai xe trong hầm?
+A. Hai xe đi hết hầm Thủ Thiêm cùng một khoảng thời gian.
+B. Xe B ra khỏi hầm trước xe A.
+C. Xe A ra khỏi hầm trước xe B.
+D. Dữ liệu bài toán không đủ kết luận.
+[[IMG 24 1110 1915 1875 2330]]

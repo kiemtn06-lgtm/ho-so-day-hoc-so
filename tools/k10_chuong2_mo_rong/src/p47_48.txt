@@ -1,0 +1,46 @@
+#q+ B11 II 47
+b) Sai số tỉ đối gia tốc rơi tự do được xác định theo biểu thức: $\delta g=\dfrac{\overline{\Delta g}}{\bar{g}}.100\%$.
+c) Giá trị trung bình của gia tốc rơi tự do 9,835 m/s².
+d) Sai số tuyệt đối của gia tốc rơi tự do 0,81 m/s².
+
+#q B11 II 47
+Thả trụ thép rơi qua cổng quang điện trên máng đứng. Chọn phát biểu đúng hay sai?
+a) Gia tốc rơi tự do của trụ thép theo công thức $g=\dfrac{s}{t^2}$.
+b) Để xác định gia tốc rơi tự do của trụ thép cần đo đại lượng: quãng đường rơi của trụ thép và thời gian rơi.
+c) Để trụ thép rơi qua cổng quang điện cần đặt trụ thép tại vị trí tiếp xúc với nam châm điện và bị giữ lại ở đó. Nhấn nút của hộp công tắc kép để ngắt điện vào nam châm điện ⇒ trụ thép rơi xuống và chuyển động đi qua cổng quang điện.
+d) Đặt MODE đồng hồ đo thời gian hiện số ở chế độ thích hợp để đo được đại lượng cần đo. Ví dụ trường hợp này, đo thời gian từ lúc thả rơi đến lúc vật rơi hết quãng đường s nên ta đặt chế độ A + B.
+
+#nhom B12 Chuyển động ném ngang
+#t B12 47
+## CHUYỂN ĐỘNG NÉM NGANG
+- **Khái niệm:** Chuyển động ném ngang là chuyển động có vận tốc ban đầu theo phương nằm ngang và chuyển động dưới tác dụng của trọng lực.
+- ***Chọn hệ trục tọa độ Oxy:***
++ *Gốc O là vị trí ném vật;*
++ *Trục Ox theo hướng vận tốc đầu;*
++ *Trục Oy thẳng đứng hướng xuống.*
++ *Gốc thời gian lúc ném.*
+[[IMG 47 735 1860 1875 2470]]
+- ***Theo phương Ox:*** *$M_x$ chuyển động thẳng đều với vận tốc $v_0$:* $a_x=0;\ v_x=v_0;\ d_x=v_x.t=v_0t$
+- ***Theo phương Oy:*** *$M_y$ chuyển động rơi tự do:* $a_y=g;\ v_y=gt;\ d_y=\dfrac{1}{2}gt^2$
+- *Phương trình quỹ đạo của vật:* $d_y=\dfrac{g}{2v_0^2}d_x^2$ ⇒ *Quỹ đạo là một nhánh parabol*
+|**- Thời gian vật chuyển động:**|**- Tầm bay xa:**|**- Vận tốc ở thời điểm t:**|
+|$h=\dfrac{1}{2}gt^2\Rightarrow t=\sqrt{\dfrac{2h}{g}}$|$L=d_{x\max}=v_0t=v_0\sqrt{\dfrac{2h}{g}}$|$v=\sqrt{v_x^2+v_y^2}=\sqrt{v_0^2+(g.t)^2}$|
+|➢ Thời gian vật chuyển động ném ngang bằng thời gian vật rơi tự do.<br>➢ Thời gian rơi của vật bị ném ngang chỉ phụ thuộc độ cao h của vật khi bị ném, không phụ thuộc vận tốc ném.<br>➢ Nếu từ cùng một độ cao, đồng thời ném ngang các vật khác nhau với các vận tốc khác nhau thì chúng đều rơi xuống đất cùng một lúc.|➢ Tầm xa của vật bị ném ngang phụ thuộc vào độ cao h và vận tốc ném.<br>➢ Nếu từ cùng một độ cao đồng thời ném các vật khác nhau với vận tốc khác nhau thì vật nào có vận tốc ném lớn hơn sẽ có tầm xa lớn hơn.<br>➢ Nếu các độ cao khác nhau ném ngang các vật với cùng vận tốc thì vật nào được ném ở độ cao lớn hơn sẽ có tầm xa lớn hơn.|➢ Khi chạm đất: $v_{cd}=\sqrt{v_0^2+2gh}$<br>➢ $\vec{v}$ hợp với phương ngang 1 góc α: $\tan\alpha=\dfrac{v_y}{v_x}$|
+
+#q B12 I 48
+Bi A có trọng lượng lớn gấp đôi bi B. Cùng một lúc tại một mái nhà ở cùng độ cao, bi A được thả còn bi B được ném theo phương ngang với tốc độ lớn. Bỏ qua sức cản không khí. Hãy cho biết câu nào sau đây đúng?
+A. A chạm đất trước.
+B. A chạm đất sau B.
+C. Cả hai chạm đất cùng lúc.
+D. Chưa đủ thông tin trả lời.
+
+#q B12 I 48
+(SBT-KNTT) Một quả bóng đặt trên mặt bàn được truyền một vận tốc theo phương nằm ngang. Hình nào dưới đây mô tả **đúng** quỹ đạo của quả bóng khi rời khỏi mặt bàn?
+[[IMG 48 195 2370 1950 2765]]
+A. Hình A.
+B. Hình B.
+C. Hình C.
+D. Hình D.
+
+#q B12 I 48
+Một vật được ném theo phương ngang với vận tốc $\vec{v_0}$ từ độ cao h so với mặt đất. Chọn hệ trục toạ độ Oxy sao cho gốc O trùng với vị trí ném, Ox theo phương vận tốc ban đầu, Oy hướng thẳng đứng xuống dưới, gốc thời gian là lúc ném. Độ lớn vận tốc của vật tại thời điểm t xác định bằng biểu thức:

@@ -1,0 +1,35 @@
+#t B11 43
+### 3. Giới thiệu dụng cụ thí nghiệm
+[[IMG 43 1425 340 1805 1065]]
+- Bộ dụng cụ thí nghiệm đo gia tốc rơi tự do:
++ Máng đứng có gắn dây dọi (1)
++ Vật bằng thép hình trụ (2)
++ Nam châm điện N, dùng giữ và thả trụ thép (3)
++ Cổng quang điện E (4)
++ Giá đỡ có đế ba chân, có vít chỉnh cân bằng và trụ thép (5)
++ Đồng hồ đo thời gian hiện số (6)
++ Công tắc kép (7)
+### 4. Thiết kế phương án và tiến hành thí nghiệm
+Thiết kế phương án thí nghiệm như bộ dụng cụ thí nghiệm đo gia tốc rơi tự do.
+**Tiến hành thí nghiệm**
+|*Thí nghiệm: Đo gia tốc rơi tự do*|
+|**Bước 1**|Bố trí thí nghiệm như hình.|
+|**Bước 2**|Cắm nam châm điện vào ổ A và cổng quang điện vào ổ B ở mặt sau của đồng hồ đo thời gian hiện số.|
+|**Bước 3**|Đặt MODE đồng hồ đo thời gian hiện số ở chế độ thích hợp A ↔ B.|
+|**Bước 4**|Đặt trụ thép tại vị trí tiếp xúc với nam châm điện N và bị giữ lại ở đó.|
+|**Bước 5**|Nhấn nút RESET của đồng hồ MC964 để chuyển các số hiển thị về giá trị ban đầu 0.000.|
+|**Bước 6**|Nhấn nút của hộp công tắc kép để ngắt điện vào nam châm điện. Trụ thép rơi xuống và chuyển động đi qua cổng quang điện.|
+|**Bước 7**|Ghi lại các giá trị thời gian hiển thị trên đồng hồ.|
+|**Bước 8**|Dịch chuyển cổng quang điện ra xa dần nam châm điện, thực hiện lại các thao tác 3, 4, 5, 6 bốn lần nữa. Ghi lại thời gian t tương ứng với quãng đường s.|
+
+#q B11 I 43
+Chọn câu **đúng**, để đo gia tốc rơi tự do trong phòng thí nghiệm, ta cần:
+A. Đo thời gian và quãng đường chuyển động của vật.
+B. Máy bắn tốc độ.
+C. Đồng hồ đo thời gian.
+D. Thước đo quãng đường.
+
+#q B11 I 43
+Chọn câu **đúng**. Những dụng cụ chính để đo gia tốc rơi tự do của khối trụ gồm:
+A. Đồng hồ đo thời gian hiện số, cổng quang điện, khối trụ, máng và thước thẳng.
+B. Đồng hồ đo thời gian hiện số, cổng quang điện, khối trụ, máng và thước kẹp.

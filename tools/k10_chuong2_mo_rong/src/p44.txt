@@ -1,0 +1,45 @@
+#q+ B11 I 44
+C. Đồng hồ đo thời gian hiện số, cần rung, khối trụ, máng và thước kẹp.
+D. Đồng hồ đo thời gian hiện số, cần rung, khối trụ, máng và thước thẳng.
+
+#q B11 I 44
+Điền khuyết các từ khóa thích hợp vào chỗ trống: Khi cắm cổng quang điện vào ổ cắm A, B cần chú ý xoay đúng ……………, cắm thẳng ……………, không rung, lắc chân cắm.
+A. máng, thước.
+B. khe định vị, thanh trụ.
+C. băng giấy, cần rung.
+D. khe định vị, giắc cắm.
+
+#q B11 I 44
+Điền khuyết các từ khóa thích hợp vào chỗ trống: Để đo gia tốc rơi tự do trong phòng thí nghiệm, ta cần đo …………… và …………… chuyển động của vật đó.
+A. vận tốc đầu, vận tốc cuối.
+B. thời gian đi qua một cổng quang điện, quãng đường.
+C. thời gian đi qua một cổng quang điện, vận tốc cuối.
+D. thời gian, quãng đường.
+
+#q B11 I 44
+Điền khuyết các từ khóa thích hợp vào chỗ trống: Những dụng cụ chính để đo gia tốc rơi gồm: Đồng hồ đo thời gian hiện số và ……………, vật bằng thép hình trụ và ……………
+A. máng, thước.
+B. cổng quang điện, thanh trụ.
+C. cổng quang điện, máng đứng có gắn thước.
+D. khe định vị, giắc cắm.
+
+#q B11 I 44
+Sắp xếp theo đúng thứ tự các bước làm thí nghiệm đo gia tốc rơi tự do:
+[[IMG 44 1465 1440 2075 2510]]
+~ a. Đặt trụ thép tại vị trí tiếp xúc với nam châm điện N và bị giữ lại ở đó.
+~ b. Dịch chuyển cổng quang điện ra xa dần nam châm điện, thực hiện lại các thao tác 3, 4, 5, 6 bốn lần nữa. Ghi lại thời gian t tương ứng với quãng đường s.
+~ c. Bố trí thí nghiệm như hình.
+~ d. Nhấn nút RESET của đồng hồ MC964 để chuyển các số hiển thị về giá trị ban đầu 0.000.
+~ e. Nhấn nút của hộp công tắc kép để ngắt điện vào nam châm điện. Trụ thép rơi xuống và chuyển động đi qua cổng quang điện.
+~ f. Cắm nam châm điện vào ổ A và cổng quang điện vào ổ B ở mặt sau của đồng hồ đo thời gian hiện số.
+~ g. Ghi lại các giá trị thời gian hiển thị trên đồng hồ.
+~ h. Đặt MODE đồng hồ đo thời gian hiện số ở chế độ thích hợp A ↔ B.
+A. c – d – e – g – b – f – h – a.
+B. c – f – h – a – d – e – g – b.
+C. c – f – e – g – b – h – a – d.
+D. c – f – g – b – h – a – d – e.
+
+#q B11 I 44
+Sắp xếp theo đúng thứ tự các bước làm thí nghiệm đo gia tốc rơi tự do:
+~ a. Điều chỉnh giá đỡ thẳng đứng bằng các vít ở đế sao cho quả năng của dây dọi sẽ nằm ở tâm lỗ tròn. Thiết lập đồng hồ đo thời gian hiện số chế độ A ↔ B để đo thời gian từ lúc thả đến lúc vật chắn cổng quang điện.
+~ b. Lặp lại phép đo ít nhất 3 lần.

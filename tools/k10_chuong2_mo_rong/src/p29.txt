@@ -1,0 +1,41 @@
+#q B9 I 29
+Từ trạng thái đứng yên, một vật chuyển động nhanh dần đều với gia tốc là 2 m/s² và đi được quãng đường dài 100 m. Hãy chia quãng đường đó ra làm 2 phần sao cho vật đi được 2 phần đó trong 2 khoảng thời gian bằng nhau:
+A. 50 m, 50 m
+B. 40 m, 60 m
+C. 32 m, 68 m
+D. 25 m, 75 m
+
+#q B9 I 29
+Một người đứng ở sân ga nhìn đoàn tàu bắt đầu chuyển bánh nhanh dần đều trên một đường thẳng thì thấy toa thứ nhất đi qua trước mặt mình trong 3 giây. Trong thời gian Δt toa thứ 15 đi qua trước mặt người ấy, Δt **gần giá trị nào nhất** sau đây?
+A. 0,4 s.
+B. 0,5 s.
+C. 0,3 s.
+D. 0,7 s.
+
+#q B9 II 29
+Một ô tô bắt đầu chuyển động thẳng nhanh dần đều. Trong giây thứ 6 xe đi được quãng đường 11 m.
+a) Gia tốc của xe ô tô là 0,61 m/s².
+b) Vận tốc của xe sau 10 s chuyển động là 6,1 m/s.
+c) Quãng đường xe đi được sau 10 s chuyển động là 100 m.
+d) Quãng đường xe đi trong 20 s đầu tiên là 400 m.
+
+#q B9 II 29
+Một xe ô tô chuyển động thẳng nhanh dần đều với vận tốc đầu 18 km/h. Trong giây thứ tư kể từ lúc bắt đầu chuyển động nhanh dần, xe đi được 12 m.
+a) Quãng đường xe đi được trong giây thứ 10 là 50 m.
+b) Vật chuyển động nhanh dần đều trong 10 s, quãng đường đi được trong 4 s cuối là 84 m.
+c) Xe đạt vận tốc 36 km/h sau thời gian 2,5 s.
+d) Quãng đường xe đi sau 2,5 s là 18,5 m.
+
+#q B9 II 29
+Một xe đang chuyển động với vận tốc 7,2 km/h thì tăng tốc. Sau 4 s, xe đi thêm được 40 m.
+a) Gia tốc của xe là 4 m/s².
+b) Vận tốc của xe sau 6 s là 26 m.
+c) Cuối giây thứ 6, xe tắt máy. Sau 13 s thì ngừng hẳn lại. Gia tốc của xe sau khi tắt máy là 2 m/s².
+d) Quãng đường đi được cho đến khi dừng lại là 169 m.
+
+#q B9 II 29
+Một chiếc xe đang chạy với tốc độ 36 km/h thì tài xế hãm phanh, xe chuyển động thẳng chậm dần đều rồi dừng lại sau 5 s.
+a) Gia tốc của xe là 2 m/s².
+b) Quãng đường xe chạy đến lúc dừng hẳn là 25.
+c) Quãng đường xe chạy sau 4 s là 20 m.
+d) Quãng đường xe chạy trong giây cuối cùng là 5 m.

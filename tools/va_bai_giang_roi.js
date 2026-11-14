@@ -88,6 +88,8 @@ module.exports = function (ma) {
         d.innerHTML='<b>Video thí nghiệm</b> không kèm theo bản trên mạng vì dung lượng lớn.<br>Trên máy giáo viên: chép thư mục <b>Chuyendongnem-media</b> (có '+v.getAttribute('src').split('/').pop()+') vào cạnh file bài giảng này để xem.';
         v.parentNode.replaceChild(d,v)}
       v.addEventListener('error',thay);if(v.error)thay()})})();`;
+    /* nút "Mở rộng cuối bài" ở hai slide cuối (trang bai-giang/k10-chuong2-mo-rong.html#B12) */
+    va.js += '\n' + require('./k10_chuong2_mo_rong/nut_mo_rong.js')('B12');
   }
   return va;
 };

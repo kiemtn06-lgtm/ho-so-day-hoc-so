@@ -1,0 +1,40 @@
+#q+ B12 I 54
+[[IMG 54 160 200 830 575]]
+Gia tốc của vật tại đỉnh I có
+A. hướng ngang theo chiều từ H đến I.
+B. hướng ngang theo chiều từ I đến H.
+C. hướng thẳng đứng xuống dưới.
+D. hướng thẳng đứng lên trên.
+
+#q B12 I 54
+Chọn phát biểu **đúng** cho chuyển động ném xiên góc α.
+A. Có thể phân tích thành hai chuyển động thành phần: chuyển động thẳng đều dọc trục ngang Ox với vận tốc $v_0\cos\alpha$ và rơi tự do theo phương thẳng đứng.
+B. Chuyển động thành phần dọc trục thẳng đứng có gia tốc không đổi và luôn có dấu âm "–" chứng tỏ đó là chuyển động chậm dần đều.
+C. Chuyển động thành phần dọc trục ngang là chuyển động theo quán tính.
+D. Vận tốc chuyển động thành phần theo phương thẳng đứng Oy lúc đầu dương về sau âm chứng tỏ lúc đầu nhanh dần đều về sau chậm dần đều.
+
+#q B12 I 54
+Một vật được ném từ mặt đất với vận tốc $\vec{v_0}$ nghiêng một góc α với phương ngang. Lấy g = 10 m/s². Bỏ qua sức cản không khí. Để tầm xa lớn nhất thì
+A. $\alpha=\dfrac{\pi}{4}$
+B. $\alpha=\dfrac{\pi}{3}$
+C. $\alpha=\dfrac{\pi}{2}$
+D. $\alpha=\dfrac{\pi}{6}$
+
+#q B12 I 54
+Trong chuyển động của vật được ném xiên từ mặt đất thì đại lượng nào sau đây không đổi?
+A. Gia tốc của vật.
+B. Độ cao của vật.
+C. Khoảng cách theo phương nằm ngang từ điểm vật được ném tới vật.
+D. Vận tốc của vật.
+
+#q B12 I 54
+Một vật được ném xiên từ mặt đất với vận tốc ban đầu $v_0$ hợp với phương ngang một góc α. Tầm bay cao của vật là
+A. $\dfrac{v_0^2.\sin^2\alpha}{2g}$
+B. $\dfrac{v_0.\sin2\alpha}{2g}$
+C. $\dfrac{v_0^2.\sin^22\alpha}{g}$
+D. $\dfrac{v_0.\sin^2\alpha}{g}$
+
+#q B12 I 54
+Biểu thức nào sau đây xác định độ cao cực đại mà vật đạt được khi ném xiên vật hợp với phương ngang một góc α từ mặt đất.
+A. $h_{\max}=y_{\max}=\dfrac{v_0\sin^2\alpha}{2g}$
+B. $h_{\max}=y_{\max}=\dfrac{2v_0^2\sin^2\alpha}{g}$

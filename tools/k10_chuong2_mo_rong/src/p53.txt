@@ -1,0 +1,25 @@
+#t B12 53
+⇒ ***Quỹ đạo chuyển động của vật ném xiên là một parabol***
+- **Xác định tầm bay cao của vật:** ta rút t ở với phương trình $v_y$ có
+Vì lên đến độ cao cực đại nên $v_y=0\Rightarrow t_1=\dfrac{v_0\sin\alpha}{g}$ (6)
+Thay (6) vào (4) với phương trình y ta có $h_{\max}=h+\dfrac{1}{2}\dfrac{v_0^2\sin^2\alpha}{g}$
+**Chú ý:** nếu h = 0 thì $h_{\max}=\dfrac{v_0^2\sin^2\alpha}{2g}$
+- **Xác định tầm bay xa của vật:**
+Khi trở về mặt đất y = 0
+Xét phương trình y ở (4) $0=h+(v_0\sin\alpha)t-\dfrac{1}{2}gt^2\Rightarrow t=?$
+Rồi thay t vào phương trình (3) tính ra x chính là tầm xa L.
++ Nếu h = 0 ta có $t_2=\dfrac{2v_0\sin\alpha}{g}\Rightarrow x=L=\dfrac{v_0^2\sin2\alpha}{g}$
+⇒ $L_{\max}$ khi $(\sin2\alpha)_{\max}=1\Rightarrow2\alpha=90^\circ$ hay $\alpha=45^\circ$
+- **Xác định vận tốc ở một vị trí** $v=\sqrt{v_x^2+v_y^2}$
+- **Xác định độ dịch chuyển của vật so với vị trí ban gốc tọa độ** $d=\sqrt{x^2+y^2}$
+
+#q B12 I 53
+Một vật ném nghiêng có quỹ đạo như hình vẽ. Tầm bay xa của vật là khoảng cách giữa
+[[IMG 53 1290 2430 1840 2660]]
+A. điểm ném và điểm cao nhất của quỹ đạo.
+B. điểm cao nhất của quỹ đạo và điểm rơi.
+C. điểm cao nhất của quỹ đạo và điểm có gia tốc bằng 0.
+D. điểm ném và điểm rơi trên mặt đất.
+
+#q B12 I 53
+Trong hình vẽ sau,

@@ -1,0 +1,47 @@
+#q+ B12 I 55
+C. $h_{\max}=y_{\max}=\dfrac{v_0^2\sin^2\alpha}{2g}$
+D. $h_{\max}=y_{\max}=\dfrac{v_0^2\sin\alpha}{2g}$
+
+#q B12 I 55
+Tầm xa (L) tính theo phương ngang xác định bằng biểu thức nào sau đây khi ném xiên vật hợp với phương ngang một góc α từ mặt đất.
+A. $L=x_{\max}=\dfrac{2v_0.\sin\alpha.\cos\alpha}{g}$
+B. $L=x_{\max}=\dfrac{2v_0.\sin^2\alpha.\cos^2\alpha}{g}$
+C. $L=x_{\max}=\dfrac{2v_0^2.\sin\alpha.\cos\alpha}{g}$
+D. $L=x_{\max}=\dfrac{v_0^2.\sin\alpha.\cos\alpha}{2g}$
+
+#q B12 I 55
+Một vật được ném xiên lên từ mặt đất với vận tốc $v_0$ và góc ném α thì tầm bay xa có biểu thức nào khi ném xiên vật hợp với phương ngang một góc α từ mặt đất.
+A. $L=\dfrac{v_0^2.\sin2\alpha}{g}$
+B. $L=\dfrac{v_0^2.\sin\alpha}{g}$
+C. $L=\dfrac{2v_0^2.\sin2\alpha}{g}$
+D. $L=\dfrac{2v_0^2.\sin\alpha}{g}$
+
+#q B12 I 55
+Hai vật được đồng thời ném từ mặt đất lên với vận tốc ban đầu như Hình vẽ 12.1
+[[IMG 55 815 1410 1270 1800]]
+Nếu bỏ qua sức cản không khí thì
+A. Vật 1 chạm đất trước.
+B. Hai vật chạm đất cùng một lúc.
+C. Hai vật có tầm bay cao như nhau.
+D. Vật 1 có tầm bay cao hơn.
+
+#q B12 I 55
+Một vật được ném xiên từ mặt đất lên với vận tốc ban đầu là $v_0=10\ \text{m/s}$ theo phương hợp với phương ngang một góc 30°. Cho g = 10 m/s². Độ cao cực đại vật đạt đến là
+A. 22,5 m
+B. 45 m
+C. 1,25 m
+D. 60 m
+
+#q B12 I 55
+Một vật được ném xiên từ mặt đất lên với vận tốc ban đầu là $v_0=10\ \text{m/s}$ theo phương hợp với phương ngang một góc 30°. Cho g = 10 m/s². Tầm bay xa của vật là
+A. 8,66 m
+B. 4,33 m
+C. 5 m
+D. 10 m
+
+#q B12 I 55
+Một quả banh được người chơi gôn đánh đi với vận tốc đầu là $v_0=40\ \text{m/s}$ hợp với phương ngang một góc α = 45°. Quả banh bay về hướng hồ cách đó 100 m, hồ rộng 50 m. Lấy g = 10 m/s². Xác định quỹ đạo của quả banh (chọn gốc tọa độ O tại chỗ đánh quả banh, chiều dương Oy hướng lên, chiều dương Ox về phía hồ).
+A. $y=-\dfrac{1}{40}x^2+x$
+B. $y=\dfrac{1}{40}x^2+x$
+C. $y=-\dfrac{1}{160}x^2+x$
+D. $y=\dfrac{1}{60}x^2+x$

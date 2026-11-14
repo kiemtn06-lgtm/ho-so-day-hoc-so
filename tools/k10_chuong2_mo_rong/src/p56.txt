@@ -1,0 +1,44 @@
+#q B12 I 56
+Một trái bóng được đá đi từ mặt đất với góc nghiêng đối với mặt phẳng ngang được tính sao cho bóng bay xa nhất. Tầm bay xa mà bóng bay được bằng 62,5 m theo phương ngang. Cho g = 10 m/s². Vận tốc ban đầu của trái bóng có độ lớn là:
+A. 20 m/s
+B. 25 m/s
+C. 30 m/s
+D. 35 m/s
+
+#q B12 I 56
+Một quả bóng được đá đi từ mặt đất với vận tốc có độ lớn bằng 10 m/s theo phương hợp với phương ngang một góc α. Khi chạm đất, vận tốc của bóng có độ lớn:
+A. 10 m/s
+B. (10cosα) m/s
+C. (10sinα) m/s
+D. (10tanα) m/s.
+
+#q B12 I 56
+Khi đẩy tạ, muốn quả tạ bay xa nhất thì người vận động viên phải ném tạ hợp với phương ngang một góc
+A. 30°
+B. 45°
+C. 60°
+D. 90°.
+
+#q B12 I 56
+Từ độ cao 7,5 m một quả cầu được ném lên xiên góc α = 45° so với phương ngang với vận tốc 10 m/s. Quả cầu chạm đất cách vị trí ném là
+A. x = 15 m
+B. x = 10 m
+C. x = 25 m
+D. x = 30 m
+
+#q B12 I 56
+Sườn đồi có thể coi là mặt phẳng nghiêng góc α = 60° so với mặt phẳng ngang. Lấy g = 10 m/s². Từ điểm O trên đỉnh đồi người ta ném một vật nặng với vận tốc ban đầu 10 m/s theo phương ngang, nó rơi tại điểm A trên sườn đồi. Giá trị OA bằng
+A. 1,33 m
+B. 16,7 m
+C. 50,7 m
+D. 69,3 m
+
+#q B12 II 56
+Một vật được ném từ một điểm M ở độ cao h = 45 m với vận tốc ban đầu $v_0=20\ \text{m/s}$ lên trên theo phương hợp với phương nằm ngang một góc 45°. Lấy $g=10\ \text{m/s}^2$, bỏ qua lực cản của không khí.
+a) Phương trình quỹ đạo chuyển động của vật là ⇒ $y=45+x-\dfrac{x^2}{40}$.
+b) Tọa độ vật sau khi ném 1 s là $x=5\sqrt{2}\ (\text{m})$, $y\approx54{,}14\ (\text{m})$.
+c) Độ cao cực đại vật đạt được so với mặt đất là 55 m.
+d) Thời gian vật bay trong không khí là 2 s.
+
+#q B12 II 56
+Một vận động viên ném đĩa cao đang luyện tập. Vận động viên ném đĩa với vận tốc ban đầu $v_0$ lên trên theo phương hợp với phương nằm ngang một góc 45°, đĩa rời tay vận động viên ở độ cao 1,7 m. Đĩa rơi cách vận động viên 60 m. Thời gian từ lúc ném đến lúc đĩa chạm đất là $3\sqrt{2}$ (s). Lấy g = 10 m/s², bỏ qua lực cản của không khí.

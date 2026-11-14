@@ -1,0 +1,45 @@
+#q B9 I 32
+Đồ thị vận tốc – thời gian của một vật chuyển động như hình bên. Tỉ số về độ lớn gia tốc của vật trong thời gian OA và AB là
+[[IMG 33 900 210 1360 530]]
+A. 1.
+B. $\dfrac{1}{2}$.
+C. $\dfrac{1}{3}$.
+D. 3.
+
+#q B8 I 33
+Véctơ gia tốc $\vec{a}$ có tính chất nào kể sau?
+A. Đặc trưng cho sự biến thiên của vận tốc.
+B. Cùng chiều với $\vec{v}$ nếu chuyển động nhanh dần.
+C. Ngược chiều với $\vec{v}$ nếu chuyển động chậm dần.
+D. Các tính chất trên.
+
+#q B8 I 33
+Gia tốc là một đại lượng
+A. đại số, đặc trưng cho sự biến đổi nhanh hay chậm của chuyển động.
+B. đại số, đặc trưng cho tính không đổi của vận tốc.
+C. vectơ, đặc trưng cho sự biến đổi nhanh hay chậm của chuyển động.
+D. vectơ, đặc trưng cho sự biến đổi nhanh hay chậm của vận tốc.
+
+#q B9 I 33
+Một chất điểm chuyển động thẳng đều, với đồ thị vận tốc – thời gian được cho như hình vẽ. Quãng đường mà chất điểm đi được trong khoảng thời gian từ 1 s đến 2 s là
+[[IMG 33 1655 1525 2060 1860]]
+A. 1 m.
+B. 2 m.
+C. 3 m.
+D. 4 m.
+
+#q B9 I 33
+Đồ thị vận tốc – thời gian của một vật chuyển động thẳng ở hình dưới. Quãng đường vật đã đi được sau 30 s là:
+[[IMG 33 1420 2115 1985 2435]]
+A. 200 m.
+B. 250 m.
+C. 300 m.
+D. 350 m.
+
+#q B9 I 33
+Đồ thị vận tốc – thời gian của một tàu hỏa đang chuyển động thẳng có dạng như hình bên. Thời điểm t = 0 là lúc tàu đi qua sân ga. Vận tốc của tàu sau khi rời sân ga được 80 m là
+[[IMG 33 1435 2460 1850 2880]]
+A. 4 m/s.
+B. 6 m/s.
+C. 8 m/s.
+D. 10 m/s.

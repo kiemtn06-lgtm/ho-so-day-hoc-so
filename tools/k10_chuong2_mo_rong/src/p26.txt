@@ -1,0 +1,23 @@
+#q B9 III 26
+Sau khi khởi hành được 50 m, xe đạt vận tốc 5 m/s. Hỏi sau khi đi hết 50 m tiếp theo xe có vận tốc là bao nhiêu m/s? Biết xe chuyển động thẳng nhanh dần đều. (kết quả lấy 2 chữ số sau dấu phẩy thập phân)
+
+#q B9 III 26
+Xe chạy chậm dần lên một dốc có độ dài là S. Tốc độ ở chân dốc 54 km/h, ở đỉnh dốc là 36 km/h. Chọn gốc tọa độ tại chân dốc, chiều dương là chiều chuyển động. Sau khi lên được nửa dốc thì tốc độ xe bằng bao nhiêu cm/s? (kết quả lấy 0 chữ số sau dấu phẩy thập phân)
+
+#q B9 III 26
+Trong một quán ăn có hệ thống đưa thức ăn tự động bằng băng chuyền, một khách hàng đặt một món ăn qua hệ thống tự động. Sau đó, đĩa thức ăn được di chuyển từ khu vực bếp đến vị trí khách hàng cách nhau 5 m từ trạng thái nghỉ. Giả sử chuyển động của đĩa thức ăn là nhanh dần đều và biết tốc độ của đĩa thức ăn đến khách hàng là 2 m/s. Nếu trường hợp khách hàng đặt một li cocktail, vì chiều cao li và mặt đế của li nhỏ nên li sẽ bị đổ khi gia tốc của nó vượt quá 0,5 m/s². Tìm tốc độ tối đa mà li có thể đạt được để không bị đổ theo đơn vị cm/s? (kết quả lấy 0 chữ số sau dấu phẩy thập phân)
+
+#q B9 III 26
+Cho một máng nghiêng, lấy một viên bi lăn nhanh dần đều từ đỉnh một máng với không vận tốc ban đầu, bỏ qua ma sát giữa vật và máng, biết viên bi lăn với gia tốc 1 m/s². Biết vận tốc khi chạm đất 4 m/s. Tính chiều dài máng theo đơn vị cm? (kết quả lấy 0 chữ số sau dấu phẩy thập phân)
+[[IMG 26 1185 1490 1850 1840]]
+
+#q B9 III 26
+Một người đứng ở sân ga nhìn thấy đoàn tàu bắt đầu chuyển động. Người này nhìn thấy toa thứ nhất chạy qua trước mắt mình trong 10 s. Hãy tính thời gian toa thứ chín chạy qua người này, theo đơn vị phút? Giả sử chuyển động của tàu hỏa là nhanh dần đều và xem khoảng cách giữa các toa tàu là không đáng kể. (kết quả lấy 1 chữ số sau dấu phẩy thập phân)
+[[IMG 26 1225 1895 1975 2275]]
+
+#q B8 I 26
+Gia tốc là một đại lượng
+A. đại số, đặc trưng cho sự biến thiên nhanh hay chậm của chuyển động.
+B. đại số, đặc trưng cho tính không đổi của vận tốc.
+C. vectơ, đặc trưng cho sự biến thiên nhanh hay chậm của chuyển động.
+D. vectơ, đặc trưng cho sự biến thiên nhanh hay chậm của vận tốc.

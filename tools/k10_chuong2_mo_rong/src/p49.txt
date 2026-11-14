@@ -1,0 +1,66 @@
+#q+ B12 I 49
+A. $v=v_0+gt$.
+B. $v=\sqrt{v_0^2+g^2t^2}$.
+C. $v=\sqrt{v_0+gt}$.
+D. $v=gt$.
+
+#q B12 I 49
+Khi vật được ném theo phương ngang thì trên phương Ox
+A. vật chuyển động thẳng đều.
+B. vật chuyển động nhanh dần đều.
+C. vật có gia tốc a = g.
+D. phương trình chuyển động $x=v_0t+\dfrac{gt^2}{2}$.
+
+#q B12 I 49
+Một vật ném theo phương ngang. Khi đang chuyển động sẽ chịu tác dụng của các lực.
+A. lực ném và trọng lực.
+B. lực cản của không khí và trọng lực.
+C. lực ném và lực ma sát.
+D. trọng lực và phản lực đàn hồi.
+
+#q B12 I 49
+Đối với hai vật bị ném ngang thì vật nào có
+A. vận tốc ban đầu lớn hơn và khối lượng lớn hơn thì bay xa hơn.
+B. khối lượng lớn hơn thì bay xa hơn.
+C. khối lượng nhỏ hơn thì bay xa hơn.
+D. vận tốc ban đầu và độ cao ban đầu lớn hơn thì bay xa hơn.
+
+#q B12 I 49
+Một vật ném theo phương ngang. Khi đang chuyển động sẽ chịu tác dụng của các lực:
+A. lực ném và trọng lực.
+B. lực cản của không khí và trọng lực.
+C. lực ném và lực ma sát.
+D. trọng lực và phản lực đàn hồi.
+
+#q B12 I 49
+Vật chuyển động ném ngang từ độ cao h và vận tốc ban đầu $v_0$. Thời gian rơi đến khi chạm đất là
+A. $t=\sqrt{\dfrac{2h}{g}}$.
+B. $t=\sqrt{\dfrac{h}{2g}}$.
+C. $t=\sqrt{\dfrac{h}{g}}$.
+D. $t=\sqrt{2hg}$.
+
+#q B12 I 49
+Trong chuyển động ném ngang, gia tốc của vật tại một vị trí bất kì luôn có hướng theo
+A. phương ngang, cùng chiều chuyển động.
+B. phương ngang, ngược chiều chuyển động.
+C. phương thẳng đứng, chiều từ trên xuống.
+D. phương thẳng đứng, chiều từ dưới lên.
+
+#q B12 I 49
+Một vật có khối lượng M, được ném ngang với vận tốc ban đầu V ở độ cao h. Bỏ qua sức cản không khí. Tầm bay xa của vật phụ thuộc vào
+A. M và V.
+B. M và h.
+C. V và h.
+D. M, V và h.
+
+#q B12 I 49
+Để tăng tầm xa của vật ném theo phương ngang với sức cản không khí không đáng kể thì biện pháp nào sau đây có hiệu quả nhất?
+A. Giảm khối lượng vật ném.
+B. Tăng độ cao điểm ném.
+C. Giảm độ cao điểm ném.
+D. Tăng vận tốc ném.
+
+#q B12 I 49
+Từ một độ cao, ném đồng thời hai vật theo phương ngang với vận tốc khác nhau $v_1>v_2$.
+A. Vật 1 sẽ rơi chạm đất trước vật 2.
+B. Vật 1 sẽ rơi xa hơn vật 2.

@@ -1,0 +1,32 @@
+#q+ B12 II 57
+a) Quỹ đạo chuyển động của đĩa có dạng là một nhánh của Hyperbol.
+b) Vận tốc ban đầu của đĩa ném là $v_0=20$ m/s.
+c) Độ cao cực đại mà đĩa đạt được so với mặt đất là 11,7 m.
+d) Vận tốc lúc chạm đất của đĩa là 40 m/s.
+
+#q B12 II 57
+Một vật được ném từ một điểm M ở độ cao h = 45 m với vận tốc ban đầu $v_0=20$ m/s xiên lên theo phương hợp với phương nằm ngang một góc 45°. Lấy g = 10 m/s², bỏ qua lực cản của không khí.
+a) Tầm bay xa của vật là 66,89 (m).
+b) Vận tốc của vật khi chạm đất là 30 m/s.
+c) Phương trình quỹ đạo của vật là $y=x-\dfrac{1}{40}x^2$ (m).
+d) Độ dịch chuyển của vật từ lúc ném đến lúc chạm đất là 80,61 m.
+
+#q B12 II 57
+Từ mặt đất một quả cầu được ném theo phương hướng lên hợp với phương ngang một góc 60° với vận tốc 20 m/s.
+a) Phương trình quỹ đạo của quả cầu là $y=\sqrt{3}x-\dfrac{x^2}{20}$ (cm).
+b) Độ cao cực đại vật đạt được so với mặt đất là 10 m.
+c) Tầm bay xa của vật là $20\sqrt{3}$ (cm).
+d) Vận tốc của vật lúc chạm đất là 10 m/s.
+
+#q B12 III 57
+Một vật được ném xiên từ mặt đất với vận tốc ban đầu có độ lớn $v_0=50$ m/s. Khi lên tới điểm cao nhất, vận tốc của vật có độ lớn là 40 m/s. Bỏ qua sức cản của không khí, lấy $g=10\ \text{m/s}^2$. Góc ném α so với phương ngang bằng bao nhiêu độ? (Kết quả lấy sau dấu phẩy 1 chữ số thập phân)
+
+#q B12 III 57
+Một cầu thủ bóng rổ cao 2 m đứng cách xa rổ 10 m theo phương nằm ngang để tập ném bóng vào rổ. Biết miệng rổ ở độ cao 3,05 m. Hỏi người đó phải ném bóng từ độ cao ngang đầu với vận tốc theo phương 45° có độ lớn bao nhiêu m/s để bóng đi vào rổ? Lấy $g=9{,}8\ \text{m/s}^2$. (Kết quả lấy sau dấu phẩy 1 chữ số thập phân)
+
+#q B12 III 57
+Khi dùng vòi nước tưới cây, để các tia nước phun ra xa, người ta thường điều chỉnh sao cho hướng của vòi xiên một góc nào đó với phương ngang (Hình 9.2). Trong trường hợp lí tưởng (bỏ qua mọi lực cản), góc hợp giữa vòi và phương ngang phải bằng bao nhiêu độ để các tia nước phun ra xa nhất?
+[[IMG 57 740 2365 1305 2775]]
+
+#q B12 III 57
+Một diễn viên biểu diễn mô tô bay đang phóng xe trên mặt dốc nằm nghiêng 30° để bay qua các ô tô như trong hình 12.3. Biết vận tốc của xe mô tô khi rời khỏi đỉnh dốc là 14 m/s. Chiều cao

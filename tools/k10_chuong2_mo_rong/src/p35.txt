@@ -1,0 +1,23 @@
+#q B9 II 35
+Đồ thị mô tả sự thay đổi vận tốc theo thời gian trong chuyển động của một ô tô thể thao đang chạy thử về phía Bắc.
+[[IMG 35 890 190 1810 625]]
+a) Ô tô bắt đầu chuyển động với vận tốc ban đầu là 20 m/s.
+b) Gia tốc của ô tô trong 4 s đầu là 5 m/s².
+c) Gia tốc của ô tô từ giây thứ 20 đến giây thứ 28 là −2,5 m/s².
+d) Quãng đường ô tô đi được sau 20 s đầu là 320 m.
+
+#q B9 II 35
+Từ các đồ thị trong hình 9.1. Nhận định sau đúng hay sai?
+[[IMG 35 890 925 1840 1480]]
+a) Chuyển động nhanh dần đều là: đồ thị a và b.
+b) Chuyển động chậm dần đều: đồ thị c.
+c) Đồ thị b: $v=v_0+at$ (a < 0).
+d) Đồ thị c: $v=v_0+at$ (a > 0).
+
+#q B9 II 35
+Chất điểm chuyển động có đồ thị vận tốc theo thời gian như hình.
+[[IMG 35 905 1850 1840 2390]]
+a) Quãng đường mà chất điểm đi được từ khi bắt đầu chuyển động cho tới 10 s là 43,75 m.
+b) Độ dịch chuyển của chất điểm từ khi bắt đầu chuyển động đến thời điểm 4 s là 10 m.
+c) Vận tốc trung bình của chất điểm trong 4 s đầu là 2 m/s.
+d) Tốc độ trung bình kể từ khi bắt đầu đi đến thời điểm 6 s là 3,1 m/s.

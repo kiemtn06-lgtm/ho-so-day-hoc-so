@@ -5,6 +5,8 @@ Cập nhật: 12/11/2026. Ghi chú này để lần sau làm tiếp không phả
 ## Đã có trong hồ sơ (khối 10)
 - **Chương III Động lực học**: Bài 13, 14, 15. Mỗi bài có: bài giảng tương tác ("Dạy ngay", nhớ slide đang dạy theo lớp), hình SGK, khung KHBD, Bài tập (69 câu kèm hình, đáp án, lời giải), Kiểm tra nhanh, Ghi chú.
 - **Chương II Động học**: bài giảng Bài 12 Chuyển động ném (ném ngang), nhúng dạng trang rời.
+- **Chương II, Mở rộng cuối bài (14/11/2026)**: Bài 8 đến Bài 12, chép từ bản scan `K 10\Quân -Ch2ly.pdf` (tr. 22–58): 225 câu (2 câu trùng đã bỏ), lí thuyết Bài 10–12, 61 hình cắt từ ảnh gốc giữ nguyên độ phân giải. Trang `bai-giang/k10-chuong2-mo-rong.html#B8..#B12` (5 mục "Mở rộng cuối bài" trong cây chương Động học); bài giảng Bài 12 có nút "Mở rộng cuối bài" ở hai slide cuối. File Word (công thức là Equation): `bai-giang/k10-c2-mr/word/` và bản chép ở `OneDrive\...\K 10\Chuong2_Mo_rong_theo_bai\`. Dựng lại: `python -I -X utf8 tools/k10_chuong2_mo_rong/dung.py "<Quân -Ch2ly.pdf>" "<thư mục chép Word>"`; sửa nội dung ở `tools/k10_chuong2_mo_rong/src/p*.txt`.
+  - Cần giáo viên: bản scan chưa có đáp án (chưa soạn đáp án); rà lại chỗ phân Bài 8 / Bài 9 (câu về khái niệm gia tốc xếp Bài 8, phần còn lại Bài 9). Bài 8, 9, 10, 11 chưa có bài giảng tương tác trong hồ sơ nên mục mở rộng nằm riêng trong cây chương; khi đưa bài giảng vào thì gắn nút bằng `tools/k10_chuong2_mo_rong/nut_mo_rong.js` như Bài 12.
 - Nguồn: `OneDrive\Fujitsu\Tài liệu 10\04_Chương III - Động lực học\*.html`. File nguồn không bị sửa.
 
 ## Cách dựng lại (khi sửa file nguồn hoặc sửa bản vá)
@@ -30,6 +32,16 @@ Các file công cụ:
 - [ ] Bài 12: có giữ dòng "Chào mừng quý thầy cô về dự giờ – thăm lớp" ở slide đầu không; có đồng ý đổi "Bài 9" thành "Bài 12" không.
 - [ ] Bài 15, slide kéo thùng: dòng "Slide gốc ghi 109,9 N; tính lại là 251,2 N" có giữ không.
 - [ ] Tên chương II, III trong hồ sơ đã đổi thành "Động học", "Động lực học" (theo SGK KNTT).
+
+## Góp ý của giáo viên ngày 12/11/2026 (LÀM Ở PHIÊN SAU, ưu tiên cao nhất)
+Mục tiêu: bài giảng tương tác ở mức xuất sắc nhất. Sửa trong `tools/va_bai_giang_roi.js` (không sửa file nguồn), áp dụng cho Bài 12, 13, 14, 15.
+1. **Bố cục các câu chọn chưa phù hợp.** Ví dụ Bài 13, slide "Mặt phẳng nghiêng": ô chọn thả xuống bị cắt chữ ("kéo vật trượt xuống dọc mặt…"), hai nút P sinα / P cosα rớt xuống dòng riêng, lệch hàng. Cần rà TẤT CẢ các slide có `select[data-o]`, `.msel`, thẻ kéo thả, điền khuyết, chỗ trống "?" ở cả 4 bài và sửa bố cục cho gọn, thẳng hàng, không cắt chữ (ví dụ mỗi dòng một cụm "nhãn + ô chọn", ô chọn đủ rộng hoặc dùng nút thay cho ô thả xuống khi lựa chọn ngắn). Kiểm tra lại bằng `HSDH_KT` và xem bằng mắt từng slide.
+2. **Âm thanh cho mọi tương tác.** Mỗi lần bấm (Kiểm tra, chọn đáp án, chọn ô, thả thẻ, Đúng/Sai, Hiện đáp án, Thêm điểm, Thả xe, kéo thanh trượt, bấm ô số...) nên có tiếng: đúng thì tiếng vui, sai thì tiếng nhẹ, bấm thường thì tiếng "tách" ngắn. Trang nguồn đã có `sfx(ok)` và `tick()` (Web Audio) nhưng chỉ dùng ở một số chỗ (câu củng cố, ô số): cần phủ rộng, nhớ `checkSel`/`showSel`, kéo thả, điền khuyết, mô phỏng. Làm bằng một lớp chung trong bản vá, thêm nút bật/tắt tiếng ở thanh dưới.
+3. **Đọc to sai chữ "khác 0".** Nút 🔊 (hàm `speakQ`) đọc "khác 0" nghe không ra chữ "không" (đọc số "0" hoặc nuốt chữ). Cần chuẩn hóa văn bản trước khi đọc: "≠ 0", "khác 0" → "khác không"; "= 0" → "bằng không"; "0" đứng riêng → "không"; rà luôn các ký hiệu khác (°, m/s², N, F₁, √, ², cos, sin, vectơ) để đọc đúng tiếng Việt. Thêm bộ kiểm tra: chạy hàm chuẩn hóa trên mọi câu ở ô số khởi động (`QZ`) và mọi câu hỏi, in ra các chỗ còn nghi ngờ để xem.
+
+4. **Không gõ được dấu trừ khi đáp án âm (ví dụ "-2"), rà cả khối 10, 11, 12.** Nguyên nhân: ô trả lời ngắn đặt `inputmode="decimal"`, trên điện thoại (nhất là iPhone) bàn phím số này không có phím "-". Khắc phục được. Cách làm: đổi ô đáp án sang `inputmode="text"` (bàn phím đầy đủ, có dấu trừ) HOẶC giữ bàn phím số và thêm nút "±" cạnh ô để đổi dấu (nên làm cả hai: nút "±" và chấp nhận các kiểu dấu trừ "-", "−", "–" khi chấm). Kiểm tra hàm chấm vẫn nhận "-2", "−2", "-2,0", "-2.0". Các chỗ đã tìm thấy `inputmode="decimal"` ở ô đáp án:
+   - Phòng làm bài: `D:\phong-lam-bai-10\public\index.html`, `D:\phong-lam-bai-11\GKI_Li11_phong_lam_bai\public\index.html`, `D:\phong-luyen-vat-li-nhiet\public\index.html` (khối 12), và bản mẫu trong `D:\GKI_Li11_goi_chuyen_phong\mau_phong_lam_bai` (cần xem). Lưu ý: đẩy mã phòng lên GitHub làm Render khởi động lại và XÓA bài làm đang có, không đẩy khi học sinh đang làm; hỏi giáo viên trước khi đẩy.
+   - Hồ sơ: `on-tap/k12-chuong2.html`, `bai-giang/k12-chuong2.html`, `chuong-1-vat-li-nhiet/bai-tra-loi-ngan-vat-li-nhiet.html`, `bai-giang/k10-B12..B15.html` (sửa qua bản vá hoặc công cụ dựng, không sửa file nguồn).
 
 ## Làm tiếp (xếp theo thứ tự nên làm)
 1. **Đẩy lên GitHub**: các thay đổi mới lưu trong máy (commit), chưa đẩy. Hai video (36 MB) không đưa lên, đã ghi trong `.gitignore`.
