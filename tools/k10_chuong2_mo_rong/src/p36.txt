@@ -5,11 +5,17 @@ a) Vật chuyển thẳng chậm dần đều với vận tốc ban đầu là 4
 b) Vận tốc của vật tại thời điểm $t_A$ là 20 m/s.
 c) Độ dịch chuyển của chuyển động là 60 m.
 d) Giá trị của gia tốc là 2 m/s².
+=> S S Đ Đ
+=: Mỗi ô: 2 m/s và 1 s. $v_0=4$ m/s, sau 6 s đạt 16 m/s: $a=2$ m/s², nhanh dần đều. $t_A=3$ s ⇒ $v_A=4+2\cdot 3=10$ m/s. Độ dịch chuyển trong 6 s: $\dfrac{(4+16)\cdot 6}{2}=60$ m.
 
 #q B9 III 36
 Một xe đạp đang chuyển động với vận tốc 5 m/s thì hãm phanh chuyển động thẳng chậm dần đều. Hình 3.1 là đồ thị vận tốc – thời gian của xe đạp. Quãng đường xe đạp đi được từ lúc hãm phanh cho đến lúc dừng lại theo đơn vị m là bao nhiêu? (kết quả lấy đến 0 chữ số phần thập phân)
 [[IMG 36 1025 1605 1700 2115]]
+=> 25
+=: Diện tích tam giác dưới đồ thị: $s=\dfrac12\cdot 5\cdot 10=25$ m.
 
 #q B9 III 36
 Một người chạy xe máy theo một đường thẳng và có vận tốc theo thời gian được biểu diễn bởi đồ thị như hình. Xác định độ dịch chuyển của người này từ khi bắt đầu chạy đến thời điểm 4 s theo đơn vị cm? (kết quả lấy đến 0 chữ số phần thập phân)
 [[IMG 36 1025 2140 1595 2585]]
+=> 1100
+=: Diện tích dưới đồ thị 0–4 s: $\dfrac12\cdot 2\cdot 4+4\cdot 1+\dfrac{(4+2)\cdot 1}{2}=4+4+3=11$ m $=1100$ cm.

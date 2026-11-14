@@ -1,6 +1,8 @@
 #q+ B11 I 44
 C. Đồng hồ đo thời gian hiện số, cần rung, khối trụ, máng và thước kẹp.
 D. Đồng hồ đo thời gian hiện số, cần rung, khối trụ, máng và thước thẳng.
+=> A
+=: Dụng cụ chính: đồng hồ đo thời gian hiện số, cổng quang điện, khối trụ (vật rơi), máng đứng và thước thẳng gắn trên máng.
 
 #q B11 I 44
 Điền khuyết các từ khóa thích hợp vào chỗ trống: Khi cắm cổng quang điện vào ổ cắm A, B cần chú ý xoay đúng ……………, cắm thẳng ……………, không rung, lắc chân cắm.
@@ -8,6 +10,8 @@ A. máng, thước.
 B. khe định vị, thanh trụ.
 C. băng giấy, cần rung.
 D. khe định vị, giắc cắm.
+=> D
+=: Xoay đúng khe định vị, cắm thẳng giắc cắm.
 
 #q B11 I 44
 Điền khuyết các từ khóa thích hợp vào chỗ trống: Để đo gia tốc rơi tự do trong phòng thí nghiệm, ta cần đo …………… và …………… chuyển động của vật đó.
@@ -15,6 +19,8 @@ A. vận tốc đầu, vận tốc cuối.
 B. thời gian đi qua một cổng quang điện, quãng đường.
 C. thời gian đi qua một cổng quang điện, vận tốc cuối.
 D. thời gian, quãng đường.
+=> D
+=: $g=\dfrac{2s}{t^2}$: cần đo thời gian và quãng đường.
 
 #q B11 I 44
 Điền khuyết các từ khóa thích hợp vào chỗ trống: Những dụng cụ chính để đo gia tốc rơi gồm: Đồng hồ đo thời gian hiện số và ……………, vật bằng thép hình trụ và ……………
@@ -22,6 +28,8 @@ A. máng, thước.
 B. cổng quang điện, thanh trụ.
 C. cổng quang điện, máng đứng có gắn thước.
 D. khe định vị, giắc cắm.
+=> C
+=: Đồng hồ đo thời gian hiện số và cổng quang điện, vật bằng thép hình trụ và máng đứng có gắn thước.
 
 #q B11 I 44
 Sắp xếp theo đúng thứ tự các bước làm thí nghiệm đo gia tốc rơi tự do:
@@ -38,6 +46,8 @@ A. c – d – e – g – b – f – h – a.
 B. c – f – h – a – d – e – g – b.
 C. c – f – e – g – b – h – a – d.
 D. c – f – g – b – h – a – d – e.
+=> B
+=: Theo bảng các bước: bố trí (c), cắm nam châm và cổng (f), đặt MODE (h), đặt trụ thép (a), RESET (d), thả vật (e), ghi thời gian (g), lặp lại (b).
 
 #q B11 I 44
 Sắp xếp theo đúng thứ tự các bước làm thí nghiệm đo gia tốc rơi tự do:

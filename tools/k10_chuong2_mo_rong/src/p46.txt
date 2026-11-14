@@ -5,6 +5,8 @@ A. $(20\pm0{,}1)\ \text{m}$
 B. $(20\pm0{,}5)\ \text{m}$
 C. $(20\pm1)\ \text{m}$
 D. $(20\pm2)\ \text{m}$
+=> D
+=: $h=\dfrac12gt^2=20$ m; $\dfrac{\Delta h}{h}=2\dfrac{\Delta t}{t}=2\cdot\dfrac{0{,}1}{2}=0{,}1$ ⇒ $\Delta h=2$ m.
 
 #q B11 I 46
 Dùng một thước có chia độ đến milimét đo 5 lần khoảng cách d giữa hai điểm A và B đều cho cùng một giá trị là 1,345 m. Lấy sai số dụng cụ là một độ chia nhỏ nhất. Kết quả đo được viết là
@@ -13,6 +15,8 @@ A. $d=(1345\pm2)$ (mm).
 B. $d=(1{,}345\pm0{,}001)$ (m).
 C. $d=(1345\pm3)$ (mm).
 D. $d=(1{,}345\pm0{,}0005)$ (m).
+=> B
+=: Các lần đo như nhau nên sai số ngẫu nhiên bằng 0; sai số dụng cụ 1 mm $=0{,}001$ m ⇒ $d=(1{,}345\pm 0{,}001)$ m.
 
 #q B11 I 46
 Dùng một thước chia độ đến milimét để đo khoảng cách ℓ giữa hai điểm A, B và có kết quả đo là 600 mm. Lấy sai số dụng cụ là một độ chia nhỏ nhất. Cách ghi nào sau đây **không** đúng với số chữ số có nghĩa của phép đo?
@@ -20,6 +24,8 @@ A. $\ell=(6{,}00\pm0{,}01)$ dm.
 B. $\ell=(0{,}6\pm0{,}001)$ m.
 C. $\ell=(60{,}0\pm0{,}1)$ cm.
 D. $\ell=(600\pm1)$ mm.
+=> B
+=: Sai số 0,001 m thì giá trị phải ghi đến hàng phần nghìn: $0{,}600$ m; cách ghi $0{,}6\pm0{,}001$ sai về chữ số có nghĩa.
 
 #q B11 I 46
 Trong bài thực hành đo gia tốc RTD tại phòng thí nghiệm, một học sinh đo quãng đường vật rơi là $h=798\pm1$ (mm) và thời gian rơi là $t=0{,}404\pm0{,}005$ (s). Gia tốc RTD tại phòng thí nghiệm bằng: (Biết gia tốc RTD được tính theo công thức $g=2h/t^2$)
@@ -27,6 +33,8 @@ A. $g=9{,}78\pm0{,}26\ \text{m/s}^2$.
 B. $g=9{,}87\pm0{,}026\ \text{m/s}^2$.
 C. $g=9{,}78\pm0{,}014\ \text{m/s}^2$.
 D. $g=9{,}87\pm0{,}014\ \text{m/s}^2$.
+=> A
+=: $\bar g=\dfrac{2\cdot 0{,}798}{0{,}404^2}\approx 9{,}78$ m/s². $\dfrac{\Delta g}{\bar g}=\dfrac{1}{798}+2\cdot\dfrac{0{,}005}{0{,}404}\approx 0{,}026$ ⇒ $\Delta g\approx 0{,}26$ m/s².
 
 #q B11 II 46
 Khi tiến hành thí nghiệm đo gia tốc trọng trường, chọn các phát biểu đúng hoặc sai:
@@ -34,6 +42,8 @@ a) Để đo gia tốc rơi tự do trong phòng thí nghiệm, ta cần đo th�
 b) Những dụng cụ chính để đo gia tốc rơi gồm: Đồng hồ đo thời gian hiện số và cổng quang điện, vật bằng thép hình trụ và máng đứng có gắn thước.
 c) Khi cắm cổng quang điện vào ổ cắm A, B cần chú ý xoay đúng khe định vị, cắm thẳng giắc cắm, không rung, lắc chân cắm.
 d) Cổng quang điện E để đo quãng đường rơi của vật.
+=> S Đ Đ S
+=: Cần đo thời gian và quãng đường (không phải thể tích). Cổng quang điện dùng để đo thời gian (cùng với đồng hồ hiện số), quãng đường đọc trên thước.
 
 #q B11 II 46
 Khi tiến hành thí nghiệm đo gia tốc trọng trường **khi đo thời gian ta có bảng số liệu sau**

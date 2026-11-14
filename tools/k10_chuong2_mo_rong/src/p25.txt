@@ -5,6 +5,8 @@ a) Gia tốc của quả cầu khi lăn trên dốc là 2,5 m/s².
 b) Vận tốc của quả cầu tại chân dốc 20 m/s.
 c) Gia tốc của quả cầu khi lăn trên mặt ngang 4 m/s².
 d) Thời gian quả cầu lăn trên mặt ngang 5 s.
+=> S Đ S Đ
+=: Trên dốc: $a_1=\dfrac{2\cdot 100}{10^2}=2$ m/s²; $v=a_1t=20$ m/s. Trên mặt ngang: $a_2=\dfrac{0-20^2}{2\cdot 50}=-4$ m/s² (ngược chiều dương, nên c sai về dấu); $t=\dfrac{0-20}{-4}=5$ s.
 
 #q B9 II 25
 Một ô tô chạy với tốc độ 54 km/h trên đoạn đường thẳng thì người lái xe hãm phanh cho ô tô chạy thẳng chậm dần đều. Sau khi chạy thêm 250 m thì tốc độ của ô tô chỉ còn 5 m/s.
@@ -12,6 +14,8 @@ a) Vận tốc ban đầu của ô tô trước khi hãm phanh là 20 m/s.
 b) Gia tốc của ô tô là 0,4 m/s².
 c) Sau 25 s kể từ khi hãm phanh, xe đi được 250 m.
 d) Sau 37,5 s kể từ lúc hãm phanh, xe dừng hẳn.
+=> S Đ Đ Đ
+=: $v_0=54$ km/h $=15$ m/s. $a=\dfrac{5^2-15^2}{2\cdot 250}=-0{,}4$ m/s² (chọn chiều dương là chiều chuyển động), độ lớn 0,4 m/s²: đề không chọn chiều dương nên ý b xét theo độ lớn. Sau 25 s: $v=15-0{,}4\cdot 25=5$ m/s, đúng lúc đi được 250 m. Dừng khi $t=\dfrac{15}{0{,}4}=37{,}5$ s.
 
 #q B8 II 25
 Một ô tô tải đang chạy trên đường thẳng với vận tốc 18 km/h thì tăng dần đều vận tốc. Sau 20 s ô tô đạt được vận tốc 36 km/h.
@@ -19,6 +23,8 @@ a) Gia tốc của ô tô được xác định bằng biểu thức $a=\dfrac{v
 b) Gia tốc của ô tô là 2,5 m/s².
 c) Vận tốc ô tô đạt được sau 40 s là 20 m/s.
 d) Sau 60 s kể từ khi tăng tốc, ô tô đạt vận tốc 72 km/h.
+=> Đ S S Đ
+=: $v_0=5$ m/s, $v=10$ m/s: $a=\dfrac{10-5}{20}=0{,}25$ m/s². Sau 40 s: $v=5+0{,}25\cdot 40=15$ m/s. Sau 60 s: $v=5+0{,}25\cdot 60=20$ m/s $=72$ km/h.
 
 #q B9 II 25
 Một xe đạp đang đi với vận tốc 2 m/s thì xuống dốc chuyển động nhanh dần đều với gia tốc 0,2 m/s². Cùng lúc đó, một ô tô đang chạy với vận tốc 20 m/s lên dốc, chuyển động chậm dần đều với gia tốc 0,4 m/s². Chọn chiều từ chân dốc lên đỉnh dốc là chiều dương. Xác định vị trí hai xe gặp nhau trên dốc. Biết dốc dài 570 m.
@@ -27,6 +33,10 @@ a) Chuyển động của ô tô: $v_{01}=20\ \text{m/s};\ a_1=0{,}4\ \text{m/s}
 b) Chuyển động của xe đạp: $v_{02}=-2\ \text{m/s};\ a_2=-0{,}2\ \text{m/s}^2$.
 c) Phương trình độ dời của ô tô, xe đạp: $d_1=20t+0{,}2t^2$; $d_2=-2t-0{,}1t^2$.
 d) Vị trí hai xe gặp nhau cách chân dốc 420 m.
+=> S Đ S Đ
+=: Ô tô lên dốc chậm dần: $v_{01}=20$ m/s, $a_1=-0{,}4$ m/s². Xe đạp xuống dốc nhanh dần theo chiều âm: $v_{02}=-2$ m/s, $a_2=-0{,}2$ m/s². $d_1=20t-0{,}2t^2$. Gốc ở chân dốc: $x_1=20t-0{,}2t^2$, $x_2=570-2t-0{,}1t^2$. Gặp nhau: $0{,}1t^2-22t+570=0$ ⇒ $t=30$ s ⇒ $x=420$ m.
 
 #q B8 III 25
 Một người lái xe máy đang chạy xe với vận tốc 36 km/h thì nhìn thấy một cái hố sâu trước mặt. Người ấy kịp thời phanh gấp xe thì xe tiếp tục chạy thêm 3 s nữa mới dừng lại. Tính gia tốc trung bình của xe theo đơn vị m/s²? (kết quả lấy 1 chữ số sau dấu phẩy thập phân)
+=> −3,3 (độ lớn 3,3)
+=: $v_0=36$ km/h $=10$ m/s; $a=\dfrac{0-10}{3}\approx -3{,}3$ m/s².

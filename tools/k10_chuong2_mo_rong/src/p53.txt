@@ -20,6 +20,8 @@ A. điểm ném và điểm cao nhất của quỹ đạo.
 B. điểm cao nhất của quỹ đạo và điểm rơi.
 C. điểm cao nhất của quỹ đạo và điểm có gia tốc bằng 0.
 D. điểm ném và điểm rơi trên mặt đất.
+=> D
+=: Tầm bay xa là khoảng cách theo phương ngang giữa điểm ném và điểm rơi (cùng độ cao).
 
 #q B12 I 53
 Trong hình vẽ sau,

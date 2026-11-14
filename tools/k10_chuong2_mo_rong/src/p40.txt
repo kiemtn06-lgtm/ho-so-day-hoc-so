@@ -4,6 +4,8 @@ A. Khi rơi tự do tốc độ của vật tăng dần.
 B. Vật rơi tự do khi lực cản không khí rất nhỏ so với trọng lực.
 C. Vận động viên nhảy dù từ máy bay xuống mặt đất sẽ rơi tự do.
 D. Rơi tự do có quỹ đạo là đường thẳng.
+=> C
+=: Vận động viên nhảy dù chịu lực cản không khí lớn (nhất là khi dù mở) nên không rơi tự do.
 
 #q B10 I 40
 Đặc điểm nào dưới đây **không** phải là đặc điểm của chuyển động rơi tự do của các vật?
@@ -11,6 +13,8 @@ A. Chuyển động theo phương thẳng đứng, chiều từ trên xuống.
 B. Chuyển động thẳng nhanh dần đều.
 C. Ở cùng một nơi và gần mặt đất, mọi vật rơi tự do như nhau.
 D. Lúc t = 0 thì vận tốc của vật luôn khác 0.
+=> D
+=: Rơi tự do bắt đầu từ trạng thái nghỉ: lúc $t=0$ thì $v=0$.
 
 #q B10 I 40
 Nhận xét nào sau đây là **sai**?
@@ -18,6 +22,8 @@ A. Vectơ gia tốc rơi tự do có phương thẳng đứng, hướng xuống.
 B. Tại cùng một nơi trên Trái Đất gia tốc rơi tự do không đổi.
 C. Gia tốc rơi tự do thay đổi theo vĩ độ.
 D. Gia tốc rơi tự do là 9,81 m/s² tại mọi nơi.
+=> D
+=: $g$ thay đổi theo vĩ độ và độ cao, không phải 9,81 m/s² ở mọi nơi.
 
 #q B10 I 40
 Vật rơi tự do
@@ -25,6 +31,8 @@ A. khi từ nơi rất cao xuống mặt đất.
 B. khi hợp lực tác dụng vào vật hướng thẳng xuống mặt đất.
 C. chỉ dưới tác dụng của trọng lực.
 D. khi vật có khối lượng lớn rơi từ cao xuống mặt đất.
+=> C
+=: Rơi tự do là rơi chỉ dưới tác dụng của trọng lực.
 
 #q B10 I 40
 (SBT-KNTT) Thả một hòn sỏi từ độ cao h xuống đất. Hòn sỏi rơi trong 2 s. Nếu thả hòn sỏi từ độ cao 2h xuống đất thì hòn sỏi sẽ rơi trong bao lâu?
@@ -32,6 +40,8 @@ A. 2 s.
 B. $2\sqrt{2}$ s.
 C. 4 s.
 D. $4\sqrt{2}$ s.
+=> B
+=: $t=\sqrt{\dfrac{2h}{g}}\sim\sqrt h$: độ cao gấp 2 thì thời gian gấp $\sqrt2$ ⇒ $2\sqrt2$ s.
 
 #q B10 I 40
 (SBT-KNTT) Thả vật rơi tự do từ độ cao h xuống đất. Công thức tính vận tốc của vật khi chạm đất là:
@@ -39,6 +49,8 @@ A. $v=2\sqrt{gh}$
 B. $v=gh$
 C. $v=2gh$
 D. $v=\sqrt{gh}$
+=> Không có
+=: Công thức đúng là $v=\sqrt{2gh}$, không có trong bốn phương án (bản gốc in sai; SBT-KNTT có phương án $v=\sqrt{2gh}$). Giáo viên nên sửa một phương án thành $v=\sqrt{2gh}$.
 
 #q B10 I 40
 (SBT-KNTT) Một vật được thả rơi tự do từ độ cao 9,8 m xuống đất. Bỏ qua lực cản của không khí. Lấy gia tốc rơi tự do g = 9,8 m/s². Vận tốc v của vật trước khi chạm đất bằng
@@ -46,6 +58,8 @@ A. $9{,}8\sqrt{2}$ m/s
 B. 9,8 m/s.
 C. 98 m/s.
 D. 6,9 m/s.
+=> A
+=: $v=\sqrt{2gh}=\sqrt{2\cdot 9{,}8\cdot 9{,}8}=9{,}8\sqrt2$ m/s.
 
 #q B10 I 40
 Một vật được thả rơi tự do từ đỉnh tháp, nó chạm đất trong thời gian 4 s. Lấy $g=10\ \text{m/s}^2$. Chiều cao của tháp là
@@ -53,6 +67,8 @@ A. 80 m
 B. 40 m
 C. 20 m
 D. 160 m
+=> A
+=: $h=\dfrac12gt^2=\dfrac12\cdot 10\cdot 4^2=80$ m.
 
 #q B10 I 40
 Một vật rơi tự do từ độ cao 20 m với đất. Lấy $g=10\ \text{m/s}^2$. Thời gian để vật chạm đất là:
@@ -60,3 +76,5 @@ A. 1 s
 B. $\sqrt{2}$ s
 C. 2 s
 D. 4 s
+=> C
+=: $t=\sqrt{\dfrac{2h}{g}}=\sqrt{\dfrac{2\cdot 20}{10}}=2$ s.

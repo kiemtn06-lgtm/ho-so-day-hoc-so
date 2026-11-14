@@ -3,6 +3,8 @@ A. $v=v_0+gt$.
 B. $v=\sqrt{v_0^2+g^2t^2}$.
 C. $v=\sqrt{v_0+gt}$.
 D. $v=gt$.
+=> B
+=: $v_x=v_0$, $v_y=gt$ ⇒ $v=\sqrt{v_0^2+g^2t^2}$.
 
 #q B12 I 49
 Khi vật được ném theo phương ngang thì trên phương Ox
@@ -10,6 +12,8 @@ A. vật chuyển động thẳng đều.
 B. vật chuyển động nhanh dần đều.
 C. vật có gia tốc a = g.
 D. phương trình chuyển động $x=v_0t+\dfrac{gt^2}{2}$.
+=> A
+=: Trên Ox không có lực tác dụng (bỏ qua lực cản): chuyển động thẳng đều với $v_x=v_0$.
 
 #q B12 I 49
 Một vật ném theo phương ngang. Khi đang chuyển động sẽ chịu tác dụng của các lực.
@@ -17,6 +21,8 @@ A. lực ném và trọng lực.
 B. lực cản của không khí và trọng lực.
 C. lực ném và lực ma sát.
 D. trọng lực và phản lực đàn hồi.
+=> B
+=: Sau khi rời tay không còn "lực ném"; vật chịu trọng lực và lực cản của không khí.
 
 #q B12 I 49
 Đối với hai vật bị ném ngang thì vật nào có
@@ -24,6 +30,8 @@ A. vận tốc ban đầu lớn hơn và khối lượng lớn hơn thì bay xa 
 B. khối lượng lớn hơn thì bay xa hơn.
 C. khối lượng nhỏ hơn thì bay xa hơn.
 D. vận tốc ban đầu và độ cao ban đầu lớn hơn thì bay xa hơn.
+=> D
+=: $L=v_0\sqrt{\dfrac{2h}{g}}$: phụ thuộc vận tốc ban đầu và độ cao, không phụ thuộc khối lượng.
 
 #q B12 I 49
 Một vật ném theo phương ngang. Khi đang chuyển động sẽ chịu tác dụng của các lực:
@@ -31,6 +39,8 @@ A. lực ném và trọng lực.
 B. lực cản của không khí và trọng lực.
 C. lực ném và lực ma sát.
 D. trọng lực và phản lực đàn hồi.
+=> B
+=: Sau khi rời tay không còn "lực ném"; vật chịu trọng lực và lực cản của không khí.
 
 #q B12 I 49
 Vật chuyển động ném ngang từ độ cao h và vận tốc ban đầu $v_0$. Thời gian rơi đến khi chạm đất là
@@ -38,6 +48,8 @@ A. $t=\sqrt{\dfrac{2h}{g}}$.
 B. $t=\sqrt{\dfrac{h}{2g}}$.
 C. $t=\sqrt{\dfrac{h}{g}}$.
 D. $t=\sqrt{2hg}$.
+=> A
+=: $h=\dfrac12gt^2$ ⇒ $t=\sqrt{\dfrac{2h}{g}}$.
 
 #q B12 I 49
 Trong chuyển động ném ngang, gia tốc của vật tại một vị trí bất kì luôn có hướng theo
@@ -45,6 +57,8 @@ A. phương ngang, cùng chiều chuyển động.
 B. phương ngang, ngược chiều chuyển động.
 C. phương thẳng đứng, chiều từ trên xuống.
 D. phương thẳng đứng, chiều từ dưới lên.
+=> C
+=: Gia tốc của vật ném ngang là $\vec g$: phương thẳng đứng, chiều từ trên xuống.
 
 #q B12 I 49
 Một vật có khối lượng M, được ném ngang với vận tốc ban đầu V ở độ cao h. Bỏ qua sức cản không khí. Tầm bay xa của vật phụ thuộc vào
@@ -52,6 +66,8 @@ A. M và V.
 B. M và h.
 C. V và h.
 D. M, V và h.
+=> C
+=: $L=V\sqrt{\dfrac{2h}{g}}$: phụ thuộc V và h.
 
 #q B12 I 49
 Để tăng tầm xa của vật ném theo phương ngang với sức cản không khí không đáng kể thì biện pháp nào sau đây có hiệu quả nhất?
@@ -59,6 +75,8 @@ A. Giảm khối lượng vật ném.
 B. Tăng độ cao điểm ném.
 C. Giảm độ cao điểm ném.
 D. Tăng vận tốc ném.
+=> D
+=: $L=v_0\sqrt{\dfrac{2h}{g}}$: L tỉ lệ thuận với $v_0$ nhưng chỉ tỉ lệ với $\sqrt h$, nên tăng vận tốc ném hiệu quả nhất.
 
 #q B12 I 49
 Từ một độ cao, ném đồng thời hai vật theo phương ngang với vận tốc khác nhau $v_1>v_2$.

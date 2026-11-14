@@ -28,6 +28,8 @@ A. Đo thời gian và quãng đường chuyển động của vật.
 B. Máy bắn tốc độ.
 C. Đồng hồ đo thời gian.
 D. Thước đo quãng đường.
+=> A
+=: $g=\dfrac{2s}{t^2}$: cần đo thời gian và quãng đường chuyển động của vật.
 
 #q B11 I 43
 Chọn câu **đúng**. Những dụng cụ chính để đo gia tốc rơi tự do của khối trụ gồm:

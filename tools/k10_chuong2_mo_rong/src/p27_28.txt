@@ -4,6 +4,8 @@ A. có phương vuông góc với vectơ vận tốc.
 B. có độ lớn không đổi.
 C. cùng hướng với vectơ vận tốc.
 D. ngược hướng với vectơ vận tốc.
+=> B
+=: Chuyển động thẳng biến đổi đều có gia tốc không đổi (cả hướng và độ lớn).
 
 #q B9 I 27
 Phương trình chuyển động của một vật trên trục Ox có dạng: $x=-2t^2+15t+10$. Trong đó t tính bằng giây, x tính bằng mét. Vật này chuyển động
@@ -11,6 +13,8 @@ A. nhanh dần đều rồi chậm dần đều theo chiều âm của trục Ox
 B. chậm dần đều theo chiều dương rồi nhanh dần đều theo chiều âm của trục Ox.
 C. nhanh dần đều rồi chậm dần đều theo chiều dương của trục Ox.
 D. chậm dần đều rồi nhanh dần đều theo chiều âm của trục Ox.
+=> B
+=: $v_0=15$ m/s $>0$, $a=-4$ m/s² $<0$: chậm dần đều theo chiều dương đến $t=3{,}75$ s rồi nhanh dần đều theo chiều âm.
 
 #q B9 I 27
 Một vật chuyển động thẳng chậm dần đều có vận tốc ban đầu $v_0$, gia tốc có độ lớn a không đổi, phương trình vận tốc có dạng: $v=v_0+at$. Vật này có
@@ -18,6 +22,8 @@ A. tích $v.a>0$.
 B. a luôn dương.
 C. v tăng theo thời gian.
 D. a luôn ngược dấu với v.
+=> D
+=: Chậm dần đều thì $a.v<0$: $a$ luôn ngược dấu với $v$.
 
 #q B9 I 27
 Một vật chuyển động trên đoạn thẳng, tại một thời điểm vật có vận tốc v và gia tốc a. Chuyển động có
@@ -25,6 +31,8 @@ A. gia tốc a âm là chuyển động chậm dần đều.
 B. gia tốc a dương là chuyển động nhanh dần đều.
 C. $a.v<0$ là chuyển động chậm dần đều.
 D. vận tốc v âm là chuyển động nhanh dần đều.
+=> C
+=: $a.v<0$: chuyển động chậm dần đều; dấu của riêng $a$ hay $v$ không cho biết nhanh hay chậm dần.
 
 #q B9 I 27
 Với chiều (+) là chiều chuyển động, trong công thức $d=v_0t+\dfrac{at^2}{2}$ của chuyển động thẳng biến đổi đều, đại lượng có thể có giá trị dương hay giá trị âm là:
@@ -32,6 +40,8 @@ A. Gia tốc.
 B. Quãng đường.
 C. Vận tốc.
 D. Thời gian.
+=> A
+=: Với chiều dương là chiều chuyển động thì $d,\ v_0,\ t$ đều dương; chỉ gia tốc có thể dương (NDĐ) hoặc âm (CDĐ).
 
 #q B9 I 27
 Chọn phát biểu **sai**.
@@ -39,6 +49,8 @@ A. Trong chuyển động thẳng biến đổi đều, quãng đường đi đ�
 B. Gia tốc của chuyển động thẳng biến đổi đều có độ lớn không đổi.
 C. Vectơ gia tốc của chuyển động thẳng biến đổi đều có thể cùng chiều hoặc ngược chiều với vectơ vận tốc.
 D. Vận tốc tức thời của chuyển động thẳng biến đổi đều có độ lớn tăng hoặc giảm đều theo thời gian.
+=> A
+=: Quãng đường đi được trong những khoảng thời gian bằng nhau bằng nhau là đặc điểm của chuyển động thẳng đều.
 
 #q B9 I 27
 Công thức tính quãng đường đi được của chuyển động thẳng nhanh dần đều là
@@ -46,6 +58,8 @@ A. $s=v_0t+\dfrac{1}{2}at^2$ (a và $v_0$ cùng dấu).
 B. $s=v_0t+\dfrac{1}{2}at^2$ (a và $v_0$ trái dấu).
 C. $x=x_0+v_0t+\dfrac{1}{2}at^2$ (a và $v_0$ cùng dấu).
 D. $x=x_0+v_0t+\dfrac{1}{2}at^2$ (a và $v_0$ trái dấu).
+=> A
+=: NDĐ: $a$ cùng dấu $v_0$; quãng đường $s=v_0t+\dfrac{1}{2}at^2$.
 
 #q B9 I 28
 Phương trình của chuyển động thẳng chậm dần đều là
@@ -53,6 +67,8 @@ A. $x=v_0t+\dfrac{1}{2}at^2$ (a và $v_0$ cùng dấu).
 B. $x=v_0t+\dfrac{1}{2}at^2$ (a và $v_0$ trái dấu).
 C. $x=x_0+v_0t+\dfrac{1}{2}at^2$ (a và $v_0$ cùng dấu).
 D. $x=x_0+v_0t+\dfrac{1}{2}at^2$ (a và $v_0$ trái dấu).
+=> D
+=: Phương trình chuyển động: $x=x_0+v_0t+\dfrac{1}{2}at^2$; chậm dần đều khi $a$ và $v_0$ trái dấu.
 
 #q B9 I 28
 Trong công thức liên hệ giữa quãng đường đi được, vận tốc và gia tốc ($v^2-v_0^2=2as$) của chuyển động thẳng nhanh dần đều, ta có các điều kiện nào dưới đây?
@@ -60,6 +76,8 @@ A. $s>0;\ a>0;\ v>v_0$.
 B. $s>0;\ a<0;\ v<v_0$.
 C. $s>0;\ a>0;\ v<v_0$.
 D. $s>0;\ a<0;\ v>v_0$.
+=> A
+=: NDĐ (chiều dương là chiều chuyển động): $s>0,\ a>0,\ v>v_0$.
 
 #q B9 I 28
 Một xe ô tô chuyển động thẳng nhanh dần đều với vận tốc đầu 18 km/h. Trong giây thứ tư kể từ lúc bắt đầu chuyển động nhanh dần, xe đi được 12 m. Hãy tính gia tốc của vật?
@@ -67,6 +85,8 @@ A. 1 m/s²
 B. 2 m/s².
 C. −1 m/s².
 D. −2 m/s²
+=> B
+=: $v_0=5$ m/s. Giây thứ tư: $s_4-s_3=v_0+\dfrac{a}{2}(4^2-3^2)=5+3{,}5a=12$ ⇒ $a=2$ m/s².
 
 #q B9 I 28
 Một vật bắt đầu chuyển động nhanh dần đều trong 10 s với gia tốc của vật 2 m/s². Quãng đường vật đi được trong 2 s cuối cùng là bao nhiêu?
@@ -74,6 +94,8 @@ A. 16 m
 B. 26 m
 C. 36 m
 D. 44 m
+=> C
+=: $s_{10}=\dfrac{1}{2}\cdot 2\cdot 10^2=100$ m; $s_8=64$ m ⇒ 2 s cuối đi được 36 m.
 
 #q B9 I 28
 Một ô tô xuống dốc nhanh dần đều không vận tốc đầu. Trong giây thứ 5 nó đi được 13,5 m. Gia tốc của ô tô là
@@ -81,6 +103,8 @@ A. 3 m/s².
 B. 1,08 m/s².
 C. 27 m/s².
 D. 2,16 m/s².
+=> A
+=: Giây thứ 5: $\dfrac{a}{2}(5^2-4^2)=4{,}5a=13{,}5$ ⇒ $a=3$ m/s².
 
 #q B9 I 28
 Một xe ô tô chuyển động thẳng nhanh dần đều với vận tốc đầu 18 km/h. Trong giây thứ tư kể từ lúc bắt đầu chuyển động nhanh dần, xe đi được 12 m. Hãy tính quãng đường đi được sau 10 s.
@@ -88,6 +112,8 @@ A. 120 m
 B. 130 m
 C. 140 m
 D. 150 m
+=> D
+=: Như câu trước: $v_0=5$ m/s, $a=2$ m/s² ⇒ $s=5\cdot 10+\dfrac{1}{2}\cdot 2\cdot 10^2=150$ m.
 
 #q B9 I 28
 Một ô tô bắt đầu chuyển động thẳng nhanh dần đều. Trong giây thứ 6 xe đi được quãng đường 11 m. Tính gia tốc của xe.
@@ -95,6 +121,8 @@ A. 2 m/s²
 B. 4 m/s²
 C. 5 m/s²
 D. 3 m/s²
+=> A
+=: Giây thứ 6: $\dfrac{a}{2}(6^2-5^2)=5{,}5a=11$ ⇒ $a=2$ m/s².
 
 #q B9 I 28
 Trên đường thẳng, ô tô chuyển động nhanh dần đều trên hai đoạn đường liên tiếp bằng nhau và bằng 150 m, lần lượt trong 6 s và 3 s. Gia tốc của ô tô **gần giá trị nào nhất** sau đây?
@@ -103,3 +131,5 @@ A. 7,2 m/s².
 B. 2,1 m/s².
 C. 5,6 m/s².
 D. 4,3 m/s².
+=> C
+=: Đoạn 1: $6v_0+18a=150$. Cả hai đoạn: $9v_0+40{,}5a=300$. Giải ra $a\approx 5{,}56$ m/s².

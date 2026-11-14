@@ -6,6 +6,8 @@ A. Đồ thị 1.
 B. Đồ thị 2.
 C. Đồ thị 3.
 D. Đồ thị 4.
+=> D
+=: Đồ thị 4 có đường $v(t)$ dốc nhất (độ dốc của đồ thị $v-t$ là gia tốc).
 
 #q B9 I 31
 Hình 7.2 mô tả đồ thị $(v-t)$ của bốn xe ô tô A, B, C, D. Nhận định nào sau đây là đúng?
@@ -14,6 +16,8 @@ A. Xe C chuyển động đều, còn các xe còn lại là chuyển động bi
 B. Chỉ có xe C chuyển động đều và chuyển động của xe A là biến đổi đều.
 C. Xe A và B chuyển động biến đổi đều, xe C chuyển động đều.
 D. Xe D chuyển động biến đổi đều, xe C chuyển động đều.
+=> C
+=: Đồ thị A, B là đường thẳng xiên: biến đổi đều; C nằm ngang: chuyển động đều; D là đường cong: biến đổi nhưng không đều.
 
 #q B9 I 31
 Đồ thị vận tốc theo thời gian của chuyển động thẳng như hình vẽ. Chuyển động thẳng nhanh dần đều là đoạn
@@ -22,6 +26,8 @@ A. MN.
 B. NO.
 C. OP.
 D. PQ.
+=> D
+=: Đoạn PQ: vận tốc tăng đều theo thời gian.
 
 #q B9 I 31
 Quan sát đồ thị $(v-t)$ trong hình vẽ của một vật đang chuyển động thẳng và cho biết trong khoảng thời gian nào gia tốc có độ lớn là lớn nhất?
@@ -30,6 +36,8 @@ A. Trong khoảng thời gian từ 0 đến 1 s.
 B. Trong khoảng thời gian từ 1 đến 2 s.
 C. Trong khoảng thời gian từ 2 đến 3 s.
 D. Trong khoảng thời gian từ 3 đến 4 s.
+=> A
+=: Từ 0 đến 1 s vận tốc tăng 4 ô trong 1 s, độ dốc lớn nhất (từ 2 đến 3 s chỉ giảm 2 ô).
 
 #q B9 I 32
 Hình bên là đồ thị vận tốc – thời gian của hai vật chuyển động thẳng cùng hướng, xuất phát từ cùng một vị trí, gốc thời gian là lúc vật (1) bắt đầu chuyển động. Nhận xét **sai** là
@@ -38,6 +46,8 @@ A. Hai vật cùng chuyển động nhanh dần.
 B. Vật 1 bắt đầu chuyển động từ trạng thái nghỉ.
 C. Vật 2 chuyển động với gia tốc lớn hơn vật 1.
 D. Ở thời điểm $t_0$, vật 1 ở phía sau vật 2.
+=> C
+=: Đường (1) dốc hơn đường (2) nên vật 1 có gia tốc lớn hơn; nhận xét C sai. (Đến $t_0$ diện tích dưới đường (2) lớn hơn nên vật 1 ở phía sau, D đúng.)
 
 #q B9 I 32
 Đồ thị vận tốc – thời gian của một vật chuyển động được biểu diễn như hình vẽ. Gọi $a_1$, $a_2$, $a_3$ lần lượt là gia tốc của vật trong các giai đoạn tương ứng là từ t = 0 đến $t_1=20\ \text{s}$; từ $t_1=20\ \text{s}$ đến $t_2=60\ \text{s}$; từ $t_2=60\ \text{s}$ đến $t_3=80\ \text{s}$. Giá trị của $a_1$, $a_2$, $a_3$ lần lượt là
@@ -46,6 +56,8 @@ A. −1 m/s²; 0; 2 m/s².
 B. 1 m/s²; 0; −2 m/s².
 C. −1 m/s²; 2 m/s²; 0.
 D. 1 m/s²; 0; 2 m/s².
+=> B
+=: $a_1=\dfrac{40-20}{20}=1$ m/s²; $a_2=0$; $a_3=\dfrac{0-40}{20}=-2$ m/s².
 
 #q B9 I 32
 Một vật chuyển động thẳng biến đổi đều có đồ thị vận tốc v theo thời gian t như hình vẽ. Phương trình vận tốc của vật là
@@ -54,3 +66,5 @@ A. $v=15-t$ (m/s).
 B. $v=t+15$ (m/s).
 C. $v=10-15t$ (m/s).
 D. $v=10-5t$ (m/s).
+=> A
+=: Đường thẳng qua $(5\ \text{s};10\ \text{m/s})$ và $(15\ \text{s};0)$: $a=-1$ m/s², $v_0=15$ m/s ⇒ $v=15-t$.

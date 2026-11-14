@@ -4,6 +4,8 @@ A. 50 m, 50 m
 B. 40 m, 60 m
 C. 32 m, 68 m
 D. 25 m, 75 m
+=> D
+=: Từ nghỉ, hai khoảng thời gian bằng nhau đi được quãng đường tỉ lệ $1:3$ ⇒ 25 m và 75 m.
 
 #q B9 I 29
 Một người đứng ở sân ga nhìn đoàn tàu bắt đầu chuyển bánh nhanh dần đều trên một đường thẳng thì thấy toa thứ nhất đi qua trước mặt mình trong 3 giây. Trong thời gian Δt toa thứ 15 đi qua trước mặt người ấy, Δt **gần giá trị nào nhất** sau đây?
@@ -11,6 +13,8 @@ A. 0,4 s.
 B. 0,5 s.
 C. 0,3 s.
 D. 0,7 s.
+=> A
+=: Toa thứ $n$ qua trong $\Delta t=t_1(\sqrt n-\sqrt{n-1})=3(\sqrt{15}-\sqrt{14})\approx 0{,}39$ s.
 
 #q B9 II 29
 Một ô tô bắt đầu chuyển động thẳng nhanh dần đều. Trong giây thứ 6 xe đi được quãng đường 11 m.
@@ -18,6 +22,8 @@ a) Gia tốc của xe ô tô là 0,61 m/s².
 b) Vận tốc của xe sau 10 s chuyển động là 6,1 m/s.
 c) Quãng đường xe đi được sau 10 s chuyển động là 100 m.
 d) Quãng đường xe đi trong 20 s đầu tiên là 400 m.
+=> S S Đ Đ
+=: Giây thứ 6: $5{,}5a=11$ ⇒ $a=2$ m/s². Sau 10 s: $v=20$ m/s; $s_{10}=\dfrac{1}{2}\cdot 2\cdot 10^2=100$ m; $s_{20}=400$ m.
 
 #q B9 II 29
 Một xe ô tô chuyển động thẳng nhanh dần đều với vận tốc đầu 18 km/h. Trong giây thứ tư kể từ lúc bắt đầu chuyển động nhanh dần, xe đi được 12 m.
@@ -25,6 +31,8 @@ a) Quãng đường xe đi được trong giây thứ 10 là 50 m.
 b) Vật chuyển động nhanh dần đều trong 10 s, quãng đường đi được trong 4 s cuối là 84 m.
 c) Xe đạt vận tốc 36 km/h sau thời gian 2,5 s.
 d) Quãng đường xe đi sau 2,5 s là 18,5 m.
+=> S Đ Đ S
+=: $v_0=5$ m/s, $a=2$ m/s². Giây thứ 10: $5+\dfrac{2}{2}(10^2-9^2)=24$ m. 4 s cuối: $s_{10}-s_6=150-66=84$ m. $v=10$ m/s khi $t=\dfrac{10-5}{2}=2{,}5$ s; $s(2{,}5)=5\cdot 2{,}5+2{,}5^2=18{,}75$ m.
 
 #q B9 II 29
 Một xe đang chuyển động với vận tốc 7,2 km/h thì tăng tốc. Sau 4 s, xe đi thêm được 40 m.
@@ -32,6 +40,8 @@ a) Gia tốc của xe là 4 m/s².
 b) Vận tốc của xe sau 6 s là 26 m.
 c) Cuối giây thứ 6, xe tắt máy. Sau 13 s thì ngừng hẳn lại. Gia tốc của xe sau khi tắt máy là 2 m/s².
 d) Quãng đường đi được cho đến khi dừng lại là 169 m.
+=> Đ Đ Đ Đ
+=: $v_0=2$ m/s: $40=2\cdot 4+\dfrac{a}{2}\cdot 4^2$ ⇒ $a=4$ m/s². $v_6=2+4\cdot 6=26$ m/s (ý b ghi nhầm đơn vị "m"). Tắt máy: $a'=\dfrac{0-26}{13}=-2$ m/s², độ lớn 2 m/s². Kể từ lúc tắt máy xe đi thêm $\dfrac{26^2}{2\cdot 2}=169$ m (cả quá trình từ lúc tăng tốc: $84+169=253$ m).
 
 #q B9 II 29
 Một chiếc xe đang chạy với tốc độ 36 km/h thì tài xế hãm phanh, xe chuyển động thẳng chậm dần đều rồi dừng lại sau 5 s.
@@ -39,3 +49,5 @@ a) Gia tốc của xe là 2 m/s².
 b) Quãng đường xe chạy đến lúc dừng hẳn là 25.
 c) Quãng đường xe chạy sau 4 s là 20 m.
 d) Quãng đường xe chạy trong giây cuối cùng là 5 m.
+=> Đ Đ S S
+=: $v_0=10$ m/s: $a=\dfrac{0-10}{5}=-2$ m/s², độ lớn 2 m/s². Quãng đường đến lúc dừng: $\dfrac{10^2}{2\cdot 2}=25$ m. Sau 4 s: $10\cdot 4-4^2=24$ m. Giây cuối: $\dfrac{1}{2}\cdot 2\cdot 1^2=1$ m.

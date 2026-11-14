@@ -1,18 +1,26 @@
 #q B9 III 37
 Cho đồ thị của chuyển động như hình, tính gia tốc của vật trong 40 s kể từ khi bắt đầu chuyển động, lấy đơn vị m/s²? (kết quả lấy đến 0 chữ số phần thập phân)
 [[IMG 37 1125 265 1815 830]]
+=> 2
+=: $a=\dfrac{120-40}{40}=2$ m/s² (đọc trục vận tốc theo m/s; nếu trục ghi cm/s thì $a=2$ cm/s² $=0{,}02$ m/s²).
 
 #q B9 III 37
 Đồ thị vận tốc – thời gian trong hình bên dưới là của một xe bus và một xe máy đang chạy cùng chiều trên một đường thẳng. Xe bus đang đứng yên, bắt đầu chuyển động thì xe máy đi tới. Sau thời gian bao lâu thì xe bus đuổi kịp xe máy, lấy đơn vị giây? (kết quả lấy đến 0 chữ số phần thập phân)
 [[IMG 37 1095 900 1865 1265]]
+=> 10
+=: Xe máy đều 8 m/s. Xe bus: 0–4 s tăng 0→8 m/s (đi 16 m), 4–8 s tăng 8→12 m/s (đi 40 m), sau đó đều 12 m/s. Đuổi kịp khi $56+12(t-8)=8t$ ⇒ $t=10$ s.
 
 #q B9 III 37
 Một quả bóng bàn được bắn ra theo phương ngang với vận tốc đầu bằng không đến va chạm vào tường và bật lại trong khoảng thời gian rất ngắn. Hình bên là đồ thị (v – t) mô tả chuyển động của quả bóng trong 20 s đầu tiên. Tính quãng đường mà bóng bay được sau 20 s kể từ lúc bắt đầu chuyển động theo đơn vị dm? (kết quả lấy đến 0 chữ số phần thập phân)
 [[IMG 37 1090 1320 1850 1840]]
+=> 1125
+=: 0–5 s: $\dfrac12\cdot 5\cdot 15=37{,}5$ m; 5–20 s (bật ngược lại): $\dfrac12\cdot 15\cdot 10=75$ m. Quãng đường 112,5 m $=1125$ dm.
 
 #q B9 III 37
 Hai vật A và B chuyển động cùng chiều trên đường thẳng có đồ thị vận tốc – thời gian như hình vẽ. Biết ban đầu hai vật cách nhau 78 m. Hai vật có cùng vận tốc ở thời điểm nào, lấy đơn vị giây? (kết quả lấy đến 1 chữ số phần thập phân)
 [[IMG 37 1105 1905 1760 2315]]
+=> 13,3
+=: $v_A=40-2t$, $v_B=t$ ⇒ $40-2t=t$ ⇒ $t\approx 13{,}3$ s (khoảng cách ban đầu 78 m không cần dùng).
 
 #t B10 37
 ## SỰ RƠI TỰ DO

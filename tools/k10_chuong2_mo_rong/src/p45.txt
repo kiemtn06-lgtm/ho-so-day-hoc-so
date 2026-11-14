@@ -6,6 +6,8 @@ A. c – a – d – e – b.
 B. c – e – b – a – d.
 C. c – e – d – b – a.
 D. c – a – e – b – d.
+=> A
+=: Bố trí (c), chỉnh giá đỡ và đồng hồ (a), đặt vật, RESET, thả (d), đọc thời gian (e), lặp lại (b).
 
 #q B11 I 45
 Trước khi đo thời gian của một hoạt động ta thường ước lượng khoảng thời gian của hoạt động đó để
@@ -13,6 +15,8 @@ A. lựa chọn đồng hồ đo phù hợp.
 B. đặt mắt đúng cách.
 C. đọc kết quả đo chính xác.
 D. hiệu chỉnh đồng hồ đúng cách.
+=> A
+=: Ước lượng thời gian để chọn đồng hồ có giới hạn đo và độ chia nhỏ nhất phù hợp.
 
 #q B11 I 45
 Cho các bước đo thời gian của một hoạt động gồm:
@@ -26,6 +30,8 @@ A. (1), (2), (3), (4), (5)
 B. (3), (2), (5), (4), (1)
 C. (2), (3), (1), (5), (4)
 D. (2), (1), (3), (5), (4).
+=> C
+=: Ước lượng và chọn đồng hồ (2), hiệu chỉnh (3), đặt mắt đúng cách (1), đo (5), đọc và ghi kết quả (4).
 
 #q B11 I 45
 Trong một bài thực hành, gia tốc RTD được tính theo công thức $g=\dfrac{2h}{t^2}$. Sai số tỉ đối của phép đo trên tính theo công thức nào?
@@ -33,6 +39,8 @@ A. $\dfrac{\Delta g}{\bar{g}}=\dfrac{\Delta h}{\bar{h}}+2\dfrac{\Delta t}{\bar{t
 B. $\dfrac{\Delta g}{\bar{g}}=\dfrac{\Delta h}{\bar{h}}+\dfrac{\Delta t}{\bar{t}}$.
 C. $\dfrac{\Delta g}{\bar{g}}=\dfrac{\Delta h}{\bar{h}}-2\dfrac{\Delta t}{\bar{t}}$.
 D. $\dfrac{\Delta g}{g}=\dfrac{\Delta h}{h}+2\dfrac{\Delta t}{t}$.
+=> A
+=: $g=\dfrac{2h}{t^2}$ ⇒ $\dfrac{\Delta g}{\bar g}=\dfrac{\Delta h}{\bar h}+2\dfrac{\Delta t}{\bar t}$ (sai số tỉ đối tính theo các giá trị trung bình).
 
 #q B11 I 45
 Một học sinh tiến hành đo gia tốc rơi tự do tại phòng thí nghiệm theo hướng dẫn của SGK VL 10. Phép đo gia tốc RTD học sinh này cho giá trị trung bình sau nhiều lần đo là $\bar{g}=9{,}7166667\ \text{m/s}^2$ với sai số tuyệt đối tương ứng là $\Delta\bar{g}=0{,}0681212\ \text{m/s}^2$. Kết quả của phép đo được biểu diễn bằng
@@ -40,6 +48,8 @@ A. $g=9{,}72\pm0{,}068\ \text{m/s}^2$
 B. $g=9{,}7\pm0{,}1\ \text{m/s}^2$
 C. $g=9{,}72\pm0{,}07\ \text{m/s}^2$
 D. $g=9{,}717\pm0{,}068\ \text{m/s}^2$
+=> C
+=: Sai số tuyệt đối làm tròn đến một chữ số có nghĩa: $\Delta g\approx 0{,}07$ m/s²; giá trị trung bình lấy đến cùng hàng: $g=9{,}72\pm 0{,}07$ m/s².
 
 #q B11 I 45
 Để xác định gia tốc của một chuyển động thẳng biến đổi đều, một học sinh đã sử dụng đồng hồ bấm giờ và thước mét để xác định thời gian t và đo quãng đường L, sau đó xác định a bằng công thức $L=a\dfrac{t^2}{2}$. Kết quả cho thấy $L=(2\pm0{,}005)\ \text{m}$, $t=(4{,}2\pm0{,}2)\ \text{s}$. Gia tốc a bằng:
@@ -47,3 +57,5 @@ A. $(0{,}23\pm0{,}01)\ \text{m/s}^2$
 B. $(0{,}23\pm0{,}02)\ \text{m/s}^2$
 C. $(0{,}23\pm0{,}03)\ \text{m/s}^2$
 D. $(0{,}23\pm0{,}04)\ \text{m/s}^2$
+=> B
+=: $\bar a=\dfrac{2L}{t^2}=\dfrac{2\cdot 2}{4{,}2^2}\approx 0{,}227$ m/s². $\dfrac{\Delta a}{\bar a}=\dfrac{0{,}005}{2}+2\cdot\dfrac{0{,}2}{4{,}2}\approx 0{,}098$ ⇒ $\Delta a\approx 0{,}02$ m/s².

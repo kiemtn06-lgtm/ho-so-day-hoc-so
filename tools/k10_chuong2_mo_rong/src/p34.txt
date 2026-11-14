@@ -5,6 +5,8 @@ A. Hai vật cùng chuyển động nhanh dần.
 B. Vật 1 bắt đầu chuyển động từ trạng thái nghỉ.
 C. Vật 2 chuyển động với gia tốc lớn hơn vật 1.
 D. Ở thời điểm $t_0$, vật 1 ở phía sau vật 2.
+=> C
+=: Đường (1) dốc hơn đường (2) nên vật 1 có gia tốc lớn hơn; nhận xét C sai.
 
 #q B9 I 34
 Đồ thị vận tốc – thời gian của một vật chuyển động được biểu diễn như hình vẽ. Gọi $a_1$, $a_2$, $a_3$ lần lượt là gia tốc của vật trong các giai đoạn tương ứng là từ t = 0 đến $t_1=20\ \text{s}$; từ $t_1=20\ \text{s}$ đến $t_2=60\ \text{s}$; từ $t_2=60\ \text{s}$ đến $t_3=80\ \text{s}$. Giá trị của $a_1$, $a_2$, $a_3$ lần lượt là
@@ -13,6 +15,8 @@ A. −1 m/s²; 0; 2 m/s².
 B. 1 m/s²; 0; −2 m/s².
 C. −1 m/s²; 2 m/s²; 0.
 D. 1 m/s²; 0; 2 m/s².
+=> B
+=: $a_1=\dfrac{40-20}{20}=1$ m/s²; $a_2=0$; $a_3=\dfrac{0-40}{20}=-2$ m/s².
 
 #q B9 I 34
 Đồ thị vận tốc – thời gian của một vật chuyển động được biểu diễn như hình vẽ. Quãng đường vật đi được từ thời điểm t = 0 đến thời điểm t = 60 s là
@@ -21,6 +25,8 @@ A. 2,2 km.
 B. 1,1 km.
 C. 440 m.
 D. 1,2 km.
+=> A
+=: Diện tích dưới đồ thị: $\dfrac{(20+40)\cdot 20}{2}+40\cdot 40=600+1600=2200$ m $=2{,}2$ km.
 
 #q B9 I 34
 Một vật chuyển động có đồ thị vận tốc – thời gian như hình vẽ. Quãng đường đi được trong giai đoạn chuyển động thẳng chậm dần đều là
@@ -29,6 +35,8 @@ A. 62,5 m.
 B. 75 m.
 C. 37,5 m.
 D. 100 m.
+=> C
+=: Chậm dần đều từ 75 s đến 90 s: $s=\dfrac12\cdot 5\cdot 15=37{,}5$ m.
 
 #q B9 I 34
 Đồ thị vận tốc – thời gian ở Hình 9.5 mô tả chuyển động của một chú chó con đang chạy trong một ngõ thẳng và hẹp. Tính quãng đường đi được và độ dịch chuyển của chú chó sau 10 s.
@@ -37,3 +45,5 @@ A. S = 12 m, d = 9,5 m.
 B. S = 12,5 m, d = 9,5 m.
 C. S = 12 m, d = 9 m.
 D. S = 10 m, d = 9 m.
+=> C
+=: Diện tích các đoạn: 0–2 s: 2 m; 2–4 s: 4 m; 4–7 s: 4,5 m; 8–9 s: −0,5 m; 9–10 s: −1 m. Quãng đường $S=2+4+4{,}5+0{,}5+1=12$ m; độ dịch chuyển $d=10{,}5-1{,}5=9$ m.

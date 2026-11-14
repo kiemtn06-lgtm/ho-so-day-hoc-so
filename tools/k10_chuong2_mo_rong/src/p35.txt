@@ -5,6 +5,8 @@ a) Ô tô bắt đầu chuyển động với vận tốc ban đầu là 20 m/s.
 b) Gia tốc của ô tô trong 4 s đầu là 5 m/s².
 c) Gia tốc của ô tô từ giây thứ 20 đến giây thứ 28 là −2,5 m/s².
 d) Quãng đường ô tô đi được sau 20 s đầu là 320 m.
+=> S Đ Đ S
+=: Từ đồ thị: $v_0=0$; 0–4 s: $a=\dfrac{20}{4}=5$ m/s²; 20–28 s: $a=\dfrac{-20-0}{8}=-2{,}5$ m/s². Quãng đường 20 s đầu bằng diện tích hình thang: $\dfrac12\cdot 4\cdot 20+8\cdot 20+\dfrac12\cdot 8\cdot 20=280$ m.
 
 #q B9 II 35
 Từ các đồ thị trong hình 9.1. Nhận định sau đúng hay sai?
@@ -13,6 +15,8 @@ a) Chuyển động nhanh dần đều là: đồ thị a và b.
 b) Chuyển động chậm dần đều: đồ thị c.
 c) Đồ thị b: $v=v_0+at$ (a < 0).
 d) Đồ thị c: $v=v_0+at$ (a > 0).
+=> Đ Đ S S
+=: Đồ thị a, b: vận tốc tăng đều (NDĐ, $a>0$); đồ thị c: vận tốc giảm đều (CDĐ, $a<0$).
 
 #q B9 II 35
 Chất điểm chuyển động có đồ thị vận tốc theo thời gian như hình.
@@ -21,3 +25,5 @@ a) Quãng đường mà chất điểm đi được từ khi bắt đầu chuy�
 b) Độ dịch chuyển của chất điểm từ khi bắt đầu chuyển động đến thời điểm 4 s là 10 m.
 c) Vận tốc trung bình của chất điểm trong 4 s đầu là 2 m/s.
 d) Tốc độ trung bình kể từ khi bắt đầu đi đến thời điểm 6 s là 3,1 m/s.
+=> S Đ S S
+=: Từ đồ thị: 0–3 s tăng từ 0 lên 4 m/s; 3–7 s đều 4 m/s; 7–10 s tăng từ 4 lên 6 m/s. Quãng đường 10 s: $6+16+15=37$ m. Độ dịch chuyển 4 s đầu: $6+4=10$ m ⇒ vận tốc trung bình $\dfrac{10}{4}=2{,}5$ m/s. 6 s đầu: $6+12=18$ m ⇒ tốc độ trung bình 3 m/s.

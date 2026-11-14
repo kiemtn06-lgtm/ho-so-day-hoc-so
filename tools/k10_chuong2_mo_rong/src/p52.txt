@@ -1,11 +1,17 @@
 #q B12 III 52
 Một máy bay ném bom đang bay theo phương ngang ở độ cao 2 km với $v_0=504\ \text{km/h}$. Bỏ qua sức cản của không khí. Hỏi viên phi công phải thả bom từ xa cách mục tiêu bao nhiêu km để bom rơi trúng mục tiêu? Biết bom được thả theo phương ngang, lấy g = 10 m/s².
+=> 2,8
+=: $v_0=504$ km/h $=140$ m/s; $t=\sqrt{\dfrac{2\cdot 2000}{10}}=20$ s ⇒ $L=140\cdot 20=2800$ m $=2{,}8$ km.
 
 #q B12 III 52
 Một vật được ném theo phương ngang từ độ cao h so với mặt đất với vận tốc đầu 20 m/s, có tầm ném xa là 120 m. Bỏ qua sức cản của không khí. Lấy g = 10 m/s². Tính h theo đơn vị m.
+=> 180
+=: $t=\dfrac{L}{v_0}=\dfrac{120}{20}=6$ s ⇒ $h=\dfrac12\cdot 10\cdot 6^2=180$ m.
 
 #q B12 III 52
 Một diễn viên đóng thế phải thực hiện một pha hành động khi điều khiển chiếc mô tô nhảy khỏi vách đá cao 50 m. Xe máy phải rời khỏi vách đá với tốc độ bao nhiêu m/s để tiếp đất tại vị trí cách chân vách đá 90 m. Lấy g = 9,8 m/s², bỏ qua lực cản của không khí và xem chuyển động của mô tô khi rời vách đá là chuyển động ném ngang? (Kết quả lấy đến 1 chữ số có nghĩa).
+=> 28,2
+=: $t=\sqrt{\dfrac{2\cdot 50}{9{,}8}}\approx 3{,}19$ s ⇒ $v_0=\dfrac{90}{3{,}19}\approx 28{,}2$ m/s (đề ghi "1 chữ số có nghĩa", hiểu là lấy 1 chữ số sau dấu phẩy).
 
 #nhom B12 Chuyển động ném xiên
 #t B12 52

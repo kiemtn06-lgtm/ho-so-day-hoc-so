@@ -1,19 +1,29 @@
 #q B9 III 26
 Sau khi khởi hành được 50 m, xe đạt vận tốc 5 m/s. Hỏi sau khi đi hết 50 m tiếp theo xe có vận tốc là bao nhiêu m/s? Biết xe chuyển động thẳng nhanh dần đều. (kết quả lấy 2 chữ số sau dấu phẩy thập phân)
+=> 7,07
+=: $v_1^2=2a\cdot 50$; $v_2^2=2a\cdot 100=2v_1^2$ ⇒ $v_2=5\sqrt 2\approx 7{,}07$ m/s.
 
 #q B9 III 26
 Xe chạy chậm dần lên một dốc có độ dài là S. Tốc độ ở chân dốc 54 km/h, ở đỉnh dốc là 36 km/h. Chọn gốc tọa độ tại chân dốc, chiều dương là chiều chuyển động. Sau khi lên được nửa dốc thì tốc độ xe bằng bao nhiêu cm/s? (kết quả lấy 0 chữ số sau dấu phẩy thập phân)
+=> 1275
+=: $v_0=15$ m/s, $v=10$ m/s: $v_0^2-v^2=2|a|S$. Giữa dốc: $v'^2=\dfrac{v_0^2+v^2}{2}=162{,}5$ ⇒ $v'\approx 12{,}75$ m/s $=1275$ cm/s.
 
 #q B9 III 26
 Trong một quán ăn có hệ thống đưa thức ăn tự động bằng băng chuyền, một khách hàng đặt một món ăn qua hệ thống tự động. Sau đó, đĩa thức ăn được di chuyển từ khu vực bếp đến vị trí khách hàng cách nhau 5 m từ trạng thái nghỉ. Giả sử chuyển động của đĩa thức ăn là nhanh dần đều và biết tốc độ của đĩa thức ăn đến khách hàng là 2 m/s. Nếu trường hợp khách hàng đặt một li cocktail, vì chiều cao li và mặt đế của li nhỏ nên li sẽ bị đổ khi gia tốc của nó vượt quá 0,5 m/s². Tìm tốc độ tối đa mà li có thể đạt được để không bị đổ theo đơn vị cm/s? (kết quả lấy 0 chữ số sau dấu phẩy thập phân)
+=> 224
+=: Với $a_{\max}=0{,}5$ m/s² trên quãng 5 m: $v=\sqrt{2a_{\max}s}=\sqrt{2\cdot 0{,}5\cdot 5}=\sqrt5\approx 2{,}24$ m/s $=224$ cm/s.
 
 #q B9 III 26
 Cho một máng nghiêng, lấy một viên bi lăn nhanh dần đều từ đỉnh một máng với không vận tốc ban đầu, bỏ qua ma sát giữa vật và máng, biết viên bi lăn với gia tốc 1 m/s². Biết vận tốc khi chạm đất 4 m/s. Tính chiều dài máng theo đơn vị cm? (kết quả lấy 0 chữ số sau dấu phẩy thập phân)
 [[IMG 26 1185 1490 1850 1840]]
+=> 800
+=: $\ell=\dfrac{v^2}{2a}=\dfrac{4^2}{2\cdot 1}=8$ m $=800$ cm.
 
 #q B9 III 26
 Một người đứng ở sân ga nhìn thấy đoàn tàu bắt đầu chuyển động. Người này nhìn thấy toa thứ nhất chạy qua trước mắt mình trong 10 s. Hãy tính thời gian toa thứ chín chạy qua người này, theo đơn vị phút? Giả sử chuyển động của tàu hỏa là nhanh dần đều và xem khoảng cách giữa các toa tàu là không đáng kể. (kết quả lấy 1 chữ số sau dấu phẩy thập phân)
 [[IMG 26 1225 1895 1975 2275]]
+=> 0,5
+=: Mỗi toa dài $\ell=\dfrac{1}{2}a\cdot 10^2$. Hết toa thứ $n$ sau $t_n=10\sqrt n$ s: hết toa thứ chín sau $t_9=30$ s $=0{,}5$ phút. (Riêng toa thứ chín đi qua mất $10(\sqrt9-\sqrt8)\approx 1{,}72$ s.)
 
 #q B8 I 26
 Gia tốc là một đại lượng
@@ -21,3 +31,5 @@ A. đại số, đặc trưng cho sự biến thiên nhanh hay chậm của chuy
 B. đại số, đặc trưng cho tính không đổi của vận tốc.
 C. vectơ, đặc trưng cho sự biến thiên nhanh hay chậm của chuyển động.
 D. vectơ, đặc trưng cho sự biến thiên nhanh hay chậm của vận tốc.
+=> D
+=: Gia tốc là đại lượng vectơ, đặc trưng cho sự biến thiên nhanh hay chậm của vận tốc.

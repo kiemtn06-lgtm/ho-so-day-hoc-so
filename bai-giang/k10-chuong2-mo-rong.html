@@ -45,6 +45,17 @@ figure img{max-width:100%;height:auto}
 .ds button{padding:2px 9px;font-size:14px}
 .ds button.on-d{background:var(--ok);color:#fff;border-color:var(--ok)}.ds button.on-s{background:var(--no);color:#fff;border-color:var(--no)}
 .ans{margin-top:6px;color:var(--mut);font-style:italic}
+.qbar{display:flex;justify-content:flex-end;margin-top:6px}
+.qbar button{font-size:14px;padding:3px 12px}
+.giai{display:none;margin-top:8px;border-left:4px solid var(--ok);background:#f0fdf4;border-radius:0 8px 8px 0;padding:6px 12px}
+.q.mo .giai{display:block}
+.giai .kq{color:var(--ok);font-weight:700}
+.giai p{margin:3px 0}
+.q.mo .opt.dung{border-color:var(--ok);background:#dcfce7}
+.q.mo .opt.chon:not(.dung){border-color:var(--no);background:#fee2e2}
+.dsk{display:none;font-weight:700;color:var(--ok);margin-left:6px}
+.q.mo .dsk{display:inline}
+#allDa.on{background:var(--ok);border-color:var(--ok);color:#fff}
 .tw{overflow-x:auto}.tw table{border-collapse:collapse;margin:8px auto}.tw td{border:1px solid #b9c2d0;padding:5px 8px;vertical-align:top}
 .mb{text-align:center;margin:6px 0;overflow-x:auto}
 .note{background:#fff8e6;border:1px solid #f3d38a;border-radius:10px;padding:8px 12px;font-size:15px;margin:8px 0}
@@ -66,19 +77,26 @@ figure img{max-width:100%;height:auto}
   function setFs(v){fs=Math.max(14,Math.min(30,v));document.documentElement.style.setProperty('--fs',fs+'px');try{localStorage.setItem('mr-fs',fs)}catch(e){}}
   setFs(fs);
   function tabs(){$('tabs').innerHTML=ma.map(function(m){return '<button class="tab'+(m===cur?' on':'')+'" role="tab" aria-selected="'+(m===cur)+'" data-m="'+m+'">Bài '+m.slice(1)+'</button>'}).join('')+
-    '<span class="sp"></span><button data-f="-2" title="Chữ nhỏ hơn">A−</button><button data-f="2" title="Chữ to hơn">A+</button><button data-p="1">In</button>'}
+    '<span class="sp"></span><button id="allDa" data-all="1" title="Hiện hoặc ẩn đáp án của mọi câu">Hiện tất cả đáp án</button><button data-f="-2" title="Chữ nhỏ hơn">A−</button><button data-f="2" title="Chữ to hơn">A+</button><button data-p="1">In</button>'}
   function cauHTML(c,n){
     var h='<div class="q"><span class="tr">tr. '+c.tr+'</span><span class="qn">Câu '+n+'.</span> '+c.than.replace(/^<p>/,'');
-    if(c.lc.length)h+='<div class="opts c'+c.col+'">'+c.lc.map(function(o){return '<div class="opt"><b>'+o[0]+'.</b><span>'+o[1]+'</span></div>'}).join('')+'</div>';
-    if(c.ds.length)h+='<table class="ds">'+c.ds.map(function(o){return '<tr><td>'+o[0]+')</td><td>'+o[1]+'</td><td class="noprint"><button data-ds="d">Đ</button> <button data-ds="s">S</button></td></tr>'}).join('')+'</table>';
+    var dsk=(c.ds.length&&/^([ĐS] ){3}[ĐS]$/.test(c.da||''))?c.da.split(' '):[];
+    if(c.lc.length)h+='<div class="opts c'+c.col+'">'+c.lc.map(function(o){return '<div class="opt'+(o[0]===c.da?' dung':'')+'"><b>'+o[0]+'.</b><span>'+o[1]+'</span></div>'}).join('')+'</div>';
+    if(c.ds.length)h+='<table class="ds">'+c.ds.map(function(o,i){return '<tr><td>'+o[0]+')</td><td>'+o[1]+(dsk[i]?'<span class="dsk">→ '+dsk[i]+'</span>':'')+'</td><td class="noprint"><button data-ds="d">Đ</button> <button data-ds="s">S</button></td></tr>'}).join('')+'</table>';
     if(!c.lc.length&&!c.ds.length)h+='<div class="ans">Đáp số: ……………</div>';
+    if(c.da){
+      var kq=dsk.length?dsk.map(function(v,i){return 'abcd'[i]+') '+v}).join(' · '):c.da;
+      h+='<div class="qbar noprint"><button data-da="1">Đáp án</button></div><div class="giai"><p><span class="kq">'+(c.lc.length||c.ds.length?'Đáp án: ':'Đáp số: ')+kq+'</span></p>'+
+        (c.lg&&c.lg.length?'<p><i>Lời giải:</i> '+c.lg.join('</p><p>')+'</p>':'')+'</div>';
+    }
     return h+'</div>';
   }
   function ve(){
     var B=MR[cur];if(!B)return;
     var d=B.dem,h='<h2>'+B.ten+'</h2><div class="row noprint"><span class="muted">'+d.I+' câu trắc nghiệm · '+d.II+' câu đúng sai · '+d.III+' câu trả lời ngắn</span><span class="sp"></span>'+
-      '<a class="btn" href="'+B.word+'" download>Tải Word bài này</a><a class="btn" href="k10-c2-mr/word/Chuong2_Mo_rong_cuoi_bai_Bai8-12.docx" download>Tải Word cả chương</a></div>'+
-      '<div class="note noprint">Chép từ tài liệu scan (tr. 22–58), xếp theo bài. Bản gốc chưa có đáp án nên ở đây chưa có đáp án. Bấm vào phương án hoặc nút Đ/S để đánh dấu khi chữa bài trên lớp (không lưu lại).</div>';
+      '<a class="btn" href="'+B.word+'" download>Word bài này</a>'+(B.wordDa?'<a class="btn" href="'+B.wordDa+'" download>Word có đáp án</a>':'')+
+      '<a class="btn" href="k10-c2-mr/word/Chuong2_Mo_rong_cuoi_bai_Bai8-12.docx" download>Word cả chương</a><a class="btn" href="k10-c2-mr/word/Chuong2_Mo_rong_cuoi_bai_Bai8-12_Dap_an.docx" download>Cả chương có đáp án</a></div>'+
+      '<div class="note noprint">Chép từ tài liệu scan (tr. 22–58), xếp theo bài. Bản gốc không có đáp án; đáp án và lời giải được soạn bổ sung, giáo viên cần duyệt lại. Bấm vào phương án hoặc nút Đ/S để đánh dấu khi chữa bài, rồi bấm "Đáp án" để đối chiếu (không lưu lại).</div>';
     B.nhom.forEach(function(g,gi){
       if(B.nhom.length>1)h+='<h3 class="dang">Dạng '+(gi+1)+'. '+g.ten+'</h3>';
       if(g.lt)h+='<details class="lt" open><summary>Tóm tắt lí thuyết</summary>'+g.lt+'</details>';
@@ -99,6 +117,9 @@ figure img{max-width:100%;height:auto}
     if(t.dataset.m){cur=t.dataset.m;history.replaceState(null,'','#'+cur);tabs();ve();return}
     if(t.dataset.f){setFs(fs+ +t.dataset.f);return}
     if(t.dataset.p){window.print();return}
+    if(t.dataset.da){var q=t.closest('.q'),mo=q.classList.toggle('mo');t.textContent=mo?'Ẩn đáp án':'Đáp án';return}
+    if(t.dataset.all){var on=t.classList.toggle('on');t.textContent=on?'Ẩn tất cả đáp án':'Hiện tất cả đáp án';
+      [].forEach.call(document.querySelectorAll('#main .q'),function(q){var b=q.querySelector('[data-da]');if(!b)return;q.classList.toggle('mo',on);b.textContent=on?'Ẩn đáp án':'Đáp án'});return}
     if(t.dataset.ds){var r=t.parentNode;[].forEach.call(r.querySelectorAll('button'),function(b){if(b!==t)b.className=''});t.className=t.className?'':'on-'+t.dataset.ds;return}
     if(t.classList.contains('opt')){var on=t.classList.contains('chon');[].forEach.call(t.parentNode.children,function(o){o.classList.remove('chon')});if(!on)t.classList.add('chon')}
   });

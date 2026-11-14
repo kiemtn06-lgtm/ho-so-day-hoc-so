@@ -4,6 +4,8 @@ a) Thời gian rơi theo phương thẳng đứng của quả bóng A nhỏ hơn
 b) Tốc độ chạm đất của hai quả bóng là như nhau.
 c) Thời gian rơi của quả bóng B là 1 s.
 d) Tầm ném xa của quả bóng B là $L=15\sqrt{2}$ m.
+=> S S S Đ
+=: Thời gian rơi như nhau: $t=\sqrt{\dfrac{2\cdot 10}{10}}=\sqrt2\approx 1{,}41$ s. Bóng B có thêm vận tốc ngang nên chạm đất nhanh hơn A. $L=15\sqrt2\approx 21{,}2$ m.
 
 #q B12 II 51
 Một chiếc máy bay muốn thả hàng tiếp tế cho những người leo núi đang bị cô lập. Máy bay đang bay ở độ cao 235 m so với vị trí đứng của những người leo núi với tốc độ 250 km/h theo phương ngang. Lấy g = 9,8 m/s² và bỏ qua lực cản của không khí.
@@ -12,6 +14,8 @@ a) Người quan sát đứng trên núi nhìn thấy quỹ đạo của gói h�
 b) Người quan sát đứng trên máy bay nhìn thấy quỹ đạo của vật là một đường thẳng đứng.
 c) Thời gian rơi của gói hàng là 4,9 s.
 d) Để người nhận được hàng tiếp tế, máy bay phải thả hàng cách người một khoảng 480,9 m.
+=> Đ Đ S Đ
+=: Với người trên núi quỹ đạo là nhánh parabol; với người trên máy bay (cùng vận tốc ngang) gói hàng rơi thẳng đứng. $t=\sqrt{\dfrac{2\cdot 235}{9{,}8}}\approx 6{,}93$ s; $v_0=\dfrac{250}{3{,}6}\approx 69{,}4$ m/s ⇒ $L=v_0t\approx 480{,}9$ m.
 
 #q B12 II 51
 Một viên đạn được bắn theo phương nằm ngang từ một khẩu súng đặt ở độ cao 45,0 m so với mặt đất. Vận tốc của viên đạn khi vừa ra khỏi nòng súng có độ lớn là 250 m/s. Lấy g = 9,8 m/s².
@@ -20,13 +24,21 @@ a) Viên đạn sau khi bay khỏi nòng súng chuyển động thẳng chậm d
 b) Thời gian từ lúc bắt đầu chuyển động đến khi chạm đất của viên đạn 3,03 s.
 c) Viên đạn rơi xuống đất cách điểm bắn theo phương nằm ngang 3125 m.
 d) Ngay trước khi chạm đất, vận tốc của viên đạn có độ lớn bằng 252 m/s.
+=> S Đ S Đ
+=: Viên đạn chuyển động ném ngang (không phải thẳng chậm dần đều). $t=\sqrt{\dfrac{2\cdot 45}{9{,}8}}\approx 3{,}03$ s; $L=250\cdot 3{,}03\approx 758$ m; $v=\sqrt{250^2+(9{,}8\cdot 3{,}03)^2}\approx 252$ m/s.
 
 #q B12 III 51
 Một hòn bi lăn dọc theo một cạnh của một mặt bàn hình chữ nhật nằm ngang cao h = 1,25 m. Lấy g = 10 m/s². Thời gian rơi của viên bi là bao nhiêu giây?
 [[IMG 51 1630 2300 1960 2705]]
+=> 0,5
+=: $t=\sqrt{\dfrac{2h}{g}}=\sqrt{\dfrac{2\cdot 1{,}25}{10}}=0{,}5$ s.
 
 #q B12 III 51
 Một vật được ném ngang từ độ cao h = 9 m, vận tốc ban đầu $v_0$. Vật bay xa 18 m, lấy g = 10 m/s². Tính $v_0$ theo đơn vị m/s? (Kết quả lấy đến 1 chữ số có nghĩa).
+=> 13,4
+=: $t=\sqrt{\dfrac{2\cdot 9}{10}}\approx 1{,}34$ s ⇒ $v_0=\dfrac{18}{1{,}34}\approx 13{,}4$ m/s (đề ghi "1 chữ số có nghĩa", hiểu là lấy 1 chữ số sau dấu phẩy).
 
 #q B12 III 51
 Một quả cầu được ném theo phương ngang từ độ cao 80 m so với mặt đất với $v_0=30\ \text{m/s}$. Bỏ qua sức cản của không khí. Lấy $g=10\ \text{m/s}^2$. Xác định góc (tính theo đơn vị độ) giữa vận tốc chạm đất của vật hợp với phương ngang? (Kết quả lấy đến 1 chữ số có nghĩa).
+=> 53,1
+=: $t=\sqrt{\dfrac{2\cdot 80}{10}}=4$ s; $v_y=40$ m/s; $\tan\alpha=\dfrac{40}{30}$ ⇒ $\alpha\approx 53{,}1^\circ$.

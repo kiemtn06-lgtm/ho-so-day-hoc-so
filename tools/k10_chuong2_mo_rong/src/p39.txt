@@ -5,6 +5,8 @@ A. Ném một hòn sỏi theo phương xiên góc.
 B. Ném một hòn sỏi theo phương nằm ngang.
 C. Ném một hòn sỏi lên cao.
 D. Thả một hòn sỏi rơi xuống.
+=> D
+=: Thả hòn sỏi (không vận tốc đầu), lực cản không đáng kể: rơi tự do.
 
 #q B10 I 39
 Một vật rơi tự do thì chuyển động của vật
@@ -12,6 +14,8 @@ A. là chuyển động thẳng đều.
 B. là chuyển động thẳng nhanh dần đều.
 C. là chuyển động thẳng chậm dần đều.
 D. là chuyển động thẳng có gia tốc thay đổi theo thời gian.
+=> B
+=: Rơi tự do là chuyển động thẳng nhanh dần đều.
 
 #q B10 I 39
 Điều nào sau đây là **không đúng** khi nói về chuyển động rơi tự do?
@@ -19,6 +23,8 @@ A. Sự rơi tự do là sự rơi của một vật chỉ dưới tác dụng c
 B. Các vật rơi tự do ở cùng một nơi trên Trái Đất và ở gần mặt đất đều có cùng một gia tốc.
 C. Trong quá trình rơi tự do, gia tốc của vật không đổi cả về hướng và độ lớn.
 D. Trong quá trình rơi tự do, gia tốc của vật không đổi cả về hướng và độ lớn.
+=> D
+=: Bản gốc in phương án D trùng C (lỗi in). A, B, C đều đúng; theo đề gốc phương án D là "Chuyển động rơi tự do là chuyển động thẳng chậm dần đều" nên D không đúng.
 
 #q B10 I 39
 (SBT-KNTT) Chuyển động của vật nào dưới đây sẽ được coi là rơi tự do nếu được thả rơi?
@@ -27,6 +33,8 @@ A. Một chiếc khăn voan nhẹ.
 B. Một sợi chỉ.
 C. Một chiếc lá cây rụng.
 D. Một viên sỏi.
+=> D
+=: Viên sỏi nặng, nhỏ gọn: lực cản không khí không đáng kể so với trọng lực.
 
 #q B10 I 39
 Chuyển động của vật rơi tự do **không** có tính chất nào sau đây?
@@ -34,6 +42,8 @@ A. Vận tốc của vật tăng đều theo thời gian.
 B. Gia tốc của vật tăng đều theo thời gian.
 C. Càng gần tới mặt đất vật rơi càng nhanh.
 D. Quãng đường vật đi được là hàm số bậc hai theo thời gian.
+=> B
+=: Gia tốc rơi tự do $g$ không đổi.
 
 #q B10 I 39
 Dạng đồ thị vận tốc – thời gian nào dưới đây mô tả chuyển động rơi tự do của vật ở gần mặt đất?
@@ -42,3 +52,5 @@ A. Đồ thị (1)
 B. Đồ thị (2)
 C. Đồ thị (3)
 D. Đồ thị (4)
+=> C
+=: Rơi tự do: $v=gt$, đồ thị là đường thẳng qua gốc tọa độ.

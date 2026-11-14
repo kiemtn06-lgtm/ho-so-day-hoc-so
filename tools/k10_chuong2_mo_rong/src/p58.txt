@@ -1,9 +1,15 @@
 #q+ B12 III 58
 của ô tô bằng chiều cao của dốc, chiều dài của ô tô là 3,2 m. Lấy g = 10 m/s². Thời gian từ khi xe rời đỉnh dốc tới khi đạt độ cao cực đại là bao nhiêu giây? (Kết quả lấy sau dấu phẩy 2 chữ số thập phân)
 [[IMG 58 570 410 1640 720]]
+=> 0,70
+=: $t=\dfrac{v_0\sin 30^\circ}{g}=\dfrac{14\cdot 0{,}5}{10}=0{,}70$ s.
 
 #q B12 III 58
 Từ mặt đất một quả cầu được ném theo phương hướng lên hợp với phương ngang một góc 60° với vận tốc 30 m/s. Tầm ném xa của quả cầu là bao nhiêu mét? Kết quả lấy sau dấu phẩy 1 chữ số thập phân.
+=> 77,9
+=: $L=\dfrac{v_0^2\sin 2\alpha}{g}=\dfrac{900\cdot\sin 120^\circ}{10}\approx 77{,}9$ m.
 
 #q B12 III 58
 Từ mặt đất một vật được ném xiên lệch với phương ngang một góc α = 45° với vận tốc ban đầu là 20 m/s. Lấy g = 10 m/s². Tầm bay cao của vật là bao nhiêu mét?
+=> 10
+=: $H=\dfrac{v_0^2\sin^2\alpha}{2g}=\dfrac{400\cdot 0{,}5}{20}=10$ m.

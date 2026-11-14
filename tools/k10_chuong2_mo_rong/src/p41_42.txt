@@ -4,6 +4,8 @@ A. 2h
 B. 4h
 C. 6h
 D. 8h
+=> B
+=: $v^2=2gh$: vận tốc gấp 2 thì độ cao gấp 4 ⇒ $H=4h$.
 
 #q B10 I 41
 Người ta thả một vật rơi tự do từ một tòa tháp thì sau 20 s vật chạm đất cho g = 10 m/s². Độ cao của vật sau khi vật thả được 4 s.
@@ -11,6 +13,8 @@ A. 1920 m
 B. 1290 m
 C. 2910 m
 D. 1029 m
+=> A
+=: Độ cao tháp $h=\dfrac12\cdot 10\cdot 20^2=2000$ m; sau 4 s vật rơi được $\dfrac12\cdot 10\cdot 4^2=80$ m ⇒ còn cách đất 1920 m.
 
 #q B10 I 41
 Một vật được thả rơi từ độ cao 1280 m so với mặt đất. Lấy $g=10\ \text{m/s}^2$. Tìm thời gian để vật rơi đến đất?
@@ -18,6 +22,8 @@ A. 15 s
 B. 16 s
 C. 51 s
 D. 15 s
+=> B
+=: $t=\sqrt{\dfrac{2h}{g}}=\sqrt{\dfrac{2\cdot 1280}{10}}=16$ s.
 
 #q B10 II 41
 Em nhận xét thế nào về các nhận định sau?
@@ -25,6 +31,8 @@ a) Sự rơi tự do là sự rơi chỉ dưới tác dụng của trọng lực
 b) Rơi tự do có phương rơi thẳng đứng, chiều rơi từ trên xuống dưới.
 c) Ở cùng một nơi trên Trái Đất, mọi vật rơi tự do với gia tốc khác nhau.
 d) Gia tốc rơi tự do không phụ thuộc vào vĩ độ địa lí và độ cao.
+=> Đ Đ S S
+=: Ở cùng một nơi mọi vật rơi tự do với cùng gia tốc $g$; $g$ phụ thuộc vĩ độ và độ cao.
 
 #q B10 II 41
 Một vật rơi không vận tốc đầu từ đỉnh tòa nhà chung cư có độ cao 320 m xuống đất. Cho g = 10 m/s².
@@ -32,6 +40,8 @@ a) Vận tốc lúc vừa chạm đất là 80 m/s.
 b) Thời gian của vật rơi là 80 s.
 c) Quãng đường vật rơi được trong 6 s là 160 m.
 d) Quãng đường vật rơi được trong 6 s cuối cùng là 300 m.
+=> Đ S S Đ
+=: $v=\sqrt{2gh}=80$ m/s; $t=\sqrt{\dfrac{2\cdot 320}{10}}=8$ s; trong 6 s đầu rơi $\dfrac12\cdot 10\cdot 6^2=180$ m; 6 s cuối: $320-\dfrac12\cdot 10\cdot 2^2=300$ m.
 
 #q B10 II 41
 Một người thả rơi một hòn bi từ trên cao xuống đất và đo được thời gian rơi là 3,1 s. Bỏ qua sức cản không khí. Lấy g = 10 m/s².
@@ -39,6 +49,8 @@ a) Độ cao của nơi thả hòn bi so với mặt đất là 48,05 m.
 b) Vận tốc lúc hòn bi chạm đất là 31,5 m/s.
 c) Quãng đường vật rơi được trong 2 giây là 20 m.
 d) Quãng đường vật rơi được trong giây thứ 2 là 15 m.
+=> Đ S Đ Đ
+=: $h=\dfrac12\cdot 10\cdot 3{,}1^2=48{,}05$ m; $v=gt=31$ m/s; 2 s đầu: 20 m; giây thứ 2: $20-5=15$ m.
 
 #q B10 II 41
 Một quả bóng được thả rơi tự do từ độ cao 1,2 m. Sau khi chạm đất, quả bóng bật lên ở độ cao 0,80 m. Thời gian tiếp xúc giữa bóng và mặt đất là 0,16 s. Lấy g = 9,8 m/s². Bỏ qua sức cản của không khí.
@@ -47,25 +59,39 @@ a) Tốc độ của quả bóng ngay trước khi chạm đất là: 4,85 m/s.
 b) Thời gian quả bóng rơi chạm đất lần đầu là 0,459 s.
 c) Tốc độ của quả bóng ngay khi bắt đầu bật lên là 3,28 m/s.
 d) Độ lớn gia tốc của quả bóng khi nó tiếp xúc với mặt đất là 2,05 m/s².
+=> Đ S S S
+=: $v_1=\sqrt{2\cdot 9{,}8\cdot 1{,}2}\approx 4{,}85$ m/s; $t=\sqrt{\dfrac{2\cdot 1{,}2}{9{,}8}}\approx 0{,}495$ s; $v_2=\sqrt{2\cdot 9{,}8\cdot 0{,}8}\approx 3{,}96$ m/s; $a=\dfrac{v_2-(-v_1)}{\Delta t}=\dfrac{3{,}96+4{,}85}{0{,}16}\approx 55$ m/s².
 
 #q B10 III 42
 Thả một hòn đá từ độ cao h = 5 m xuống mặt đất, hòn đá rơi trong 0,5 s. Nếu thả hòn đá từ độ cao h' xuống đất mất 1,5 s thì h' bằng bao nhiêu? (kết quả lấy đến 0 chữ số thập phân, theo đơn vị m)
+=> 45
+=: $h\sim t^2$: $h'=5\cdot\left(\dfrac{1{,}5}{0{,}5}\right)^2=45$ m.
 
 #q B10 III 42
 Ga-li-lê thả quả đạn hình cầu từ độ cao 56 m trên tháp nghiêng Pi-da xuống đất. Tính thời gian quả đạn rơi. Biết g = 9,81 m/s². (kết quả lấy đến 2 chữ số thập phân, theo đơn vị s)
 [[IMG 42 1630 890 2040 1430]]
+=> 3,38
+=: $t=\sqrt{\dfrac{2h}{g}}=\sqrt{\dfrac{2\cdot 56}{9{,}81}}\approx 3{,}38$ s.
 
 #q B10 III 42
 Thả một hòn đá từ mép một vách núi dựng đứng xuống vực sâu. Sau 3,96 s từ lúc thả thì nghe thấy tiếng hòn đá chạm đáy vực sâu. Biết g = 9,8 m/s² và tốc độ truyền âm trong không khí là 330 m/s. Tìm chiều cao vách đá bờ vực đó. (kết quả lấy đến 0 chữ số thập phân, theo đơn vị m)
+=> 69
+=: $t_1+\dfrac{h}{330}=3{,}96$ với $h=4{,}9t_1^2$ ⇒ $t_1\approx 3{,}75$ s ⇒ $h\approx 69$ m.
 
 #q B10 III 42
 Một trái banh được ném từ mặt đất thẳng đứng với vận tốc 20 m/s. Thời gian từ lúc ném banh đến lúc chạm đất là bao nhiêu? (kết quả lấy đến 0 chữ số thập phân, theo đơn vị s)
+=> 4
+=: Lấy $g=10$ m/s². Thời gian lên bằng thời gian xuống: $t=\dfrac{2v_0}{g}=\dfrac{2\cdot 20}{10}=4$ s.
 
 #q B10 III 42
 Một vật rơi tự do từ độ cao h. Biết rằng trong giây cuối cùng vật rơi được 15 m. Độ cao nơi thả vật là bao nhiêu? (kết quả lấy đến 0 chữ số thập phân, theo đơn vị m)
+=> 20
+=: Lấy $g=10$ m/s². Giây cuối: $\dfrac12gt^2-\dfrac12g(t-1)^2=15$ ⇒ $t=2$ s ⇒ $h=\dfrac12\cdot 10\cdot 2^2=20$ m.
 
 #q B10 III 42
 Một vật được thả rơi tự do, vận tốc của vật ngay trước khi chạm đất là 50 m/s. Cho $g=10\ \text{m/s}^2$. Độ cao của vật sau 3 s là bao nhiêu? (kết quả lấy đến 0 chữ số thập phân, theo đơn vị m)
+=> 80
+=: $t=\dfrac{v}{g}=5$ s; $h=\dfrac12\cdot 10\cdot 5^2=125$ m. Sau 3 s rơi được 45 m ⇒ còn cách đất 80 m.
 
 #t B11 42
 ## THỰC HÀNH ĐO GIA TỐC TRỌNG TRƯỜNG

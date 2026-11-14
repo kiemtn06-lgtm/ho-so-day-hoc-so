@@ -2,6 +2,8 @@
 b) Sai số tỉ đối gia tốc rơi tự do được xác định theo biểu thức: $\delta g=\dfrac{\overline{\Delta g}}{\bar{g}}.100\%$.
 c) Giá trị trung bình của gia tốc rơi tự do 9,835 m/s².
 d) Sai số tuyệt đối của gia tốc rơi tự do 0,81 m/s².
+=> S Đ Đ S
+=: $\bar t=\dfrac{0{,}285+0{,}286+0{,}284+0{,}285+0{,}286}{5}=0{,}2852$ s; $\bar g=\dfrac{2s}{\bar t^2}=\dfrac{2\cdot 0{,}400}{0{,}2852^2}\approx 9{,}835$ m/s². $\overline{\Delta t}=0{,}00064$ s ⇒ $\Delta g\approx\bar g\cdot 2\dfrac{\Delta t}{\bar t}\approx 0{,}04$ m/s² (cộng thêm sai số dụng cụ 0,001 s thì khoảng 0,1 m/s²), không phải 0,81 m/s². Rơi tự do là nhanh dần đều.
 
 #q B11 II 47
 Thả trụ thép rơi qua cổng quang điện trên máng đứng. Chọn phát biểu đúng hay sai?
@@ -9,6 +11,8 @@ a) Gia tốc rơi tự do của trụ thép theo công thức $g=\dfrac{s}{t^2}$
 b) Để xác định gia tốc rơi tự do của trụ thép cần đo đại lượng: quãng đường rơi của trụ thép và thời gian rơi.
 c) Để trụ thép rơi qua cổng quang điện cần đặt trụ thép tại vị trí tiếp xúc với nam châm điện và bị giữ lại ở đó. Nhấn nút của hộp công tắc kép để ngắt điện vào nam châm điện ⇒ trụ thép rơi xuống và chuyển động đi qua cổng quang điện.
 d) Đặt MODE đồng hồ đo thời gian hiện số ở chế độ thích hợp để đo được đại lượng cần đo. Ví dụ trường hợp này, đo thời gian từ lúc thả rơi đến lúc vật rơi hết quãng đường s nên ta đặt chế độ A + B.
+=> S Đ Đ S
+=: $s=\dfrac12gt^2$ ⇒ $g=\dfrac{2s}{t^2}$. Đo thời gian từ lúc thả đến lúc vật chắn cổng quang điện thì đặt chế độ A ↔ B (không phải A + B).
 
 #nhom B12 Chuyển động ném ngang
 #t B12 47
@@ -33,6 +37,8 @@ A. A chạm đất trước.
 B. A chạm đất sau B.
 C. Cả hai chạm đất cùng lúc.
 D. Chưa đủ thông tin trả lời.
+=> C
+=: Thời gian rơi chỉ phụ thuộc độ cao $t=\sqrt{\dfrac{2h}{g}}$, không phụ thuộc khối lượng và vận tốc ném ngang.
 
 #q B12 I 48
 (SBT-KNTT) Một quả bóng đặt trên mặt bàn được truyền một vận tốc theo phương nằm ngang. Hình nào dưới đây mô tả **đúng** quỹ đạo của quả bóng khi rời khỏi mặt bàn?
@@ -41,6 +47,8 @@ A. Hình A.
 B. Hình B.
 C. Hình C.
 D. Hình D.
+=> B
+=: Rời mép bàn, quả bóng chuyển động theo nhánh parabol bắt đầu từ mép bàn, tiếp tuyến ban đầu nằm ngang.
 
 #q B12 I 48
 Một vật được ném theo phương ngang với vận tốc $\vec{v_0}$ từ độ cao h so với mặt đất. Chọn hệ trục toạ độ Oxy sao cho gốc O trùng với vị trí ném, Ox theo phương vận tốc ban đầu, Oy hướng thẳng đứng xuống dưới, gốc thời gian là lúc ném. Độ lớn vận tốc của vật tại thời điểm t xác định bằng biểu thức:

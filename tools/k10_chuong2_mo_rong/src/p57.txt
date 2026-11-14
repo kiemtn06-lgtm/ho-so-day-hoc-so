@@ -3,6 +3,8 @@ a) Quỹ đạo chuyển động của đĩa có dạng là một nhánh của H
 b) Vận tốc ban đầu của đĩa ném là $v_0=20$ m/s.
 c) Độ cao cực đại mà đĩa đạt được so với mặt đất là 11,7 m.
 d) Vận tốc lúc chạm đất của đĩa là 40 m/s.
+=> S Đ Đ S
+=: Quỹ đạo là một nhánh parabol. $v_0\cos 45^\circ=\dfrac{60}{3\sqrt2}=10\sqrt2$ ⇒ $v_0=20$ m/s. $h_{\max}=1{,}7+\dfrac{20^2\cdot 0{,}5}{20}=11{,}7$ m. Khi chạm đất $v=\sqrt{v_0^2+2gh_0}=\sqrt{400+34}\approx 20{,}8$ m/s, không phải 40 m/s. (Lưu ý: số liệu của đề chưa khớp nhau; với $v_0=20$ m/s thì đĩa chỉ bay khoảng 2,94 s và xa khoảng 41,6 m.)
 
 #q B12 II 57
 Một vật được ném từ một điểm M ở độ cao h = 45 m với vận tốc ban đầu $v_0=20$ m/s xiên lên theo phương hợp với phương nằm ngang một góc 45°. Lấy g = 10 m/s², bỏ qua lực cản của không khí.
@@ -10,6 +12,8 @@ a) Tầm bay xa của vật là 66,89 (m).
 b) Vận tốc của vật khi chạm đất là 30 m/s.
 c) Phương trình quỹ đạo của vật là $y=x-\dfrac{1}{40}x^2$ (m).
 d) Độ dịch chuyển của vật từ lúc ném đến lúc chạm đất là 80,61 m.
+=> Đ S Đ Đ
+=: $t\approx 4{,}73$ s ⇒ $L=10\sqrt2\cdot 4{,}73\approx 66{,}9$ m. $v=\sqrt{v_0^2+2gh}=\sqrt{400+900}\approx 36{,}1$ m/s. Gốc tọa độ tại M, Oy hướng lên: $y=x-\dfrac{x^2}{40}$. Độ dịch chuyển $\sqrt{66{,}89^2+45^2}\approx 80{,}6$ m.
 
 #q B12 II 57
 Từ mặt đất một quả cầu được ném theo phương hướng lên hợp với phương ngang một góc 60° với vận tốc 20 m/s.
@@ -17,16 +21,24 @@ a) Phương trình quỹ đạo của quả cầu là $y=\sqrt{3}x-\dfrac{x^2}{2
 b) Độ cao cực đại vật đạt được so với mặt đất là 10 m.
 c) Tầm bay xa của vật là $20\sqrt{3}$ (cm).
 d) Vận tốc của vật lúc chạm đất là 10 m/s.
+=> S S S S
+=: $y=\sqrt3x-\dfrac{10}{2\cdot 400\cdot 0{,}25}x^2=\sqrt3x-\dfrac{x^2}{20}$ với x, y tính bằng **m** (ý a, c ghi cm nên sai). $H=\dfrac{400\cdot 0{,}75}{20}=15$ m. $L=\dfrac{400\sin 120^\circ}{10}=20\sqrt3$ m. Chạm đất cùng độ cao nên $v=20$ m/s.
 
 #q B12 III 57
 Một vật được ném xiên từ mặt đất với vận tốc ban đầu có độ lớn $v_0=50$ m/s. Khi lên tới điểm cao nhất, vận tốc của vật có độ lớn là 40 m/s. Bỏ qua sức cản của không khí, lấy $g=10\ \text{m/s}^2$. Góc ném α so với phương ngang bằng bao nhiêu độ? (Kết quả lấy sau dấu phẩy 1 chữ số thập phân)
+=> 36,9
+=: Ở điểm cao nhất $v=v_0\cos\alpha=40$ ⇒ $\cos\alpha=0{,}8$ ⇒ $\alpha\approx 36{,}9^\circ$.
 
 #q B12 III 57
 Một cầu thủ bóng rổ cao 2 m đứng cách xa rổ 10 m theo phương nằm ngang để tập ném bóng vào rổ. Biết miệng rổ ở độ cao 3,05 m. Hỏi người đó phải ném bóng từ độ cao ngang đầu với vận tốc theo phương 45° có độ lớn bao nhiêu m/s để bóng đi vào rổ? Lấy $g=9{,}8\ \text{m/s}^2$. (Kết quả lấy sau dấu phẩy 1 chữ số thập phân)
+=> 10,5
+=: Gốc tại tay ném (cao 2 m): $y=x\tan 45^\circ-\dfrac{gx^2}{2v_0^2\cos^2 45^\circ}$. Với $x=10$ m, $y=1{,}05$ m: $1{,}05=10-\dfrac{9{,}8\cdot 100}{v_0^2}$ ⇒ $v_0\approx 10{,}5$ m/s.
 
 #q B12 III 57
 Khi dùng vòi nước tưới cây, để các tia nước phun ra xa, người ta thường điều chỉnh sao cho hướng của vòi xiên một góc nào đó với phương ngang (Hình 9.2). Trong trường hợp lí tưởng (bỏ qua mọi lực cản), góc hợp giữa vòi và phương ngang phải bằng bao nhiêu độ để các tia nước phun ra xa nhất?
 [[IMG 57 740 2365 1305 2775]]
+=> 45
+=: Bỏ qua lực cản, tầm xa $L=\dfrac{v_0^2\sin 2\alpha}{g}$ lớn nhất khi $\alpha=45^\circ$.
 
 #q B12 III 57
 Một diễn viên biểu diễn mô tô bay đang phóng xe trên mặt dốc nằm nghiêng 30° để bay qua các ô tô như trong hình 12.3. Biết vận tốc của xe mô tô khi rời khỏi đỉnh dốc là 14 m/s. Chiều cao

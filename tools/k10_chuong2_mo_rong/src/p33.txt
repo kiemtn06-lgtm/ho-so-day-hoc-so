@@ -5,6 +5,8 @@ A. 1.
 B. $\dfrac{1}{2}$.
 C. $\dfrac{1}{3}$.
 D. 3.
+=> C
+=: $|a_{OA}|=\tan 30^\circ$, $|a_{AB}|=\tan 60^\circ$ (cùng tỉ lệ trục) ⇒ tỉ số $\dfrac{\tan 30^\circ}{\tan 60^\circ}=\dfrac13$.
 
 #q B8 I 33
 Véctơ gia tốc $\vec{a}$ có tính chất nào kể sau?
@@ -12,6 +14,8 @@ A. Đặc trưng cho sự biến thiên của vận tốc.
 B. Cùng chiều với $\vec{v}$ nếu chuyển động nhanh dần.
 C. Ngược chiều với $\vec{v}$ nếu chuyển động chậm dần.
 D. Các tính chất trên.
+=> D
+=: Gia tốc đặc trưng cho sự biến thiên của vận tốc; NDĐ thì $\vec a$ cùng chiều $\vec v$, CDĐ thì ngược chiều.
 
 #q B8 I 33
 Gia tốc là một đại lượng
@@ -19,6 +23,8 @@ A. đại số, đặc trưng cho sự biến đổi nhanh hay chậm của chuy
 B. đại số, đặc trưng cho tính không đổi của vận tốc.
 C. vectơ, đặc trưng cho sự biến đổi nhanh hay chậm của chuyển động.
 D. vectơ, đặc trưng cho sự biến đổi nhanh hay chậm của vận tốc.
+=> D
+=: Gia tốc là đại lượng vectơ, đặc trưng cho sự biến đổi nhanh hay chậm của vận tốc.
 
 #q B9 I 33
 Một chất điểm chuyển động thẳng đều, với đồ thị vận tốc – thời gian được cho như hình vẽ. Quãng đường mà chất điểm đi được trong khoảng thời gian từ 1 s đến 2 s là
@@ -27,6 +33,8 @@ A. 1 m.
 B. 2 m.
 C. 3 m.
 D. 4 m.
+=> C
+=: $s=vt=3\cdot 1=3$ m.
 
 #q B9 I 33
 Đồ thị vận tốc – thời gian của một vật chuyển động thẳng ở hình dưới. Quãng đường vật đã đi được sau 30 s là:
@@ -35,6 +43,8 @@ A. 200 m.
 B. 250 m.
 C. 300 m.
 D. 350 m.
+=> B
+=: Quãng đường bằng diện tích dưới đồ thị: $\dfrac12\cdot 10\cdot 10+10\cdot 20=250$ m.
 
 #q B9 I 33
 Đồ thị vận tốc – thời gian của một tàu hỏa đang chuyển động thẳng có dạng như hình bên. Thời điểm t = 0 là lúc tàu đi qua sân ga. Vận tốc của tàu sau khi rời sân ga được 80 m là
@@ -43,3 +53,5 @@ A. 4 m/s.
 B. 6 m/s.
 C. 8 m/s.
 D. 10 m/s.
+=> B
+=: Từ đồ thị: $v_0=2$ m/s, $a=\dfrac{12-2}{50}=0{,}2$ m/s². $v^2=v_0^2+2ad=4+2\cdot 0{,}2\cdot 80=36$ ⇒ $v=6$ m/s.
