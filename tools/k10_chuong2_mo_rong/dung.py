@@ -27,6 +27,7 @@ from docx.oxml import OxmlElement
 DIR = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(os.path.join(DIR, '..', '..'))
 OUT = os.path.join(REPO, 'bai-giang', 'k10-c2-mr')
+TAI_LIEU = os.path.join(REPO, 'K10 chương 2- Động học', 'Mở rộng cuối bài (Bài 8-12)')  # bản Word để ở thư mục chương ngoài cùng hồ sơ
 XSL = r'C:\Program Files\Microsoft Office\root\Office16\MML2OMML.XSL'
 TRANG_DAU = 22  # trang 1 của PDF là trang 22 của tài liệu in
 
@@ -498,6 +499,7 @@ def main():
         dd = tao_doc(); mot_bai(dd, hinh, ma, bai[ma], da=True); files.append((ten_file(ma) + '_Dap_an', dd))
     for ten, dd in files:
         f = os.path.join(OUT, 'word', ten + '.docx'); dd.save(f)
+        os.makedirs(TAI_LIEU, exist_ok=True); shutil.copy(f, os.path.join(TAI_LIEU, ten + '.docx'))
         if them:
             os.makedirs(them, exist_ok=True); shutil.copy(f, os.path.join(them, ten + '.docx'))
 
