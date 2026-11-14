@@ -91,5 +91,8 @@ module.exports = function (ma) {
     /* nút "Mở rộng cuối bài" ở hai slide cuối (trang bai-giang/k10-chuong2-mo-rong.html#B12) */
     va.js += '\n' + require('./k10_chuong2_mo_rong/nut_mo_rong.js')('B12');
   }
+  /* công cụ lên lớp ngay trong bài giảng: Gọi tên, Xung phong, Bấm giờ, Chia nhóm, Ghi chú (tools/cong_cu_lop.js) */
+  const cc = require('./cong_cu_lop.js')(ma, ma === 'B12' ? '10-2' : '10-3');
+  va.css += cc.css; va.js += '\n' + cc.js;
   return va;
 };

@@ -3503,7 +3503,26 @@ window.HO_SO = {
     else if (t.classList && t.classList.contains("ed")) { var k = bKey(curBai()); (S.khbd[k] = S.khbd[k] || {})[t.getAttribute("data-f")] = t.innerText; save(); }
   });
 
-  load(); if (!CFG.khoi[V.khoi]) V.khoi = Object.keys(CFG.khoi)[0]; firstData(); render();
+  /* nhận ghi nhận từ công cụ lớp trong trang bài giảng (tools/cong_cu_lop.js, hàng chờ localStorage "hsdh_bg"):
+     điểm phát biểu, ghi chú nhanh, danh sách lớp nhập ở bài giảng. Nhận xong thì xóa khỏi hàng chờ. */
+  function nhanTuBaiGiang() {
+    var o; try { o = JSON.parse(localStorage.getItem("hsdh_bg") || "null"); } catch (e) { return false; }
+    if (!o) return false;
+    var pv = o.pv || [], nt = o.notes || [], lm = o.lopMoi || {}, nl = Object.keys(lm);
+    if (!pv.length && !nt.length && !nl.length) return false;
+    load();
+    pv.forEach(function (r) { S.pv.push({ lop: r.lop, hs: r.hs, ngay: r.ngay, bai: r.bai, slide: r.slide, diem: r.diem }); });
+    nt.forEach(function (r) { (S.notes[r.k] = S.notes[r.k] || []).push({ lop: r.lop, ngay: r.ngay, slide: r.slide, text: r.text }); });
+    nl.forEach(function (l) { if (Array.isArray(lm[l]) && lm[l].length) S.lop[l] = lm[l]; });
+    o.pv = []; o.notes = []; o.lopMoi = {};
+    try { localStorage.setItem("hsdh_bg", JSON.stringify(o)); } catch (e) { return false; }
+    save(); return true;
+  }
+  function nhanVaVe() { if (nhanTuBaiGiang() && $("lenLop").hidden) render(); }
+  window.addEventListener("focus", nhanVaVe);
+  window.addEventListener("storage", function (e) { if (e.key === "hsdh_bg") nhanVaVe(); });
+
+  load(); nhanTuBaiGiang(); if (!CFG.khoi[V.khoi]) V.khoi = Object.keys(CFG.khoi)[0]; firstData(); render();
 })();
 
 </script>
