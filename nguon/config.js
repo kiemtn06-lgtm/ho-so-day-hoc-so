@@ -13,7 +13,8 @@ window.HO_SO = {
   /* Phòng tương tác trên lớp (học sinh quét QR). Điền địa chỉ Render sau khi đưa máy chủ lên, ví dụ https://phong-tuong-tac.onrender.com */
   tuongTac: "https://phong-tuong-tac.onrender.com",
   /* Phòng làm bài có máy chủ bổ sung theo chương (ngoài phòng chính của khối ở mục "ph" phía trên) */
-  phongPhu: { 12: [{ ten: "Chương 2 · Chất khí", moTa: "265 câu: Buổi 1-6 và ngân hàng theo bài (Bài 8-12)", url: "https://phong-chuong-2-chat-khi.onrender.com" }] },
+  phongPhu: { 10: [{ ten: "Chương II · Động học · Mở rộng cuối bài", moTa: "184 câu: Bài 8-12, 7 nhóm theo bài và dạng", url: "https://phong-k10-chuong2-mo-rong.onrender.com" }],
+    12: [{ ten: "Chương 2 · Chất khí", moTa: "265 câu: Buổi 1-6 và ngân hàng theo bài (Bài 8-12)", url: "https://phong-chuong-2-chat-khi.onrender.com" }] },
   congCu: [
     { id: "on", ten: "Ôn tập", moTa: "Lịch ôn, thẻ ghi nhớ, đề tổng hợp (trang cho học sinh)", khoi: {} },
     /* Phòng làm bài: mỗi khối một máy chủ trên Render (link cố định). Khối 12 là phòng luyện tập Vật lí nhiệt. */
