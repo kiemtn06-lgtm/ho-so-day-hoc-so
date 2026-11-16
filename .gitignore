@@ -1,3 +1,7 @@
 # Video thí nghiệm (nặng, chỉ dùng trên máy giáo viên, không đưa lên GitHub)
 bai-giang/Chuyendongnem-media/
 __pycache__/
+
+# Khối 11: file nguồn của giáo viên (pptx nặng, bản Word bài tập gốc), chỉ để trên máy
+K11/*.pptx
+K11/*.pdf

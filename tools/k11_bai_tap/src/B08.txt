@@ -1,0 +1,125 @@
+#ten B8 MÔ TẢ SÓNG
+
+#q B8 I
+Sóng là
+A. sự thay đổi vị trí của vật này so với vật khác theo thời gian.
+B. sự truyền chuyển động cơ trong chất rắn, lỏng, khí.
+C. những biến dạng cơ lan truyền trong môi trường đàn hồi.
+D. dao động của mọi điểm trong không gian.
+=> C
+
+#q B8 I
+Năng lượng sóng truyền qua một đơn vị diện tích vuông góc với phương truyền sóng trong một đơn vị thời gian gọi là
+A. biên độ sóng.
+B. cường độ sóng.
+C. tần số sóng.
+D. bước sóng.
+=> B
+
+#q B8 I
+Một sóng hình sin truyền từ không khí vào nước thì đại lượng nào sau đây không đổi?
+A. Bước sóng.
+B. Biên độ của sóng.
+C. Tốc độ truyền sóng.
+D. Tần số sóng.
+=> D
+
+#q B8 I
+Khoảng cách từ một phần tử môi trường bất kì trên phương truyền sóng đến phần tử gần nhất có trạng thái dao động hoàn toàn tương tự được gọi là
+A. chu kì sóng.
+B. bước sóng.
+C. tốc độ truyền sóng.
+D. biên độ sóng.
+=> B
+
+#q B8 I
+Trong thí nghiệm tạo sóng nước, nếu ta thay đổi tần số dao động của nguồn sóng thì đại lượng nào sau đây không thay đổi?
+A. Chu kì sóng.
+B. Bước sóng.
+C. Tần số sóng.
+D. Tốc độ truyền sóng.
+=> D
+
+#q B8 I
+Vào một thời điểm hình bên là đồ thị li độ - quãng đường truyền sóng của một sóng hình sin. Biên độ và bước sóng của sóng này lần lượt là
+[[IMG image110.png 8.1]]
+A. 5 cm và 50 cm.
+B. 6 cm và 50 cm.
+C. 5 cm và 30 cm.
+D. 6 cm và 30 cm.
+=> A
+
+#q B8 I
+Một sóng cơ khi truyền trong môi trường 1 có bước sóng và vận tốc là $\lambda_{1}$ và $v_{1}$. Khi truyền trong môi trường 2 có bước sóng và vận tốc là $\lambda_{2}$ và $v_{2}$. Biểu thức đúng là
+A. $\lambda_{2}$ = $\lambda_{1}$.
+B. $v_{2}$ = $v_{1}$.
+C. $\dfrac{\lambda_2}{\lambda_1}=\dfrac{v_1}{v_2}$.
+D. $\dfrac{\lambda_1}{\lambda_2}=\dfrac{v_1}{v_2}$.
+=> D
+
+#q B8 I
+Một sóng cơ hình sin truyền theo trục Ox. Phương trình dao động của một phần tử trên Ox là u = 2cos10t (mm). Biên độ của sóng là
+A. 10 mm.
+B. 4 mm.
+C. 5 mm.
+D. 2 mm.
+=> D
+
+#q B8 I
+Một sóng cơ hình sin truyền theo trục Ox với chu kì T. Khoảng thời gian để sóng truyền được quãng đường bằng một bước sóng là
+A. 4T.
+B. 0,5T.
+C. T.
+D. 2T.
+=> C
+
+#q B8 II
+Một sóng cơ truyền dọc theo phương Ox có đồ thị li độ - khoảng cách tại một thời điểm xác định được cho như hình vẽ. Biết chu kì của sóng là 0,5 giây.
+[[IMG image113.png 9.0]]
+a) Độ lệch lớn nhất của phần tử sóng khỏi vị trí cân bằng là 3,0 cm.
+b) Chu kì của sóng bằng hai lần chu kì dao động của phần tử sóng.
+c) Tần số của sóng là số các ngọn sóng đi qua một điểm đang xét trong một đơn vị thời gian.
+d) Tốc độ truyền sóng là 16 cm/s.
+=> Đ S Đ Đ
+
+#q B8 II
+Nhận định nào sau đây là đúng hay sai về tốc độ truyền sóng?
+a) Tốc độ truyền sóng không thay đổi khi sóng truyền từ không khí vào nước.
+b) Tốc độ truyền sóng luôn bằng tốc độ dao động của phân tử có sóng truyền qua.
+c) Tốc độ truyền sóng được xác định bằng công thức v = λf với λ là bước sóng, f là tần số sóng.
+d) Tốc độ truyền sóng cơ học phụ thuộc vào đặc tính của môi trường truyền như mật độ vật chất, độ đàn hồi và nhiệt độ,….. của môi trường.
+=> S S Đ Đ
+
+#q B8 III
+Ở 20 $^{o}$ C và áp suất khí quyển 1 atm, một sóng âm có tần số 550 Hz truyền trong không khí với tốc độ là 343 m/s. Tìm bước sóng của sóng âm theo đơn vị mét. Làm tròn kết quả đến chữ số hàng phần trăm.
+=> 0,62
+
+#q B8 III
+Một sóng hình sin truyền trong một môi trường với tốc độ 1 m/s. Bước sóng trong môi trường đó bằng 30 cm. Tìm chu kì của sóng theo đơn vị giây (s). Làm tròn kết quả đến chữ số hàng phần mười.
+=> 0,3
+
+#q B8 III
+Tại một điểm O trên mặt nước có một nguồn dao động điều hòa theo phương thẳng đứng với tần số 2 Hz. Từ điểm O có những gợn sóng tròn lan rộng ra xung quanh. Khoảng cách giữa hai gợn sóng kế tiếp là 20 cm. Tính tốc độ truyền sóng trên mặt nước theo đơn vị cm/s. Làm tròn kết quả đến chữ số hàng đơn vị.
+=> 40
+
+#q B8 III
+Năm 2011 tại Nhật Bản, một trận động đất khởi phát ngoài khơi hòn đảo Honshu tạo nên sóng thần đổ xô từng đợt với tốc độ tiếp cận khoảng 800 km/h cách bờ biển khoảng 150 km. Tính thời gian (theo đơn vị phút) đợt sóng đầu tiên truyền tâm chấn đến bờ biển. Làm tròn kết quả đến chữ số hàng phần mười.
+=> 11,3
+
+#q B8 III
+Một tàu sử dụng hệ thống phát sóng âm để đo độ sâu của biển. Hệ thống phát ra các sóng âm và đo thời gian quay trở lại của sóng âm sau khi chúng bị phản xạ tại đáy biển. Tại một vị trí trên mặt biển, thời gian mà hệ thống ghi nhận được là 0,16 s kể từ khi sóng âm được truyền đi. Biết tốc độ truyền sóng âm trong nước biển không đổi là 1500 m/s. Tính độ sâu mực nước biển theo đơn vị mét. Làm tròn kết quả đến chữ số hàng đơn vị.
+[[IMG image114.png 7.7]]
+=> 120
+
+#q B8 TL
+Trên mặt hồ yên lặng, một người làm cho con thuyền dao động tạo ra sóng trên mặt nước. Thuyền thực hiện được 24 dao động trong 40 s, mỗi dao động tạo ra một ngọn sóng cao 12 cm so với mặt hồ yên lặng và ngọn sóng tới bờ cách thuyền 10 m sau 5 s.
+**a)** Tìm chu kì dao động của thuyền và tốc độ truyền sóng.
+**b)** Tìm bước sóng và biên độ sóng.
+=> a. 1,67 s; 2m/s; b) 3,33 m; 0,12 m.
+
+#q B8 TL
+Hình bên là hình ảnh của một sóng trên dây đàn hồi tại một thời điểm xác định. Cho biết thời gian ngắn nhất để điểm A từ vị trí cân bằng dao động theo phương thẳng đứng và trở lại vị trí này là 0,25 s và khoảng cách AB bằng 40 cm.
+[[IMG image115.png 6.4]]
+**a)** Tính tốc độ truyền sóng trên dây.
+**b)** Tính khoảng cách CD.
+=> a. 1,6 m/s; b. 80 cm.

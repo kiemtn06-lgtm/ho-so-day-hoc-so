@@ -1,0 +1,145 @@
+#ten B13 SÓNG DỪNG
+
+#q B13 I
+Sóng dừng được tạo thành khi
+A. hai sóng có biên độ khác nhau truyền cùng chiều gặp nhau.
+B. hai sóng cùng biên độ, cùng bước sóng lan truyền theo hai hướng ngược nhau gặp nhau, giao thoa với nhau.
+C. một sóng bị vật cản hấp thụ hoàn toàn.
+D. hai sóng có tần số khác nhau truyền ngược chiều gặp nhau.
+=> B
+
+#q B13 I
+Trong sóng dừng, nút sóng là những điểm tại đó hai sóng thành phần
+A. đồng pha với nhau nên dao động với biên độ cực đại.
+B. vuông pha với nhau nên dao động với biên độ trung bình.
+C. ngược pha với nhau nên không dao động (đứng yên).
+D. cùng tần số nên dao động rất mạnh.
+=> C
+
+#q B13 I
+Trong sóng dừng, bụng sóng là những điểm
+A. luôn đứng yên.
+B. dao động với biên độ cực đại do hai sóng đồng pha với nhau.
+C. chỉ dao động khi tần số rất lớn.
+D. có biên độ bằng biên độ của một sóng thành phần.
+=> B
+
+#q B13 I
+Trên một sợi dây có sóng dừng, hai nút sóng liên tiếp cách nhau một khoảng bằng
+A. λ.
+B. $\dfrac{\lambda}{2}$.
+C. $\dfrac{\lambda}{4}$.
+D. 2λ.
+=> B
+
+#q B13 I
+Trong thí nghiệm tạo sóng dừng trên dây có hai đầu cố định, L là chiều dài của dây, $\lambda$ là bước sóng. Điều kiện để có sóng dừng là chiều dài dây phải bằng
+A. $L=\dfrac{n\lambda}{2}$, với n = 1, 2, 3,....
+B. L = nλ, với n = 1, 2, 3,...
+C. $L=\dfrac{(2n+1)\lambda}{4}$, với n = 0, 1, 2, 3,...
+D. $L=\dfrac{n\lambda}{4}$, với n = 1, 2, 3,...
+=> A
+
+#q B13 I
+Một ống sáo có một đầu kín, một đầu hở. Điều kiện để có sóng dừng trong cột không khí của ống sáo là chiều dài của ống phải bằng
+A. một số nguyên lần nửa bước sóng.
+B. một số chẵn lần một phần tư bước sóng.
+C. một số nguyên lần bước sóng.
+D. một số lẻ lần một phần tư bước sóng.
+=> D
+
+#q B13 I
+Trong thí nghiệm tạo sóng dừng trên dây PQ hình, người ta điều chỉnh tần số của bộ rung cho đến khi
+[[IMG image127.png 5.5]]
+A. trên dây xuất hiện những điểm dao động với biên độ cực đại xen kẽ những điểm đứng yên.
+B. mọi điểm trên dây đều dao động với biên độ như nhau.
+C. sợi dây bị đứt do dao động quá mạnh.
+D. toàn bộ sợi dây đứng yên hoàn toàn.
+=> A
+
+#q B13 I
+Sóng dừng trên một sợi dây đàn hồi chiều dài L được mô tả như hình. Số nút sóng (kể cả hai đầu dây) và số bụng sóng trên dây là
+[[IMG image128.png 6.5]]
+A. hai nút sóng và ba bụng sóng.
+B. ba nút sóng và bốn bụng sóng.
+C. bốn nút sóng và ba bụng sóng.
+D. bốn nút sóng và sáu bụng sóng.
+=> C
+
+#q B13 I
+Một trong những ứng dụng hiện tượng sóng dừng để xác định
+A. tần số sóng.
+B. tốc độ truyền sóng.
+C. năng lượng sóng.
+D. cường độ sóng.
+=> B
+
+#q B13 I
+Khi gảy đàn ghita, trên dây đàn (hai đầu cố định, chiều dài L) xuất hiện sóng dừng và đàn phát ra âm cơ bản có tần số $f=\dfrac{v}{2L}$. Khi ấn ngón tay vào các phím khác nhau, âm phát ra có độ cao khác nhau vì
+A. lực căng dây thay đổi làm biên độ sóng thay đổi.
+B. chiều dài dây dao động thay đổi làm tần số âm phát ra thay đổi.
+C. tốc độ truyền sóng trên dây thay đổi còn chiều dài dây không đổi.
+D. thùng đàn cộng hưởng làm thay đổi tần số của âm.
+=> B
+
+#q B13 II
+Trong thí nghiệm tạo sóng dừng như hình, sợi dây PQ dài 1,2 m có hai đầu cố định. Khi bộ rung dao động với tần số 50 Hz thì trên dây quan sát được sóng dừng với 4 bụng sóng.
+[[IMG image129.jpg 7.1]]
+a) Sóng dừng trên dây là kết quả giao thoa giữa sóng tới và sóng phản xạ truyền ngược chiều nhau trên dây.
+b) Bước sóng của sóng trên dây bằng 0,6 m.
+c) Tốc độ truyền sóng trên dây bằng 60 m/s.
+d) Trên dây có 5 nút sóng (kể cả hai đầu P, Q).
+=> Đ Đ S Đ
+
+#q B13 II
+Một ống khí hình trụ dài L = 0,5 m có một đầu kín, một đầu hở. Trong ống có sóng dừng của sóng âm, bước sóng $\lambda$. Tốc độ truyền âm trong không khí là 340 m/s.
+a) Khi có hiện tượng cộng hưởng âm thì tại đầu kín của ống là một nút sóng, tại đầu hở là một bụng sóng.
+b) Điều kiện để có sóng dừng trong ống khi là L = $\dfrac{n\lambda}{2}$ với n = 1, 2, 3,...
+c) Bước sóng dài nhất của sóng dừng có thể có trong ống là 2 m.
+d) Tần số âm nhỏ nhất mà ống có thể tạo sóng dừng là 170 Hz.
+=> Đ S Đ Đ
+
+#q B13 III
+Trên một sợi dây có sóng dừng, hai nút sóng liên tiếp cách nhau 25 cm. Bước sóng của sóng trên dây là bao nhiêu cm?
+=> 50
+
+#q B13 III
+Một dây đàn hồi dài 0,6 m hai đầu cố định dao động tạo sóng dừng với 3 bụng sóng. Bước sóng của sóng trên dây là bao nhiêu mét?
+=> 0,4
+
+#q B13 III
+Trên sợi dây đàn hồi có chiều dài L = 1,2 m (hai đầu cố định), người ta tạo ra sóng dừng có hình dạng như Hình 3 (3 bụng sóng). Biết tần số rung của sợi dây là f = 13,3 Hz. Tốc độ truyền sóng trên dây là bao nhiêu m/s? Kết quả làm tròn đến hàng phần mười.
+=> 10,6
+
+#q B13 III
+Một dây đàn ghita dài 0,64 m có hai đầu cố định, tốc độ truyền sóng trên dây là 422,4 m/s. Khi gảy, dây dao động với một bụng sóng. Tần số âm do dây đàn phát ra là bao nhiêu Hz? Kết quả làm tròn đến hàng đơn vị.
+[[IMG image130.png 6.9]]
+=> 330
+
+#q B13 III
+Một sợi dây dài 1,0 m có một đầu cố định, một đầu tự do. Bước sóng dài nhất của sóng dừng có thể tạo được trên dây là bao nhiêu mét?
+=> 4
+
+#q B13 III
+Trên một sợi dây có sóng dừng, khoảng cách giữa 5 nút sóng liên tiếp là 80 cm. Tốc độ truyền sóng trên dây là 8 m/s. Tần số sóng là bao nhiêu Hz?
+=> 20
+
+#q B13 III
+Một sợi dây đàn hồi hai đầu cố định, dài 0,9 m. Trên dây đang có sóng dừng với tổng cộng 4 nút sóng (kể cả hai đầu dây). Bước sóng của sóng trên dây bằng bao nhiêu mét?
+=> 0,6
+
+#q B13 TL
+Thí nghiệm tạo sóng dừng trên một sợi dây đàn hồi dài 0,5 m có hai đầu cố định. Tốc độ truyền sóng trên dây là 4 m/s.
+**a)** Khi tần số của sóng bằng 400 Hz, hãy xác định bước sóng của sóng trên dây.
+**b)** Hãy xác định tần số của sóng để trung điểm của dây là một nút sóng. Biết rằng tần số sóng có giá trị từ 425 Hz đến 437 Hz.
+=> a) 1 cm. b) 432 Hz.
+
+#q B13 TL
+Sợi dây đàn hồi PQ dài 1,2 m có hai đầu cố định, được kích thích dao động bằng một bộ rung có thể thay đổi tần số như hình. Tốc độ truyền sóng trên dây là 60 m/s.
+[[IMG image131.png 7.5]]
+**a)** Lập luận để tìm biểu thức tổng quát của các tần số f mà tại đó trên dây có sóng dừng. Tính ba giá trị tần số nhỏ nhất.
+**b)** Khi bộ rung dao động với tần số 75 Hz, xác định số nút, số bụng và vị trí nút sóng thứ ba tính từ đầu P.
+=> a) - Dây hai đầu cố định: $L=\dfrac{n\lambda}{2}=\dfrac{nv}{2f}$ → f = $\dfrac{nv}{2L}$ = 25n (Hz), với n = 1, 2, 3,...
+=: - Ba giá trị nhỏ nhất: f₁ = 25 Hz; f₂ = 50 Hz; f₃ = 75 Hz.
+=: b) - Với f = 75 Hz → n = 3: trên dây có 3 bụng sóng và 4 nút sóng (kể cả hai đầu).
+=: Vị trí nút sóng thứ 3: x= 0,8 m.

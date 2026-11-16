@@ -1,0 +1,141 @@
+#ten B12 GIAO THOA SÓNG
+
+#q B12 I
+Hai nguồn sóng kết hợp là hai nguồn dao động
+A. cùng biên độ và cùng pha.
+B. cùng phương, cùng tần số và có độ lệch pha không đổi theo thời gian.
+C. cùng tần số và cùng biên độ.
+D. cùng phương và có độ lệch pha thay đổi theo thời gian.
+=> B
+
+#q B12 I
+Hiện tượng giao thoa của hai sóng là hiện tượng
+A. hai sóng gặp nhau rồi truyền tiếp mà không thay đổi gì.
+B. hai sóng gặp nhau tạo nên các gợn sóng ổn định (các vân giao thoa).
+C. hai sóng gặp nhau và triệt tiêu nhau tại mọi điểm.
+D. hai sóng cùng truyền theo một phương và tăng cường nhau tại mọi điểm.
+=> B
+
+#q B12 I
+Trong vùng giao thoa của hai sóng phát ra từ hai nguồn kết hợp cùng pha, điểm dao động với biên độ cực đại có hiệu đường đi d₂ − d₁ thỏa mãn (k ∈ ℤ):
+A. d₂ − d₁ = kλ.
+B. d₂ − d₁ = (k + ½)λ.
+C. d₂ − d₁ = kλ/2.
+D. d₂ − d₁ = (2k + 1)λ.
+=> A
+
+#q B12 I
+Với hai nguồn kết hợp cùng pha, điểm đứng yên (biên độ cực tiểu) trong vùng giao thoa có hiệu đường đi thỏa mãn (k ∈ ℤ):
+A. d₂ − d₁ = kλ.
+B. d₂ − d₁ = 2kλ.
+C. d₂ − d₁ = (k + ½)λ.
+D. d₂ − d₁ = kλ/4.
+=> C
+
+#q B12 I
+Trong thí nghiệm giao thoa hai sóng mặt nước, khi cần rung có gắn hai quả cầu dao động, hình ảnh quan sát được trên màn là
+[[IMG image124c0.png 7.5]]
+A. các vòng tròn sáng, tối đồng tâm lan ra từ một tâm dao động.
+B. các gợn sóng chuyển động hỗn loạn, không ổn định.
+C. các đường sáng và tối ổn định, hình dạng hypebol, xen kẽ nhau.
+D. mặt nước hoàn toàn đứng yên, không có gợn sóng.
+=> C
+
+#q B12 I
+Thí nghiệm Young về giao thoa ánh sáng chứng tỏ
+A. ánh sáng có tính chất sóng.
+B. ánh sáng truyền thẳng trong mọi môi trường.
+C. ánh sáng là dòng các hạt chuyển động thẳng đều.
+D. ánh sáng chỉ truyền được trong chân không.
+=> A
+
+#q B12 I
+Trong thí nghiệm Young, gọi a là khoảng cách hai khe, D là khoảng cách từ hai khe đến màn, λ là bước sóng ánh sáng. Khoảng vân i được xác định bởi công thức
+A. $i=\dfrac{\lambda a}{D}$.
+B. $i=\dfrac{\lambda D}{a}$.
+C. $i=\dfrac{aD}{\lambda}$.
+D. $i=\dfrac{\lambda}{aD}$.
+=> B
+
+#q B12 I
+Giao thoa ánh sáng đơn sắc là hiện tượng
+A. xuất hiện các vạch sáng xen kẽ với các vạch tối khi hai sóng ánh sáng kết hợp gặp nhau.
+B. xuất hiện các vạch sáng xen kẽ với các vạch tối khi hai sóng ánh sáng gặp nhau.
+C. chỉ xảy ra với ánh sáng đỏ.
+D. xuất hiện các vạch sáng trắng xen kẽ với các vạch tối khi hai sóng ánh sáng kết hợp gặp nhau.
+=> A
+
+#q B12 I
+Chọn câu sai khi nói về giao thoa ánh sáng.
+A. Hiện tượng giao thoa ánh sáng chỉ giải thích được bằng sự giao thoa của hai sóng kết hợp.
+B. Hiện tượng giao thoa ánh sáng khẳng định ánh sáng có tính chất sóng.
+C. Trong miền giao thoa, những vạch sáng ứng với những chỗ hai sóng gặp nhau tăng cường lẫn nhau.
+D. Trong miền giao thoa, những vạch tối ứng với những chỗ hai sóng không gặp được nhau.
+=> D
+
+#q B12 I
+Trong hệ vân giao thoa ánh sáng của thí nghiệm Young, các vạch tối là những chỗ
+A. hai sóng ánh sáng tăng cường lẫn nhau.
+B. chỉ có một sóng ánh sáng truyền tới.
+C. hai sóng ánh sáng triệt tiêu lẫn nhau.
+D. ánh sáng bị màn chắn hấp thụ hoàn toàn.
+=> C
+
+#q B12 II
+Khảo sát hiện tượng giao thoa sóng cơ trên mặt nước với hai nguồn kết hợp S₁, S₂ dao động cùng phương, cùng pha, cùng tần số. Trong vùng hai sóng gặp nhau xuất hiện những điểm dao động với biên độ cực đại và những điểm dao động với biên độ cực tiểu (đứng yên).
+a) Hai nguồn S₁, S₂ là hai nguồn kết hợp vì chúng dao động cùng phương, cùng tần số và có độ lệch pha không đổi theo thời gian.
+b) Tại một điểm dao động với biên độ cực đại, hai sóng từ hai nguồn truyền tới dao động cùng pha với nhau.
+c) Những điểm dao động với biên độ cực tiểu (đứng yên) là những điểm mà hai sóng truyền tới ngược pha và triệt tiêu lẫn nhau.
+d) Trên đoạn thẳng nối hai nguồn, khoảng cách giữa hai điểm dao động cực đại liên tiếp bằng một bước sóng.
+=> Đ Đ Đ S
+
+#q B12 II
+Khảo sát hiện tượng giao thoa ánh sáng bằng thí nghiệm Young: hai khe hẹp F₁, F₂ song song được chiếu bằng ánh sáng đơn sắc. Màn quan sát đặt song song với mặt phẳng chứa hai khe. Trên màn thu được hệ vân giao thoa gồm các vân sáng và vân tối xen kẽ, cách đều nhau, chứng tỏ ánh sáng có tính chất sóng.
+a) Hai khe hẹp F₁, F₂ đóng vai trò là hai nguồn sáng kết hợp.
+b) Vân tối trên màn là chỗ hai sóng ánh sáng từ hai khe truyền tới tăng cường lẫn nhau.
+c) Tại vị trí vân sáng, hai sóng ánh sáng từ hai khe truyền tới dao động cùng pha nên tăng cường lẫn nhau.
+d) Khi giữ nguyên các điều kiện khác và tăng khoảng cách từ hai khe đến màn thì khoảng vân trên màn tăng lên.
+=> Đ S Đ Đ
+
+#q B12 III
+Trên mặt nước có hai nguồn sóng cơ kết hợp, dao động cùng phương, cùng tần số, cùng pha nhau. Sóng trên mặt nước có tần số 20 Hz. Điểm M trên mặt nước cách $S_{1}$ và $S_{2}$ lần lượt 26 cm và 20 cm, đồng thời có biên độ cực đại. Tốc độ truyền sóng trên mặt nước là bao nhiêu cm/s?
+[[IMG image125.png 6.7]]
+=> 60
+
+#q B12 III
+Trong một thí nghiệm giao thoa sóng trên mặt nước, cần rung tạo hai nguồn kết hợp $S_{1}$ và $S_{2}$ dao động cùng pha cùng tần số **5 Hz**. Khi ổn định, học sinh thấy trên đoạn thẳng nối hai nguồn S₁, S₂ các điểm dao động cực đại nằm cách đều nhau, khoảng cách giữa hai điểm cực đại **cạnh nhau là 4 cm**. Tốc độ truyền sóng trên mặt nước là bao nhiêu cm/s?
+=> 40
+
+#q B12 III
+Trong bài thực hành đo bước sóng ánh sáng bằng khe Young của học sinh. Ánh sáng đơn sắc có bước sóng **0,6 μm,** hai khe hẹp cách nhau **0,3 mm**. Màn quan sát đặt song song và cách mặt phẳng chứa hai khe **1,5 m**. Khoảng vân giao thoa trên màn là bao nhiêu mm?
+=> 3
+
+#q B12 III
+Trong thí nghiệm Young về giao thoa với ánh sáng đơn sắc, hai khe cách nhau **0,5 mm** và màn cách hai khe **1,5 m**. Để giảm sai số học sinh không đo một khoảng vân đơn lẻ mà đo khoảng cách giữa **10 vân sáng liên tiếp** được kết quả **13,5 mm**. Bước sóng λ của ánh sáng dùng trong thí nghiệm là bao nhiêu $\mu m$?
+=> 0,5
+
+#q B12 III
+Trong thí nghiệm giao thoa ánh sáng đơn sắc với hai khe Young, một học sinh xác định được khoảng vân trên màn là **1,2 mm**. Trên màn khoảng cách từ **vân sáng bậc 4** đến vân sáng trung tâm là bao nhiêu mm?
+=> 4,8
+
+#q B12 III
+Trong thí nghiệm Young về giao thoa ánh sáng. Ánh sáng đươc dùng có bước sóng **0,60 μm**. Biết tốc độ ánh sáng trong chân không **c = 3.10⁸ m/s**. Tần số của ánh sáng đơn sắc này là f = x.10¹⁴ Hz. Giá trị của x là bao nhiêu?
+=> 5
+
+#q B12 III
+Trong thí nghiệm Young về giao thoa ánh sáng, hai khe hẹp cách nhau **0,6 mm**. Ban đầu khoảng vân đo được trên màn là **1 mm**. Giữ nguyên nguồn sáng và hai khe, học sinh tịnh tiến màn quan sát theo phương vuông góc mặt phẳng chứa hai khe và **lại gần** hai khe một đoạn **25 cm** thì đo được khoảng vân mới là **0,8 mm**. Bước sóng λ của ánh sáng là bao nhiêu $\mu m$?
+=> 0,48
+
+#q B12 TL
+Cho hai loa giống hệt nhau, cùng nối với một máy phát âm tần nên phát ra âm hoàn toàn giống nhau (hình bên dưới). Âm phát ra có tần số 850 Hz, tốc độ truyền âm trong không khí là 340 m/s. Khi di chuyển một micro có nối với dao động kí dọc theo một đường thẳng phía trước hai loa thì thấy có những điểm tại đó biên độ sóng âm thu được rất lớn (L) và những điểm biên độ rất bé nằm xen kẽ nhau.
+[[IMG image126.png 6.9]]
+**a)** Vận dụng kiến thức về giao thoa sóng, hãy giải thích hiện tượng thú vị này.
+**b)** Tính bước sóng.
+=> a) - Hai sóng âm do chúng phát ra là hai sóng kết hợp, khi gặp nhau xảy ra hiện tượng giao thoa: tại những điểm hai sóng luôn đồng pha chúng tăng cường nhau → âm nghe rất to (điểm L); tại những điểm hai sóng luôn ngược pha chúng triệt tiêu nhau → âm rất bé (điểm B). Các điểm L và B có vị trí ổn định, nằm xen kẽ nhau tạo thành hệ vân giao thoa của sóng âm.
+=: b) 40 cm.
+
+#q B12 TL
+Trong thí nghiệm Young về giao thoa ánh sáng, nguồn sáng hẹp phát ra ánh sáng đơn sắc có bước sóng λ = 0,6 μm. Khoảng cách giữa hai khe là a = 1 mm, khoảng cách từ mặt phẳng chứa hai khe đến màn quan sát ban đầu là D = 1,5 m.
+**a)** Tính khoảng vân trên màn và khoảng cách từ vân sáng bậc 3 đến vân tối thứ 5 ở hai phía so với vân sáng trung tâm.
+**b)** Gọi M là một điểm trên màn quan sát, ban đầu cách vân sáng trung tâm một đoạn 4,5 mm. Giữ cố định các điều kiện khác, dời màn quan sát từ từ dọc theo đường thẳng vuông góc với mặt phẳng chứa hai khe, tiến lại gần hai khe thêm một đoạn tối đa 0,9 m. Trong quá trình dời màn, tại điểm M quan sát được bao nhiêu lần chuyển thành vân tối?
+=> a/ 0,9 mm; 6,75 mm; b/ 8 lần.

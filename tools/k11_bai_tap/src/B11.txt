@@ -1,0 +1,121 @@
+#ten B11 SÓNG ĐIỆN TỪ
+
+#q B11 I
+Sóng điện từ
+A. là điện từ trường lan truyền trong không gian.
+B. là điện trường lan truyền trong không gian.
+C. là từ trường lan truyền trong không gian.
+D. là điện từ trường không lan truyền trong không gian.
+=> A
+
+#q B11 I
+Các sóng điện từ có tần số tăng dần theo thứ tự đúng là
+A. tia gamma, tia X, tia tử ngoại, ánh sáng nhìn thấy, tia hồng ngoại, sóng vô tuyến.
+B. sóng vô tuyến, tia hồng ngoại, ánh sáng nhìn thấy, tia tử ngoại, tia X và tia gamma.
+C. tia gamma, tia X, tia hồng ngoại, ánh sáng nhìn thấy, tia tử ngoại, sóng vô tuyến.
+D. sóng vô tuyến, tia tử ngoại, ánh sáng nhìn thấy, tia hồng ngoại, tia X và tia gamma.
+=> B
+
+#q B11 I
+Tốc độ lan truyền của sóng điện từ trong chân không có giá trị bằng
+A. $c=3.{10}^{5}$ m/s.
+B. $c=3.{10}^{9}$ m/s.
+C. $c=3.{10}^{8}$ m/s.
+D. $c=3.{10}^{10}$ m/s.
+=> C
+
+#q B11 I
+Sóng điện từ và sóng cơ học có cùng chung tính chất nào sau đây?
+A. Đều có thể lan truyền được trong môi trường chân không.
+B. Đều là sóng dọc khi lan truyền trong môi trường chất rắn và chất lỏng.
+C. Đều có các hiện tượng phản xạ, khúc xạ, nhiễu xạ và giao thoa sóng.
+D. Tốc độ truyền sóng đều tăng lên khi mật độ vật chất của môi trường giảm.
+=> C
+
+#q B11 I
+Ánh sáng nhìn thấy là một phần của thang sóng điện từ, có dải bước sóng nằm trong khoảng nào trong chân không?
+A. Từ 10 nm đến 400 nm.
+B. Từ 0,76 $\mu$ m đến 1 mm.
+C. Từ 0,38 $\mu$ m đến 0,76 $\mu$ m.
+D. Từ 30 pm đến 3 nm.
+=> C
+
+#q B11 I
+Trong vùng ánh sáng nhìn thấy, bức xạ có bước sóng dài nhất và bức xạ có bước sóng ngắn nhất lần lượt là
+A. ánh sáng lục và ánh sáng vàng.
+B. ánh sáng đỏ và ánh sáng tím.
+C. ánh sáng tím và ánh sáng đỏ.
+D. ánh sáng lam và ánh sáng cam.
+=> B
+
+#q B11 I
+Tia hồng ngoại (IR) có đặc điểm và tính chất nào sau đây?
+A. Là bức xạ điện từ nhìn thấy được có màu hồng nhạt rất đẹp mắt.
+B. Có bước sóng trong khoảng từ 0,76 um đến 1 mm, không nhìn thấy được bằng mắt thường.
+C. Có khả năng kích thích sự phát quang của rất nhiều chất hóa học độc hại.
+D. Chỉ được phát ra từ những vật được nung nóng tới nhiệt độ cực cao trên 2000 °C.
+=> B
+
+#q B11 I
+Nguồn phát nào sau đây thông dụng nhất để phát ra tia hồng ngoại trong đời sống?
+A. Đèn hơi thủy ngân công suất lớn.
+B. Hồ quang điện dùng trong công nghiệp hàn kim loại.
+C. Bóng đèn dây tóc, bếp gas, bếp than hoặc chính cơ thể con người.
+D. Máy chụp bức xạ cắt lớp vi tính trong bệnh viện.
+=> C
+
+#q B11 I
+Điều kiện để một vật phát ra tia tử ngoại mạnh mẽ truyền ra môi trường xung quanh là nhiệt độ của vật phải
+A. cao hơn nhiệt độ môi trường xung quanh một chút (trên 37 °C).
+B. rất thấp dưới 0 °C để các nguyên tử bị kích thích dao động mạnh.
+C. đạt từ 500 °C đến 1000 °C để nguyên tử chuyển trạng thái dừng.
+D. đạt nhiệt độ rất cao, thông thường là trên 2000 °C.
+=> D
+
+#q B11 I
+Trong y học, tia Rơn-ghen (tia X) được ứng dụng rộng rãi nhất để
+A. chụp X-quang để hỗ trợ chẩn đoán bệnh và tổn thương trong cơ thể, đặc biệt là xương.
+B. sấy khô thực phẩm và diệt khuẩn bề mặt các dụng cụ phẫu thuật.
+C. kích thích các tế bào biểu bì da tự tổng hợp vitamin D tự nhiên.
+D. chụp ảnh hồng ngoại tầm nhiệt để đo thân nhiệt từ xa của bệnh nhân.
+=> A
+
+#q B11 I
+Bức xạ điện từ có bước sóng rất ngắn (từ ${10}^{-14}$ m đến 0,1 nm), năng lượng cao, khả năng đâm xuyên mạnh, dùng xạ trị trong y học … là
+A. bức xạ hồng ngoại.
+B. bức xạ tử ngoại
+C. bức xạ Rơn-ghen.
+D. bức xạ gamma.
+=> D
+
+#q B11 I
+Sóng vô tuyến dải tần số cực cao UHF (Ultra High Frequency, bước sóng từ 10 cm đến 1 m) có đặc điểm nổi bật là
+A. bị tầng điện li của Trái Đất phản xạ rất mạnh mẽ để truyền đi xa vòng quanh Trái Đất.
+B. có thể truyền thẳng đến máy thu, không bị phản xạ ở tầng điện li.
+C. bị nước biển hấp thụ hoàn toàn nên chỉ dùng liên lạc cho tàu ngầm ở tầng sâu.
+D. có tốc độ lan truyền chậm hơn nhiều so với các dải sóng vô tuyến khác.
+=> B
+
+#q B11 II
+Máy sấy và tiệt trùng bát đĩa được sử dụng trong nhà bếp. Máy tích hợp 3 tính năng: bộ phận sưởi phát bức xạ nhiệt giúp làm khô bát đĩa, đèn tử ngoại (UV) hỗ trợ khử khuẩn bề mặt bát đĩa và bộ điều khiển từ xa (remote) sử dụng tia hồng ngoại phát tín hiệu điều khiển. Các nhận định dưới đây về máy là **đúng** hay **sai**?
+[[IMG image122c0.png 4.7]]
+a) Bức xạ hồng ngoại do remote phát ra và thành phần bức xạ hồng ngoại phát ra từ bộ phận sưởi đều thuộc vùng hồng ngoại của phổ điện từ.
+b) Tia tử ngoại (UV) có khả năng diệt vi khuẩn và mầm bệnh.
+c) Theo thiết kế của thiết bị, cửa được làm bằng vật liệu ngăn tia UV truyền ra ngoài.
+d) Bức xạ có tác dụng chính để sấy khô bát đĩa trong máy là của tia tử ngoại.
+=> Đ Đ Đ S
+
+#q B11 III
+Một đài truyền hình địa phương phát sóng truyền hình mặt đất bằng sóng điện từ thuộc dải UHF có tần số $f = 600\ \text{MHz}$. Coi tốc độ truyền sóng điện từ trong chân không là $c=3.{10}^{8} m/s$. Bước sóng của tín hiệu này trong chân không là bao nhiêu mét? Kết quả làm tròn đến chữ số hàng phần trăm.
+=> 0,50
+
+#q B11 III
+Một vệ tinh cách trạm thu trên mặt đất 36000 km. Một tín hiệu vô tuyến truyền từ vệ tinh đến trạm thu. Coi tín hiệu truyền với tốc độ $c=3.{10}^{8} m/s$. Thời gian tín hiệu truyền đến trạm thu xấp xỉ bằng bao nhiêu mili giây (ms)?
+=> 120
+
+#q B11 TL
+Một anten phát sóng vô tuyến đặt tại mặt đất phát ra một sóng điện từ truyền thẳng hướng lên một vệ tinh truyền thông đang ở quỹ đạo địa tĩnh ở độ cao h = 36000 km so với anten mặt đất. Tín hiệu truyền từ anten đến vệ tinh mất một khoảng thời gian Δt. Sóng vô tuyến này có bước sóng $\lambda_{0} = 15\ \text{cm}$ trong không khí (được coi là chân không).
+**a)** Tính tần số f của sóng vô tuyến này và cho biết nó thuộc dải sóng vô tuyến nào?
+**b)** Tính thời gian Δt để tín hiệu đi từ anten mặt đất lên tới vệ tinh.
+[[IMG image123.png 14.9]]
+=> a) $2.{10}^{9}$ Hz; b) 0,12 s.

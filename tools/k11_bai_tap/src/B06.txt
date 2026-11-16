@@ -1,0 +1,178 @@
+#ten B6 DAO ĐỘNG TẮT DẦN. DAO ĐỘNG CƯỠNG BỨC. HIỆN TƯỢNG CỘNG HƯỞNG
+
+#q B6 I
+Một em bé đang chơi xích đu trong sân, nếu người mẹ chỉ đẩy một lần thì dao động của em bé và chiếc xích đu là
+A. dao động tắt dần.
+B. dao động tuần hoàn.
+C. dao động tự do.
+D. dao động điều hòa.
+=> A
+
+#q B6 I
+Dao động tắt dần là
+A. dao động có biên độ giảm dần theo thời gian.
+B. dao động có biên độ tăng dần theo thời gian.
+C. dao động có biên độ giảm rồi tăng theo thời gian.
+D. dao động có biên độ tăng rồi giảm theo thời gian.
+=> A
+
+#q B6 I
+Nguyên nhân gây ra dao động tắt dần là do tác dụng của
+A. lực căng dây.
+B. lực cản và lực ma sát của môi trường.
+C. trọng lực.
+D. lực đàn hồi của lò xo.
+=> B
+
+#q B6 I
+Khi một con lắc lò xo đang dao động tắt dần do tác dụng của lực ma sát thì cơ năng của con lắc chuyển hóa dần thành
+A. điện năng.
+B. quang năng.
+C. hóa năng.
+D. nhiệt năng.
+=> D
+
+#q B6 I
+Bộ giảm chấn khối lượng thường được sử dụng trong các tòa nhà cao tầng, các thiết bị đóng cửa tự động hay giảm xóc ô tô, xe máy là ứng dụng của
+A. dao động duy trì.
+B. dao động cưỡng bức.
+C. dao động tắt dần.
+D. dao động điều hòa.
+=> C
+
+#q B6 I
+Trong những dao động tắt dần sau, trường hợp nào tắt dần nhanh có lợi?
+[[IMG image104.png 16.1]]
+A. Dao động của quả lắc đồng hồ.
+B. Dao động của khung xe qua chỗ đường mấp mô.
+C. Dao động của xích đu.
+D. Dao động của con lắc đơn trong phòng thí nghiệm.
+=> B
+
+#q B6 I
+Hai chất điểm dao động có li độ phụ thuộc theo thời gian được biểu diễn tương ứng bởi hai đồ thị (1) và (2) như hình vẽ. Nhận xét nào dưới đây **đúng** khi nói về dao động của hai chất điểm?
+[[IMG image105c0.png 6.7]]
+A. Hai chất điểm đều thực hiện dao động điều hòa với cung chu kì.
+B. Đồ thị (1) biểu diễn chất điểm dao động tắt dần cùng chu kì với chất điểm còn lại.
+C. Hai chất điểm đều thực hiện dao động điều hòa và cùng pha ban đầu.
+D. Hai chất điểm đều thực hiện dao động tắt dần.
+=> B
+
+#q B6 I
+Dao động xảy ra dưới tác dụng của ngoại lực tuần hoàn có tần số f bất kì được gọi là
+A. dao động tắt dần.
+B. dao động cưỡng bức.
+C. dao động duy trì.
+D. dao động cộng hưởng.
+=> B
+
+#q B6 I
+Khi đến bến xe buýt, xe chỉ tạm dừng nên không tắt máy, thân xe vẫn dao động. Dao động này là
+A. dao động cưỡng bức.
+B. dao động tắt dần.
+C. dao động điện từ.
+D. dao động tự do.
+=> A
+
+#q B6 I
+Máy đo địa chấn được sử dụng để phát hiện và đo đạc những rung động địa chấn được tạo ra bởi sự dịch chuyển của lớp vỏ Trái Đất. Năng lượng từ các cơn địa chấn có khả năng kích thích con lắc lò xo bên trong máy đo làm đầu bút di chuyển để vẽ lên giấy. Dao động của con lắc lò xo trong máy đo địa chấn khi cơn địa chấn xuất hiện là
+[[IMG image106.png 3.8]]
+A. dao động duy trì.
+B. dao động cưỡng bức.
+C. dao động điều hòa.
+D. dao động tự do.
+=> B
+
+#q B6 I
+Hiện tượng cộng hưởng xảy ra khi
+A. tần số của lực cưỡng bức tiến đến bằng tần số riêng của hệ dao động.
+B. tần số của lực cưỡng bức nhỏ hơn tần số riêng của hệ dao động.
+C. tần số của lực cưỡng bức nhỏ hơn tần số riêng của hệ dao động.
+D. tần số của lực cưỡng bức lớn hơn tần số riêng của hệ dao động.
+=> A
+
+#q B6 I
+Hiện tượng cộng hưởng thể hiện rõ nét khi
+A. tần số lực cưỡng bức nhỏ.
+B. lực cản môi trường nhỏ.
+C. tần số lực cưỡng bức lớn.
+D. biên độ lực cưỡng bức nhỏ.
+=> B
+
+#q B6 I
+Biên độ dao động cưỡng bức không thay đổi khi thay đổi
+A. lực cản môi trường.
+B. pha ban đầu của lực cưỡng bức.
+C. biên độ lực cưỡng bức.
+D. tần số ngoại lực tuần hoàn.
+=> B
+
+#q B6 I
+Hộp đàn của đàn guitar, viôlon,... là những ứng dụng của
+A. dao động tắt dần.
+B. dao động duy trì.
+C. hiện tượng cộng hưởng.
+D. dao động cưỡng bức.
+=> C
+
+#q B6 I
+Một cây cầu bắc ngang qua sông Fontanka ở Saint Petersburg (nước Nga) được thiết kế đủ vững chắc cho 300 người đi qua. Nhưng nó đã bị sập khi một trung đội bộ binh gồm 36 người đi đều qua vào năm 1960. Hiện tượng trên xảy ra là do
+A. cây cầu dao động tắt dần.
+B. cầu không chịu được tải trọng.
+C. dao động tự do của cây cầu.
+D. hiện tượng cộng hưởng.
+=> D
+
+#q B6 I
+Hiện tượng cộng hưởng nào sau đây là có **hại**?
+A. Khi máy bay di chuyển với tốc độ rất cao, cánh máy bay rung lắc mạnh vì cộng hưởng với các xoáy của dòng không khí.
+B. Các phân tử nước trong thực phẩm dao động cộng hưởng với tần số lò vi sóng hoạt động.
+C. Bầu đàn đóng vai trò của hộp cộng hưởng có khả năng cộng hưởng với nhiều tần số khác nhau và tăng cường độ âm với có các tần số đó.
+D. Không khí trong hộp đàn violon dao động cộng hưởng với tần số dao động của dây đàn.
+=> A
+
+#q B6 I
+Một hệ cơ học có tần số dao động riêng là 10 Hz ban đầu dao động cưỡng bức dưới tác dụng của ngoại lực biến thiên điều hoà $F_{1}$ = $F_{0}$ cos(20πt + π/12) (N) (t đo bằng giây). Nếu ta thay ngoại lực cưỡng bức $F_{1}$ bằng ngoại lực cưỡng bức $F_{2}$ = $F_{0}$ cos(40πt + π/6) (N) (t đo bằng giây) thì biên độ dao động cưỡng bức của hệ
+A. sẽ không đổi vì biên độ của lực không đổi.
+B. sẽ giảm vì mất cộng hưởng.
+C. sẽ tăng vì tần số biến thiên của lực tăng.
+D. sẽ giảm vì pha ban đầu của lực giảm.
+=> B
+
+#q B6 I
+Một con lắc đang dao động với tần số góc riêng 20 rad/s. Tác dụng một ngoại lực điều hòa cưỡng bức biên độ F và tần số $f_{1}$ = 4 Hz theo phương trùng với trục của lò xo thì biên độ dao động ổn định $A_{1}$. Nếu giữ nguyên biên độ F và tăng tần số ngoại lực đến giá trị $f_{2}$ = 5 Hz thì biên độ dao động ổn định $A_{2}$. So sánh $A_{1}$ và $A_{2}$.
+A. $A_{1}$ = 2$A_{2}$.
+B. $A_{1}$ ≥ $A_{2}$.
+C. $A_{1}$ < $A_{2}$.
+D. $A_{1}$ > $A_{2}$.
+=> D
+
+#q B6 II
+Dao động tắt dần có nhiều ứng dụng trong cuộc sống.
+a) Dao động tắt dần là dao động có biên độ giảm dần theo thời gian.
+b) Dao động của vật sẽ tắt dần nhanh hơn nếu tăng lực cản của môi trường.
+c) Trong dao động tắt dần, vận tốc của vật giảm liên tục theo thời gian.
+d) Dao động tắt dần được ứng dụng trong bộ phận giảm xóc của ô tô hoặc xe máy.
+=> Đ Đ S Đ
+
+#q B6 II
+Một vật dao động trong không khí với tần số riêng $f_{0}$ = 10 Hz thì chịu tác dụng của một ngoại lực biến thiên điều hòa. Đồ thị biểu diễn sự phụ thuộc biên độ dao động của vật vào tần số f của ngoại lực có dạng như hình vẽ.
+[[IMG image107.png 5.3]]
+a) Dao động của vật là dao động cưỡng bức.
+b) Đặt hệ vật vào trong môi trường có lực cản lớn hơn thì độ lớn cực đại của biên độ dao động cưỡng bức sẽ tăng lên.
+c) Khi tần số của ngoại lực có giá trị f = 10 Hz thì xảy ra hiện tượng cộng hưởng.
+d) Khi ngoại lực thay đổi tần số từ giá trị $f_{1}$ đến giá trị $f_{2}$ thì biên độ dao động của vật tăng lên.
+=> Đ S Đ S
+
+#q B6 III
+Một vật có tần số riêng 20 Hz đang thực hiện dao động cưỡng bức dưới tác dụng của ngoại lực tuần hoàn $F = 20\cos (60\pi t+\pi)$ (N) trong đó t tính theo giây (s). Tần số dao động của vật trong giai đoạn ổn định là bao nhiêu héc (Hz)? Làm tròn kết quả đến chữ số hàng đơn vị.
+=> 30
+
+#q B6 III
+Một con lắc lò xo có chu kì dao động riêng là $T_{0}$ = 1 s. Tác dụng lên con lắc ngoại lực cưỡng bức biến đổi điều hòa theo phương trùng với trục của lò xo. Lực cưỡng bức có tần số góc bao nhiêu rad/s sẽ làm con lắc dao động mạnh nhất? Làm tròn kết quả đến chữ số hàng phần trăm.
+=> 6,28
+
+#q B6 III
+Một vật có khối lượng 200 g dao động dưới tác dụng của ngoại lực biến thiên điều hòa với tần số góc ω. Đồ thị biểu diễn sự phụ thuộc của biên độ vào tần số góc của ngoại lực tác dụng lên hệ có dạng như hình vẽ. Tính cơ năng của vật khi cộng hưởng theo đơn vị jun (J). Làm tròn kết quả đến chữ số hàng phần trăm.
+[[IMG image109.png 4.9]]
+=> 0,36

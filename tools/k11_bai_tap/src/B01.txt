@@ -1,0 +1,118 @@
+#ten B1 DAO ĐỘNG ĐIỀU HÒA
+
+#q B1 I
+Chuyển động nào sau đây **không phải** là dao động cơ học?
+[[IMG image1.png 16.5]]
+A. Chuyển động đung đưa của lá cây.
+B. Chuyển động của ôtô chạy trên đường.
+C. Chuyển động qua lại của con lắc đồng hồ
+D. Chuyển động nhấp nhô của phao trên mặt nước.
+=> B
+
+#q B1 I
+Dao động mà trạng thái chuyển động của vật (vị trí và vận tốc) được lặp lại như cũ sau những khoảng thời gian bằng nhau được gọi là
+A. dao động cơ học.
+B. dao động tuần hoàn.
+C. dao động tự do.
+D. sự tự dao động.
+=> B
+
+#q B1 I
+Dựa vào hình vẽ, cách nào sau đây có thể tạo ra dao động cho con lắc lò xo và con lắc đơn?
+[[IMG image2.png 2.8]]
+A. Nâng vật lên theo phương thẳng đứng rồi giữ cố định ở vị trí mới.
+B. Kéo vật xuống rồi giữ cố định (hình a) hoặc kéo vật sang ngang rồi giữ nguyên (hình b).
+C. Gắn thêm một vật nhỏ vào vật đang treo rồi giữ nguyên vị trí.
+D. Kéo vật xuống một đoạn nhỏ theo phương thẳng đứng (hình a) hoặc kéo vật sang ngang một đoạn nhỏ (hình b) rồi thả nhẹ.
+=> D
+
+#q B1 I
+Phát biểu nào sau đây **sai** khi nói về dao động điều hòa?
+A. Dao động điều hòa có li độ của vật là một hàm cosin (hoặc sin) theo thời gian x = Acos(ωt + φ). Trong đó A, ω, φ là các hằng số.
+B. Đồ thị li độ - thời gian của một vật dao động điều hòa là một đường hình sin.
+C. Dao động điều hòa là dạng dao động tuần hoàn đơn giản nhất; tuy nhiên, không phải mọi dao động tuần hoàn đều là dao động điều hòa.
+D. Quỹ đạo chuyển động của vật dao động điều hòa là một đường hình sin.
+=> D
+
+#q B1 I
+Phát biểu nào sau đây **sai** khi nói về các đại lượng trong phương trình li độ x = Acos(ωt + φ) (A > 0, ω > 0) của vật dao động điều hoà
+A. x là li độ dao động.
+B. A là biên độ dao động.
+C. $(\omega t+\varphi)$ là pha ban đầu của dao động.
+D. $\varphi$ là pha ban đầu của dao động.
+=> C
+
+#q B1 I
+Phương trình nào sau đây **không** biểu diễn một dao động điều hòa
+A. x = 3sin5πt (cm).
+B. x = 2tcos5πt (cm).
+C. x = 5cosπt (cm).
+D. x = 4cos (πt -$\dfrac{\pi}{6})$ (cm).
+=> B
+
+#q B1 I
+Một con lắc đơn dao động điều hòa với phương trình li độ x = 2cos(2πt + $\dfrac{\pi}{3}$) (cm). Pha ban đầu của dao động là
+A. 2 rad.
+B. (2πt + $\dfrac{\pi}{3}$) rad.
+C. $\dfrac{\pi}{3}$ rad.
+D. 2π rad.
+=> C
+
+#q B1 I
+Một chất điểm dao động điều hòa có phương trình li độ x = 5cos(10πt + $\dfrac{\pi}{3}$) (cm). Li độ của chất điểm khi pha dao động bằng π rad là
+A. 2,5 cm.
+B. -2,5 cm.
+C. -5 cm.
+D. 5 cm.
+=> C
+
+#q B1 I
+Pit-tông của một động cơ đốt trong dao động điều hòa trên một đoạn thẳng dài 14 cm và làm cho trục khuỷu của động cơ quay đều. Biên độ dao động của một điểm trên bề mặt pit-tông bằng
+[[IMG image3.png 1.5]]
+A. 56 cm.
+B. 7 cm.
+C. 28 cm.
+D. 14 cm.
+=> B
+
+#q B1 II
+Tại nơi có lực ma sát không đáng kể, người ta cho một con lắc đơn dao động với góc lệch nhỏ $(\le$ 10°). Vị trí của vật xác định bằng một cảm biến khoảng cách kết nối với máy tính. Trên màn hình máy tính hiển thị đồ thị li độ - thời gian. Nhận xét tính đúng hoặc sai của các thông tin sau
+[[IMG image4.png 11.3]]
+a) Dao động của con lắc đơn là dao động điều hòa.
+b) Biên độ dao động là 1,0 cm.
+c) Tại thời điểm t = 6,0 s vật có li độ x = - 2,0 cm và chuyển động cùng chiều dương.
+d) Cứ sau khoảng thời gian 5,0 s, trạng thái dao động của vật lặp lại như cũ.
+=> Đ S S S
+
+#q B1 II
+Một chất điểm dao động điều hòa với phương trình x = 5cos (10πt +$\dfrac{\pi}{3})$ (cm). Nhận xét tính đúng hoặc sai của các phát biểu sau
+a) Pha ban đầu của dao động là $\dfrac{\pi}{3}$ rad.
+b) Li độ của vật khi pha dao động bằng π (rad) là -0,846 cm.
+c) Tại thời điểm ban đầu (t = 0), vật qua vị trí có li độ x = 2,5 cm.
+d) Chất điểm này chuyển động trên đoạn thẳng dài 10 cm.
+=> Đ S Đ Đ
+
+#q B1 TL
+Dao động tự do là dao động của hệ xảy ra sau khi được kích thích ban đầu và tự nó tiếp tục dao động mà không chịu tác dụng của các lực từ bên ngoài.
+Các ví dụ: - Dao động của con lắc lò xo (1), con lắc đơn (2) sau khi kích thích.
+- Dùng búa cao su gõ vào nhánh âm thoa, âm thoa dao động phát ra âm thanh (3).
+- Gảy dây đàn guitar rồi thả ra, dây đàn dao động phát ra âm thanh (4).
+[[IMG image5c0.png 13.6]]
+Trên thực tế, các dao động trên chỉ diễn ra một thời gian rồi dừng lại. Dựa vào kiến thức thực tế, em hãy giải thích vì sao chúng ta không thể duy trì dao động tự do mãi mãi như trong lý thuyết?
+=: **Giải thích: (chỉ cần 1 ý)**
+=: -Trong thực tế luôn có lực cản của không khí (hoặc lực ma sát).
+=: -Lực cản/ma sát làm năng lượng của vật bị mất dần nên vật dừng lại.
+
+#q B1 TL
+Một vật nhỏ dao động điều hòa có đồ thị li độ - thời gian như hình vẽ
+[[IMG image6c0.png 8.4]]
+**a)** Tính độ dịch chuyển của vật từ thời điểm ban đầu (t = 0) đến thời điểm t = 0,5 s.
+**b)** Tính tốc độ trung bình của vật trong khoảng thời gian 0,75 s kể từ lúc bắt đầu dao động.
+=> a) 20 cm. b) 22,2 cm/s.
+
+#q B1 TL
+Một vật nhỏ dao động điều hòa có đồ thị li độ - thời gian như hình vẽ
+[[IMG image7.png 10.3]]
+**a)** Tính số dao động vật thực hiện trong 1,6 s.
+**b)** Kể từ thời điểm t = 0, sau bao nhiêu giây thì vật đi được quãng đường 1,40 cm.
+=> a) 4 dao động. b) 0,7 s.

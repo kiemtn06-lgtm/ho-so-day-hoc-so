@@ -1,0 +1,155 @@
+#ten B5 ĐỘNG NĂNG, THẾ NĂNG. SỰ CHUYỂN HÓA NĂNG LƯỢNG TRONG DAO DỘNG ĐIỀU HÒA
+
+#q B5 I
+Một chất điểm có khối lượng $m$, dao động điều hòa quanh vị trí cần bằng $O$ với tần số góc $\omega$, biên độ $A$. Khi vận tốc của chất điểm là $v$ thì động năng của chất điểm $W_{\text{đ}}$ tính bằng biểu thức
+A. $W_{\text{đ}}=\dfrac{1}{2}m\omega^{2}A^{2}$.
+B. $W_{\text{đ}}=\dfrac{1}{2}m\omega v^{2}$.
+C. $W_{\text{đ}}=\dfrac{1}{2}mv^{2}$.
+D. $W_{\text{đ}}=\dfrac{1}{2}m\omega^{2}v^{2}$.
+=> C
+
+#q B5 I
+Một chất điểm có khối lượng $m$, dao động điều hòa quanh vị trí cần bằng $O$. Phương trình li độ có dạng $x=A\cos \left(\omega t+\varphi \right)$, $t$ tính theo đơn vị giây. Lấy gốc thế năng tại $O$. Biểu thức tính thế năng $W_{\text{t}}$ là
+A. $W_{\text{t}}=\dfrac{1}{2}m\omega A^{2}\sin^{2}\left(\omega t+\varphi \right)$.
+B. $W_{\text{t}}=\dfrac{1}{2}m\omega A^{2}\cos^{2}\left(\omega t+\varphi \right)$.
+C. $W_{\text{t}}=\dfrac{1}{2}m\omega^{2}A^{2}\sin^{2}\left(\omega t+\varphi \right)$.
+D. $W_{\text{t}}=\dfrac{1}{2}m\omega^{2}A^{2}\cos^{2}\left(\omega t+\varphi \right)$.
+=> D
+
+#q B5 I
+Một chất điểm có khối lượng $m$, dao động điều hòa quanh vị trí cần bằng $O$ với tần số góc $\omega$, biên độ $A$. Lấy gốc thế năng tại $O$. Cơ năng $W$ tính bằng biểu thức
+A. $W=\dfrac{1}{2}m\omega A^{2}$.
+B. $W=\dfrac{1}{2}m\omega^{2}A^{2}$.
+C. $W=\dfrac{1}{2}m\omega^{2}A$.
+D. $W=\dfrac{1}{2}m\omega A$.
+=> B
+
+#q B5 I
+Một chất điểm có khối lượng $m$, dao động điều hòa quanh vị trí cân bằng $O$ với tần số góc $\omega$.Lấy gốc thế năng tại $O$. Khi li độ là $x$ thì vận tốc là $v$. Động năng $W_{\text{đ}}$ tính bằng biểu thức
+A. $W_{\text{đ}}=\dfrac{1}{2}m\omega^{2}\left(A^{2}+x^{2}\right)$.
+B. $W_{\text{đ}}=\dfrac{1}{2}m\left(\omega^{2}A^{2}+x^{2}\right)$.
+C. $W_{\text{đ}}=\dfrac{1}{2}m\omega^{2}\left(A^{2}-x^{2}\right)$.
+D. $W_{\text{đ}}=\dfrac{1}{2}m\left(\omega^{2}A^{2}-x^{2}\right)$.
+=> C
+
+#q B5 I
+Cơ năng của một vật dao động điều hòa tỉ lệ thuận với
+A. li độ dao động.
+B. biên độ dao động.
+C. bình phương biên độ dao động.
+D. tần số dao động.
+=> C
+
+#q B5 I
+Chọn câu **sai**. Một vật dao động điều hòa có chu kì dao động là T. Năng lượng của một vật dao động điều hòa
+A. luôn luôn là một hằng số.
+B. bằng động năng của vật khi qua vị trí cân bằng.
+C. bằng thế năng của vật khi qua vị trí cân biên.
+D. biến thiên tuần hoàn theo thời gian với chu kì T.
+=> D
+
+#q B5 I
+Một chất điểm có khối lượng m, dao động điều hòa quanh vị trí cần bằng O với chu kì T, biên độ A. Động năng của vật biến đổi theo thời gian
+[[IMG image88.png 7.8]]
+A. tuần hoàn với chu kỳ T.
+B. Điều hòa với chu kỳ $\dfrac{T}{2}$.
+C. không đổi.
+D. tuần hoàn với chu kỳ $\dfrac{T}{2}$.
+=> D
+
+#q B5 I
+Một vật dao động điều hoà, cơ năng toàn phần có giá trị là W thì
+A. Tại vị trí biên: động năng bằng W.
+B. Tại vị trí cân bằng: động năng bằng W.
+C. Tại vị trí bất kì: thế năng lớn hơn W.
+D. Tại vị trí bất kì: động năng lớn hơn W.
+=> B
+
+#q B5 I
+Cho một vật dao động điều hòa với biên độ A dọc theo trục Ox và quanh gốc tọa độ O. Một đại lượng Y nào đó của vật phụ thuộc vào li độ x của vật theo đồ thị có dạng một phần của đường parabol như hình vẽ bên. Đại lượng Y là
+[[IMG image90c0.png 4.0]]
+A. vận tốc của vật.
+B. thế năng của vật.
+C. động năng của vật.
+D. gia tốc của vật.
+=> C
+
+#q B5 I
+Cho một vật dao động điều hòa với biên độ A dọc theo trục Ox và quanh gốc tọa độ O có đồ thị biểu diễn sự phụ thuộc động năng theo li độ như hình bên. Khi vật đi từ li độ x = 3 cm đến vị trí biên dương
+[[IMG image91.png 7.0]]
+A. thế năng của vật chuyển hóa thành cơ năng.
+B. cơ năng của vật chuyển hóa thành thế năng.
+C. động năng của vật chuyển hóa thành thế năng.
+D. thế năng của vật chuyển hóa thành động năng.
+=> C
+
+#q B5 I
+Cho một vật dao động điều hòa với biên độ A dọc theo trục Ox và quanh gốc tọa độ O có đồ thị biểu diễn sự phụ thuộc li độ theo thời gian như hình bên.
+[[IMG image92.png 7.4]]
+A. Tại thời điểm ban đầu thế năng cực đại.
+B. Từ $\dfrac{T}{4}$ đến thời điểm $\dfrac{3T}{4}$ thế năng tăng từ 0 đến cực đại.
+C. Động năng tại thời điểm $\dfrac{T}{4}$ bằng thế năng tại thời điểm $\dfrac{T}{2}$.
+D. Từ $\dfrac{T}{2}$ đến thời điểm $\dfrac{3T}{4}$ thế năng giảm từ cực đại về 0.
+=> C
+
+#q B5 I
+Cho một vật dao động điều hòa với biên độ A dọc theo trục Ox và quanh gốc tọa độ O có đồ thị biểu diễn sự phụ thuộc vận tốc theo thời gian như hình bên.
+[[IMG image93.png 7.2]]
+A. Tại thời điểm ban đầu thế năng cực đại.
+B. Trong 0,6 s đầu tiên, động năng chuyển hóa thành thế năng.
+C. Trong 1,2 s đầu tiên, cơ năng không đổi.
+D. Trong một chu kì dao động của vật, thế năng cực tiểu hai lần.
+=> D
+
+#q B5 I
+Chọn phát biểu đúng về sự chuyển hóa năng lượng trong dao động điều hòa.
+A. Thế năng cực đại khi vật ở vị trí cân bằng.
+B. Thế năng bằng không khi vật ở biên.
+C. Động năng bằng không khi vật ở vị trí cân bằng.
+D. Động năng cực đại khi vật ở vị trí cân bằng.
+=> D
+
+#q B5 I
+Một vật dao động điều hòa dọc theo trục Ox và xung quanh vị trí cân bằng O. Đồ thị biểu diễn sự thay đổi của một đại lượng Y nào đó theo thời gian trong dao động của vật có dạng như hình vẽ. Đại lượng Y có thể là
+[[IMG image94.png 5.1]]
+A. thế năng của vật.
+B. gia tốc của vật.
+C. cơ năng của vật.
+D. vận tốc của vật.
+=> A
+
+#q B5 II
+Một con lắc lò xo gồm một vật nhỏ khối lượng m và lò xo có độ cứng k. Con lắc dao động điều hòa chu kì T có đồ thị biểu diễn sự phụ thuộc của thế năng theo thời gian như hình. Các phát biểu sau đây đúng hay sai?
+[[IMG image95.png 7.3]]
+a) Tại thời điểm ban đầu thế năng cực đại, sau thời gian $\dfrac{T}{4}$ thế năng bằng không.
+b) Thế năng của vật biến đổi tuần hoàn theo thời gian với chu kì T.
+c) Khi vật dao động điều hòa di chuyển từ vị trí cân bằng ra biên thì động năng giảm và thế năng tăng
+d) Chu kì dao động T của con lắc lò xo không phụ thuộc vào khối lượng vật nhỏ.
+=> Đ S Đ S
+
+#q B5 II
+Một con lắc đơn với góc lệch nhỏ (α ≤ 10°) dao động điều hòa có chiều dài sợi dây l, gia tốc trọng trường g, chu kì $T=2\pi \sqrt{\dfrac{\ell}{g}}$. Chọn mốc thế năng tại vị trí cân bằng.
+[[IMG image97c0.png 7.5]]
+a) Khi vật đi từ vị trí biên về vị trí cân bằng thì thế năng giảm và động năng tăng.
+b) Trong quá trình dao động, cơ năng biến thiên tuần hoàn.
+c) Một con lắc đơn góc lệch nhỏ (α ≤ 10°) thì chu kì T không phụ thuộc vào biên độ dao động.
+d) Khi vật di chuyển từ vị trí biên về vị trí cân bằng, thế năng giảm từ cực đại về 0.
+=> Đ S Đ S
+
+#q B5 III
+Một chất điểm có khối lượng $m$, dao động điều hòa quanh vị trí cân bằng O với phương trình li độ có dạng $x=A\cos \left(\omega t+\varphi \right)$. Sau những khoảng thời gian bằng nhau $\Delta t=nT$ động năng và thế năng bằng nhau. Hãy tìm n.
+[[IMG image99.png 7.1]]
+=> 0,25
+
+#q B5 III
+Một vật nhỏ có khối lượng 100 gam dao động điều hòa với chu kì $0{,}5\pi\ \text{s}$ và biên độ $3\ \text{cm}$. Chọn mốc thế năng tại vi trí cân bằng, cơ năng của vật bằng bao nhiêu mJ?
+=> 0,72
+
+#q B5 III
+Một vật nhỏ khối lượng 100 g dao động theo phương trình x = 8cos10t (x tính bằng cm, t tính bằng s). Động năng cực đại của vật bằng bao nhiêu mJ?
+=> 32
+
+#q B5 III
+Cho đồ thị như hình vẽ mô tả sự thay đổi thế năng theo li độ của một quả cầu có khối lượng 200 g đang dao động điều hòa dọc theo trục Ox, quanh gốc tọa độ O. Khi vật ở vị trí biên thế năng là bao nhiêu mJ?
+[[IMG image103.png 5.9]]
+=> 100

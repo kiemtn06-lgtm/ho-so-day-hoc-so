@@ -1,0 +1,68 @@
+#ten B15 THỰC HÀNH : ĐO TỐC ĐỘ TRUYỀN ÂM
+
+#q B15 I
+Mục tiêu của bài thực hành đo tốc độ truyền âm
+A. xác định tần số của nguồn âm.
+B. xác định tốc độ truyền âm trong không khí bằng dụng cụ thực hành.
+C. xác định cường độ âm của nguồn phát.
+D. xác định bước sóng của ánh sáng.
+=> B
+
+#q B15 I
+Hình bên là bộ thí nghiệm đo tốc độ truyền âm dụng cụ số (3) là
+[[IMG image132c0.png 3.8]]
+A. máy phát tần số phát ra tín hiệu có dạng sin.
+B. loa phát ra sóng âm.
+C. ống trụ làm bằng thủy tinh trong suất.
+D. pittông làm bằng thép bọc nhựa.
+=> A
+
+#q B15 I
+Trong thí nghiệm đo tốc độ truyền âm trong không khí, dụng cụ nào sau đây tạo ra tín hiệu âm
+A. loa.
+B. pittông làm bằng thép bọc nhựa.
+C. máy phát tần số phát ra tín hiệu có dạng sin.
+D. ống trụ làm bằng thủy tinh trong suất.
+=> A
+
+#q B15 I
+Trong quá trình thực hành đo tốc độ truyền âm, để giảm sai số khi xác định bước sóng, cách làm nào sau đây là phù hợp nhất
+A. chỉ đo khoảng cách giữa hai vị trí cực đại liên tiếp.
+B. đo nhiều lần khoảng cách giữa hai vị trí cực đại liên tiếp.
+C. chỉ thực hiện phép đo một lần.
+D. chọn khoảng cách đo càng nhỏ càng tốt.
+=> B
+
+#q B15 I
+Trong một môi trường không đổi, nếu tăng tần số của nguồn âm thì tốc độ truyền âm sẽ
+A. tăng.
+B. giảm.
+C. không đổi.
+D. bằng không.
+=> C
+
+#q B15 I
+Trong thí nghiệm đo tốc độ truyền âm bằng ống cộng hưởng, gọi chiều cao của cột không khí trong ống là $l_{1}$ và $l_{2}$ khi tai ta nghe liên tiếp hai lần âm to nhất. Liên hệ giữa bước sóng λ và $l_{1}$, $l_{2}$ là
+A. $l_{2}$ - $l_{1}$ = $\dfrac{}{2}$.
+B. $l_{2}$ - $l_{1}$ = $\dfrac{}{4}$.
+C. $l_{2}$ - $l_{1}$ =.
+D. $l_{2}$ - $l_{1}$ = 2.
+=> A
+
+#q B15 II
+Trong thí nghiệm đo tốc độ truyền âm bằng bộ dụng cụ thực hành như hình. Phát biểu sau đây là đúng hay sai?
+[[IMG image132c0.png 3.8]]
+a) Âm truyền trong không khí có dạng hình sin.
+b) Để xác định tốc độ truyền âm, cần xác định được thời gian âm truyền từ nguồn đến máy thu.
+c) Đo tốc độ truyền âm là phép đo gián tiếp.
+d) Đo tốc độ truyền âm là một trong những ứng dụng của hiện tượng sóng dừng
+=> Đ S Đ Đ
+
+#q B15 II
+Bộ thí nghiệm đo tốc độ truyền âm bằng bộ dụng cụ thực hành như hình bên. Phát biểu sau đây là đúng hay sai?
+[[IMG image132c0.png 3.8]]
+a) Dụng cụ số (2) là pit-tông làm bằng thép bọc nhựa.
+b) Sóng dừng xảy ra trong cột không khí phía dưới pittông.
+c) Việc đo nhiều lần rồi lấy giá trị trung bình làm góp phần giảm ảnh hưởng sai số ngẫu nhiên.
+d) Nếu tăng tần số của máy phát tần số thì tốc độ truyền âm trong không khí tăng.
+=> Đ Đ Đ S

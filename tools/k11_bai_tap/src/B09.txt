@@ -1,0 +1,122 @@
+#ten B9 SÓNG NGANG, SÓNG DỌC SỰ TRUYỀN NĂNG LƯỢNG CỦA SÓNG CƠ
+
+#q B9 I
+Để phân loại sóng dọc và sóng ngang người ta căn cứ vào
+A. vận tốc truyền sóng và bước sóng.
+B. phương trình sóng và bước sóng.
+C. phương dao động của các phần tử môi trường với phương truyền sóng.
+D. phương dao động của các phần tử môi trường với vận tốc truyền sóng.
+=> C
+
+#q B9 I
+Sóng dọc là sóng có các phần tử dao động
+A. theo phương vuông góc với phương truyền sóng.
+B. trùng với phương truyền sóng.
+C. theo phương ngang.
+D. theo phương thẳng đứng.
+=> B
+
+#q B9 I
+Sóng ngang là sóng có các phần tử dao động
+A. theo phương vuông góc với phương truyền sóng.
+B. trùng với phương truyền sóng.
+C. theo phương ngang.
+D. theo phương thẳng đứng.
+=> A
+
+#q B9 I
+Sóng cơ truyền trên lò xo như hình a) và hình b). Nhận xét nào sau đây là đúng?
+[[IMG image116.png 7.6]]
+A. Hình a) mô tả sóng dọc, b) mô tả sóng ngang.
+B. Hình a) mô tả sóng ngang, b) mô tả sóng dọc.
+C. Hình a) và b) mô tả sóng ngang.
+D. Hình a) và b) mô tả sóng dọc.
+=> A
+
+#q B9 I
+Sáng ngày 14/3/2022 một trận động đất 3,4 độ richter xảy ra ở huyện Điện Biên Đông tỉnh Điện Biên nhưng một số huyện tỉnh Sơn La cách huyện Điện Biên Đông 20 km nhưng nhà cửa, đồ đạc và vật dụng đều bị rung lắc chứng tỏ
+[[IMG image117.jpg 7.8]]
+A. quá trình truyền sóng là quá trình truyền năng lượng.
+B. quá trình truyền sóng là quá trình truyền vật chất.
+C. sóng luôn luôn là sóng ngang.
+D. sóng luôn luôn là sóng dọc.
+=> A
+
+#q B9 I
+Sóng cơ không truyền được trong
+A. chân không.
+B. không khí.
+C. nước.
+D. kim loại.
+=> A
+
+#q B9 I
+Trong một buổi biểu diễn nhạc dân tộc, nghệ sĩ gảy dây đàn nguyệt làm dây đàn dao động, tạo ra âm lan truyền qua không khí đến tai người nghe. Âm truyền trong không khí là loại sóng gì và có phương dao động như thế nào?
+A. Sóng ngang; phương dao động vuông góc với phương truyền sóng.
+B. Sóng dọc; phương dao động trùng với phương truyền sóng.
+C. Sóng ngang; phương dao động trùng với phương truyền sóng.
+D. Sóng dọc; phương dao động vuông góc với phương truyền sóng.
+=> B
+
+#q B9 I
+Trong phòng gym, một vận động viên tập luyện bài tập với dây thừng nặng (Battle Ropes). Vận động viên cầm một đầu dây cố định và giật mạnh tay lên xuống liên tục tạo ra các gợn sóng truyền dọc theo sợi dây về phía điểm cố định. Sóng trên dây thừng này thuộc loại sóng nào?
+[[IMG image118.png 5.3]]
+A. Sóng ngang.
+B. Sóng dọc.
+C. Sóng âm.
+D. Sóng điện từ.
+=> A
+
+#q B9 I
+Học sinh thực hành dùng đồ chơi lò xo Slinky đặt nằm ngang trên mặt bàn nhẵn. Học sinh dùng tay dồn nén một số vòng lò xo rồi thả nhẹ. Một vùng nén và giãn truyền đi dọc theo lò xo. Đây là mô hình minh họa trực quan cho
+A. sự truyền của sóng ngang.
+B. sự truyền của sóng dọc.
+C. sự truyền của sóng điện từ.
+D. hiện tượng phản xạ toàn phần.
+=> B
+
+#q B9 I
+Mũi tên nào trong hình vẽ mô tả đúng hướng truyền dao động của các phần tử môi trường?
+[[IMG image119.png 12.3]]
+A. ↔.
+B. →.
+C. ↑.
+D. ↓.
+=> A
+
+#q B9 I
+Chọn phát biểu **sai.** Quá trình lan truyền sóng là quá trình
+A. truyền pha dao động.
+B. truyền dao động trong môi trường vật chất theo thời gian.
+C. truyền năng lượng.
+D. lan truyền các phần tử vật chất trong không gian theo thời gian.
+=> D
+
+#q B9 II
+Hình bên mô tả quá trình lan truyền của sóng cơ trên một sợi dây đàn hồi tại thời điểm t. Biết rằng sóng lan truyền từ trái sang phải.
+[[IMG image120.png 5.7]]
+a) Sóng truyền trên dây là sóng ngang.
+b) Phương dao động của M là phương ngang.
+c) Điểm M dao động sớm pha hơn điểm N.
+d) Điểm M sau 1 chu kì dao động sẽ di chuyển theo phương ngang.
+=> Đ S Đ S
+
+#q B9 II
+Cấu tạo của tai người được mô tả như hình bên gồm 3 phần: tai ngoài, tai giữa và tai trong.
+[[IMG image121c0.png 6.7]]
+- Tai ngoài đảm nhận chức năng thu và dẫn âm thanh; tai ngoài và tai giữa được ngăn cách bằng màng nhĩ, là màng kín, nhạy âm.
+- Tai giữa giúp khuếch đại sóng âm thanh và truyền sóng âm đến tai trong.
+- Tai trong: cung cấp thông tin thính giác.
+a) Sóng âm truyền vào tai ngoài làm màng nhĩ dao động chứng tỏ quá trình truyền sóng là quá trình truyền năng lượng.
+b) Tần số của sóng âm càng lớn thì tần số dao động của màng nhĩ càng lớn, âm nghe càng cao.
+c) Âm thanh (sóng âm) lan truyền trong không khí là sóng ngang.
+d) Biên độ của sóng âm càng lớn thì biên độ dao động của màng nhĩ càng lớn, âm nghe càng to.
+=> Đ Đ S Đ
+
+#q B9 TL
+Dải tần số mà một học sinh có thể nghe thấy từ 30 Hz đến 16 000 Hz. Tốc độ truyền âm trong không khí là 330 m/s. Tính bước sóng lớn nhất của âm thanh trong không khí mà bạn học sinh đó nghe được.
+=> 11
+
+#q B9 TL
+Một công nhân sửa chữa đường ray tàu hỏa dùng búa gõ mạnh vào thanh ray thép. Một người quan sát đứng cách đó 1020 m áp tai vào đường ray thì nghe thấy tiếng búa truyền qua thép, sau đó 2,8 s mới nghe thấy tiếng búa truyền qua không khí. Biết tốc độ truyền âm trong không khí là 340 m/s. Tính tốc độ truyền âm trong thép đường ray theo đơn vị m/s.
+=> 5100

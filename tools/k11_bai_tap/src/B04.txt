@@ -1,0 +1,62 @@
+#ten B4 BÀI TẬP VỀ DAO ĐỘNG ĐIỀU HÒA
+
+#q B4 I
+Trong dao động điều hòa, li độ, vận tốc và gia tốc biến thiên điều hòa theo thời gian và có cùng
+A. biên độ.
+B. tần số.
+C. pha ban đầu.
+D. Pha dao động.
+=> B
+
+#q B4 I
+Hình vẽ thể hiện đồ thị li độ - thời gian của ba vật 1, 2 và 3 khác nhau đang thực hiện dao động điều hòa. Gọi $f_{1}$, $f_{2}$ và $f_{3}$ là tần số dao động của 3 vật thì
+[[IMG image43c0.png 7.9]]
+A. $f_{1}$ = $f_{2}$ = $f_{3}$.
+B. $f_{1}$ > $f_{2}$ >$f_{3}$.
+C. $f_{1}$ = $f_{2}$ < $f_{3}$.
+D. $f_{1}$ < $f_{2}$ < $f_{3}$.
+=> B
+
+#q B4 I
+Một vật dao động điều hòa theo một trục cố định. Phát biểu nào dưới đây là **không** chính xác?
+A. Quãng đường vật đi được trong một chu kì dao động bằng 4 lần biên độ.
+B. Đồ thị li độ theo thời gian của vật là một đường hình sin.
+C. Chiều dài quỹ đạo chuyển động của vật bằng 2 lần biên độ.
+D. Quỹ đạo chuyển động của vật là một đường hình sin.
+=> D
+
+#q B4 I
+Xét một vật đang thực hiện dao động điều hòa. Khi vật thực hiện một dao động tương ứng với pha dao động sẽ thay đổi một lượng
+A. 5π rad.
+B. π rad.
+C. 2π rad.
+D. 3π rad.
+=> C
+
+#q B4 I
+Một vật dao động điều hòa trên trục Ox quanh vị trí cân bằng O với biên độ A > 0, tần số góc ω. Chọn mốc thời gian là lúc vật có vận tốc cực đại. Đồ thị biểu biễn sự phụ thuộc của li độ theo thời gian được biểu diễn như hình
+[[IMG image44c0.png 16.5]]
+A. Hình 1.
+B. Hình 2.
+C. Hình 4.
+D. Hình 3.
+=> A
+
+#q B4 II
+Một vật dao động điều hòa dọc theo trục Ox, quanh điểm gốc O có đồ thị biểu diễn sự phụ thuộc li độ, vận tốc, gia tốc theo thời gian như hình.
+[[IMG image45.png 15.6]]
+Các phát biểu sau đây đúng hay sai?
+a) Trong dao động điều hòa, li độ, vận tốc và gia tốc biến thiên điều hòa theo thời gian và có cùng pha ban đầu.
+b) Vận tốc của vật dao động ngược pha so với li độ.
+c) Gia tốc có độ lớn tỉ lệ với độ lớn của li độ.
+d) Các đường biểu diễn li độ, vận tốc, gia tốc lần lượt là (3), (2), (1).
+=> S S Đ S
+
+#q B4 III
+Hai dao động điều hòa có đồ thị li độ - thời gian như hình vẽ. Gọi $T_{1}$ và $T_{2}$ là chu kì dao động của dao động (1) và dao động (2) thì $T_{2}$ = n$T_{1}$. Hãy tìm n.
+[[IMG image46.png 6.7]]
+=> 2
+
+#q B4 III
+Khi ca sĩ hát, dây thanh quản của người ca sĩ sẽ dao động với tần số bằng tần số của âm do người đó phát ra. Giả sử người ca sĩ hát tone nhạc “Si giáng trưởng” có tần số khoảng 466 Hz thì trong 2 s dây thanh quản của người đó thực hiện được số dao động là bao nhiêu?
+=> 932

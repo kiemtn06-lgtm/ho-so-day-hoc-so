@@ -1,0 +1,147 @@
+#ten B3 VẬN TỐC, GIA TỐC TRONG DAO ĐỘNG ĐIỀU HÒA
+
+#q B3 I
+Một vật dao động điều hòa theo phương trình $x=A\cos \left(\omega t+\varphi \right)$. Phương trình vận tốc của vật là
+A. $v=\omega^{2}A\sin \left(\omega t+\varphi \right)$.
+B. $v=-\omega A\cos \left(\omega t+\varphi \right)$.
+C. $v=\omega A\cos \left(\omega t+\varphi \right)$.
+D. $v=-\omega A\sin \left(\omega t+\varphi \right)$.
+=> D
+
+#q B3 I
+Đồ thị biểu diễn sự biến thiên của vận tốc theo thời gian trong dao động điều hoà có dạng
+A. đường thẳng.
+B. đoạn thẳng.
+C. đường hình sin.
+D. đường elip.
+=> C
+
+#q B3 I
+Một vật dao động điều hòa có có phương trình li độ là $x=A\cos \left(\omega t+\varphi \right)$ với A > 0. Vận tốc cực đại của dao động là
+A. $v_{\max}=\omega^{2}A$.
+B. $v_{\max}=-\omega^{2}A$.
+C. $v_{\max}=\omega A$.
+D. $v_{\max}=-\omega A$.
+=> C
+
+#q B3 I
+Một vật dao động điều hòa theo phương trình $x=A\cos \left(\omega t+\varphi \right)$. Phương trình gia tốc của vật là
+A. $a=-\omega^{2}A\sin \left(\omega t+\varphi \right)$.
+B. $a=-\omega^{2}A\cos \left(\omega t+\varphi \right)$.
+C. $a=\omega A^{2}\cos \left(\omega t+\varphi \right)$.
+D. $a=\omega^{2}A\sin \left(\omega t+\varphi \right)$.
+=> B
+
+#q B3 I
+Một vật dao động điều hòa có có phương trình li độ là $x=A\cos \left(\omega t+\varphi \right)$ với A > 0. Giá trị cực đại của gia tốc là
+A. $a_{\max}=\omega^{2}A$.
+B. $a_{\max}=-\omega^{2}A$.
+C. $a_{\max}=\omega A$.
+D. $a_{\max}=-\omega A$.
+=> A
+
+#q B3 I
+Một vật nhỏ dao động điều hòa trên trục Ox với tần số góc ω. Ở li độ x, vật có gia tốc là
+A. a = -ω²x.
+B. a = ω²x.
+C. a = -ωx².
+D. a = -ωx.
+=> A
+
+#q B3 I
+Đồ thị biểu diễn sự biến thiên của gia tốc theo li độ trong dao động điều hoà có dạng
+A. đường thẳng.
+B. đoạn thẳng.
+C. đường hình sin.
+D. đường elip.
+=> B
+
+#q B3 I
+Trong dao động điều hòa, vận tốc biến thiên điều hòa và
+A. cùng pha với li độ.
+B. trễ pha $\dfrac{\pi}{2}$ so với li độ.
+C. sớm pha $\dfrac{\pi}{2}$ so với li độ.
+D. ngược pha với li độ.
+=> C
+
+#q B3 I
+Trong dao động điều hòa, vận tốc biến thiên điều hòa và
+A. cùng pha với gia tốc.
+B. trễ pha $\dfrac{\pi}{2}$ so với gia tốc.
+C. sớm pha $\dfrac{\pi}{2}$ so với gia tốc.
+D. ngược pha với gia tốc.
+=> B
+
+#q B3 I
+Một vật dao động điều hòa trên trục Ox quanh vị trí cân bằng O. Vectơ gia tốc của vật
+A. luôn hướng ra xa vị trí cân bằng.
+B. có độ lớn tỷ lệ nghịch với độ lớn li độ của vật.
+C. luôn hướng về vị trí cân bằng.
+D. có độ lớn tỷ lệ thuận với độ lớn vận tốc của vật.
+=> C
+
+#q B3 II
+Cho đồ thị biểu diễn vận tốc v theo thời gian t của một vật dao động điều hòa như hình. Các phát biểu sau đây đúng hay sai?
+[[IMG image31c0.png 7.3]]
+a) Vận tốc biến đổi cùng pha với li độ.
+b) Theo đồ thị, vận tốc của vật có độ lớn cực đại lần đầu tiên ở thời điểm t = 0,4 s.
+c) Tại thời điểm t = 0,1 s, vật ở vị trí cân bằng.
+d) Biên độ dao động của vật là 20 cm.
+=> S Đ Đ S
+
+#q B3 II
+Cho đồ thị biểu diễn gia tốc a theo thời gian t của một vật dao động điều hòa như hình. Trong đó A là biên độ dao động, ω là tần số góc. Các phát biểu sau đây đúng hay sai?
+[[IMG image32.png 6.0]]
+[[IMG image33c0.png 6.5]]
+a) Đồ thị biểu diễn sự biến thiên của gia tốc theo thời gian trong dao động điều hòa có dạng hình sin.
+b) Li độ, vận tốc và gia tốc của vật dao động điều hòa là những đại lượng biến đổi theo hàm cosin (hoặc sin) theo thời gian và có cùng tần số góc.
+c) Gia tốc của dao động có độ lớn cực tiểu khi vật ở vị trí biên dương.
+d) Đồ thị biểu diễn li độ x theo thời gian t tương ứng dao động trên được biểu diễn như hình bên dưới.
+=> Đ Đ S S
+
+#q B3 III
+Một vật dao động điều hòa trên trục Ox. Quan sát đồ thị vận tốc – thời gian của một vật dao động điều hòa dưới đây. Tính gia tốc cực đại của vật theo đơn vị cm/s² (Kết quả làm tròn đến hàng đơn vị)
+[[IMG image34.png 7.9]]
+=> 40
+
+#q B3 III
+Một vật dao động điều hòa với phương trình x = 4cos(2πt) (x tính bằng cm, t tính bằng s). Vận tốc cực tiểu của vật là y.π (cm/s). Tìm y.
+=> -3
+
+#q B3 III
+Một chất điểm dao động điều hòa trên trục Ox với chu kì T. Vị trí cân bằng của chất điểm trùng với gốc tọa độ. Khoảng thời gian ngắn nhất để chất điểm đi từ vị trí vận tốc cực đại đến vị trí vận tốc cực tiểu là $\dfrac{T}{a}$. Hãy tìm a.
+=> 2
+
+#q B3 III
+Một vật dao động điều hòa trên trục Ox. Hình bên là đồ thị biểu diễn sự phụ thuộc của vận tốc v vào thời gian t. Khi li độ của vật là 4 cm thì gia tốc của vật bằng bao nhiêu cm/s²? Lấy π = 3,14. Kết quả làm tròn đến chữ số hàng phần mười.
+[[IMG image36.png 6.6]]
+=> -9,9
+
+#q B3 III
+Một chất điểm dao động điều hòa trên trục Ox với chu kì T. Vị trí cân bằng của chất điểm trùng với gốc tọa độ. Khoảng thời gian ngắn nhất để chất điểm đi từ vị trí gia tốc có độ lớn cực đại đến vị trí gia tốc có độ lớn cực tiểu là $\dfrac{T}{b}$. Hãy tìm b.
+=> 4
+
+#q B3 III
+Một vật dao động điều hòa trên trục Ox. Quan sát đồ thị gia tốc – thời gian của một vật dao động điều hòa dưới đây. Sau bao nhiêu giây kể từ thời điểm t = 0, vectơ gia tốc đổi chiều lần đầu tiên?
+[[IMG image38.png 6.1]]
+=> 1
+
+#q B3 TL
+Trong kĩ thuật cơ khí, pit-tông của một động cơ đốt trong khi hoạt động sẽ tạo ra những dao động được xem gần đúng là dao động điều hòa với phương trình $x=2\cos (180\pi t)$ mm.
+a) Viết phương trình vận tốc của một điểm trên pit-tông.
+b) Tại sao không thể nói "Pit-tông chuyển động nhanh dần đều từ điểm biên về vị trí cân bằng"?
+
+#q B3 TL
+Một vật dao động điều hòa trên trục Ox. Hình bên là đồ thị biểu diễn sự phụ thuộc của vận tốc v vào thời gian t.
+[[IMG image40c0.png 7.4]]
+a) Tính chu kì dao động của vật.
+b) Tính gia tốc của vật khi vật có li độ là -4 cm.
+=> a) 4/3 s; b) 6π cm/s².
+
+#q B3 TL
+Một con lắc lò xo dao động điều hòa có đồ thị biểu diễn đồ thị gia tốc theo li độ như hình.
+[[IMG image41.png 9.5]]
+a) Tính tần số góc của con lắc đó.
+b) Chọn mốc thời gian lúc con lắc tại vị trí cân bằng theo chiều dương. Hãy viết phương trình vận tốc theo thời gian của con lắc trên.
+=> a) 10 rad/s
+=: **b)** $x=-0{,}4\sin \left(5t-\dfrac{\pi}{2}\right)$ m/s.

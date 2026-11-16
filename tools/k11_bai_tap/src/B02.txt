@@ -1,0 +1,187 @@
+#ten B2 MÔ TẢ DAO ĐỘNG ĐIỀU HÒA
+
+#q B2 I
+Chọn phát biểu **sai** khi nói về một chất điểm dao động điều hòa.
+A. Phương trình li độ có dạng x = A cos(ωt + φ).
+B. Quỹ đạo của chất điểm là một đoạn thẳng.
+C. Đồ thị li độ - thời gian là một đường hình sin.
+D. Pha của dao động biến thiên điều hòa theo thời gian.
+=> D
+
+#q B2 I
+Phát biểu nào sau đây là **sai** khi nói về các đại lượng **không phụ thuộc** vào thời gian và được dùng để đặc trưng cho dao động điều hòa?
+A. Biên độ dao động.
+B. Li độ dao động.
+C. Tần số dao động.
+D. Tần số góc của dao động.
+=> B
+
+#q B2 I
+Độ dịch chuyển của vật từ vị trí cân bằng đến vị trí của vật tại thời điểm t gọi là
+A. li độ.
+B. tần số.
+C. pha ban đầu.
+D. biên độ.
+=> A
+
+#q B2 I
+Biên độ của một vật dao động điều hòa là
+A. khoảng cách giữa hai vị trí biên.
+B. độ dịch chuyển của vật tính từ vị trí cân bằng.
+C. độ lệch của vật so với vị trí cân bằng tại một thời điểm bất kì.
+D. độ dịch chuyển cực đại của vật tính từ vị trí cân bằng.
+=> D
+
+#q B2 I
+Trong dao động điều hòa, khoảng thời gian để vật thực hiện được một dao động toàn phần gọi là
+A. chu kì.
+B. biên độ.
+C. tần số.
+D. tần số góc.
+=> A
+
+#q B2 I
+Trong dao động điều hòa, số dao động toàn phần mà vật thực hiện được trong một đơn vị thời gian gọi là
+A. tần số góc.
+B. chu kỳ dao động.
+C. pha ban đầu.
+D. tần số dao động.
+=> D
+
+#q B2 I
+Một chất điểm dao động điều hoà thực hiện một dao động toàn phần trong thời gian 0,2 giây. Tần số dao động của chất điểm là
+A. $5\ \text{Hz}$.
+B. $10\ \text{Hz}$.
+C. $20\ \text{Hz}$.
+D. $5\pi\ \text{Hz}$.
+=> A
+
+#q B2 I
+Đại lượng đặc trưng cho tốc độ biến thiên của pha dao động là
+A. pha dao động.
+B. chu kì dao động.
+C. tần số dao động.
+D. tần số góc của dao động.
+=> D
+
+#q B2 I
+Một vật dao động điều hòa với tần số $f$, chu kỳ $T$ và tần số góc $\omega$. Biểu thức liên hệ nào sau đây đúng?
+A. $T=\dfrac{\omega}{2\pi}$
+B. $f=\dfrac{2\pi}{T}$
+C. $f=\dfrac{\omega}{2\pi}$
+D. $\omega =\dfrac{2\pi}{f}$
+=> C
+
+#q B2 I
+Trong hệ SI, đơn vị của tần số góc là
+A. giây (s).
+B. héc (Hz).
+C. radian trên giây (rad/s).
+D. mét (m).
+=> C
+
+#q B2 I
+Vật dao động điều hòa với biên độ, tần số và pha ban đầu lần lượt là A, f, φ. Đại lượng luôn dương trong ba đại lượng trên là
+A. f, φ.
+B. A, f.
+C. A, f, φ.
+D. A, φ.
+=> B
+
+#q B2 I
+Cho đồ thị li độ - thời gian của con lắc lò xo như hình bên. Trong các đoạn thời gian được biểu diễn trên trục t, đoạn nào sau đây tương ứng với một chu kỳ dao động?
+[[IMG image8.png 9.6]]
+A. đoạn FH.
+B. đoạn HQ.
+C. đoạn FQ.
+D. đoạn OH.
+=> B
+
+#q B2 I
+Đại lượng nào dưới đây đặc trưng cho độ lệch về thời gian giữa hai dao động điều hoà cùng chu kì?
+A. Li độ.
+B. Pha.
+C. Pha ban đầu.
+D. Độ lệch pha.
+=> D
+
+#q B2 I
+Cho hai dao động điều hòa cùng tần số $x_{1}$ = $A_{1}$ cos(ωt + $\varphi_{1}$) và $x_{2}$ = $A_{2}$ cos(ωt + $\varphi_{2}$). Độ lệch pha Δφ của dao động $x_{2}$ so với dao động $x_{1}$ là
+A. Δφ = $\dfrac{\varphi_{1}+\varphi_{2}}{2}$.
+B. Δφ = $\varphi_{1}$ + $\varphi_{2}$.
+C. Δφ = $\varphi_{2}$ - $\varphi_{1}$.
+D. Δφ = $\varphi_{1}$.$\varphi_{2}$.
+=> C
+
+#q B2 I
+Hai dao động điều hoà cùng phương, cùng tần số có phương trình dao động là $x_{1}$ = 4cos(10πt +$\dfrac{\pi}{2}$) cm và $x_{2}$ = 4$\sqrt{2}$ cos(10πt - $\dfrac{\pi}{6}$) cm. So với dao động thứ nhất thì dao động thứ hai
+A. trễ pha hơn $\dfrac{\pi}{3}$ rad.
+B. sớm pha hơn $\dfrac{\pi}{6}$ rad.
+C. trễ pha hơn $\dfrac{2\pi}{3}$ rad.
+D. sớm pha hơn $\dfrac{2\pi}{3}$ rad.
+=> C
+
+#q B2 I
+Gọi $T$ là chu kì dao động, $\Delta t$ là khoảng thời gian ngắn nhất để hai dao động có cùng trạng thái. Độ lớn độ lệch pha $\Delta \varphi$ giữa hai dao động được tính theo công thức
+A. $\Delta \varphi =\pi \dfrac{\Delta t}{T}$.
+B. $\Delta \varphi =2\pi \dfrac{T}{\Delta t}$.
+C. $\Delta \varphi =4\pi \dfrac{\Delta t}{T}$.
+D. $\Delta \varphi =2\pi \dfrac{\Delta t}{T}$.
+=> D
+
+#q B2 II
+Hai chất điểm (1) và (2) dao động điều hòa có cùng tần số và có đồ thị li độ - thời gian như hình vẽ.
+[[IMG image9.jpg 6.9]]
+a) Vật (1) đạt li độ cực tiểu trước vật (2).
+b) Chu kì dao động của vật (1) bằng 2,4 s.
+c) Độ lớn độ lệch pha của hai dao động là $\dfrac{\pi}{6}$ rad.
+d) Phương trình dao động của vật (1) là $x_{1} = \sqrt{3}.\cos \left(\dfrac{5\pi}{6} t-\dfrac{\pi}{2}\right)$ cm.
+=> S Đ S S
+
+#q B2 II
+Một vật dao động điều hoà với biên độ $6\ \text{cm}$, tần số góc $\omega =10\pi\ \text{rad}/s$. Chọn gốc tọa độ $O$ trùng với vị trí cân bằng của vật, gốc thời gian lúc vật bắt đầu chuyển động từ vị trí biên dương.
+a) Quỹ đạo chuyển động của vật là một đường hình sin.
+b) Ngay sau thời điểm t = 0, vật chuyển động cùng chiều dương.
+c) Phương trình dao động của vật là $x=6\cos \left(10\pi t-\dfrac{\pi}{6}\right)$ cm.
+d) Cho π = 3,14 thì độ lớn của độ lệch pha dao động tại hai thời điểm $t_{1}$ = 0 và $t_{2}$ = 0,05s là 1,59 rad.
+=> S S S Đ
+
+#q B2 III
+Một chất điểm dao động điều hòa với phương trình li độ x = 2cos(2πt + $\dfrac{\pi}{2})$ (x tính bằng cm, t tính bằng s). Tại thời điểm t = 0,25 s, chất điểm có li độ bằng bao nhiêu centimet (cm)?
+=> -2
+
+#q B2 III
+Một chất điểm dao động điều hoà trong thời gian 1 phút vật thực hiện được 30 dao động. Chu kì dao động của vật là bao nhiêu giây (s)?
+=> 2
+
+#q B2 III
+Một vật dao động điều hòa theo phương trình x = 4cos($4\pi t$ - $\dfrac{2\pi}{3}$) cm (t tính bằng giây). Độ dịch chuyển sau $0{,}125$ giây kể từ thời điểm ban đầu là bao nhiêu centimet (cm)? (kết quả làm tròn đến chữ số hàng phần trăm)
+=> 5,46
+
+#q B2 III
+Một vật dao động điều hòa trên đoạn thẳng MN = 20 cm như hình bên. Chọn gốc tọa độ O của trục ox trùng với vị trí cân bằng. Biết trong khoảng thời gian 10 s, vật thực hiện được 20 dao động toàn phần. Quãng đường vật đi được trong khoảng thời gian 2 s là bao nhiêu mét (m)?
+[[IMG image10c0.png 9.0]]
+=> 1,6
+
+#q B2 III
+Độ lớn độ lệch pha của hai dao động điều hòa cùng tần số có đồ thị li độ - thời gian như hình vẽ bên là bao nhiêu radian (rad)? (kết quả làm tròn đến chữ số hàng phần trăm)
+[[IMG image11.png 8.5]]
+=> 0,79
+
+#q B2 III
+Hình bên là đồ thị li độ x theo thời gian t của một vật dao động điều hòa trên trục Ox. Độ dịch chuyển của vật từ thời điểm $t_{1}$ = 1,0 s đến $t_{2}$ = 2,0 s là bao nhiêu cm? (kết quả làm tròn đến chữ số hàng đơn vị)
+[[IMG image12c0.png 7.6]]
+=> -40
+
+#q B2 TL
+Pit-tông bên trong động cơ đốt trong dao động lên và xuống khi động cơ hoạt động. Dao động này được coi là dao động điều hòa với phương trình li độ x = 4cos(4πt) (x tính bằng cm, t tính bằng s).
+**a)** Tính pha dao động của pit-tông tại thời điểm 0,5 s.
+**b)** Tính tốc độ trung bình của pit-tông trong khoảng thời gian 6,0 giây (kể từ lúc t = 0).
+=> a) π/2 rad. b) 32 cm/s.
+
+#q B2 TL
+Thực hiện thí nghiệm với thiết bị ghi đồ thị dao động điều hoà của một con lắc lò xo được kết quả như hình vẽ bên. Biết quả nặng có khối lượngS 100g, lò xo nhẹ có độ cứng k = 100N/m và chu kỳ dao động tự do của con lắc lò xo tính bằng công thức T = 2π$\sqrt{\dfrac{m}{k}}$. Lấy π $\approx \sqrt{10}$.
+[[IMG image13.png 16.5]]
+**a)** Tính tần số góc của dao động.
+**b)** Xác định pha của dao động tại thời điểm t = $\dfrac{1}{30}$ s.
+=> a) 10π rad/s. b) $\dfrac{4\pi}{3}$ rad.

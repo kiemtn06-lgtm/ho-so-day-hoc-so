@@ -2732,6 +2732,8 @@ window.HSDH_DATA=window.HSDH_DATA||{};window.HSDH_DATA["10-3"]={"ten":"Động l
    - Chương chưa có: chỉ ghi tên, sẽ hiện "chưa có dữ liệu".
    Tên chương theo chương trình GDPT 2018, bộ KNTT. [CẦN KIỂM TRA] với SGK thật. */
 var MR_GC = "Chép từ tài liệu scan Chương II (tr. 22–58), có tóm tắt lí thuyết (Bài 10–12) và bài tập 3 phần. Công thức hiển thị bằng KaTeX, hình cắt từ bản scan. Có file Word của bài (công thức là Equation), bản đề và bản có đáp án. Bản gốc không có đáp án; đáp án và lời giải được soạn bổ sung (bấm \"Đáp án\" ở mỗi câu), giáo viên cần duyệt lại.";
+var BT11_GC = "Lấy từ tập Bài tập Vật lí 11 học kì I (bản giáo viên), xếp theo bài: trắc nghiệm, đúng sai, trả lời ngắn, tự luận. Công thức hiển thị bằng KaTeX, hình lấy từ file Word. Đáp án theo bản giáo viên (bấm \"Đáp án\" ở mỗi câu). Có file Word của bài và của chương (công thức là Equation), bản đề và bản có đáp án.";
+var BG11_GC = "Bài giảng trình chiếu (15 slide): bấm vào khung rồi dùng phím ← → để chuyển slide, phím O xem tất cả slide, phím F toàn màn hình. Nút \"Bài tập cuối bài\" mở bài tập của bài kèm đáp án. Mở toàn trang để dùng nút \"Lớp\" (Gọi tên, Bấm giờ, Chia nhóm, Ghi chú).";
 window.HO_SO = {
   ten: "Hồ sơ dạy học số",
   namHoc: "2026-2027",
@@ -2743,6 +2745,7 @@ window.HO_SO = {
   tuongTac: "https://phong-tuong-tac.onrender.com",
   /* Phòng làm bài có máy chủ bổ sung theo chương (ngoài phòng chính của khối ở mục "ph" phía trên) */
   phongPhu: { 10: [{ ten: "Chương II · Động học · Mở rộng cuối bài", moTa: "184 câu: Bài 8-12, 7 nhóm theo bài và dạng", url: "https://phong-k10-chuong2-mo-rong.onrender.com" }],
+    11: [{ ten: "Chương II · Sóng", moTa: "90 câu: Bài 8, 9, 11, 12, 13, 15, 6 nhóm theo bài", url: "https://phong-tuong-tac-k11-chuong-2.onrender.com" }],
     12: [{ ten: "Chương 2 · Chất khí", moTa: "265 câu: Buổi 1-6 và ngân hàng theo bài (Bài 8-12)", url: "https://phong-chuong-2-chat-khi.onrender.com" }] },
   congCu: [
     { id: "on", ten: "Ôn tập", moTa: "Lịch ôn, thẻ ghi nhớ, đề tổng hợp (trang cho học sinh)", khoi: {} },
@@ -2771,7 +2774,25 @@ window.HO_SO = {
       { ten: "Động lực học", duLieu: "10-3", baiGiang: "bai-giang/k10-{ma}.html" },
       { ten: "Năng lượng, công, công suất" }, { ten: "Động lượng" }, { ten: "Chuyển động tròn" }, { ten: "Biến dạng của vật rắn" } ] },
     11: { ten: "Vật lí 11", chuong: [
-      { ten: "Dao động" }, { ten: "Sóng" }, { ten: "Điện trường" }, { ten: "Dòng điện, mạch điện" } ] },
+      /* bài tập theo bài lấy từ tập Bài tập Vật lí 11 HKI (bản giáo viên). Dựng lại: python -I -X utf8 tools/k11_bai_tap/dung.py */
+      { ten: "Dao động", luyenTap: [
+        { ten: "Bài tập · Bài 1. Dao động điều hòa", trang: "bai-giang/k11-bai-tap.html#B1", ghiChu: BT11_GC },
+        { ten: "Bài tập · Bài 2. Mô tả dao động điều hòa", trang: "bai-giang/k11-bai-tap.html#B2", ghiChu: BT11_GC },
+        { ten: "Bài tập · Bài 3. Vận tốc, gia tốc trong dao động điều hòa", trang: "bai-giang/k11-bai-tap.html#B3", ghiChu: BT11_GC },
+        { ten: "Bài tập · Bài 4. Bài tập về dao động điều hòa", trang: "bai-giang/k11-bai-tap.html#B4", ghiChu: BT11_GC },
+        { ten: "Bài tập · Bài 5. Động năng. Thế năng. Sự chuyển hóa năng lượng", trang: "bai-giang/k11-bai-tap.html#B5", ghiChu: BT11_GC },
+        { ten: "Bài tập · Bài 6. Dao động tắt dần. Dao động cưỡng bức. Cộng hưởng", trang: "bai-giang/k11-bai-tap.html#B6", ghiChu: BT11_GC } ] },
+      /* bài giảng Bài 8, 9: trình chiếu ảnh từ file .pptx trong thư mục K11. Dựng lại: python -I -X utf8 tools/k11_bai_giang/dung.py */
+      { ten: "Sóng", luyenTap: [
+        { ten: "Bài giảng Bài 8. Mô tả sóng", trang: "bai-giang/k11-B8.html", ghiChu: BG11_GC },
+        { ten: "Bài giảng Bài 9. Sóng ngang. Sóng dọc. Sự truyền năng lượng của sóng cơ", trang: "bai-giang/k11-B9.html", ghiChu: BG11_GC },
+        { ten: "Bài tập · Bài 8. Mô tả sóng", trang: "bai-giang/k11-bai-tap.html#B8", ghiChu: BT11_GC },
+        { ten: "Bài tập · Bài 9. Sóng ngang. Sóng dọc", trang: "bai-giang/k11-bai-tap.html#B9", ghiChu: BT11_GC },
+        { ten: "Bài tập · Bài 11. Sóng điện từ", trang: "bai-giang/k11-bai-tap.html#B11", ghiChu: BT11_GC },
+        { ten: "Bài tập · Bài 12. Giao thoa sóng", trang: "bai-giang/k11-bai-tap.html#B12", ghiChu: BT11_GC },
+        { ten: "Bài tập · Bài 13. Sóng dừng", trang: "bai-giang/k11-bai-tap.html#B13", ghiChu: BT11_GC },
+        { ten: "Bài tập · Bài 15. Thực hành: Đo tốc độ truyền âm", trang: "bai-giang/k11-bai-tap.html#B15", ghiChu: BT11_GC } ] },
+      { ten: "Điện trường" }, { ten: "Dòng điện, mạch điện" } ] },
     12: { ten: "Vật lí 12", chuong: [
       { ten: "Vật lí nhiệt", luyenTap: [
         { ten: "Luyện đúng sai", trang: "chuong-1-vat-li-nhiet/bai-day-dung-sai-vat-li-nhiet.html", ghiChu: "Bản xem và làm thử ngay trong hồ sơ. Để học sinh làm và giáo viên xem được kết quả cả lớp, dùng mục Làm bài trực tuyến." },
