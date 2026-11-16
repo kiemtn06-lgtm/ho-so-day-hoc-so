@@ -3285,7 +3285,11 @@ window.HO_SO = {
   function qrKeyText(q) { return q.type === "tf" ? q.key.map(function (x, i) { return "abcdef".charAt(i) + ":" + (x ? "Đ" : "S"); }).join("  ") : q.type === "short" ? q.key.v : q.key; }
   /* bảng phần trăm đúng/sai của câu hỏi nhanh đang mở hoặc vừa đóng */
   function qrKq(j) {
-    var q = j.q, c = q.count, h = '<div style="margin-top:6px"><b>' + (q.open ? "Đang mở" : "Đã đóng") + "</b>: " + c + "/" + j.total + " em đã trả lời" + (q.label ? " · " + esc(q.label) : "") + "</div>";
+    var q = j.q, c = q.count, co = Math.max(j.joined.length, c), R = 15, C = 2 * Math.PI * R, f = co ? c / co : 0;
+    /* vòng tròn tiến độ: số em đã trả lời / số em có mặt */
+    var vt = '<svg viewBox="0 0 40 40" width="30" height="30" aria-hidden="true" style="vertical-align:middle;margin-right:6px"><circle cx="20" cy="20" r="' + R + '" fill="none" stroke="rgba(148,163,184,.4)" stroke-width="5"/>' +
+      '<circle cx="20" cy="20" r="' + R + '" fill="none" stroke="' + (co && c >= co ? "#3fb950" : "#4c9aff") + '" stroke-width="5" stroke-linecap="round" transform="rotate(-90 20 20)" stroke-dasharray="' + C.toFixed(1) + '" stroke-dashoffset="' + (C * (1 - f)).toFixed(1) + '"/></svg>';
+    var h = '<div style="margin-top:6px">' + (q.open ? vt : "") + "<b>" + (q.open ? "Đang mở" : "Đã đóng") + "</b>: " + c + "/" + co + " em có mặt đã trả lời" + (q.label ? " · " + esc(q.label) : "") + "</div>";
     if (q.key && q.dung != null) h += '<div style="font-size:18px;margin:4px 0">Đúng: <b style="color:#3fb950">' + pc(q.dung, c) + "%</b> (" + q.dung + "/" + c + ') · Sai: <b style="color:#ff6b6b">' + pc(c - q.dung, c) + "%</b></div>";
     if (q.type === "mc") {
       ["A", "B", "C", "D"].forEach(function (x) {
@@ -3346,7 +3350,12 @@ window.HO_SO = {
     if (!S.srv.url) { var u = prompt("Địa chỉ máy chủ phòng tương tác (ví dụ https://phong-tuong-tac.onrender.com hoặc http://192.168.1.5:3000):", ""); if (!u) return; S.srv.url = u.trim(); }
     if (!S.srv.pass) { var pw = prompt("Mật khẩu giáo viên của máy chủ:", ""); if (!pw) return; S.srv.pass = pw; }
     save(); msg("llMsg", "Đang mở phòng... (máy chủ miễn phí có thể mất khoảng 1 phút để thức dậy)");
-    srvCall("POST", "/api/t/open", { lop: lp, bai: LL.b ? LL.b.ten : "", roster: ds }).then(function (j) {
+    /* điểm quá trình gửi kèm cho phòng: các buổi trước của từng em (câu hỏi nhanh đúng / có đáp án, điểm phát biểu) */
+    var qt = {};
+    ds.forEach(function (n) { qt[n] = { b: 0, dg: 0, qk: 0, pv: 0, pn: 0 }; });
+    (S.cm || []).forEach(function (r) { var x = r.lop === lp && qt[r.hs]; if (x) { x.b++; x.dg += r.dg || 0; x.qk += r.qk || 0; } });
+    (S.pv || []).forEach(function (r) { var x = r.lop === lp && qt[r.hs]; if (x) { x.pv += +r.diem || 0; x.pn++; } });
+    srvCall("POST", "/api/t/open", { lop: lp, bai: LL.b ? LL.b.ten : "", roster: ds, qt: qt }).then(function (j) {
       QR = { code: j.code, lop: lp, bai: LL.b ? LL.b.ma : "", st: null, big: false, svg: "", tm: null, vis: true };
       QR.svg = qrSvg(qrJoinUrl()); qrDraw(); qrPoll(); QR.tm = setInterval(qrPoll, 2000);
     }, function (e) { if (/mật khẩu/i.test(e.message)) { S.srv.pass = ""; save(); } msg("llMsg", e.message + " Kiểm tra địa chỉ máy chủ và mật khẩu rồi bấm lại."); });

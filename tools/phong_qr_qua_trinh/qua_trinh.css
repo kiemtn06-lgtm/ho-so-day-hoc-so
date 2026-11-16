@@ -1,0 +1,24 @@
+/* [QT] mã QR, điểm quá trình, vòng tròn tiến độ theo từng câu */
+.mr{display:inline-flex;align-items:center;gap:5px;font-size:13px;color:var(--muted);white-space:nowrap}
+.mr svg{width:26px;height:26px;flex:none}
+.mr-bg{fill:none;stroke:var(--line);stroke-width:5}
+.mr-fg{fill:none;stroke:var(--accent);stroke-width:5;stroke-linecap:round}
+.mr.full .mr-fg{stroke:var(--ok)}
+.mr .num{font-weight:700;color:var(--ink)}
+.qh .mr{margin-left:auto}
+.mr.sm{display:flex;justify-content:center;margin-top:2px}.mr.sm svg{width:18px;height:18px}
+.kv .mr.sm{display:inline-flex;vertical-align:-5px;margin:0 6px 0 0}.kv .mr.sm svg{width:22px;height:22px}
+.qt-avg{font:700 30px var(--mono);color:var(--accent);white-space:nowrap}.qt-avg small{font-size:14px;color:var(--muted);font-weight:600}
+.qt-t{width:100%;border-collapse:collapse;margin-top:10px;font-size:14px}
+.qt-t th{font-size:12px;color:var(--muted);text-align:left;font-weight:600;padding:4px 6px}
+.qt-t td{padding:6px;border-top:1px solid var(--line)}.qt-t td.num,.qt-t th:nth-child(n+3){text-align:right}
+.qt-t th,.qt-t td{white-space:nowrap}.qt-t td:nth-child(2){white-space:normal;width:100%}
+.qt-t tr.cur td{background:var(--accent-soft)}
+table.qtt th small{font-weight:500;color:var(--muted)}
+.qrc{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.qrc .qrimg{width:190px;height:190px;background:#fff;padding:6px;border-radius:10px;border:1px solid var(--line);cursor:zoom-in;flex:none}
+.qrimg svg{width:100%;height:100%;display:block}
+.qrurl{font:700 18px var(--mono);word-break:break-all;color:var(--ink)}
+#qrBig{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.88);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:16px;cursor:zoom-out}
+#qrBig .qrimg{width:min(76vh,92vw);height:min(76vh,92vw);background:#fff;padding:14px;border-radius:14px}
+#qrBig .qrurl{color:#fff;font-size:clamp(16px,3vw,32px);text-align:center}
