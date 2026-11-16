@@ -113,5 +113,6 @@ const JS = `<script>(function(){
 h = h.replace('</body>', JS + '</body>');
 
 fs.mkdirSync(require('path').dirname(dst), { recursive: true });
+h = require('./sua_dap_an_on_tap')(h, dst);   // sửa đáp án đã được giáo viên xác nhận (tools/sua_dap_an_on_tap.js)
 fs.writeFileSync(dst, h);
 console.log('Đã tạo', dst, (h.length / 1048576).toFixed(1) + ' MB');
