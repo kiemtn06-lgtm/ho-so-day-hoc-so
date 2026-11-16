@@ -4,10 +4,14 @@
 //   - Đề tổng hợp (Ngày 5): ngân hàng câu luyện tập nd.bai[].cau_hoi (Bài 8–13), đề rút theo ma trận nd.ma_tran.de_tong_hop.
 // Nội dung giữ nguyên văn, chỉ đổi định dạng. Câu tự luận (tl) đưa vào dạng "chỉ xem" (kèm lời giải mẫu khi đóng câu).
 //
-// Chạy: node tools/k12_on_tap_phong/tao_phong.js <thư mục kho phòng> [thư mục ảnh đồ thị từ ve_hinh.js]
+// Chạy: node tools/k12_on_tap_phong/tao_phong.js <thư mục kho phòng> [thư mục ảnh đồ thị từ ve_hinh.js] [--ghep]
 // Ghi: data/cfg.json, data/key.json, public/img/* (xóa ảnh cũ mr-*, th-* trước khi ghi)
+// --ghep: GHÉP vào phòng đã có (phòng Chất khí D:\phong-chuong-2-chat-khi): giữ nguyên bộ câu cũ, nhóm, buổi, ma trận đề ôn của phòng
+//         (ma trận cũ chỉ rút trong bộ cũ), thêm các nhóm Mở rộng / Đề tổng hợp phía sau và ma trận thứ hai (cfg.matrices[1]).
+//         Chạy lại được: câu MR*, TH-* của lần trước được thay bằng bản mới.
 const fs = require('fs'), path = require('path'), crypto = require('crypto');
-const ROOM = process.argv[2], HINH = process.argv[3];
+const GHEP = process.argv.includes('--ghep'), ARGS = process.argv.slice(2).filter(x => x !== '--ghep');
+const ROOM = ARGS[0], HINH = ARGS[1];
 if (!ROOM) { console.error('Thiếu thư mục kho phòng'); process.exit(1); }
 const SRC = path.join(__dirname, '..', '..', 'on-tap', 'k12-chuong2.html');
 const H = fs.readFileSync(SRC, 'utf8');
@@ -63,7 +67,18 @@ function soNgan(txt) {   // "Đáp án: 0,92 atm." / "ĐA: 160 phút." / "Đáp 
 }
 
 const questions = [], answers = {}, explain = {}, groups = {}, sessions = [];
-let g = 0;
+let g = 0, CU = null, KCU = null;
+const LA_MOI = id => /^(MR\d|TH-)/.test(id);
+if (GHEP) {      // giữ bộ câu cũ của phòng (bỏ phần đã ghép lần trước)
+  CU = JSON.parse(fs.readFileSync(path.join(ROOM, 'data', 'cfg.json'), 'utf8'));
+  KCU = JSON.parse(fs.readFileSync(path.join(ROOM, 'data', 'key.json'), 'utf8'));
+  const goc = CU.questions.filter(q => !LA_MOI(q.id)), gs = new Set(goc.map(q => String(q.group)));
+  goc.forEach(q => questions.push(q));
+  for (const k of Object.keys(CU.groups)) if (gs.has(k)) groups[k] = CU.groups[k];
+  (CU.sessions || []).filter(s => s.end <= goc.length).forEach(s => sessions.push(s));
+  g = Math.max(...goc.map(q => +q.group));
+  for (const k of ['answers', 'explain', 'note']) for (const [id, v] of Object.entries(KCU[k] || {})) if (!LA_MOI(id)) (k === 'answers' ? answers : k === 'explain' ? explain : (KCU._note = KCU._note || {}))[id] = v;
+}
 function nhom(ten) { g++; groups[String(g)] = ten; return g; }
 function xongNhom(ten) { sessions.push({ name: ten, end: questions.length }); }
 
@@ -146,13 +161,22 @@ const tln = {}; D.III.forEach(b => { tln[b] = (tln[b] || 0) + 1; });
 for (const [b, n] of Object.entries(tln)) rules.push({ type: 'short', n, topic: +b.slice(1), set: 'th', bu: 'mr' });
 const matrix = { name: 'Đề tổng hợp (Ngày 5) · 18 TN – 4 ĐS – 6 TLN', rules };
 
-const cfg = {
-  title: 'Ôn tập Vật lí 12 · Chương II. Khí lí tưởng', released: 0, closed: 0,
-  tabs: [{ id: 'mc', ten: 'Trắc nghiệm', types: ['mc'] }, { id: 'tf', ten: 'Đúng sai', types: ['tf'] }, { id: 'short', ten: 'Trả lời ngắn', types: ['short'] }],
-  groups, sessions, questions, matrix
-};
+let cfg;
+if (GHEP) {
+  // ma trận cũ của phòng: chỉ rút trong bộ câu cũ (set của bộ cũ), để đề ôn trộn như trước
+  const setCu = (CU.questions.find(q => !LA_MOI(q.id)) || {}).set || 'g';
+  const cu = JSON.parse(JSON.stringify((CU.matrices && CU.matrices[0]) || CU.matrix));
+  cu.rules.forEach(r => { r.set = setCu; delete r.bu; });
+  cfg = Object.assign({}, CU, { groups, sessions, questions, matrix: cu, matrices: [cu, matrix] });
+} else {
+  cfg = {
+    title: 'Ôn tập Vật lí 12 · Chương II. Khí lí tưởng', released: 0, closed: 0,
+    tabs: [{ id: 'mc', ten: 'Trắc nghiệm', types: ['mc'] }, { id: 'tf', ten: 'Đúng sai', types: ['tf'] }, { id: 'short', ten: 'Trả lời ngắn', types: ['short'] }],
+    groups, sessions, questions, matrix
+  };
+}
 fs.writeFileSync(path.join(ROOM, 'data', 'cfg.json'), JSON.stringify(cfg));
-fs.writeFileSync(path.join(ROOM, 'data', 'key.json'), JSON.stringify({ answers, explain, note: {} }));
+fs.writeFileSync(path.join(ROOM, 'data', 'key.json'), JSON.stringify(Object.assign({}, KCU || {}, { answers, explain, note: (KCU && KCU._note) || {} }, { _note: undefined })));
 const dem = {}; questions.forEach(q => { const k = q.set + ' ' + q.type; dem[k] = (dem[k] || 0) + 1; });
 console.log('Đã ghi', questions.length, 'câu ·', JSON.stringify(dem), '·', Object.keys(groups).length, 'nhóm ·', fs.readdirSync(IMG).filter(f => /^(mr|th)-/.test(f)).length, 'ảnh');
 if (bao.length) console.log(bao.join('\n'));
