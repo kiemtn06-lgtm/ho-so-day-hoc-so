@@ -7,6 +7,7 @@ Chạy:  python -I -X utf8 tools/k11_bai_giang/dung.py
   bai-giang/k11-B8.html            trang trình chiếu: phím ← → , tổng quan slide, toàn màn hình, nút "Bài tập cuối bài"
                                    (mở bai-giang/k11-bai-tap.html#B8), công cụ lớp (Gọi tên, Bấm giờ, Chia nhóm, Ghi chú)
 Trang mở đúng slide theo địa chỉ  k11-B8.html#B8@5  và báo vị trí slide cho hồ sơ như bài giảng khối 10.
+Mô phỏng: file mo_phong/<MA>.js (dùng khung mo_phong/khung.js) đăng kí mô phỏng cho từng slide; slide có mô phỏng hiện nút "Mô phỏng" (phím M).
 File .pptx gốc không bị sửa. Thêm bài mới: thêm một mục vào BAI (tên slide dùng cho trang tổng quan và người dùng trình đọc màn hình).
 """
 import os, re, io, json, zipfile, subprocess
@@ -128,12 +129,13 @@ __CSS__
   <span id="vt" aria-live="polite"></span>
   <button id="bSau" title="Slide sau (phím → hoặc phím cách)">▶</button>
   <span id="td"></span>
+  <button id="bMP" hidden title="Mô phỏng cho slide này (phím M)">🌊 Mô phỏng</button>
   <button id="bLuoi" title="Xem tất cả slide (phím O)">Tất cả slide</button>
   <button id="bBT" class="c" title="Bài tập của bài này, có đáp án (phím B)">Bài tập cuối bài</button>
   <button id="bToan" title="Toàn màn hình (phím F)">⛶ Toàn màn hình</button>
 </div>
 <div id="btK"><button type="button">Đóng ✕</button></div>
-<script>
+__MP__<script>
 var MA=__MA__,TEN=__SLIDE__,THU="k11-"+MA+"/",slides=TEN.map(function(t,i){return {ten:t,src:THU+"s"+(i<9?"0":"")+(i+1)+".jpg"}}),cur=0;
 (function(){
   var $=function(i){return document.getElementById(i)},anh=$("anh"),luoi=$("luoi"),btK=$("btK");
@@ -144,6 +146,7 @@ var MA=__MA__,TEN=__SLIDE__,THU="k11-"+MA+"/",slides=TEN.map(function(t,i){retur
     $("bTruoc").disabled=cur===0;$("bSau").disabled=cur===slides.length-1;
     $("thuoc").style.width=((cur+1)/slides.length*100)+"%";
     if(slides[cur+1]){(new Image()).src=slides[cur+1].src}
+    var mp=window.MP&&MP.co(MA,cur);$("bMP").hidden=!mp;if(window.MP&&MP.dangMo())MP.dong();
     try{history.replaceState(null,"","#"+MA+"@"+cur)}catch(e){}
     dongLuoi();
   };
@@ -162,16 +165,17 @@ var MA=__MA__,TEN=__SLIDE__,THU="k11-"+MA+"/",slides=TEN.map(function(t,i){retur
   luoi.addEventListener("click",function(e){var b=e.target.closest("button");if(b)go(+b.dataset.i)});
   $("bTruoc").onclick=$("vTruoc").onclick=function(){go(cur-1)};
   $("bSau").onclick=$("vSau").onclick=function(){go(cur+1)};
-  $("bLuoi").onclick=moLuoi;$("bToan").onclick=toan;$("bBT").onclick=moBT;btK.querySelector("button").onclick=dongBT;
+  $("bLuoi").onclick=moLuoi;$("bToan").onclick=toan;$("bBT").onclick=moBT;$("bMP").onclick=function(){if(window.MP)MP.mo(MA,cur)};btK.querySelector("button").onclick=dongBT;
   document.addEventListener("keydown",function(e){
     if(btK.style.display==="block"){if(e.key==="Escape")dongBT();return}
     var t=e.target.tagName;if(t==="INPUT"||t==="TEXTAREA"||t==="SELECT"||e.ctrlKey||e.altKey||e.metaKey)return;
-    if(document.querySelector(".hl-ov"))return;
+    if(document.querySelector(".hl-ov")||(window.MP&&MP.dangMo()))return;
     var k=e.key;
     if(k==="ArrowRight"||k==="PageDown"||(k===" "&&t!=="BUTTON")){go(cur+1);e.preventDefault()}
     else if(k==="ArrowLeft"||k==="PageUp"){go(cur-1);e.preventDefault()}
     else if(k==="Home")go(0);else if(k==="End")go(slides.length-1);
     else if(k==="f"||k==="F")toan();else if(k==="o"||k==="O")moLuoi();else if(k==="b"||k==="B")moBT();
+    else if((k==="m"||k==="M")&&window.MP&&MP.co(MA,cur))MP.mo(MA,cur);
     else if(k==="Escape")dongLuoi();
   });
   var x0=null;
@@ -201,8 +205,11 @@ def main():
             if (ma, i) in SUA_ANH: im = sua_anh(im, SUA_ANH[(ma, i)])
             g = os.path.join(thu, 's%02d.jpg' % i); im.save(g, quality=88, optimize=True); tong += os.path.getsize(g)
         cc = cong_cu_lop(ma)
+        mp = os.path.join(DIR, 'mo_phong', ma + '.js')     # mô phỏng gắn vào slide (nếu bài có)
+        mp = ''.join('<script>%s</script>\n' % open(g, encoding='utf8').read().replace('</script', '<\\/script')
+                     for g in (os.path.join(DIR, 'mo_phong', 'khung.js'), mp)) if os.path.exists(mp) else ''
         h = (TRANG.replace('__TEN__', B['ten']).replace('__MA__', json.dumps(ma)).replace('__SLIDE__', json.dumps(B['slide'], ensure_ascii=False))
-             .replace('__CSS__', cc['css']).replace('__JS__', cc['js'].replace('</script', '<\\/script')))
+             .replace('__MP__', mp).replace('__CSS__', cc['css']).replace('__JS__', cc['js'].replace('</script', '<\\/script')))
         open(os.path.join(REPO, 'bai-giang', 'k11-%s.html' % ma), 'w', encoding='utf8').write(h)
         print(ma, B['ten'], '·', len(anh), 'slide ·', round(tong / 1048576, 2), 'MB ảnh')
 
