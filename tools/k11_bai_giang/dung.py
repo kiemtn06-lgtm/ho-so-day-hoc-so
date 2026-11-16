@@ -19,11 +19,10 @@ KHOA = '11-2'   # khóa dữ liệu của chương (ghi chú, điểm phát bi�
 
 BAI = {
     'B8': dict(file='Bài 8 Mô_Tả_Sóng.pptx', ten='Bài 8. Mô tả sóng', slide=[
-        'Bài 8: Mô tả sóng', 'Nghịch lí của chiếc lá', 'Hoạt động 1: Khám phá kênh tạo sóng', 'Kết quả quan sát và thuật ngữ',
-        'Định nghĩa cốt lõi: Sóng cơ', 'Tại sao sóng lan truyền được?', 'Chân dung của một sóng (đồ thị u - x)',
-        'Các đại lượng đặc trưng: không gian và thời gian', 'Các đại lượng đặc trưng: sự truyền lan', 'Hệ thức λ = v·T = v/f',
-        'Sự trễ pha theo không gian', 'Cường độ sóng (I): năng lượng truyền đi', 'Vận dụng: Bài toán con thuyền',
-        'Tư duy bản chất vật lí', 'Tổng kết bài học']),
+        'Bài 8: Mô tả sóng', 'Nghịch lí của sóng biển', 'Thí nghiệm tạo sóng mặt nước', 'Từ mặt cắt thực tế đến đồ thị hình sin',
+        'Giải mã bản chất: sóng được tạo ra như thế nào?', 'Sự lệch pha trên phương truyền sóng', 'Giải phẫu đồ thị: 4 đại lượng đặc trưng',
+        'Nguyên lí môi trường và công thức cốt lõi', 'Tránh bẫy trắc nghiệm: dao động và sự truyền sóng', 'Thực chiến 1: Bài toán con thuyền',
+        'Thực chiến 2: Giải phẫu đồ thị dao động kí', 'Thực chiến 3: Trắc nghiệm tốc độ và chu kì', 'Thực chiến 4: Đọc độ lệch pha', 'Tổng kết: Em đã học những gì?']),
     'B9': dict(file='Bài 9 - Sóng_Ngang_và_Sóng_Dọc.pptx', ten='Bài 9. Sóng ngang. Sóng dọc. Sự truyền năng lượng của sóng cơ', slide=[
         'Bài 9: Sóng ngang và sóng dọc', 'Khởi động: Hai loại chuyển động sóng', 'Hoạt động 1: Khảo sát sóng trên dây', 'Định nghĩa: Sóng ngang',
         'Hoạt động 2: Khảo sát sóng trên lò xo', 'Định nghĩa: Sóng dọc', 'Bảng so sánh hai loại sóng', 'Hoạt động 3: Sự truyền năng lượng của sóng cơ',
@@ -36,7 +35,6 @@ BAI = {
 #   ('xoa', (x0, y0, x1, y1))            xóa một vùng: tô lại bằng nền, nội suy theo chiều dọc từ mép trên xuống mép dưới
 #   ('chep', (x0, y0, x1, y1), (dx, dy)) chép một vùng sang vị trí lệch (dx, dy)
 SUA_ANH = {
-    ('B8', 1): [('xoa', (44, 592, 512, 736))],                       # ô chữ mẫu "Giáo viên: Thầy Nguyễn Văn A, Lớp: 11A1"
     ('B9', 8): [('xoa', (150, 290, 370, 336)), ('xoa', (580, 290, 800, 336)), ('xoa', (1010, 290, 1240, 336)),   # hàng nhãn trên bị lỗi chữ ("Thờn gian 3")
                 ('chep', (165, 548, 355, 592), (-5, -256)), ('chep', (595, 548, 785, 592), (-5, -256)), ('chep', (1030, 548, 1220, 592), (-7, -256))],
 }

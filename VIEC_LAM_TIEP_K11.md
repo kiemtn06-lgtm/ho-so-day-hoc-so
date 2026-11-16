@@ -3,7 +3,7 @@
 Cập nhật: 16/11/2026. Ghi chú này để lần sau làm tiếp không phải dò lại từ đầu.
 
 ## Nguồn (thư mục `K11/` của hồ sơ, không đưa lên GitHub)
-- `Bài 8 Mô_Tả_Sóng.pptx`, `Bài 9 - Sóng_Ngang_và_Sóng_Dọc.pptx`: mỗi file 15 slide, mỗi slide là một ảnh (làm bằng NotebookLM).
+- `Bài 8 Mô_Tả_Sóng.pptx` (14 slide, thay bằng bản "Chuẩn lớp học" ngày 16/11/2026), `Bài 9 - Sóng_Ngang_và_Sóng_Dọc.pptx` (15 slide): mỗi slide là một ảnh (làm bằng NotebookLM).
 - `L11_ BÀI TẬP VẬT LÍ 11 _ HKI 2026_GV.pdf`: tên đuôi .pdf nhưng thực chất là file Word (bản giáo viên, đáp án gạch chân). Bản giống hệt: `OneDrive\Fujitsu\4- 2026- 2027\K11\L11_ BÀI TẬP VẬT LÍ 11 _ HKI 2026_GV -In.docx`.
 
 ## Đã có trong hồ sơ (khối 11)
@@ -23,8 +23,8 @@ Công cụ: `tools/k11_bai_tap/mtef.py` chuyển công thức MathType sang LaTe
 - [ ] 6 câu phần I mà bản Word gạch chân từ hai phương án trở lên, đáp án đã xác định lại theo kiến thức (danh sách `SUA_DA` trong `tach_docx.py`): Bài 3 câu 2 (C), câu 3 (C), câu 4 (B), câu 8 (C); Bài 5 câu 10 (C); Bài 11 câu 2 (B).
 - [x] Bài 3 phần I câu 4: phương án D trong bản Word trùng A; đã sửa D thành $a=\omega^2A\sin(\omega t+arphi)$ trong `src/B03.txt` (đáp án vẫn là B).
 - [ ] Hai hình trôi nổi trong Word được chuyển sang câu kế tiếp vì câu trước không nhắc tới hình: Bài 13 phần I (hình bộ thí nghiệm sóng dừng, câu "dây PQ hình"), Bài 15 phần I câu 2 (hình bộ thí nghiệm đo tốc độ truyền âm). Nên lướt lại vị trí hình ở các bài.
-- [x] Bài giảng Bài 8 slide 1: đã xóa ô chữ mẫu "Giáo viên: Thầy Nguyễn Văn A, Lớp: 11A1". Bài 9 slide 8: hàng nhãn trên bị lỗi chữ ("Thờu gian", "Thờn gian") đã thay bằng chữ "Thời gian 1/2/3" chép từ hàng nhãn dưới. Sửa trên ảnh khi dựng (`SUA_ANH` trong `tools/k11_bai_giang/dung.py`), file .pptx gốc không đổi.
-- Bài 8 slide 11 (sự trễ pha theo không gian): kiến thức đúng (λ/4 trễ π/2, λ/2 trễ π); đường sóng vẽ nền chỉ để trang trí, không đúng tỉ lệ (O đến M trên hình khoảng 1,5 bước sóng).
+- [x] Bài 9 slide 8: hàng nhãn trên bị lỗi chữ ("Thờu gian", "Thờn gian") đã thay bằng chữ "Thời gian 1/2/3" chép từ hàng nhãn dưới. Sửa trên ảnh khi dựng (`SUA_ANH` trong `tools/k11_bai_giang/dung.py`), file .pptx gốc không đổi.
+- [ ] Bài 8 (bản mới) có vài chữ lỗi trên ảnh do NotebookLM: slide 5 dòng t = 3T/4 ("công ʰthể trạng lực ... các trử trị P"), slide 10 đề bài ("bờ l̀"). Chưa sửa trên ảnh.
 
 ## Làm tiếp
 1. Phòng cho Chương I Dao động (104 câu chấm tự động được) chưa làm: cần kho GitHub mới, chạy `tao_phong.py` với `CHUONG = 'C1'`.
