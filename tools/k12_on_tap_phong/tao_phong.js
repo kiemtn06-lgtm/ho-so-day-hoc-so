@@ -38,14 +38,15 @@ function chu(html, figs) {
   let s = html;
   s = s.replace(/<img\b[^>]*>/g, t => {
     const src = (/src="([^"]+)"/.exec(t) || [])[1] || '';
-    if (/class="eq"/.test(t)) return '[[img:' + luuAnh(src, 'mr') + ']]';
-    figs.img.push(luuAnh(src, 'mr')); return '';
+    // công thức: giữ chiều cao như trong tệp Word gốc (pt) -> [[img:tên|pt]]; hình minh hoạ: giữ bề rộng gốc (px)
+    if (/class="eq"/.test(t)) { const h = (/height:([\d.]+)pt/.exec(t) || [])[1]; return '[[img:' + luuAnh(src, 'mr') + (h ? '|' + h : '') + ']]'; }
+    figs.img.push(luuAnh(src, 'mr')); figs.w.push(+((/width:([\d.]+)px/.exec(t) || [])[1] || 0) || null); return '';
   });
   s = s.replace(/<table[\s\S]*?<\/table>/g, t => {
     if (!/<t[dh]\b[^>]*>[\s\S]*?\S[\s\S]*?<\/t[dh]>/.test(t)) return '';          // bảng rỗng (chỉ để dàn trang)
     figs.html.push(bang(t)); return '';
   });
-  s = s.replace(/<span class="math inline">([\s\S]*?)<\/span>/g, '$1');
+  s = s.replace(/<span class="math inline">([\s\S]*?)<\/span>/g, (_, m) => m.replace(/\\frac(?=\s*\{)/g, '\\dfrac'));   // phân số trong dòng: cỡ chữ thường, dễ đọc
   s = s.replace(/<(\/?)strong>/g, '<$1b>').replace(/<(\/?)em>/g, '<$1i>');
   s = s.replace(/<br\s*\/?>/g, '\n').replace(/<\/(p|blockquote|div|h4|li)>/g, '\n');
   s = s.replace(/<(?!\/?(?:b|i|sub|sup)>)[^>]+>/g, '');                              // bỏ mọi thẻ khác, giữ chữ
@@ -89,7 +90,7 @@ for (const b of Object.keys(MR).sort((a, b) => a - b)) {
     const k = /data-k="(\w+)"/.exec(blk)[1], so = (/Câu (\d+)\./.exec(blk) || [])[1];
     const iO = blk.search(/<div class="mq-[od]">|<p class="dapan">/), than = blk.slice(blk.indexOf('<p class="mq-s">'), iO < 0 ? undefined : iO)
       .replace(/<b class="mq-n">[\s\S]*?<\/b>\s*/, '');
-    const figs = { img: [], html: [] };
+    const figs = { img: [], html: [], w: [] };
     const q = { id: '', group: gi, set: 'mr', topic: +b, type: '', text: chu(than, figs) };
     let key = null;
     if (k === 'tn') {
@@ -102,7 +103,7 @@ for (const b of Object.keys(MR).sort((a, b) => a - b)) {
       q.type = 'tf';
       const ys = [...blk.matchAll(/<div class="md( ok)?"><b>([a-d])\)<\/b><span>([\s\S]*?)<\/span><\/div>(?=<div class="md|<\/div>)/g)];
       if (ys.length !== 4) throw new Error('Bài ' + b + ' câu ' + so + ': đọc được ' + ys.length + ' ý');
-      q.options = ys.map(y => chu(y[3], figs));
+      q.options = ys.map(y => chu(y[3], figs).replace(/^\.\s*/, ''));   // ". Học sinh cho rằng..." -> bỏ dấu chấm thừa đầu ý
       key = ys.map(y => !!y[1]);
     } else {
       const da = (/<p class="dapan">([\s\S]*?)<\/p>/.exec(blk) || [])[1] || '';
@@ -113,7 +114,7 @@ for (const b of Object.keys(MR).sort((a, b) => a - b)) {
     dem[q.type]++;
     q.id = 'MR' + b + '-' + { mc: 'I', tf: 'II', short: 'III', view: 'TL' }[q.type] + '-' + String(dem[q.type]).padStart(2, '0');
     if (figs.img.length || figs.html.length) {
-      q.fig = {}; if (figs.img.length) { q.fig.img = figs.img; q.fig.alt = 'Hình của câu ' + so; } if (figs.html.length) q.fig.html = figs.html.join('');
+      q.fig = {}; if (figs.img.length) { q.fig.img = figs.img; q.fig.alt = 'Hình của câu ' + so; if (figs.w.some(Boolean)) q.fig.w = figs.w; } if (figs.html.length) q.fig.html = figs.html.join('');
     }
     if (key == null && q.type !== 'view') throw new Error('Bài ' + b + ' câu ' + so + ': không có đáp án');
     questions.push(q);
@@ -148,6 +149,9 @@ for (const B of ND.bai) {
       q.type = 'view';
       explain[q.id] = '<b>Lời giải mẫu:</b> ' + (c.tl.loi_giai_mau || '') + ((c.tl.thang_diem || []).length ? '\n<b>Thang điểm:</b>\n' + c.tl.thang_diem.map(x => '• ' + x.y + ' (' + soVN(x.diem) + ' đ)').join('\n') : '');
     } else throw new Error('Dạng lạ ' + c.dang + ' ở ' + c.id);
+    // phân số trong dòng hiện cỡ thường (\dfrac) cho dễ đọc
+    const df = s => typeof s === 'string' ? s.replace(/\\frac(?=\s*\{)/g, '\\dfrac') : s;
+    q.text = df(q.text); if (q.options) q.options = q.options.map(df); if (explain[q.id]) explain[q.id] = df(explain[q.id]);
     questions.push(q);
   }
   xongNhom(ten);
