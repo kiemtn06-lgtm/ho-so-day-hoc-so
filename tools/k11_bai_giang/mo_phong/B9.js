@@ -122,9 +122,14 @@
             if (dau > lam * 1.2) { while (x1 > DAI) x1 -= lam; if (x1 - lam >= 0) V.kichThuoc(ctx, L + (x1 - lam) * s, L + x1 * s, bot + (doThi ? 46 : 22), "λ = " + so(lam, 2) + " m", "#7c3aed", true) }
           }
           // âm thoa
-          var u0 = dich(0), ax = L - 40;
+          var ax = L - 40;   // âm thoa đứng yên; chỉ có các vạch rung nhấp nháy hai bên để báo đang phát âm
+          if (tr > 0) {
+            ctx.save(); ctx.strokeStyle = "rgba(14,165,233," + (.25 + .6 * Math.abs(Math.sin(w * tr))) + ")"; ctx.lineWidth = 2.5; ctx.lineCap = "round";
+            [-34, -29, 31, 36].forEach(function (dx) { ctx.beginPath(); ctx.moveTo(ax + dx, mid - 100); ctx.lineTo(ax + dx, mid - 30); ctx.stroke() });
+            ctx.restore();
+          }
           ctx.save(); ctx.fillStyle = "#94a3b8"; ctx.strokeStyle = "#475569"; ctx.lineWidth = 1.5;
-          [[-22 - u0 * .5, 0], [8 + u0, 0]].forEach(function (p) { ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(ax + p[0], mid - 110, 14, 140, 7); else ctx.rect(ax + p[0], mid - 110, 14, 140); ctx.fill(); ctx.stroke() });
+          [[-22, 0], [8, 0]].forEach(function (p) { ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(ax + p[0], mid - 110, 14, 140, 7); else ctx.rect(ax + p[0], mid - 110, 14, 140); ctx.fill(); ctx.stroke() });
           ctx.fillRect(ax - 22, mid + 22, 44, 14); ctx.fillRect(ax - 5, mid + 34, 10, 70); ctx.restore();
           chu(ctx, "âm thoa", ax, mid + 122, "#334155", 14, "center");
           // tai và màng nhĩ
