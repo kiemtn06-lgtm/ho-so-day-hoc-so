@@ -1,0 +1,107 @@
+# CLAUDE SỬA THEO PHIẾU: giáo viên bấm "✎ Sửa" trên trang (nguon/lib/nut_sua.js), tạo phiếu (Issue) có nhãn "sua".
+# Quy trình này chạy trên máy chủ GitHub: Claude đọc phiếu, sửa tệp theo CLAUDE.md, rồi quy trình commit, đẩy lên main,
+# yêu cầu GitHub Pages dựng lại, trả lời trong phiếu và đóng phiếu.
+# Muốn sửa thêm hoặc hỏi lại: viết bình luận có "@claude" trong phiếu (kể cả phiếu đã đóng).
+# Chỉ chủ kho mới kích hoạt được. Cần secret CLAUDE_CODE_OAUTH_TOKEN (tạo bằng lệnh: claude setup-token).
+name: Claude sửa theo phiếu
+
+on:
+  issues:
+    types: [opened]
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: write
+  issues: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: claude-sua            # chạy lần lượt từng phiếu, không đẩy chồng lên nhau
+  cancel-in-progress: false
+
+jobs:
+  sua:
+    # phiếu mới có nhãn sua (từ nút Sửa) hoặc có @claude trong thân phiếu; hoặc bình luận có @claude
+    if: >-
+      (github.event_name == 'issues' && github.event.issue.author_association == 'OWNER' &&
+        (contains(github.event.issue.labels.*.name, 'sua') || contains(github.event.issue.body, '@claude'))) ||
+      (github.event_name == 'issue_comment' && !github.event.issue.pull_request &&
+        github.event.comment.author_association == 'OWNER' && contains(github.event.comment.body, '@claude'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      GH_TOKEN: ${{ github.token }}
+      SO: ${{ github.event.issue.number }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 20
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Thư viện Python cho công cụ dựng bài tập K11
+        run: pip install -q python-docx pillow
+
+      - name: Chép phiếu và các bình luận ra tệp cho Claude đọc
+        run: |
+          mkdir -p .phieu
+          gh issue view "$SO" --comments > .phieu/phieu.md
+          gh issue reopen "$SO" 2>/dev/null || true
+          gh issue comment "$SO" --body "⏳ Claude đang xử lý phiếu này… ([xem tiến trình](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}))" > /dev/null
+
+      - name: Claude sửa
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          github_token: ${{ github.token }}
+          prompt: |
+            Bạn đang xử lý PHIẾU SỬA số ${{ github.event.issue.number }} của giáo viên cho kho "Hồ sơ dạy học số".
+            1. Đọc CLAUDE.md (bản đồ kho, cách sửa từng loại trang, quy tắc) rồi đọc phiếu tại .phieu/phieu.md
+               (yêu cầu đầu tiên ở thân phiếu; các bình luận sau, nhất là bình luận có @claude mới nhất, là yêu cầu bổ sung).
+            2. Sửa đúng và CHỈ những gì phiếu yêu cầu, theo mục "Sửa theo phiếu trên GitHub" của CLAUDE.md
+               (sửa tệp nguồn trong nguon/ rồi chạy node tools/dong_goi.js; ghi nhật kí vào SUA_TREN_MANG.md).
+            3. Không chạy git commit, git push: quy trình sẽ tự làm sau khi bạn xong.
+            4. Cuối cùng ghi tệp .phieu/tra_loi.md:
+               - dòng 1: tiêu đề commit ngắn bằng tiếng Việt (ví dụ: Sửa đáp án câu 3 Bài 9 K12 theo phiếu #${{ github.event.issue.number }});
+               - các dòng sau: trả lời giáo viên, tiếng Việt, ngắn gọn: đã sửa gì, ở tệp nào, cũ → mới; điều gì cần giáo viên kiểm tra lại.
+               Nếu phiếu chưa rõ hoặc việc sửa có thể sai (ví dụ đổi đáp án mà bạn tính ra khác), KHÔNG sửa tệp nào,
+               ghi dòng 1 đúng là: CAN HOI  rồi các dòng sau là câu hỏi hoặc lí do. Giáo viên sẽ trả lời bằng bình luận @claude.
+          claude_args: >-
+            --model claude-opus-5-5
+            --max-turns 60
+            --allowedTools "Read,Edit,Write,Glob,Grep,Bash(node:*),Bash(python3:*),Bash(git diff:*),Bash(git status:*),Bash(git log:*),Bash(git show:*),Bash(git checkout:*),Bash(ls:*),Bash(grep:*),Bash(head:*),Bash(tail:*),Bash(wc:*)"
+
+      - name: Commit, đẩy lên, trả lời phiếu
+        if: always()
+        run: |
+          git config user.name "Claude (phiếu sửa)"
+          git config user.email "noreply@anthropic.com"
+          TL=.phieu/tra_loi.md
+          if [ ! -s "$TL" ]; then
+            gh issue comment "$SO" --body "⚠️ Lần chạy này không xong (xem [nhật kí](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})). Chưa có thay đổi nào được đẩy lên. Viết bình luận có @claude để thử lại."
+            exit 0
+          fi
+          TIEU_DE=$(head -n1 "$TL"); THAN=$(tail -n +2 "$TL")
+          rm -rf .phieu
+          git add -A
+          if [ "$TIEU_DE" = "CAN HOI" ] || git diff --cached --quiet; then
+            git reset -q
+            gh issue comment "$SO" --body "❓ $THAN
+
+          _Chưa sửa gì. Trả lời bằng bình luận có **@claude** để Claude làm tiếp._"
+            exit 0
+          fi
+          git commit -q -m "$TIEU_DE" -m "Phiếu sửa #$SO: ${{ github.event.issue.html_url }}" -m "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+          for i in 1 2 3; do git pull -q --rebase origin main && git push -q origin HEAD:main && break; sleep 5; done
+          SHA=$(git rev-parse HEAD)
+          gh api -X POST "repos/${{ github.repository }}/pages/builds" > /dev/null 2>&1 || true
+          gh issue comment "$SO" --body "✅ Đã sửa và đẩy lên (commit [${SHA:0:7}](${{ github.server_url }}/${{ github.repository }}/commit/$SHA)). Trang trên mạng cập nhật sau 1–3 phút (tải lại trang, nếu chưa thấy thì Ctrl+F5).
+
+          $THAN
+
+          _Cần sửa thêm: bình luận có **@claude**. Sửa chưa đúng: bình luận \"@claude hoàn tác\"._"
+          gh issue close "$SO" > /dev/null

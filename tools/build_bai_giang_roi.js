@@ -51,4 +51,5 @@ h = h.replace('</body>', JS + (va.js ? '<script>' + va.js + '</script>' : '') + 
 const out = path.join(__dirname, '..', dst);
 fs.mkdirSync(path.dirname(out), { recursive: true });
 fs.writeFileSync(out, h);
+require('./gan_nut_sua').tep(out);   // nút ✎ Sửa (nguon/lib/nut_sua.js)
 console.log('Đã tạo', dst, (h.length / 1048576).toFixed(2) + ' MB', '· vá:', (va.sua || []).length);

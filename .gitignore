@@ -5,3 +5,6 @@ __pycache__/
 # Khối 11: file nguồn của giáo viên (pptx nặng, bản Word bài tập gốc), chỉ để trên máy
 K11/*.pptx
 K11/*.pdf
+
+# Phiếu sửa đang xử lý (quy trình .github/workflows/claude-sua.yml)
+.phieu/

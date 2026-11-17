@@ -1,0 +1,34 @@
+# Hồ sơ dạy học số (Vật lí THPT)
+
+Trang tĩnh trên GitHub Pages: https://kiemtn06-lgtm.github.io/ho-so-day-hoc-so/ (kho `kiemtn06-lgtm/ho-so-day-hoc-so`, nhánh `main`).
+Trao đổi với giáo viên bằng tiếng Việt. Nhiều tệp nguồn của giáo viên (pptx, docx, trang bài giảng gốc) CHỈ có trên máy giáo viên, không có trong kho.
+
+## Bản đồ kho: trang nào dựng từ đâu
+
+| Trang trên mạng | Dựng từ (sửa ở đây) | Lệnh dựng lại | Dựng lại được trên GitHub? |
+|---|---|---|---|
+| `Ho-so-day-hoc-so.html` (hồ sơ) | `nguon/` (`app.js`, `config.js`, `style.css`, `index.html`, `lib/nut_sua.js`) | `node tools/dong_goi.js` | Có. KHÔNG sửa tay `Ho-so-day-hoc-so.html` |
+| dữ liệu K12 Ch.2 trong hồ sơ | `nguon/data/k12-2.js` (do `tools/build_du_lieu.js` tạo từ trang ôn tập gốc, chỉ có trên máy) | sửa thẳng `nguon/data/k12-2.js` rồi `node tools/dong_goi.js` | Sửa tay được; ghi nhật kí |
+| dữ liệu K10 Ch.3 trong hồ sơ | kiến thức, công thức, dạng bài, lỗi hay mắc, thẻ: `tools/noi_dung_k10_chuong3.json`; câu hỏi lấy từ trang bài giảng gốc (chỉ có trên máy) | trên máy: `node tools/build_du_lieu_roi.js tools/noi_dung_k10_chuong3.json` rồi `node tools/dong_goi.js` | Không chạy được build (thiếu trang gốc): sửa cả `.json` và `nguon/data/k10-3.js`, rồi `dong_goi.js` |
+| `bai-giang/k10-B12..B15.html` | trang bài giảng gốc (OneDrive của giáo viên) + vá hiển thị `tools/va_bai_giang_roi.js` | `node tools/build_bai_giang_roi.js "<gốc>" bai-giang/k10-B13.html B13` | Không: sửa thẳng trang đã dựng, ghi nhật kí |
+| `bai-giang/k12-chuong2.html`, `on-tap/k12-chuong2.html` | trang ôn tập gốc (chỉ có trên máy); sửa đáp án qua `tools/sua_dap_an_on_tap.js` | `build_bai_giang.js` / `build_on_tap.js` | Sửa ĐÁP ÁN: thêm mục vào `tools/sua_dap_an_on_tap.js` rồi `node tools/sua_dap_an_on_tap.js on-tap/k12-chuong2.html bai-giang/k12-chuong2.html` (tự áp lại khi dựng lại trên máy). Sửa khác: sửa thẳng, ghi nhật kí |
+| `bai-giang/k10-chuong2-mo-rong.html` + `k10-c2-mr/du-lieu.js` | `tools/k10_chuong2_mo_rong/src/p*.txt` | `python -I -X utf8 tools/k10_chuong2_mo_rong/dung.py "<PDF scan>"` (cần PDF trên máy) | Không: sửa `src/p*.txt` VÀ sửa thẳng `du-lieu.js` cho khớp, ghi nhật kí (để dựng lại Word trên máy) |
+| `bai-giang/k11-bai-tap.html` + `k11-bt/du-lieu.js` | `tools/k11_bai_tap/src/B*.txt` | `python3 -X utf8 tools/k11_bai_tap/dung.py` | Có |
+| `bai-giang/k11-B8.html`, `k11-B9.html` | pptx của giáo viên (slide là ảnh `k11-B8/s*.jpg`) + mô phỏng `tools/k11_bai_giang/mo_phong/` | `tools/k11_bai_giang/dung.py` (cần pptx) | Chữ trên ảnh slide KHÔNG sửa được trên GitHub: trả lời CAN HOI |
+| Phòng làm bài trực tuyến (`*.onrender.com`) | kho riêng `D:\phong-*` trên máy, không thuộc kho này | — | Không: trả lời CAN HOI, nói rõ cần sửa trên máy |
+
+Nút `✎ Sửa` (`nguon/lib/nut_sua.js`) có trên mọi trang. Trang mới dựng phải có nút: các `build_*.js` và `k11_bai_giang/dung.py` tự gắn; công cụ khác thì chạy `node tools/gan_nut_sua.js` sau khi dựng.
+Trang `.html` lớn (vài MB, dòng rất dài): tìm bằng Grep, sửa bằng `node -e` thay đúng một chuỗi (kiểm tra chuỗi cũ khớp đúng 1 lần), không đọc cả tệp.
+
+## Sửa theo phiếu trên GitHub (Claude chạy trong `.github/workflows/claude-sua.yml`)
+
+Giáo viên bấm `✎ Sửa` trên trang, tạo phiếu (Issue, nhãn `sua`) gồm vị trí, đoạn cần sửa, yêu cầu.
+- Sửa đúng và chỉ những gì phiếu yêu cầu. Đổi đáp án/lời giải/số liệu: tự giải lại để kiểm tra; nếu kết quả của bạn khác yêu cầu, không sửa mà hỏi lại (CAN HOI).
+- Sửa ở tệp nguồn theo bảng trên, dựng lại bằng đúng lệnh, rồi kiểm tra chuỗi mới có trong trang đã dựng.
+- "@claude hoàn tác": dùng `git log`/`git show` tìm commit của phiếu, đưa các tệp về như trước commit đó (`git checkout <sha>~1 -- <tệp>`), dựng lại nếu cần.
+- MỌI lần sửa đều thêm một dòng vào đầu bảng trong `SUA_TREN_MANG.md` (ngày, số phiếu, tệp, cũ → mới ngắn gọn, cột "Đã áp vào nguồn trên máy" ghi `chưa` nếu tệp đó dựng từ nguồn chỉ có trên máy, ghi `không cần` nếu nguồn nằm trong kho).
+
+## Làm việc trên máy giáo viên
+
+- Đầu mỗi phiên: `git pull` (Claude trên GitHub có thể đã đẩy bản sửa). Mở `SUA_TREN_MANG.md`: dòng nào cột cuối là `chưa` thì áp vào nguồn trên máy (trang gốc trên OneDrive, `tools/va_bai_giang_roi.js`, PDF/pptx…), dựng lại, kiểm tra trang dựng lại vẫn giữ bản sửa, rồi đổi thành `đã áp <ngày>`. Không làm việc này thì lần dựng lại sau sẽ XÓA bản sửa trên mạng.
+- Đẩy lên GitHub khi giáo viên bảo "đẩy lên". Commit bằng user `Hosodayhocso`.

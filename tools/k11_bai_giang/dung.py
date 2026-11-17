@@ -212,7 +212,9 @@ def main():
                      for g in (os.path.join(DIR, 'mo_phong', 'khung.js'), mp)) if os.path.exists(mp) else ''
         h = (TRANG.replace('__TEN__', B['ten']).replace('__MA__', json.dumps(ma)).replace('__SLIDE__', json.dumps(B['slide'], ensure_ascii=False))
              .replace('__MP__', mp).replace('__CSS__', cc['css']).replace('__JS__', cc['js'].replace('</script', '<\\/script')))
-        open(os.path.join(REPO, 'bai-giang', 'k11-%s.html' % ma), 'w', encoding='utf8').write(h)
+        dich = os.path.join(REPO, 'bai-giang', 'k11-%s.html' % ma)
+        open(dich, 'w', encoding='utf8').write(h)
+        subprocess.run(['node', os.path.join(REPO, 'tools', 'gan_nut_sua.js'), dich], check=True, stdout=subprocess.DEVNULL)   # nút ✎ Sửa
         print(ma, B['ten'], '·', len(anh), 'slide ·', round(tong / 1048576, 2), 'MB ảnh')
 
 

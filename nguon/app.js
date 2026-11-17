@@ -429,6 +429,15 @@
     w.innerHTML = h;
   }
   function render() { renderHead(); renderTree(); renderWork(); }
+  /* vị trí đang xem, ghi vào phiếu của nút Sửa (lib/nut_sua.js), kèm mã dữ liệu để biết tệp cần sửa */
+  window.HSDH_VITRI = function () {
+    var p = ["Hồ sơ", CFG.khoi[V.khoi].ten], ch = chs()[V.ch], b = V.page === "bai" ? curBai() : null;
+    var TEN = { tq: "Tổng quan khối", ph: "Làm bài trực tuyến", hd: "Hỏi đáp", lop: "Lớp học", cc: "Sao lưu dữ liệu" };
+    if (b) p.push("Chương " + (V.ch + 1) + ". " + ch.ten, "Bài: " + b.ten, "Tab: " + TABS[V.tab], "(dữ liệu nguon/data/k" + ch.duLieu + ".js, mã bài " + b.ma + ")");
+    else if (V.page === "lt" && ch && ch.luyenTap && ch.luyenTap[V.lt]) p.push("Chương " + (V.ch + 1) + ". " + ch.ten, "Luyện tập: " + ch.luyenTap[V.lt].ten);
+    else p.push(TEN[V.page] || V.page);
+    return p.join(" · ");
+  };
   function msg(id, m) { var e = $(id); if (e) { e.textContent = m; setTimeout(function () { if (e) e.textContent = ""; }, 3500); } }
 
   /* ---------- chế độ lên lớp ---------- */
