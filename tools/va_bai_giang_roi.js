@@ -41,10 +41,50 @@ const SVG_B13_VUONG = '<svg viewBox="0 0 360 215" width="100%" style="max-height
   '<text x="254" y="46" font-size="21" font-weight="700" fill="#b45309">F = 10 N</text>' +
   '<text x="146" y="160" font-size="17">90°</text></svg>';
 
+
+/* Đáp án thảo luận / gợi ý: ẩn sẵn, giáo viên bấm "Hiện đáp án" sau khi học sinh đã thảo luận */
+const JS_AN_DAP_AN = `(function(){
+  var bo=/Nhấn|Giáo viên bấm|Nhập số|Số đo|CHÀO|CHƯƠNG|Slide gốc/;
+  document.querySelectorAll('.hint').forEach(function(h){
+    if(h.className.trim()!=='hint'||h.id||bo.test(h.textContent)||!h.closest('.panel,.step'))return;
+    h.style.display='none';
+    var b=document.createElement('button');b.type='button';b.className='btn ghost hsdh-dapan';b.textContent='👁 Hiện đáp án';
+    b.onclick=function(e){e.stopPropagation();h.style.display=h.tagName==='DIV'?'block':'inline';b.remove()};
+    b.onmousedown=b.onkeydown=function(e){e.stopPropagation()};
+    h.parentNode.insertBefore(b,h);
+  });
+})();`;
+const CSS_DAP_AN = `.hsdh-dapan{font-size:20px!important;padding:4px 14px!important;margin:6px 0 0 8px;display:inline-block;cursor:pointer}
+`;
+
+
+/* Bài 14: thêm 3 slide hình tham khảo (cắt từ bản trình chiếu K10/Bài 14, nén JPEG) */
+function slideAnh(tag, ten, tep, alt) {
+  const b = require('fs').readFileSync(require('path').join(__dirname, 'k10_anh_b14', tep)).toString('base64');
+  return '<section class="slide" data-title="' + ten + '"><h2><span class="tag">' + tag + '</span> ' + ten + '</h2>' +
+    '<div style="flex:1;display:flex;align-items:center;justify-content:center;min-height:0"><img alt="' + alt + '" src="data:image/jpeg;base64,' + b +
+    '" style="max-height:100%;max-width:100%;border-radius:14px;box-shadow:0 6px 24px #0008"></div></section>\n\n';
+}
+
+
+/* Thay ảnh SGK (data-img) bằng ảnh cắt từ bản trình chiếu K10 (chỉ phần hình, bỏ chữ đáp án); chèn thêm ảnh vào chỗ trống */
+function anhB64(t) { return 'data:image/jpeg;base64,' + require('fs').readFileSync(require('path').join(__dirname, 'k10_anh_b14', t + '.jpg')).toString('base64'); }
+function thayAnh(key, tep, chuthich, maxh) {
+  return [new RegExp('<img class="sgk" data-img="' + key + '"[^>]*>(<div class="src">[^<]*</div>)?'),
+    '<img class="sgk" alt="' + chuthich + '" style="margin:auto;max-height:' + (maxh || 320) + 'px;width:auto;border-radius:10px" src="' + anhB64(tep) + '"><div class="src">' + chuthich + '</div>'];
+}
+function themTruoc(neo, tep, maxh, step) {
+  return [neo, '<div class="' + (step ? 'step ' : '') + 'panel" style="text-align:center;padding:6px"><img alt="" style="max-height:' + (maxh || 260) + 'px;max-width:100%;width:auto;border-radius:10px" src="' + anhB64(tep) + '"></div>' + neo];
+}
+
 module.exports = function (ma) {
   const va = { css: CSS_CHUNG, js: '', sua: [] };
-  if (ma === 'B13' || ma === 'B14' || ma === 'B15') va.js = JS_NHAN;
+  if (ma === 'B13' || ma === 'B14' || ma === 'B15') { va.js = JS_NHAN + JS_AN_DAP_AN; va.css += CSS_DAP_AN; }
+  if (ma === 'B14') va.js += require('./va_k10_b14_xe.js');
   if (ma === 'B13') va.sua = [
+    thayAnh('s13_tau', 'b13-tau-keo', 'Hai tàu kéo một tàu chở hàng', 300),
+    thayAnh('s13_1', 'b13-thuc-te-mo-hinh', 'Thực tế = mô hình vật lí: hai lực thay bằng một hợp lực', 230),
+    thayAnh('s13_5', 'b13-sach-can-bang', 'Quyển sách nằm yên: N và P cân bằng', 200),
     /* Hoạt động 1: tách xa hai mũi tên F1, F2 để nhãn không đè nhau */
     ["arrow(x,cx+bw/2,cy-18,cx+bw/2+a*k,cy-18,", "arrow(x,cx+bw/2,cy-27,cx+bw/2+a*k,cy-27,"],
     ["arrow(x,cx+bw/2,cy+18,cx+bw/2+b*k,cy+18,", "arrow(x,cx+bw/2,cy+27,cx+bw/2+b*k,cy+27,"],
@@ -58,11 +98,24 @@ module.exports = function (ma) {
     [/<svg viewBox="0 0 330 200" width="100%"><rect x="40" y="30"[\s\S]*?<\/svg>/, SVG_B13_VUONG]
   ];
   if (ma === 'B14') va.sua = [
+    thayAnh('s14_3', 'b14-xe-va-vat', 'Xe lăn xuống dốc va vào tường – vật nhỏ trên xe', 190),
+    themTruoc('<div class="step panel" style="background:#e0f2fe"><b>Hãy nghĩ quán tính', 'b14-khoi-luong-quan-tinh', 250, true),
+    /* thêm slide lời giải Voyager (sau Củng cố 1); thay ảnh minh hoạ ở slide Ứng dụng quán tính và An toàn giao thông bằng hình trong bản trình chiếu K10/Bài 14 */
+    ['<section class="slide" data-title="Quán tính là gì">', slideAnh('Lời giải', 'Lời giải cho bí ẩn Voyager', 'loi-giai-voyager.jpg', 'Lời giải cho bí ẩn Voyager') + '<section class="slide" data-title="Quán tính là gì">'],
+    ['<img class="sgk" data-img="s14_4" alt="Hình 14.4" style="max-height:200px;width:auto;margin:auto"><div class="src">SGK tr. 62 – Hình 14.4</div>',
+     '<img class="sgk" alt="Mẹo tra đầu búa" style="max-height:210px;width:auto;margin:auto;border-radius:10px" src="'+'data:image/jpeg;base64,'+require('fs').readFileSync(require('path').join(__dirname,'k10_anh_b14','bua.jpg')).toString('base64')+'"><div class="src">Mẹo tra đầu búa (SGK tr. 62 – Hình 14.4)</div>'],
+    ['<img class="sgk" data-img="s14_5" alt="Hình 14.5" style="max-height:200px;width:auto;margin:auto"><div class="src">SGK tr. 62 – Hình 14.5</div>',
+     '<img class="sgk" alt="Giật giấy dưới cốc nước" style="max-height:210px;width:auto;margin:auto;border-radius:10px" src="'+'data:image/jpeg;base64,'+require('fs').readFileSync(require('path').join(__dirname,'k10_anh_b14','giay.jpg')).toString('base64')+'"><div class="src">Giật giấy dưới cốc nước (SGK tr. 62 – Hình 14.5)</div>'],
+    ['<div class="step panel" style="font-size:24px;background:#fee2e2;color:#7f1d1d"><b>Chạy nước rút 100 m:</b> vì sao vận động viên không dừng ngay ở vạch đích? → cơ thể có <b>quán tính</b>; hãm đột ngột có thể gây chấn thương.</div>',
+     '<div class="step panel" style="font-size:22px;background:#fee2e2;color:#7f1d1d;display:flex;gap:14px;align-items:center"><img alt="Vận động viên về đích" style="height:150px;width:auto;border-radius:10px;flex:none" src="'+'data:image/jpeg;base64,'+require('fs').readFileSync(require('path').join(__dirname,'k10_anh_b14','van-dong-vien.jpg')).toString('base64')+'"><div><b>Chạy nước rút 100 m:</b> vì sao vận động viên không dừng ngay ở vạch đích mà phải chạy chậm dần thêm một đoạn?<div class="hint" style="color:#7f1d1d;font-size:20px;margin-top:6px"><b>1.</b> Đang có vận tốc rất lớn (chuyển động thẳng). <b>2.</b> Cơ bắp không thể tạo ngay ngoại lực đủ lớn để triệt tiêu vận tốc. <b>3.</b> Quán tính buộc cơ thể tiếp tục lao về phía trước; hãm phanh đột ngột dễ gây chấn thương cơ, xương khớp.</div></div></div>'],
     /* chữ "tường" màu trắng trên nền sáng không đọc được; chữ "người" đè lên hình người */
     ["x.fillStyle='#fff';x.font='26px Segoe UI';x.fillText('tường',WALL-6,XG-60);", "x.fillStyle='#7c2d12';x.font='bold 24px Segoe UI';x.fillText('tường',WALL-22,XG-62);"],
     ["x.fillText('người',px-18,py+5);", "x.fillText('người',px-36,py-30);"]
   ];
   if (ma === 'B15') va.sua = [
+    thayAnh('s15_lab', 'b15-bo-tri-thi-nghiem', 'Bố trí thí nghiệm: máng đệm khí, xe trượt, cổng quang điện, quả nặng', 260),
+    themTruoc('<div class="step panel math" style="font-size:24px"><b>Lời giải</b>', 'b15-cu-da-phat', 240, false),
+    themTruoc('<div class="step panel" style="font-size:24px"><b>Điền khuyết:</b>', 'b15-dinh-luat-2', 170, false),
     /* lời giải thử thách dài quá khung: chia thành các dòng thẳng hàng */
     ["<div class=\"step panel\" style=\"padding:10px 14px\">$$F-F_{ms}=ma\\ \\Rightarrow\\ F=m(a+\\mu g)=80\\,(0{,}2+0{,}3\\cdot9{,}8)=\\mathbf{251{,}2}\\,\\mathrm{N}$$",
       "<div class=\"step panel\" style=\"padding:4px 12px;font-size:19px\">$$\\begin{aligned}F-F_{ms}&=ma\\ \\Rightarrow\\ F=m(a+\\mu g)\\\\F&=80\\,(0{,}2+0{,}3\\cdot9{,}8)=\\mathbf{251{,}2}\\,\\mathrm{N}\\end{aligned}$$"],
