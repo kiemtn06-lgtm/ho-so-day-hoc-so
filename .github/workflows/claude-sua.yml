@@ -97,7 +97,7 @@ jobs:
           _Chưa sửa gì. Trả lời bằng bình luận có **@claude** để Claude làm tiếp._"
             exit 0
           fi
-          git commit -q -m "$TIEU_DE" -m "Phiếu sửa #$SO: ${{ github.event.issue.html_url }}" -m "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+          git commit -q -m "$TIEU_DE" -m "Phiếu sửa #$SO: ${{ github.event.issue.html_url }}" -m "Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>"
           for i in 1 2 3; do git pull -q --rebase origin main && git push -q origin HEAD:main && break; sleep 5; done
           SHA=$(git rev-parse HEAD)
           gh api -X POST "repos/${{ github.repository }}/pages/builds" > /dev/null 2>&1 || true
