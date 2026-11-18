@@ -37,7 +37,7 @@
 
   var css = document.createElement("style");
   css.textContent =
-    "#nsNut{position:fixed;left:10px;bottom:10px;z-index:2147483000;font:600 13px system-ui,sans-serif;padding:6px 11px;border-radius:18px;border:1px solid #b45309;background:#fff7ed;color:#9a3412;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.18);opacity:.8;user-select:none}" +
+    "#nsNut{position:fixed;right:10px;top:50%;touch-action:none;z-index:2147483000;font:600 13px system-ui,sans-serif;padding:6px 11px;border-radius:18px;border:1px solid #b45309;background:#fff7ed;color:#9a3412;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.18);opacity:.8;user-select:none}" +
     "#nsNut:hover{opacity:1}" +
     "#nsHop{position:fixed;left:10px;bottom:52px;z-index:2147483001;width:min(420px,calc(100vw - 20px));max-height:calc(100vh - 70px);overflow:auto;font:14px/1.45 system-ui,sans-serif;background:#fff;color:#1f2937;border:1px solid #d1d5db;border-radius:10px;box-shadow:0 8px 28px rgba(0,0,0,.25);padding:12px;box-sizing:border-box}" +
     "#nsHop b{display:block;margin:6px 0 3px;font-size:13px}#nsHop .vt{font-size:12px;color:#4b5563;word-break:break-word}" +
@@ -51,7 +51,22 @@
   var nut = document.createElement("button"), hop = null;
   nut.id = "nsNut"; nut.type = "button"; nut.textContent = "✎ Sửa"; nut.title = "Gửi yêu cầu sửa chỗ đang xem (bôi đen đoạn cần sửa trước khi bấm)";
   nut.addEventListener("mousedown", function (e) { e.preventDefault(); });
-  nut.addEventListener("click", function () { if (hop) dong(); else mo(); });
+  /* Nút kéo được (giữ chuột/ngón tay rồi kéo), vị trí được nhớ: tránh che nút điều khiển của trang (ví dụ nút lùi slide) */
+  var vt0 = null, keo = false, bd = null;
+  try { vt0 = JSON.parse(localStorage.getItem("nsViTri") || "null"); } catch (e) {}
+  function dat(x, y) {
+    x = Math.max(0, Math.min(x, window.innerWidth - nut.offsetWidth)); y = Math.max(0, Math.min(y, window.innerHeight - nut.offsetHeight));
+    nut.style.left = x + "px"; nut.style.top = y + "px"; nut.style.right = "auto"; nut.style.bottom = "auto"; return { x: x, y: y };
+  }
+  nut.addEventListener("pointerdown", function (e) { var r = nut.getBoundingClientRect(); bd = { px: e.clientX, py: e.clientY, x: r.left, y: r.top }; keo = false; try { nut.setPointerCapture(e.pointerId); } catch (x) {} });
+  nut.addEventListener("pointermove", function (e) {
+    if (!bd) return;
+    if (!keo && Math.abs(e.clientX - bd.px) + Math.abs(e.clientY - bd.py) < 6) return;
+    keo = true; vt0 = dat(bd.x + e.clientX - bd.px, bd.y + e.clientY - bd.py);
+  });
+  nut.addEventListener("pointerup", function () { if (keo && vt0) { try { localStorage.setItem("nsViTri", JSON.stringify(vt0)); } catch (e) {} } bd = null; });
+  nut.addEventListener("pointercancel", function () { bd = null; });
+  nut.addEventListener("click", function () { if (keo) { keo = false; return; } if (hop) dong(); else mo(); });
 
   function dong() { if (hop) hop.remove(); hop = null; }
   function mo() {
@@ -66,6 +81,12 @@
     hop.querySelector(".vt").textContent = vt;
     hop.querySelector('[data-k="doan"]').value = cat(chon, 1500);
     document.body.appendChild(hop);
+    (function () {   // đặt hộp gần nút, không tràn khỏi màn hình
+      var r = nut.getBoundingClientRect(), w = Math.min(420, window.innerWidth - 20);
+      hop.style.width = w + "px"; hop.style.left = Math.max(10, Math.min(r.left, window.innerWidth - w - 10)) + "px";
+      if (r.top > window.innerHeight / 2) { hop.style.bottom = (window.innerHeight - r.top + 8) + "px"; hop.style.top = "auto"; hop.style.maxHeight = (r.top - 20) + "px"; }
+      else { hop.style.top = (r.bottom + 8) + "px"; hop.style.bottom = "auto"; hop.style.maxHeight = (window.innerHeight - r.bottom - 20) + "px"; }
+    })();
     hop.querySelector('[data-k="yc"]').focus();
     hop.addEventListener("click", function (e) {
       var k = e.target.getAttribute && e.target.getAttribute("data-k");
@@ -81,6 +102,6 @@
       }
     });
   }
-  function gan() { document.body.appendChild(nut); }
+  function gan() { document.body.appendChild(nut); if (vt0) dat(vt0.x, vt0.y); }
   if (document.body) gan(); else document.addEventListener("DOMContentLoaded", gan);
 })();

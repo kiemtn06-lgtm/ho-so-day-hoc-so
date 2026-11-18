@@ -4,16 +4,19 @@
    Chạy lại không sao: trang đã có nút thì bỏ qua. Các công cụ dựng trang (build_*.js) tự gọi sau khi ghi;
    công cụ Python (tools/k11_bai_giang/dung.py, tools/k10_chuong2_mo_rong/dung.py ...) thì chạy lệnh này sau khi dựng. */
 const fs = require('fs'), path = require('path');
-const ROOT = path.join(__dirname, '..'), DAU = '<!--nut-sua-->';
+const ROOT = path.join(__dirname, '..'), DAU = '<!--nut-sua-->', DAU2 = '<!--am-thanh-->';
 
 function gan(f) {
-  const h = fs.readFileSync(f, 'utf8');
-  if (h.includes(DAU)) return false;
-  const rel = path.relative(path.dirname(f), path.join(ROOT, 'nguon', 'lib', 'nut_sua.js')).split(path.sep).join('/');
-  const the = DAU + '<script src="' + rel + '" defer></script>\n';
-  const i = h.lastIndexOf('</body>');
-  fs.writeFileSync(f, i < 0 ? h + '\n' + the : h.slice(0, i) + the + h.slice(i));
-  return true;
+  let h = fs.readFileSync(f, 'utf8'), doi = false;
+  for (const [dau, tep] of [[DAU, 'nut_sua.js'], [DAU2, 'am_thanh.js']]) {   // nút ✎ Sửa và âm thanh thao tác
+    if (h.includes(dau)) continue;
+    const rel = path.relative(path.dirname(f), path.join(ROOT, 'nguon', 'lib', tep)).split(path.sep).join('/');
+    const the = dau + '<script src="' + rel + '" defer></script>\n';
+    const i = h.lastIndexOf('</body>');
+    h = i < 0 ? h + '\n' + the : h.slice(0, i) + the + h.slice(i); doi = true;
+  }
+  if (doi) fs.writeFileSync(f, h);
+  return doi;
 }
 module.exports = { tep: gan };
 
