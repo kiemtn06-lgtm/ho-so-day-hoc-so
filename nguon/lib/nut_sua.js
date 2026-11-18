@@ -102,6 +102,16 @@
       }
     });
   }
-  function gan() { document.body.appendChild(nut); if (vt0) dat(vt0.x, vt0.y); }
+  function gan() {
+    document.body.appendChild(nut); if (vt0) dat(vt0.x, vt0.y);
+    /* Trang bài giảng nằm trong khung của Hồ sơ (Dạy ngay): chỉ giữ một nút. Nút của trang bài giảng biết đang ở slide nào nên được giữ,
+       nút của trang chứa nó tạm ẩn và hiện lại khi đóng bài giảng. */
+    try {
+      if (window.parent && window.parent !== window) {
+        var cha = window.parent.document.getElementById("nsNut");
+        if (cha) { cha.style.display = "none"; window.addEventListener("pagehide", function () { cha.style.display = ""; }); }
+      }
+    } catch (e) {}
+  }
   if (document.body) gan(); else document.addEventListener("DOMContentLoaded", gan);
 })();
