@@ -15,7 +15,7 @@ window.HO_SO = {
   /* Phòng tương tác trên lớp (học sinh quét QR). Điền địa chỉ Render sau khi đưa máy chủ lên, ví dụ https://phong-tuong-tac.onrender.com */
   tuongTac: "https://phong-tuong-tac.onrender.com",
   /* Phòng làm bài có máy chủ bổ sung theo chương (ngoài phòng chính của khối ở mục "ph" phía trên) */
-  phongPhu: { 10: [{ ten: "Chương II · Động học · Mở rộng cuối bài", moTa: "228 câu: Chương II Bài 8-12 (7 nhóm) và Chương III. Động lực học Bài 13-15 (3 nhóm cuối)", url: "https://phong-k10-chuong2-mo-rong.onrender.com" }],
+  phongPhu: { 10: [{ ten: "Chương II · Động học · Mở rộng cuối bài", moTa: "280 câu: Chương II Bài 8-12 (7 nhóm), Bài 9-12 từ tài liệu GV (4 nhóm), Chương III. Động lực học Bài 13-15 (3 nhóm cuối)", url: "https://phong-k10-chuong2-mo-rong.onrender.com" }],
     11: [{ ten: "Chương II · Sóng", moTa: "92 câu: Bài 8, 9, 11, 12, 13, 15, 6 nhóm theo bài", url: "https://phong-tuong-tac-k11-chuong-2.onrender.com" }],
     12: [{ ten: "Chương 2 · Chất khí", moTa: "708 câu: 26 buổi luyện tập (521 câu), Mở rộng ôn tập Bài 8-12, Đề tổng hợp Bài 8-13", url: "https://phong-chuong-2-chat-khi.onrender.com" }] },
   congCu: [
