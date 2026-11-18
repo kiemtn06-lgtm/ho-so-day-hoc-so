@@ -49,7 +49,9 @@ jobs:
       - name: Chép phiếu và các bình luận ra tệp cho Claude đọc
         run: |
           mkdir -p .phieu
-          gh issue view "$SO" --comments > .phieu/phieu.md
+          gh issue view "$SO" > .phieu/phieu.md                       # tiêu đề, nhãn, thân phiếu
+          { echo; echo "---- CÁC BÌNH LUẬN ----"; gh issue view "$SO" --comments; } >> .phieu/phieu.md
+          wc -c .phieu/phieu.md
           gh issue reopen "$SO" 2>/dev/null || true
           gh issue comment "$SO" --body "⏳ Claude đang xử lý phiếu này… ([xem tiến trình](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}))" > /dev/null
 
