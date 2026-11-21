@@ -84,6 +84,233 @@ html,body{margin:0;height:100%;background:#0b1220;color:#e5e7eb;font:16px/1.4 "S
   <button id="bToan" title="Toàn màn hình (phím F)">⛶ Toàn màn hình</button>
 </div>
 <div id="btK"><button type="button">Đóng ✕</button></div>
+<script>/* Khung mô phỏng cho bài giảng khối 11 (trình chiếu ảnh).
+   Mỗi bài có file mo_phong/<MA>.js gọi MP.dangKy(ma, chỉ_số_slide_từ_0, {ten, goiY, tao(ui) -> {ve(ctx,W,H,t,dt), datLai?, nhap?}}).
+   Trang trình chiếu hiện nút "Mô phỏng" (phím M) ở slide có mô phỏng. */
+window.MP = (function () {
+  var DS = {}, K, cv, ctx, dk, chay = null, mo = false, tam = false, toc = 1, t = 0, last = 0, nutVe = null, W = 0, H = 0;
+  function dangKy(ma, i, def) { DS[ma + "@" + i] = def }
+  function co(ma, i) { return !!DS[ma + "@" + i] }
+  function dungKhung() {
+    if (K) return;
+    var st = document.createElement("style");
+    st.textContent =
+      "#mpK{position:fixed;inset:0;z-index:9998;background:rgba(3,7,18,.82);display:none;padding:1.5vh 1.5vw}" +
+      "#mpK.mo{display:flex}" +
+      "#mpK .mp-hop{margin:auto;width:100%;height:100%;display:flex;flex-direction:column;background:#0f172a;border:1px solid #2a3a5c;border-radius:12px;overflow:hidden;box-shadow:0 10px 40px #000a}" +
+      "#mpK .mp-dau{display:flex;align-items:center;gap:12px;padding:8px 12px 8px 16px;border-bottom:1px solid #24304a}" +
+      "#mpK .mp-ten{font-size:17px;color:#f1f5f9}#mpK .mp-gc{flex:1;min-width:0;color:#9fb0cc;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}" +
+      "#mpK .mp-than{flex:1;min-height:0;position:relative}#mpK canvas{position:absolute;inset:0;width:100%;height:100%;display:block}" +
+      "#mpK .mp-dk{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px;padding:10px 16px;border-top:1px solid #24304a;font-size:14px;color:#d6deeb}" +
+      "#mpK button,#mpK select{font:600 14px 'Segoe UI',sans-serif;color:#e5e7eb;background:#1c2742;border:1px solid #33415f;border-radius:999px;padding:6px 13px;cursor:pointer;min-height:34px}" +
+      "#mpK button:hover{border-color:#60a5fa}#mpK :focus-visible{outline:3px solid #60a5fa;outline-offset:2px}" +
+      "#mpK label{display:inline-flex;align-items:center;gap:7px;white-space:nowrap}#mpK input[type=range]{width:130px;accent-color:#38bdf8}" +
+      "#mpK input[type=checkbox]{width:17px;height:17px;accent-color:#38bdf8}#mpK output{font-weight:700;color:#7dd3fc;font-variant-numeric:tabular-nums;min-width:3.2em;display:inline-block}" +
+      "@media (max-width:720px){#mpK .mp-gc{display:none}#mpK input[type=range]{width:100px}}";
+    document.head.appendChild(st);
+    K = document.createElement("div"); K.id = "mpK"; K.setAttribute("role", "dialog"); K.setAttribute("aria-modal", "true");
+    K.innerHTML = '<div class="mp-hop"><div class="mp-dau"><b class="mp-ten"></b><span class="mp-gc"></span><button type="button" class="mp-dong" title="Đóng (Esc)">Đóng ✕</button></div>' +
+      '<div class="mp-than"><canvas></canvas></div><div class="mp-dk"></div></div>';
+    document.body.appendChild(K);
+    cv = K.querySelector("canvas"); ctx = cv.getContext("2d"); dk = K.querySelector(".mp-dk");
+    K.querySelector(".mp-dong").onclick = dong;
+    cv.addEventListener("click", function (e) {
+      if (!chay || !chay.nhap) return; var r = cv.getBoundingClientRect(); chay.nhap(e.clientX - r.left, e.clientY - r.top, r.width, r.height);
+    });
+    document.addEventListener("keydown", function (e) {
+      if (!mo) return;
+      var tg = e.target.tagName;
+      if (e.key === "Escape") { dong(); e.preventDefault(); e.stopImmediatePropagation() }
+      else if (e.key === " " && tg !== "BUTTON" && tg !== "INPUT" && tg !== "SELECT") { datTam(!tam); e.preventDefault(); e.stopImmediatePropagation() }
+    });
+  }
+  var nutTam;
+  function datTam(x) { tam = x; nutTam.textContent = tam ? "▶ Chạy tiếp" : "⏸ Tạm dừng" }
+  function datLai() { t = 0; if (chay && chay.datLai) chay.datLai() }
+  function taoUI() {
+    dk.innerHTML = "";
+    nutTam = them("button", "⏸ Tạm dừng"); nutTam.type = "button"; nutTam.title = "Tạm dừng / chạy tiếp (phím cách)"; nutTam.onclick = function () { datTam(!tam) };
+    var nl = them("button", "↺ Bắt đầu lại"); nl.type = "button"; nl.onclick = datLai;
+    var lb = them("label", "Tốc độ phát "), s = document.createElement("select");
+    [[0.25, "×0,25 (rất chậm)"], [0.5, "×0,5 (chậm)"], [1, "×1 (thật)"]].forEach(function (o) { var op = document.createElement("option"); op.value = o[0]; op.textContent = o[1]; s.appendChild(op) });
+    s.value = String(toc); s.onchange = function () { toc = +s.value }; lb.appendChild(s);
+    return {
+      truot: function (nhan, a, b, buoc, gt, dv, fn) {
+        var l = them("label", nhan + " "), r = document.createElement("input"), o = document.createElement("output");
+        r.type = "range"; r.min = a; r.max = b; r.step = buoc; r.value = gt; r.setAttribute("aria-label", nhan);
+        var hien = function () { o.textContent = String(+r.value).replace(".", ",") + (dv ? " " + dv : "") };
+        r.oninput = function () { hien(); fn(+r.value) }; hien(); l.appendChild(r); l.appendChild(o); return r;
+      },
+      chon: function (nhan, gt, fn) {
+        var l = them("label", ""), c = document.createElement("input"); c.type = "checkbox"; c.checked = gt;
+        c.onchange = function () { fn(c.checked) }; l.appendChild(c); l.appendChild(document.createTextNode(nhan)); return c;
+      },
+      nut: function (nhan, fn) { var b = them("button", nhan); b.type = "button"; b.onclick = fn; return b },
+      datLai: datLai,
+      tocDo: function (x) { toc = x; s.value = String(x) }
+    };
+  }
+  function them(tag, txt) { var e = document.createElement(tag); if (txt) e.textContent = txt; dk.appendChild(e); return e }
+  function khung(ts) {
+    if (!mo) return;
+    var dt = last ? Math.min(0.05, (ts - last) / 1000) : 0; last = ts;
+    var d = tam ? 0 : dt * toc; t += d;
+    var r = cv.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
+    W = r.width; H = r.height;
+    var cw = Math.round(W * dpr), ch = Math.round(H * dpr);
+    if (cv.width !== cw || cv.height !== ch) { cv.width = cw; cv.height = ch }
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    if (W > 20 && H > 20) chay.ve(ctx, W, H, t, d);
+    requestAnimationFrame(khung);
+  }
+  function moMP(ma, i, t0) {
+    var def = DS[ma + "@" + i]; if (!def) return;
+    dungKhung(); nutVe = document.activeElement;
+    K.querySelector(".mp-ten").textContent = def.ten; K.querySelector(".mp-gc").textContent = def.goiY || "";
+    K.setAttribute("aria-label", "Mô phỏng: " + def.ten);
+    toc = def.toc || 1; var ui = taoUI(); tam = false; t = 0; last = 0;
+    chay = def.tao(ui); t = t0 || 0; mo = true; K.classList.add("mo");
+    K.querySelector(".mp-dong").focus(); requestAnimationFrame(khung);
+  }
+  function dong() {
+    if (!mo) return; mo = false; K.classList.remove("mo"); chay = null;
+    if (nutVe && nutVe.focus) try { nutVe.focus() } catch (e) {}
+  }
+  return { dangKy: dangKy, co: co, mo: moMP, dong: dong, dangMo: function () { return mo } };
+})();
+
+/* Hàm vẽ dùng chung */
+window.MPve = {
+  hop: function (ctx, x, y, dong, o) {      // khung chữ nhiều dòng, góc trên trái tại (x, y)
+    o = o || {}; ctx.save(); ctx.font = (o.co || 15) + "px 'Segoe UI',Roboto,Arial,sans-serif";
+    var lh = (o.co || 15) * 1.45, w = 0; dong.forEach(function (d) { w = Math.max(w, ctx.measureText(d.replace(/\*/g, "")).width) });
+    var h = lh * dong.length + 14; if (o.phai) x -= w + 20;
+    ctx.fillStyle = o.nen || "rgba(15,23,42,.82)"; ctx.strokeStyle = "rgba(148,163,184,.35)"; ctx.lineWidth = 1;
+    ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(x, y, w + 20, h, 8); else ctx.rect(x, y, w + 20, h); ctx.fill(); ctx.stroke();
+    ctx.textBaseline = "middle";
+    dong.forEach(function (d, i) {   // *chữ* : tô màu nhấn
+      var cx = x + 10, cy = y + 7 + lh * (i + .5), ph = d.split("*");
+      ph.forEach(function (p, j) { ctx.fillStyle = j % 2 ? (o.nhan || "#fde047") : (o.chu || "#e2e8f0"); ctx.fillText(p, cx, cy); cx += ctx.measureText(p).width });
+    });
+    ctx.restore(); return h;
+  },
+  muiTen: function (ctx, x1, y1, x2, y2, mau, w) {
+    var a = Math.atan2(y2 - y1, x2 - x1), L = Math.hypot(x2 - x1, y2 - y1), m = Math.min(14, L * .5) + (w || 3);
+    ctx.save(); ctx.strokeStyle = ctx.fillStyle = mau; ctx.lineWidth = w || 3; ctx.lineCap = "round";
+    ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2 - Math.cos(a) * m * .6, y2 - Math.sin(a) * m * .6); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x2, y2); ctx.lineTo(x2 - m * Math.cos(a - .45), y2 - m * Math.sin(a - .45)); ctx.lineTo(x2 - m * Math.cos(a + .45), y2 - m * Math.sin(a + .45)); ctx.closePath(); ctx.fill();
+    ctx.restore();
+  },
+  kichThuoc: function (ctx, x1, x2, y, nhan, mau, nenSang) {   // mũi tên hai đầu nằm ngang có nhãn
+    ctx.save(); ctx.strokeStyle = ctx.fillStyle = mau; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(x1, y); ctx.lineTo(x2, y); ctx.moveTo(x1, y - 7); ctx.lineTo(x1, y + 7); ctx.moveTo(x2, y - 7); ctx.lineTo(x2, y + 7); ctx.stroke();
+    [[x1, 1], [x2, -1]].forEach(function (p) { ctx.beginPath(); ctx.moveTo(p[0], y); ctx.lineTo(p[0] + 9 * p[1], y - 5); ctx.lineTo(p[0] + 9 * p[1], y + 5); ctx.closePath(); ctx.fill() });
+    ctx.font = "bold 15px 'Segoe UI',sans-serif"; ctx.textAlign = "center"; ctx.textBaseline = "bottom";
+    if (!nenSang) { ctx.lineWidth = 4; ctx.strokeStyle = "rgba(0,0,0,.55)"; ctx.strokeText(nhan, (x1 + x2) / 2, y - 6) } ctx.fillText(nhan, (x1 + x2) / 2, y - 6);
+    ctx.restore();
+  },
+  so: function (x, n) { return (+x).toFixed(n == null ? 1 : n).replace(".", ",") }
+};
+</script>
+<script>/* Mô phỏng Bài 12. Giao thoa sóng: slide 4 (giao thoa sóng mặt nước), slide 7-8 (giao thoa ánh sáng, khoảng vân). */
+(function () {
+  var TAU = Math.PI * 2, V = window.MPve, so = V.so;
+
+  /* ---------- Slide 4: hai nguồn kết hợp trên mặt nước ---------- */
+  MP.dangKy("B12", 3, {
+    ten: "Giao thoa sóng mặt nước: hai nguồn kết hợp S₁, S₂",
+    goiY: "Nét liền đỏ: cực đại (hai sóng cùng pha). Nét đứt xanh: cực tiểu (ngược pha). Đổi f, v và khoảng cách S₁S₂.",
+    tao: function (ui) {
+      var f = 4, v = 20, d = 6, duong = true, RONG = 24;   // cm
+      var buf = document.createElement("canvas"), bc = buf.getContext("2d"), img = null;
+      ui.truot("Tần số f", 2, 8, 0.5, f, "Hz", function (x) { f = x });
+      ui.truot("Tốc độ v", 10, 30, 1, v, "cm/s", function (x) { v = x });
+      ui.truot("Khoảng cách S₁S₂", 3, 12, 0.5, d, "cm", function (x) { d = x });
+      ui.chon("Vẽ đường cực đại, cực tiểu", duong, function (x) { duong = x });
+      return {
+        ve: function (ctx, W, H, t) {
+          var s = W / RONG, buoc = 3, bw = Math.ceil(W / buoc), bh = Math.ceil(H / buoc), lam = v / f, k = TAU / lam, w = TAU * f;
+          if (buf.width !== bw || buf.height !== bh || !img) { buf.width = bw; buf.height = bh; img = bc.createImageData(bw, bh) }
+          var dt = img.data, cx = W / 2, cy = H / 2, x1 = cx - d / 2 * s, x2 = cx + d / 2 * s;
+          for (var j = 0; j < bh; j++) for (var i = 0; i < bw; i++) {
+            var X = i * buoc + 1.5, Y = j * buoc + 1.5, r1 = Math.hypot(X - x1, Y - cy) / s, r2 = Math.hypot(X - x2, Y - cy) / s;
+            var u = (Math.sin(w * t - k * r1) / Math.sqrt(1 + r1 / 3) + Math.sin(w * t - k * r2) / Math.sqrt(1 + r2 / 3)) * .5;
+            var p = (j * bw + i) * 4, up = Math.max(0, u);
+            dt[p] = 24 + 150 * up + 20 * u; dt[p + 1] = 80 + 140 * up + 30 * u; dt[p + 2] = 130 + 110 * up + 40 * u; dt[p + 3] = 255;
+          }
+          bc.putImageData(img, 0, 0); ctx.imageSmoothingEnabled = true; ctx.drawImage(buf, 0, 0, W, H);
+          if (duong) {   // hyperbol d₁ − d₂ = m·λ/2 (m chẵn: cực đại, m lẻ: cực tiểu), S₁ ở x = −d/2, S₂ ở x = +d/2
+            var c = d / 2, N = Math.floor(d / lam * 2 - 1e-6);
+            for (var m = -N; m <= N; m++) {
+              var dl = m * lam / 2, a = dl / 2, cuc = m % 2 === 0, b = Math.sqrt(Math.max(0, c * c - a * a));
+              ctx.save(); ctx.lineWidth = cuc ? 2.2 : 1.8; ctx.strokeStyle = cuc ? "rgba(254,202,202,.95)" : "rgba(147,222,253,.95)"; if (!cuc) ctx.setLineDash([7, 5]);
+              ctx.beginPath();
+              if (m === 0) { ctx.moveTo(cx, 0); ctx.lineTo(cx, H) }
+              else for (var th = -3; th <= 3.001; th += .06) {
+                var px = cx + a * Math.cosh(th) * s, py = cy + b * Math.sinh(th) * s;
+                if (th === -3) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+              }
+              ctx.stroke(); ctx.restore();
+            }
+          }
+          [[x1, "S₁"], [x2, "S₂"]].forEach(function (o) {
+            ctx.beginPath(); ctx.arc(o[0], cy, 7 + 1.5 * Math.sin(w * t), 0, TAU); ctx.fillStyle = "#f8fafc"; ctx.fill(); ctx.strokeStyle = "#0f172a"; ctx.lineWidth = 2; ctx.stroke();
+            ctx.fillStyle = "#fff"; ctx.font = "bold 17px 'Segoe UI',sans-serif"; ctx.fillText(o[1], o[0] - 9, cy + 28);
+          });
+          V.kichThuoc(ctx, x1, x2, Math.min(H - 12, cy + 56), "S₁S₂ = " + so(d) + " cm", "#fde047");
+          V.hop(ctx, 12, 12, ["Bước sóng *λ = v/f = " + so(lam, 2) + " cm*", "Hai cực đại liền kề trên S₁S₂ cách nhau *λ/2 = " + so(lam / 2, 2) + " cm*",
+            "Cực đại: *d₂ − d₁ = kλ* · Cực tiểu: *d₂ − d₁ = (k + ½)λ*"]);
+        }
+      };
+    }
+  });
+
+  /* ---------- Slide 7, 8: thí nghiệm Y-âng, i = λD/a ---------- */
+  function rgbLam(l) {
+    var r = 0, g = 0, b = 0;
+    if (l < 440) { r = (440 - l) / 60; b = 1 } else if (l < 490) { g = (l - 440) / 50; b = 1 } else if (l < 510) { g = 1; b = (510 - l) / 20 }
+    else if (l < 580) { r = (l - 510) / 70; g = 1 } else if (l < 645) { r = 1; g = (645 - l) / 65 } else r = 1;
+    var f = l < 420 ? .3 + .7 * (l - 380) / 40 : l > 700 ? .3 + .7 * (780 - l) / 80 : 1; return [r * f, g * f, b * f];
+  }
+  var defYang = {
+    ten: "Giao thoa Y-âng: khoảng vân i = λD/a",
+    goiY: "Đổi bước sóng λ (màu ánh sáng), khoảng cách hai khe a và khoảng cách D đến màn, rồi quan sát khoảng vân i.",
+    tao: function (ui) {
+      var lam = 600, a = 0.5, D = 1.5, RONG = 12;   // λ (nm), a (mm), D (m), bề rộng màn quan sát (mm)
+      ui.truot("Bước sóng λ", 400, 760, 10, lam, "nm", function (x) { lam = x });
+      ui.truot("Khoảng cách hai khe a", 0.2, 2, 0.05, a, "mm", function (x) { a = x });
+      ui.truot("Khoảng cách D", 0.5, 3, 0.1, D, "m", function (x) { D = x });
+      return {
+        ve: function (ctx, W, H) {
+          ctx.fillStyle = "#0b1220"; ctx.fillRect(0, 0, W, H);
+          var i = lam * 1e-3 * D / a, mm = W / RONG, yM = H * .07, hM = H * .36, rgb = rgbLam(lam), n = Math.ceil(W);   // i (mm)
+          var I = function (x) { var q = Math.cos(Math.PI * ((x - W / 2) / mm) / i); return q * q };
+          var img = ctx.createImageData(n, 1), row = img.data;
+          for (var x = 0; x < n; x++) { var p = x * 4, e = I(x); row[p] = 255 * rgb[0] * e; row[p + 1] = 255 * rgb[1] * e; row[p + 2] = 255 * rgb[2] * e; row[p + 3] = 255 }
+          var tmp = document.createElement("canvas"); tmp.width = n; tmp.height = 1; tmp.getContext("2d").putImageData(img, 0, 0);
+          ctx.imageSmoothingEnabled = false; ctx.drawImage(tmp, 0, yM, W, hM);
+          ctx.strokeStyle = "#64748b"; ctx.lineWidth = 1; ctx.strokeRect(0, yM, W, hM);
+          ctx.fillStyle = "#fff"; ctx.font = "bold 13px 'Segoe UI',sans-serif"; ctx.fillText("Màn quan sát E (rộng " + RONG + " mm)", 10, yM + hM - 8);
+          var yG = H * .6, hG = H * .17, mau = "rgb(" + Math.round(255 * rgb[0]) + "," + Math.round(255 * rgb[1]) + "," + Math.round(255 * rgb[2]) + ")";
+          ctx.strokeStyle = mau; ctx.lineWidth = 2.5; ctx.beginPath();
+          for (var x2 = 0; x2 <= W; x2 += 2) { var y = yG + hG * (1 - I(x2)); if (x2 === 0) ctx.moveTo(x2, y); else ctx.lineTo(x2, y) }
+          ctx.stroke(); ctx.fillStyle = "#9fb0cc"; ctx.font = "13px 'Segoe UI',sans-serif"; ctx.fillText("Đồ thị cường độ sáng I theo vị trí trên màn", 10, yG - 6);
+          var xc = W / 2, xi = xc + i * mm;      // vân sáng trung tâm và vân sáng bậc 1
+          if (xi < W - 4) {
+            ctx.setLineDash([5, 4]); ctx.strokeStyle = "#fde047"; ctx.lineWidth = 1.5;
+            [xc, xi].forEach(function (q) { ctx.beginPath(); ctx.moveTo(q, yM + hM); ctx.lineTo(q, yG + hG + 8); ctx.stroke() }); ctx.setLineDash([]);
+            V.kichThuoc(ctx, xc, xi, yM + hM + 26, "i = " + so(i, 3) + " mm", "#fde047");
+          } else { ctx.fillStyle = "#fde047"; ctx.font = "bold 15px 'Segoe UI',sans-serif"; ctx.fillText("i = " + so(i, 2) + " mm: vân rộng hơn vùng quan sát", 10, yM + hM + 24) }
+          V.hop(ctx, 12, H - 74, ["*i = λD/a = " + so(lam * 1e-3, 2) + " μm × " + so(D, 1) + " m / " + so(a, 2) + " mm = " + so(i, 3) + " mm*",
+            "Vân thưa ra khi tăng λ, tăng D hoặc giảm a"], { co: 15 });
+        }
+      };
+    }
+  };
+  MP.dangKy("B12", 6, defYang);
+  MP.dangKy("B12", 7, defYang);
+})();
+</script>
 <script>
 var MA="B12",TEN=["Bài 12: Giao thoa sóng", "Mục tiêu bài học", "Tình huống mở đầu: hai loa và micro", "Giao thoa sóng mặt nước", "Bản chất: cực đại và cực tiểu giao thoa", "Điều kiện: hai nguồn kết hợp", "Thí nghiệm Y-âng về giao thoa ánh sáng", "Công thức khoảng vân và bước sóng", "Ví dụ minh họa 1 (sóng nước)", "Ví dụ minh họa 2 (giao thoa Y-âng)", "Luyện tập thi THPT (phần 1)", "Luyện tập thi THPT (phần 2: vận dụng)", "Ứng dụng thực tế của giao thoa sóng", "Tổng kết bài học"],THU="k11-"+MA+"/",slides=TEN.map(function(t,i){return {ten:t,src:THU+"s"+(i<9?"0":"")+(i+1)+".jpg"}}),cur=0;
 (function(){

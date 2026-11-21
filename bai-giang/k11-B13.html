@@ -84,6 +84,207 @@ html,body{margin:0;height:100%;background:#0b1220;color:#e5e7eb;font:16px/1.4 "S
   <button id="bToan" title="Toàn màn hình (phím F)">⛶ Toàn màn hình</button>
 </div>
 <div id="btK"><button type="button">Đóng ✕</button></div>
+<script>/* Khung mô phỏng cho bài giảng khối 11 (trình chiếu ảnh).
+   Mỗi bài có file mo_phong/<MA>.js gọi MP.dangKy(ma, chỉ_số_slide_từ_0, {ten, goiY, tao(ui) -> {ve(ctx,W,H,t,dt), datLai?, nhap?}}).
+   Trang trình chiếu hiện nút "Mô phỏng" (phím M) ở slide có mô phỏng. */
+window.MP = (function () {
+  var DS = {}, K, cv, ctx, dk, chay = null, mo = false, tam = false, toc = 1, t = 0, last = 0, nutVe = null, W = 0, H = 0;
+  function dangKy(ma, i, def) { DS[ma + "@" + i] = def }
+  function co(ma, i) { return !!DS[ma + "@" + i] }
+  function dungKhung() {
+    if (K) return;
+    var st = document.createElement("style");
+    st.textContent =
+      "#mpK{position:fixed;inset:0;z-index:9998;background:rgba(3,7,18,.82);display:none;padding:1.5vh 1.5vw}" +
+      "#mpK.mo{display:flex}" +
+      "#mpK .mp-hop{margin:auto;width:100%;height:100%;display:flex;flex-direction:column;background:#0f172a;border:1px solid #2a3a5c;border-radius:12px;overflow:hidden;box-shadow:0 10px 40px #000a}" +
+      "#mpK .mp-dau{display:flex;align-items:center;gap:12px;padding:8px 12px 8px 16px;border-bottom:1px solid #24304a}" +
+      "#mpK .mp-ten{font-size:17px;color:#f1f5f9}#mpK .mp-gc{flex:1;min-width:0;color:#9fb0cc;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}" +
+      "#mpK .mp-than{flex:1;min-height:0;position:relative}#mpK canvas{position:absolute;inset:0;width:100%;height:100%;display:block}" +
+      "#mpK .mp-dk{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px;padding:10px 16px;border-top:1px solid #24304a;font-size:14px;color:#d6deeb}" +
+      "#mpK button,#mpK select{font:600 14px 'Segoe UI',sans-serif;color:#e5e7eb;background:#1c2742;border:1px solid #33415f;border-radius:999px;padding:6px 13px;cursor:pointer;min-height:34px}" +
+      "#mpK button:hover{border-color:#60a5fa}#mpK :focus-visible{outline:3px solid #60a5fa;outline-offset:2px}" +
+      "#mpK label{display:inline-flex;align-items:center;gap:7px;white-space:nowrap}#mpK input[type=range]{width:130px;accent-color:#38bdf8}" +
+      "#mpK input[type=checkbox]{width:17px;height:17px;accent-color:#38bdf8}#mpK output{font-weight:700;color:#7dd3fc;font-variant-numeric:tabular-nums;min-width:3.2em;display:inline-block}" +
+      "@media (max-width:720px){#mpK .mp-gc{display:none}#mpK input[type=range]{width:100px}}";
+    document.head.appendChild(st);
+    K = document.createElement("div"); K.id = "mpK"; K.setAttribute("role", "dialog"); K.setAttribute("aria-modal", "true");
+    K.innerHTML = '<div class="mp-hop"><div class="mp-dau"><b class="mp-ten"></b><span class="mp-gc"></span><button type="button" class="mp-dong" title="Đóng (Esc)">Đóng ✕</button></div>' +
+      '<div class="mp-than"><canvas></canvas></div><div class="mp-dk"></div></div>';
+    document.body.appendChild(K);
+    cv = K.querySelector("canvas"); ctx = cv.getContext("2d"); dk = K.querySelector(".mp-dk");
+    K.querySelector(".mp-dong").onclick = dong;
+    cv.addEventListener("click", function (e) {
+      if (!chay || !chay.nhap) return; var r = cv.getBoundingClientRect(); chay.nhap(e.clientX - r.left, e.clientY - r.top, r.width, r.height);
+    });
+    document.addEventListener("keydown", function (e) {
+      if (!mo) return;
+      var tg = e.target.tagName;
+      if (e.key === "Escape") { dong(); e.preventDefault(); e.stopImmediatePropagation() }
+      else if (e.key === " " && tg !== "BUTTON" && tg !== "INPUT" && tg !== "SELECT") { datTam(!tam); e.preventDefault(); e.stopImmediatePropagation() }
+    });
+  }
+  var nutTam;
+  function datTam(x) { tam = x; nutTam.textContent = tam ? "▶ Chạy tiếp" : "⏸ Tạm dừng" }
+  function datLai() { t = 0; if (chay && chay.datLai) chay.datLai() }
+  function taoUI() {
+    dk.innerHTML = "";
+    nutTam = them("button", "⏸ Tạm dừng"); nutTam.type = "button"; nutTam.title = "Tạm dừng / chạy tiếp (phím cách)"; nutTam.onclick = function () { datTam(!tam) };
+    var nl = them("button", "↺ Bắt đầu lại"); nl.type = "button"; nl.onclick = datLai;
+    var lb = them("label", "Tốc độ phát "), s = document.createElement("select");
+    [[0.25, "×0,25 (rất chậm)"], [0.5, "×0,5 (chậm)"], [1, "×1 (thật)"]].forEach(function (o) { var op = document.createElement("option"); op.value = o[0]; op.textContent = o[1]; s.appendChild(op) });
+    s.value = String(toc); s.onchange = function () { toc = +s.value }; lb.appendChild(s);
+    return {
+      truot: function (nhan, a, b, buoc, gt, dv, fn) {
+        var l = them("label", nhan + " "), r = document.createElement("input"), o = document.createElement("output");
+        r.type = "range"; r.min = a; r.max = b; r.step = buoc; r.value = gt; r.setAttribute("aria-label", nhan);
+        var hien = function () { o.textContent = String(+r.value).replace(".", ",") + (dv ? " " + dv : "") };
+        r.oninput = function () { hien(); fn(+r.value) }; hien(); l.appendChild(r); l.appendChild(o); return r;
+      },
+      chon: function (nhan, gt, fn) {
+        var l = them("label", ""), c = document.createElement("input"); c.type = "checkbox"; c.checked = gt;
+        c.onchange = function () { fn(c.checked) }; l.appendChild(c); l.appendChild(document.createTextNode(nhan)); return c;
+      },
+      nut: function (nhan, fn) { var b = them("button", nhan); b.type = "button"; b.onclick = fn; return b },
+      datLai: datLai,
+      tocDo: function (x) { toc = x; s.value = String(x) }
+    };
+  }
+  function them(tag, txt) { var e = document.createElement(tag); if (txt) e.textContent = txt; dk.appendChild(e); return e }
+  function khung(ts) {
+    if (!mo) return;
+    var dt = last ? Math.min(0.05, (ts - last) / 1000) : 0; last = ts;
+    var d = tam ? 0 : dt * toc; t += d;
+    var r = cv.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
+    W = r.width; H = r.height;
+    var cw = Math.round(W * dpr), ch = Math.round(H * dpr);
+    if (cv.width !== cw || cv.height !== ch) { cv.width = cw; cv.height = ch }
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    if (W > 20 && H > 20) chay.ve(ctx, W, H, t, d);
+    requestAnimationFrame(khung);
+  }
+  function moMP(ma, i, t0) {
+    var def = DS[ma + "@" + i]; if (!def) return;
+    dungKhung(); nutVe = document.activeElement;
+    K.querySelector(".mp-ten").textContent = def.ten; K.querySelector(".mp-gc").textContent = def.goiY || "";
+    K.setAttribute("aria-label", "Mô phỏng: " + def.ten);
+    toc = def.toc || 1; var ui = taoUI(); tam = false; t = 0; last = 0;
+    chay = def.tao(ui); t = t0 || 0; mo = true; K.classList.add("mo");
+    K.querySelector(".mp-dong").focus(); requestAnimationFrame(khung);
+  }
+  function dong() {
+    if (!mo) return; mo = false; K.classList.remove("mo"); chay = null;
+    if (nutVe && nutVe.focus) try { nutVe.focus() } catch (e) {}
+  }
+  return { dangKy: dangKy, co: co, mo: moMP, dong: dong, dangMo: function () { return mo } };
+})();
+
+/* Hàm vẽ dùng chung */
+window.MPve = {
+  hop: function (ctx, x, y, dong, o) {      // khung chữ nhiều dòng, góc trên trái tại (x, y)
+    o = o || {}; ctx.save(); ctx.font = (o.co || 15) + "px 'Segoe UI',Roboto,Arial,sans-serif";
+    var lh = (o.co || 15) * 1.45, w = 0; dong.forEach(function (d) { w = Math.max(w, ctx.measureText(d.replace(/\*/g, "")).width) });
+    var h = lh * dong.length + 14; if (o.phai) x -= w + 20;
+    ctx.fillStyle = o.nen || "rgba(15,23,42,.82)"; ctx.strokeStyle = "rgba(148,163,184,.35)"; ctx.lineWidth = 1;
+    ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(x, y, w + 20, h, 8); else ctx.rect(x, y, w + 20, h); ctx.fill(); ctx.stroke();
+    ctx.textBaseline = "middle";
+    dong.forEach(function (d, i) {   // *chữ* : tô màu nhấn
+      var cx = x + 10, cy = y + 7 + lh * (i + .5), ph = d.split("*");
+      ph.forEach(function (p, j) { ctx.fillStyle = j % 2 ? (o.nhan || "#fde047") : (o.chu || "#e2e8f0"); ctx.fillText(p, cx, cy); cx += ctx.measureText(p).width });
+    });
+    ctx.restore(); return h;
+  },
+  muiTen: function (ctx, x1, y1, x2, y2, mau, w) {
+    var a = Math.atan2(y2 - y1, x2 - x1), L = Math.hypot(x2 - x1, y2 - y1), m = Math.min(14, L * .5) + (w || 3);
+    ctx.save(); ctx.strokeStyle = ctx.fillStyle = mau; ctx.lineWidth = w || 3; ctx.lineCap = "round";
+    ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2 - Math.cos(a) * m * .6, y2 - Math.sin(a) * m * .6); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x2, y2); ctx.lineTo(x2 - m * Math.cos(a - .45), y2 - m * Math.sin(a - .45)); ctx.lineTo(x2 - m * Math.cos(a + .45), y2 - m * Math.sin(a + .45)); ctx.closePath(); ctx.fill();
+    ctx.restore();
+  },
+  kichThuoc: function (ctx, x1, x2, y, nhan, mau, nenSang) {   // mũi tên hai đầu nằm ngang có nhãn
+    ctx.save(); ctx.strokeStyle = ctx.fillStyle = mau; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(x1, y); ctx.lineTo(x2, y); ctx.moveTo(x1, y - 7); ctx.lineTo(x1, y + 7); ctx.moveTo(x2, y - 7); ctx.lineTo(x2, y + 7); ctx.stroke();
+    [[x1, 1], [x2, -1]].forEach(function (p) { ctx.beginPath(); ctx.moveTo(p[0], y); ctx.lineTo(p[0] + 9 * p[1], y - 5); ctx.lineTo(p[0] + 9 * p[1], y + 5); ctx.closePath(); ctx.fill() });
+    ctx.font = "bold 15px 'Segoe UI',sans-serif"; ctx.textAlign = "center"; ctx.textBaseline = "bottom";
+    if (!nenSang) { ctx.lineWidth = 4; ctx.strokeStyle = "rgba(0,0,0,.55)"; ctx.strokeText(nhan, (x1 + x2) / 2, y - 6) } ctx.fillText(nhan, (x1 + x2) / 2, y - 6);
+    ctx.restore();
+  },
+  so: function (x, n) { return (+x).toFixed(n == null ? 1 : n).replace(".", ",") }
+};
+</script>
+<script>/* Mô phỏng Bài 13. Sóng dừng: slide 3 (bản chất: sóng tới + sóng phản xạ), slide 7, 9 (hai đầu cố định), slide 8, 13 (một đầu cố định, một đầu tự do). */
+(function () {
+  var TAU = Math.PI * 2, V = window.MPve, so = V.so;
+
+  /* tuDo = false: hai đầu cố định, L = kλ/2.  tuDo = true: đầu trái cố định, đầu phải tự do, L = (2n+1)λ/4. */
+  function mau(tuDo, L0, v0, q0, ten, goiY) {
+    return {
+      ten: ten, goiY: goiY, toc: 0.5,
+      tao: function (ui) {
+        var L = L0, v = v0, q = q0, tpx = false, nb = true;   // q: số bó sóng k (hai đầu cố định) hoặc n (một đầu tự do)
+        ui.truot(tuDo ? "n (L = (2n+1)λ/4)" : "k (số bó sóng)", tuDo ? 0 : 1, 8, 1, q, "", function (x) { q = x });
+        ui.truot("Chiều dài L", 0.2, 1.2, 0.05, L, "m", function (x) { L = x });
+        ui.truot("Tốc độ truyền sóng v", 5, tuDo ? 400 : 40, tuDo ? 5 : 1, v, "m/s", function (x) { v = x });
+        ui.chon("Hiện sóng tới và sóng phản xạ", tpx, function (x) { tpx = x });
+        ui.chon("Đánh dấu nút, bụng", nb, function (x) { nb = x });
+        return {
+          ve: function (ctx, W, H, t) {
+            ctx.fillStyle = "#0b1530"; ctx.fillRect(0, 0, W, H);
+            var lam = tuDo ? 4 * L / (2 * q + 1) : 2 * L / q, f = v / lam, kk = TAU / lam;
+            var x0 = 70, x1 = W - 70, s = (x1 - x0) / L, y0 = H * .5, A = Math.min(H * .15, 90), w = TAU * .5;   // phát chậm: 0,5 Hz trên màn hình
+            var X = function (x) { return x0 + x * s };
+            var nut = tuDo ? q + 1 : q + 1, bung = tuDo ? q + 1 : q;
+            // đường bao
+            ctx.save(); ctx.setLineDash([6, 5]); ctx.strokeStyle = "rgba(148,163,184,.6)"; ctx.lineWidth = 1.5;
+            [1, -1].forEach(function (sg) { ctx.beginPath(); for (var x = 0; x <= L + 1e-9; x += L / 300) { var y = y0 - sg * 2 * A * Math.abs(Math.sin(kk * x)); if (x === 0) ctx.moveTo(X(x), y); else ctx.lineTo(X(x), y) } ctx.stroke() });
+            ctx.restore();
+            if (tpx) {   // sóng tới (chạy sang trái, vàng) và sóng phản xạ (chạy sang phải, xanh lục), mỗi sóng biên độ A
+              [["#fde047", 1], ["#34d399", -1]].forEach(function (o) {
+                ctx.save(); ctx.strokeStyle = o[0]; ctx.globalAlpha = .75; ctx.lineWidth = 2; ctx.beginPath();
+                for (var x = 0; x <= L + 1e-9; x += L / 300) { var y = y0 - A * (o[1] > 0 ? Math.sin(kk * x + w * t) : Math.sin(kk * x - w * t)); if (x === 0) ctx.moveTo(X(x), y); else ctx.lineTo(X(x), y) }
+                ctx.stroke(); ctx.restore();
+              });
+            }
+            // sóng dừng: u = 2A·sin(kx)·cos(ωt)
+            ctx.strokeStyle = "#60a5fa"; ctx.lineWidth = 4; ctx.beginPath();
+            for (var x2 = 0; x2 <= L + 1e-9; x2 += L / 300) { var y2 = y0 - 2 * A * Math.sin(kk * x2) * Math.cos(w * t); if (x2 === 0) ctx.moveTo(X(x2), y2); else ctx.lineTo(X(x2), y2) }
+            ctx.stroke();
+            // đầu cố định (tường) và đầu còn lại
+            ctx.fillStyle = "#94a3b8"; ctx.fillRect(x0 - 12, y0 - 2.4 * A, 12, 4.8 * A);
+            if (!tuDo) ctx.fillRect(x1, y0 - 2.4 * A, 12, 4.8 * A);
+            else { var yd = y0 - 2 * A * Math.sin(kk * L) * Math.cos(w * t); ctx.beginPath(); ctx.arc(x1, yd, 9, 0, TAU); ctx.fillStyle = "#fbbf24"; ctx.fill(); ctx.strokeStyle = "#fff"; ctx.lineWidth = 2; ctx.stroke() }
+            if (nb) {
+              ctx.font = "bold 14px 'Segoe UI',sans-serif"; ctx.textAlign = "center";
+              for (var m = 0; m <= 2 * q + 2; m++) {      // vị trí x = m·λ/4: m chẵn là nút, m lẻ là bụng
+                var xm = m * lam / 4; if (xm > L + 1e-6) break;
+                if (m % 2 === 0) { ctx.beginPath(); ctx.arc(X(xm), y0, 6, 0, TAU); ctx.fillStyle = "#f87171"; ctx.fill(); ctx.fillStyle = "#fecaca"; ctx.fillText("N", X(xm), y0 + 24) }
+                else { ctx.fillStyle = "#a7f3d0"; ctx.fillText("B", X(xm), y0 - 2 * A - 12) }
+              }
+              ctx.textAlign = "start";
+            }
+            V.kichThuoc(ctx, x0, x1, H - 22, "L = " + so(L, 2) + " m", "#fde047");
+            var dong = tuDo ? ["Một đầu cố định, một đầu tự do: *L = (2n + 1)·λ/4*, n = " + q, "Số bụng = số nút = *n + 1 = " + (q + 1) + "*"]
+              : ["Hai đầu cố định: *L = k·λ/2*, k = " + q + " (số bó sóng = số bụng)", "Số bụng = *k = " + bung + "*, số nút = *k + 1 = " + nut + "*"];
+            V.hop(ctx, 12, 12, dong.concat(["Bước sóng *λ = " + so(lam, 3) + " m* · tần số *f = v/λ = " + so(f, 1) + " Hz*",
+              "Khoảng cách hai nút (hai bụng) liền kề *λ/2 = " + so(lam / 2, 3) + " m*"]));
+            ctx.fillStyle = "#9fb0cc"; ctx.font = "12px 'Segoe UI',sans-serif"; ctx.textAlign = "right"; ctx.fillText("Chuyển động được phát chậm để dễ quan sát", W - 12, H - 6); ctx.textAlign = "start";
+          }
+        };
+      }
+    };
+  }
+  var cd = mau(false, 0.6, 12, 3, "Sóng dừng trên dây hai đầu cố định",
+    "Đổi số bó sóng k, chiều dài L, tốc độ v: λ = 2L/k, f = v/λ. Mặc định là ví dụ L = 0,6 m; v = 12 m/s; 3 bụng → f = 30 Hz.");
+  var td = mau(true, 0.5, 340, 1, "Sóng dừng: một đầu cố định, một đầu tự do (cột khí, ống sáo)",
+    "Đầu tự do luôn là bụng, đầu cố định luôn là nút. Tăng n để thấy nhiều nút, bụng hơn; λ = 4L/(2n+1).");
+  MP.dangKy("B13", 2, mau(false, 0.6, 12, 3, "Thí nghiệm sóng dừng: sóng tới + sóng phản xạ",
+    "Bật hiện sóng tới (vàng) và sóng phản xạ (xanh lục): tổng của chúng là sóng dừng (xanh dương). Nút luôn đứng yên."));
+  MP.dangKy("B13", 6, cd);
+  MP.dangKy("B13", 8, cd);
+  MP.dangKy("B13", 7, td);
+  MP.dangKy("B13", 12, td);
+})();
+</script>
 <script>
 var MA="B13",TEN=["Bài 13: Sóng dừng", "Mục tiêu bài học", "Thí nghiệm tạo sóng dừng", "Bản chất của sóng dừng", "Đặc điểm hình học: nút và bụng", "Khoảng cách quan trọng cần nhớ", "Điều kiện sóng dừng: hai đầu cố định", "Điều kiện sóng dừng: một đầu cố định, một đầu tự do", "Ví dụ minh họa (thực hành)", "Sóng dừng trong thế giới nhạc cụ", "Kiểm tra nhanh - Câu 1", "Kiểm tra nhanh - Câu 2", "Thử thách suy luận - Câu 3", "Lưu ý quan trọng để không mất điểm", "Tổng kết: ma trận sóng dừng"],THU="k11-"+MA+"/",slides=TEN.map(function(t,i){return {ten:t,src:THU+"s"+(i<9?"0":"")+(i+1)+".jpg"}}),cur=0;
 (function(){
