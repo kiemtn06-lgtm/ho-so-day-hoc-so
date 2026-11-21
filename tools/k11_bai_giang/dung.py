@@ -29,6 +29,18 @@ BAI = {
         'Hoạt động 2: Khảo sát sóng trên lò xo', 'Định nghĩa: Sóng dọc', 'Bảng so sánh hai loại sóng', 'Hoạt động 3: Sự truyền năng lượng của sóng cơ',
         'Sóng mang gì đi xa?', 'Hoạt động 4: Mô hình sóng âm', 'Đặc trưng của âm thanh', 'Ngưỡng nghe của tai người',
         'Câu vận dụng: Tính toán bước sóng', 'Ghi nhớ trọng tâm', 'Trắc nghiệm củng cố nhanh']),
+    'B11': dict(file='Bài 11 Sóng_điện_từ.pptx', ten='Bài 11. Sóng điện từ', slide=[
+        'Bài 11: Sóng điện từ', 'Mục tiêu bài học', 'Đặc điểm cốt lõi của sóng điện từ', 'Thang sóng điện từ', 'Ánh sáng nhìn thấy', 'Tia hồng ngoại',
+        'Tia tử ngoại', 'Sóng vô tuyến', 'Tia Rơn-ghen (tia X)', 'Tia gamma', 'Tổng hợp và so sánh thang sóng điện từ', 'Luyện tập 1: Phân loại theo bước sóng',
+        'Luyện tập 2: Phân loại theo tần số', 'Tổng kết bài học']),
+    'B12': dict(file='Bài 12 Giao_Thoa_Sóng.pptx', ten='Bài 12. Giao thoa sóng', slide=[
+        'Bài 12: Giao thoa sóng', 'Mục tiêu bài học', 'Tình huống mở đầu: hai loa và micro', 'Giao thoa sóng mặt nước', 'Bản chất: cực đại và cực tiểu giao thoa',
+        'Điều kiện: hai nguồn kết hợp', 'Thí nghiệm Y-âng về giao thoa ánh sáng', 'Công thức khoảng vân và bước sóng', 'Ví dụ minh họa 1 (sóng nước)',
+        'Ví dụ minh họa 2 (giao thoa Y-âng)', 'Luyện tập thi THPT (phần 1)', 'Luyện tập thi THPT (phần 2: vận dụng)', 'Ứng dụng thực tế của giao thoa sóng', 'Tổng kết bài học']),
+    'B13': dict(file='Bài 13 Sóng_Dừng.pptx', ten='Bài 13. Sóng dừng', slide=[
+        'Bài 13: Sóng dừng', 'Mục tiêu bài học', 'Thí nghiệm tạo sóng dừng', 'Bản chất của sóng dừng', 'Đặc điểm hình học: nút và bụng', 'Khoảng cách quan trọng cần nhớ',
+        'Điều kiện sóng dừng: hai đầu cố định', 'Điều kiện sóng dừng: một đầu cố định, một đầu tự do', 'Ví dụ minh họa (thực hành)', 'Sóng dừng trong thế giới nhạc cụ',
+        'Kiểm tra nhanh - Câu 1', 'Kiểm tra nhanh - Câu 2', 'Thử thách suy luận - Câu 3', 'Lưu ý quan trọng để không mất điểm', 'Tổng kết: ma trận sóng dừng']),
 }
 
 
