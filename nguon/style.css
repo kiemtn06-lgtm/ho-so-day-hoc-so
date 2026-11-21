@@ -121,3 +121,43 @@ table.key{border-collapse:collapse}table.key td{border:1px solid var(--bd);paddi
 @media (max-width:760px){.layout{grid-template-columns:1fr}#tree{border-right:0;border-bottom:1px solid var(--bd)}}
 @media print{.top,#tree,.tabs,.noprint,#lenLop{display:none !important}.layout{display:block}#work{padding:0;max-width:none}body{background:#fff}.card{break-inside:avoid}}
 .qimg{margin:8px 0}.qimg img{max-width:min(100%,420px);max-height:260px;border-radius:8px;border:1px solid var(--bd);background:#fff}
+
+/* ===== Ứng dụng di động (PWA) ===== */
+#nutMenu,#manMenu{display:none}
+.top{padding-top:calc(12px + env(safe-area-inset-top));padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
+#nutCai{display:inline-block;background:var(--ac);color:#fff;border-color:var(--ac);font-weight:500}
+@media (max-width:760px){
+  body{font-size:16px;-webkit-text-size-adjust:100%;overflow-wrap:anywhere}
+  .top{position:sticky;top:0;z-index:30;gap:6px 8px;padding-top:calc(8px + env(safe-area-inset-top));padding-bottom:8px;flex-wrap:wrap;justify-content:flex-start}
+  #nutMenu{display:inline-flex;gap:6px;align-items:center;flex:none;min-height:44px;background:var(--acbg);color:var(--ac);border-color:var(--ac);font-weight:500}
+  .top .seg{flex:1;order:2;min-width:0}
+  .top .seg button{flex:1;padding-left:4px;padding-right:4px}
+  .top h1{order:3;flex:1 0 100%;font-size:13px;font-weight:400;color:var(--mu);line-height:1.3;margin:0}
+  .seg button{padding:10px 12px;min-height:44px}
+  #nutCai{display:none}
+  .layout{display:block;min-height:0}
+  #tree{position:fixed;left:0;top:0;bottom:0;width:86%;max-width:340px;z-index:70;overflow-y:auto;overscroll-behavior:contain;border:0;box-shadow:4px 0 24px #0005;padding:calc(10px + env(safe-area-inset-top)) 10px calc(16px + env(safe-area-inset-bottom));transform:translateX(-105%);visibility:hidden;transition:transform .22s ease,visibility 0s .22s}
+  body.menu-open #tree{transform:none;visibility:visible;transition:transform .22s ease}
+  body.menu-open{overflow:hidden}
+  #manMenu{display:block;position:fixed;inset:0;z-index:65;background:#0007}
+  #manMenu[hidden]{display:none}
+  #tree button{min-height:44px;padding:10px 12px}
+  #work{padding:14px max(14px,env(safe-area-inset-left)) calc(24px + env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-right));max-width:none}
+  button,.btn,select{min-height:44px}
+  input,textarea,select{font-size:16px}
+  .tabs{flex-wrap:nowrap;overflow-x:auto;margin-left:-14px;margin-right:-14px;padding:0 14px 6px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .tabs::-webkit-scrollbar{display:none}
+  .tabs button{flex:none;white-space:nowrap}
+  .card{padding:12px}
+  .opts,.grid,.sgk{grid-template-columns:1fr}
+  .otf{height:calc(100dvh - 130px);min-height:420px}
+  .go{padding:12px 18px}
+  table.prog{font-size:14px}
+  .ll-bar{gap:6px;padding:6px 8px;font-size:14px}
+  .ll-bar button,.ll-bar select{font-size:14px;padding:6px 8px;min-height:40px}
+  .ll-name{font-size:20px;min-width:0}
+  .ll-time{font-size:22px;min-width:70px}
+  #llQrBox{left:8px;right:8px;width:auto}
+  .bigurl{padding:24px 18px;font-size:20px}
+}
+@media (display-mode: standalone){ body{overscroll-behavior-y:contain} }

@@ -1,0 +1,17 @@
+{
+  "name": "Hồ sơ dạy học số – Vật lí THPT",
+  "short_name": "Hồ sơ Vật lí",
+  "description": "Hồ sơ dạy học số môn Vật lí THPT: bài giảng, bài tập, ôn tập, lớp học.",
+  "lang": "vi",
+  "start_url": "./Ho-so-day-hoc-so.html?app=1",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#fafaf8",
+  "theme_color": "#185fa5",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

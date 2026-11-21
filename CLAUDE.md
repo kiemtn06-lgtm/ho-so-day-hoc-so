@@ -17,6 +17,8 @@ Trao đổi với giáo viên bằng tiếng Việt. Nhiều tệp nguồn của
 | `bai-giang/k11-B8.html`, `k11-B9.html` | pptx của giáo viên (slide là ảnh `k11-B8/s*.jpg`) + mô phỏng `tools/k11_bai_giang/mo_phong/` | `tools/k11_bai_giang/dung.py` (cần pptx) | Chữ trên ảnh slide KHÔNG sửa được trên GitHub: trả lời CAN HOI |
 | Phòng làm bài trực tuyến (`*.onrender.com`) | kho riêng `D:\phong-*` trên máy, không thuộc kho này | — | Không: trả lời CAN HOI, nói rõ cần sửa trên máy |
 
+Ứng dụng cài được trên điện thoại (PWA): `manifest.webmanifest`, `sw.js` (ưu tiên mạng, mất mạng dùng bản đã lưu; đổi logic thì tăng `VER`), `icons/` (tạo bằng `node tools/tao_icon.js`), `nguon/lib/di_dong.js` (menu "Bài", nút cài) và khối cuối `nguon/style.css`. Sửa các tệp này ở nguồn rồi `node tools/dong_goi.js`.
+
 Nút `✎ Sửa` (`nguon/lib/nut_sua.js`) có trên mọi trang. Trang mới dựng phải có nút: các `build_*.js` và `k11_bai_giang/dung.py` tự gắn; công cụ khác thì chạy `node tools/gan_nut_sua.js` sau khi dựng.
 Trang `.html` lớn (vài MB, dòng rất dài): tìm bằng Grep, sửa bằng `node -e` thay đúng một chuỗi (kiểm tra chuỗi cũ khớp đúng 1 lần), không đọc cả tệp.
 
