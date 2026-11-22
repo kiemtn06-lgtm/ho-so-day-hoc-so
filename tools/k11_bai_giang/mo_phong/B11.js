@@ -151,32 +151,47 @@
   MP.dangKy("B11", 11, defThang);
   MP.dangKy("B11", 12, defThang);
 
-  /* ---------- Slide 11: lò vi sóng nấu gà — phân tử nước phân cực dao động theo điện trường của vi sóng ----------
-     Ảnh: ga-song.webp (gà sống, Ibrahim Husain Meraj, CC BY-SA 4.0), ga-chin.webp (cùng ảnh đã chỉnh màu thành gà quay), ga-quay.webp (gà quay thật,
-     Jameswasswa, CC BY-SA 4.0), nguồn Wikimedia Commons. Kính lúp kéo được trên con gà; khung phân tử nước phóng to được ra toàn khung. */
+  /* ---------- Slide 11: lò vi sóng nấu gà (nhìn từ trên xuống) ----------
+     Vật lí: magnetron phát vi sóng f = 2,45 GHz (λ ≈ 12,2 cm) qua ống dẫn sóng vào khoang kim loại; sóng phản xạ nhiều lần ở thành lò và chồng lên nhau
+     tạo SÓNG ĐỨNG: các điểm nóng (bụng, E mạnh) và điểm lạnh (nút, E ≈ 0) đứng yên, cách nhau λ/2 ≈ 6,1 cm. Đĩa xoay (≈ 5 vòng/phút) mang gà đi qua
+     lần lượt các điểm nóng nên gà chín đều; tắt đĩa xoay thì gà chín loang lổ (cũng là cách đo λ, rồi c = λ·f, bằng sô-cô-la).
+     Phân tử nước trong kính lúp quay theo điện trường TẠI CHỖ: mạnh ở điểm nóng, gần như đứng yên ở nút.
+     Ảnh: ga-song.webp (gà sống, Ibrahim Husain Meraj, CC BY-SA 4.0, Wikimedia Commons); ga-chin.webp là chính ảnh đó chỉnh màu thành gà chín. */
   MP.dangKy("B11", 10, {
-    ten: "Lò vi sóng nấu gà: phân tử nước dao động làm chín thức ăn",
-    goiY: "Vi sóng (f ≈ 2,45 GHz) tạo điện trường đổi chiều; phân tử nước phân cực trong gà quay theo, va chạm nhau nên nóng lên. Kéo kính lúp trên con gà, kéo “Độ phóng đại”, hoặc bấm “Phóng to ảnh phân tử”.",
+    ten: "Lò vi sóng nấu gà: sóng đứng trong lò, đĩa xoay và phân tử nước",
+    goiY: "Nhìn từ trên xuống. Vi sóng phản xạ ở thành kim loại tạo sóng đứng: điểm nóng (màu) và điểm lạnh đứng yên. Đĩa xoay đưa gà qua các điểm nóng. Thử tắt đĩa xoay, kéo kính lúp đến điểm nóng / điểm lạnh.",
     toc: 0.5,
     tao: function (ui) {
-      var cs = 0.6, zoom = 3, hSong = true, hDT = true, nhiet = 0, toan = false, lens = [.5, .45], keo = false, hit = { lens: null, panel: null, anh: null }, vao = 0;
-      var IMG = {}, w0 = TAU * 1.2, nutZ;
-      ["ga-song", "ga-chin", "ga-quay"].forEach(function (k) { var im = new Image(); im.src = "k11-B11/" + k + ".webp"; IMG[k] = im });
+      var LC = 36.72, M5 = 6;                             // cạnh khoang lò (cm) = 6 nửa bước sóng; tâm đĩa rơi vào nút
+      var xong = false, cs = 0.7, zoom = 3, hTruong = true, hDT = true, xoay = true, toan = false, phi = 0, keo = false, vao = 0;
+      var lensP = [15.3, 9.18], hit = { lens: null, panel: null, khoang: null };
+      var N = 44, heat = new Float32Array(N * N), mask = null, w0 = TAU * 1.2;
+      var IMG = {}, nutZ, nutX;
+      ["ga-song", "ga-chin"].forEach(function (k) { var im = new Image(); im.src = "k11-B11/" + k + ".webp"; IMG[k] = im });
       ui.truot("Công suất vi sóng", 0.1, 1, 0.05, cs, "", function (x) { cs = x });
       ui.truot("Độ phóng đại phân tử", 1, 6, 0.5, zoom, "×", function (x) { zoom = x });
-      ui.chon("Hiện sóng vi ba", hSong, function (x) { hSong = x });
+      nutX = ui.nut("⏸ Tắt đĩa xoay", function () { xoay = !xoay; nutX.textContent = xoay ? "⏸ Tắt đĩa xoay" : "▶ Bật đĩa xoay" });
+      ui.chon("Hiện sóng đứng trong lò", hTruong, function (x) { hTruong = x });
       ui.chon("Hiện điện tích δ⁺, δ⁻", hDT, function (x) { hDT = x });
       nutZ = ui.nut("🔍 Phóng to ảnh phân tử", function () { api.doiToan() });
-      var VT = [[0, 0, .0], [1, 0, .17], [.5, .87, .31], [-.5, .87, .46], [-1, 0, .6], [-.5, -.87, .73], [.5, -.87, .89]];   // vị trí 7 phân tử (đơn vị bán kính), độ trễ pha riêng
+      ui.nut("🗑 Gà mới", function () { heat.fill(0); xong = false });
+      ui.nut("▶ Video tham khảo", function () { window.open("https://www.youtube.com/watch?v=kp33ZprO0Ck", "_blank", "noopener") });
 
-      function nuoc(ctx, x, y, th, s, dt) {   // H₂O: O đỏ ở giữa, hai H trắng lệch ±52°; mô men lưỡng cực p hướng từ O sang H
+      var kx = M5 * Math.PI / LC, kb = 5 * Math.PI / LC;
+      /* biên độ điện trường tại (x, y) cm, khoảng −1..1: chồng hai kiểu sóng đứng của khoang (6×6 và 5×5 nửa bước sóng), như lò thật có nhiều kiểu sóng;
+         điểm nóng cách nhau xấp xỉ λ/2 */
+      function sE(x, y) { return .62 * Math.sin(kx * x) * Math.sin(kx * y) + .42 * Math.sin(kb * x) * Math.sin(kb * y) }
+      (function () { var best = 0; for (var x = 9; x <= 27; x += .2) for (var y = 5; y <= 12; y += .2) { var v = Math.abs(sE(x, y)); if (v > best) { best = v; lensP = [x, y] } } })();   // kính lúp đặt sẵn ở một điểm nóng
+      var VT = [[0, 0, .0], [1, 0, .17], [.5, .87, .31], [-.5, .87, .46], [-1, 0, .6], [-.5, -.87, .73], [.5, -.87, .89]];
+
+      function nuoc(ctx, x, y, th, s, dt) {   // H₂O: O đỏ, hai H trắng lệch ±52°; mô men lưỡng cực p hướng từ O sang H
         ctx.save(); ctx.translate(x, y); ctx.rotate(-th);
         ctx.fillStyle = "#f8fafc"; ctx.strokeStyle = "rgba(15,23,42,.5)"; ctx.lineWidth = Math.max(1, s * .06);
         [-1, 1].forEach(function (d) { ctx.beginPath(); ctx.arc(Math.cos(d * .91) * s * 1.35, Math.sin(d * .91) * s * 1.35, s * .62, 0, TAU); ctx.fill(); ctx.stroke() });
         var g = ctx.createRadialGradient(-s * .3, -s * .3, s * .1, 0, 0, s); g.addColorStop(0, "#fca5a5"); g.addColorStop(1, "#dc2626");
         ctx.fillStyle = g; ctx.beginPath(); ctx.arc(0, 0, s, 0, TAU); ctx.fill(); ctx.stroke();
         ctx.restore();
-        if (dt && s > 14) {   // nhãn điện tích: δ⁻ phía O, δ⁺ phía H (theo hướng p)
+        if (dt && s > 14) {
           var c = Math.cos(th), sn = -Math.sin(th);
           ctx.save(); ctx.font = "bold " + Math.round(s * .85) + "px 'Segoe UI',sans-serif"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
           ctx.fillStyle = "#fca5a5"; ctx.fillText("δ⁻", x - c * s * 1.9, y - sn * s * 1.9);
@@ -184,17 +199,18 @@
           ctx.restore();
         }
       }
-      /* khung phân tử: vòng tròn tâm (cx, cy) bán kính R, điện trường E thẳng đứng (E > 0: hướng lên) */
-      function truongPT(ctx, cx, cy, R, t, E, dt, vien) {
+      /* khung phân tử tại vị trí có biên độ trường f (−1..1): E(t) = f·cos ωt, phân tử quay theo E */
+      function truongPT(ctx, cx, cy, R, t, f, dt, vien) {
+        var E = f * Math.cos(w0 * t);
         ctx.save(); ctx.beginPath(); ctx.arc(cx, cy, R, 0, TAU); ctx.clip();
         var g = ctx.createRadialGradient(cx, cy, R * .1, cx, cy, R); g.addColorStop(0, "#14275a"); g.addColorStop(1, "#08122e"); ctx.fillStyle = g; ctx.fillRect(cx - R, cy - R, 2 * R, 2 * R);
-        ctx.strokeStyle = "rgba(248,113,113," + (.18 + .25 * Math.abs(E)) + ")"; ctx.lineWidth = 1.5; ctx.setLineDash([7, 7]);
-        [-.75, -.4, 0, .4, .75].forEach(function (f) { ctx.beginPath(); ctx.moveTo(cx + f * R, cy - R); ctx.lineTo(cx + f * R, cy + R); ctx.stroke() });
+        ctx.strokeStyle = "rgba(248,113,113," + (.12 + .3 * Math.abs(E)) + ")"; ctx.lineWidth = 1.5; ctx.setLineDash([7, 7]);
+        [-.75, -.4, 0, .4, .75].forEach(function (u) { ctx.beginPath(); ctx.moveTo(cx + u * R, cy - R); ctx.lineTo(cx + u * R, cy + R); ctx.stroke() });
         ctx.setLineDash([]);
-        if (R > 60) { var ah = R * .28 * E; [-.88, .88].forEach(function (f) { if (Math.abs(ah) > 3) V.muiTen(ctx, cx + f * R * .9, cy + ah * .5, cx + f * R * .9, cy - ah * .5, "#f87171", Math.max(3, R * .02)) }) }
-        var s = R * .04 * zoom, amp = (Math.PI / 2) * (.55 + .45 * cs), rung = nhiet * cs * R * .02;
+        if (R > 60) { var ah = R * .3 * E; [-.88, .88].forEach(function (u) { if (Math.abs(ah) > 3) V.muiTen(ctx, cx + u * R * .9, cy + ah * .5, cx + u * R * .9, cy - ah * .5, "#f87171", Math.max(3, R * .02)) }) }
+        var s = R * .04 * zoom, amp = (Math.PI / 2) * (.3 + .7 * cs), rung = Math.abs(f) * cs * R * .015;
         VT.forEach(function (m, i) {
-          var th = amp * Math.sin(w0 * t - m[2] * 3.2), jx = rung * Math.sin(t * 7.3 + i * 2.1), jy = rung * Math.cos(t * 6.1 + i * 3.7);
+          var th = amp * f * Math.cos(w0 * t - m[2] * .8), jx = rung * Math.sin(t * 7.3 + i * 2.1), jy = rung * Math.cos(t * 6.1 + i * 3.7);
           nuoc(ctx, cx + m[0] * R * .62 + jx, cy + m[1] * R * .62 + jy, th, s, dt);
         });
         ctx.restore();
@@ -202,15 +218,75 @@
       }
       function txt(ctx, s, x, y, mau, co, can) { ctx.save(); ctx.font = "bold " + (co || 14) + "px 'Segoe UI',sans-serif"; ctx.textAlign = can || "left"; ctx.textBaseline = "middle"; ctx.lineWidth = 4; ctx.strokeStyle = "rgba(8,18,46,.9)"; ctx.strokeText(s, x, y); ctx.fillStyle = mau; ctx.fillText(s, x, y); ctx.restore() }
       function trong(x, y, c) { return !!c && Math.hypot(x - c[0], y - c[1]) <= c[2] }
+      function moTa(f) { var a = Math.abs(f); return a > .7 ? "điểm nóng (bụng sóng, E mạnh)" : a < .25 ? "điểm lạnh (gần nút, E ≈ 0)" : "giữa điểm nóng và điểm lạnh" }
 
+      /* mặt nạ hình con gà (N×N) lấy từ kênh alpha của ảnh; mở file trực tiếp (file://) không đọc được thì dùng hình elip */
+      function layMask() {
+        var im = IMG["ga-song"]; if (!(im.complete && im.naturalWidth)) return null;
+        var m = new Float32Array(N * N);
+        try {
+          var c = document.createElement("canvas"); c.width = c.height = N; var x = c.getContext("2d"); x.drawImage(im, 0, 0, N, N);
+          var d = x.getImageData(0, 0, N, N).data; for (var i = 0; i < N * N; i++) m[i] = d[i * 4 + 3] / 255;
+        } catch (e) { for (var j = 0; j < N; j++) for (var i2 = 0; i2 < N; i2++) { var u = (i2 + .5) / N - .5, v = (j + .5) / N - .5; m[j * N + i2] = (u * u / .2 + v * v / .2) < 1 ? 1 : 0 } }
+        return m;
+      }
+      var cvHeat = document.createElement("canvas"); cvHeat.width = cvHeat.height = N; var ctxHeat = cvHeat.getContext("2d"), imgHeat = ctxHeat.createImageData(N, N);
+      var cvChin = document.createElement("canvas"), ctxChin = cvChin.getContext("2d");
+      var FM = 64, cvF = document.createElement("canvas"); cvF.width = cvF.height = FM; var ctxF = cvF.getContext("2d"), imgF = ctxF.createImageData(FM, FM);
+      var GA = 20;   // bề rộng con gà (cm)
+
+      function napNhiet(dt) {      // mỗi ô thịt gà (theo toạ độ gắn với gà) nhận nhiệt tỉ lệ với E² trung bình tại vị trí hiện tại của nó
+        if (!mask) return;
+        var c = Math.cos(phi), s = Math.sin(phi), hcm = GA * 550 / 560, k = cs * dt * .32;
+        for (var j = 0; j < N; j++) for (var i = 0; i < N; i++) {
+          var id = j * N + i; if (mask[id] < .3) continue;
+          var u = ((i + .5) / N - .5) * GA, v = ((j + .5) / N - .5) * hcm, x = LC / 2 + u * c - v * s, y = LC / 2 + u * s + v * c, e = sE(x, y);
+          heat[id] = Math.min(1.8, heat[id] + k * e * e);
+        }
+        // dẫn nhiệt trong thịt (chậm): mỗi ô san sẻ nhiệt với ô bên cạnh
+        var D = Math.min(.2, dt * .8), tmp = heat.slice();
+        for (var j2 = 1; j2 < N - 1; j2++) for (var i2 = 1; i2 < N - 1; i2++) { var q = j2 * N + i2; if (mask[q] < .3) continue; var tbc = (tmp[q - 1] + tmp[q + 1] + tmp[q - N] + tmp[q + N]) / 4; heat[q] += D * (tbc - tmp[q]) }
+      }
+      function veGa(ctx, X0, Y0, sc) {   // con gà quay theo đĩa; phần đã chín lấy từ ảnh chín, ô quá nóng sẫm màu (cháy)
+        var iS = IMG["ga-song"], iC = IMG["ga-chin"];
+        if (!(iS.complete && iS.naturalWidth)) { txt(ctx, "Đang tải ảnh gà…", X0, Y0, "#e2e8f0", 15, "center"); return }
+        var wc = GA * sc, hc = wc * 550 / 560;
+        var d = imgHeat.data;
+        for (var i = 0; i < N * N; i++) { var h = heat[i], a = Math.min(1, h); a = a * a * (3 - 2 * a); d[i * 4] = 60; d[i * 4 + 1] = 22; d[i * 4 + 2] = 6; d[i * 4 + 3] = Math.round(255 * (mask ? mask[i] : 1) * a) }
+        ctxHeat.putImageData(imgHeat, 0, 0);
+        var W2 = Math.max(2, Math.round(wc)), H2 = Math.max(2, Math.round(hc));
+        if (cvChin.width !== W2 || cvChin.height !== H2) { cvChin.width = W2; cvChin.height = H2 }
+        ctxChin.globalCompositeOperation = "source-over"; ctxChin.clearRect(0, 0, W2, H2);
+        if (iC.complete && iC.naturalWidth) ctxChin.drawImage(iC, 0, 0, W2, H2);
+        ctxChin.globalCompositeOperation = "destination-in"; ctxChin.imageSmoothingEnabled = true; ctxChin.drawImage(cvHeat, 0, 0, W2, H2);
+        // vùng cháy: nhiệt vượt ngưỡng chín nhiều → phủ nâu sẫm, chỉ trên phần thịt đã chín (source-atop)
+        for (var j = 0; j < N * N; j++) { var b = Math.max(0, Math.min(1, (heat[j] - 1.45) / .35)); d[j * 4] = 40; d[j * 4 + 1] = 14; d[j * 4 + 2] = 4; d[j * 4 + 3] = Math.round(220 * b) }
+        ctxHeat.putImageData(imgHeat, 0, 0);
+        ctxChin.globalCompositeOperation = "source-atop"; ctxChin.drawImage(cvHeat, 0, 0, W2, H2);
+        ctxChin.globalCompositeOperation = "source-over";
+        ctx.save(); ctx.translate(X0, Y0); ctx.rotate(phi);
+        ctx.shadowColor = "rgba(0,0,0,.45)"; ctx.shadowBlur = 14; ctx.drawImage(iS, -wc / 2, -hc / 2, wc, hc); ctx.shadowBlur = 0;
+        ctx.drawImage(cvChin, -wc / 2, -hc / 2, wc, hc);
+        ctx.restore();
+      }
+      function veTruong(ctx, X, Y, L, t, alpha) {   // sóng đứng E(x,y,t) = E₀·sin(kx)·sin(ky)·cos ωt : đỏ E hướng lên, xanh E hướng xuống, đậm = mạnh
+        var d = imgF.data, ct = Math.cos(w0 * t);
+        for (var j = 0; j < FM; j++) for (var i = 0; i < FM; i++) {
+          var v = sE((i + .5) / FM * LC, (j + .5) / FM * LC) * ct, id = (j * FM + i) * 4;
+          if (v >= 0) { d[id] = 248; d[id + 1] = 113; d[id + 2] = 113 } else { d[id] = 96; d[id + 1] = 165; d[id + 2] = 250 }
+          d[id + 3] = Math.round(255 * Math.min(1, Math.abs(v)) * alpha);
+        }
+        ctxF.putImageData(imgF, 0, 0);
+        ctx.save(); ctx.imageSmoothingEnabled = true; ctx.drawImage(cvF, X, Y, L, L); ctx.restore();
+      }
       var api = {
         vao: function () { return vao }, keo: function (b) { keo = b }, dangKeo: function () { return keo },
         chamLens: function (x, y) { return !toan && trong(x, y, hit.lens) },
         chamPanel: function (x, y) { return trong(x, y, hit.panel) },
         doiToan: function () { toan = !toan; nutZ.textContent = toan ? "↩ Thu nhỏ" : "🔍 Phóng to ảnh phân tử" },
-        dat: function (x, y) { var a = hit.anh; if (!a) return; lens = [Math.max(.12, Math.min(.88, (x - a[0]) / a[2])), Math.max(.12, Math.min(.88, (y - a[1]) / a[3]))] }
+        dat: function (x, y) { var k = hit.khoang; if (!k) return; lensP = [Math.max(1, Math.min(LC - 1, (x - k[0]) / k[2])), Math.max(1, Math.min(LC - 1, (y - k[1]) / k[2]))] }
       };
-      function gan(cv) {      /* kéo kính lúp bằng chuột/ngón tay; mỗi canvas chỉ gắn một lần, đọc trạng thái của mô phỏng đang chạy */
+      function gan(cv) {      /* kéo kính lúp; mỗi canvas chỉ gắn một lần, đọc trạng thái của mô phỏng đang chạy */
         cv.__ga = api; if (cv.__gaGan) return; cv.__gaGan = true;
         function toaDo(e) { var r = cv.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top] }
         function song(a) { return a && performance.now() - a.vao() < 400 }
@@ -220,100 +296,109 @@
         cv.addEventListener("dblclick", function (e) { var a = cv.__ga; if (!song(a)) return; var p = toaDo(e); if (a.chamPanel(p[0], p[1])) a.doiToan() });
       }
       return {
-        datLai: function () { nhiet = 0 },
+        datLai: function () { heat.fill(0); phi = 0; xong = false },
         ve: function (ctx, W, H, t, dt) {
           vao = performance.now(); gan(ctx.canvas);
-          nhiet = Math.min(1, nhiet + dt * cs * .03);
-          var E = Math.sin(w0 * t), q = nhiet, T = 25 + Math.round(q * 50);
+          if (!mask) mask = layMask();
+          if (xoay) phi += dt * .52;            // ≈ 5 vòng/phút như đĩa xoay thật
+          if (!xong) napNhiet(dt);
+          // thống kê độ chín
+          var tong = 0, n = 0, tong2 = 0, chay = 0;
+          if (mask) for (var i = 0; i < N * N; i++) if (mask[i] > .5) { var h = Math.min(1, heat[i]); tong += h; tong2 += h * h; n++; if (heat[i] > 1.45) chay++ }
+          var tb = n ? tong / n : 0; if (tb >= .98) xong = true; var lech = n ? Math.sqrt(Math.max(0, tong2 / n - tb * tb)) : 0, T = 25 + Math.round(tb * 50);
+          var fL = sE(lensP[0], lensP[1]);
           var g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, "#0b1530"); g.addColorStop(1, "#16254a"); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
           if (toan) {   // ====== phóng to ảnh phân tử toàn khung ======
             var R = Math.min(W * .46, (H - 124) / 2), pcy2 = H - R - 8;
             hit.lens = null; hit.panel = [W / 2, pcy2, R];
-            truongPT(ctx, W / 2, pcy2, R, t, E, hDT, 5);
-            txt(ctx, "Ảnh phóng to: các phân tử nước (H₂O) trong thịt gà", 16, 24, "#e2e8f0", 18);
-            txt(ctx, "Điện trường E: " + (E > .05 ? "hướng lên ↑" : E < -.05 ? "hướng xuống ↓" : "đang đổi chiều"), 16, 52, E > 0 ? "#fca5a5" : "#93c5fd", 16);
-            txt(ctx, "Phân tử quay theo E, đảo chiều ≈ 2,45·10⁹ lần/s (ở đây phát chậm); công suất càng lớn càng quay mạnh", 16, 78, "#cbd5e1", 14);
-            txt(ctx, "Va chạm giữa các phân tử → nội năng tăng. Nhiệt độ gà: " + T + " °C", 16, 100, "#fde047", 14);
+            truongPT(ctx, W / 2, pcy2, R, t, fL, hDT, 5);
+            var E = fL * Math.cos(w0 * t);
+            txt(ctx, "Ảnh phóng to: phân tử nước (H₂O) tại vị trí kính lúp: " + moTa(fL), 16, 24, "#e2e8f0", 18);
+            txt(ctx, "Điện trường tại chỗ: " + (Math.abs(fL) < .1 ? "gần như bằng 0 (nút sóng)" : E > .05 ? "hướng lên ↑" : E < -.05 ? "hướng xuống ↓" : "đang đổi chiều"), 16, 52, E > 0 ? "#fca5a5" : "#93c5fd", 16);
+            txt(ctx, "Phân tử phân cực quay theo E, đảo chiều ≈ 2,45·10⁹ lần/s (ở đây phát chậm). Ở điểm nóng quay mạnh, ở nút gần như đứng yên.", 16, 78, "#cbd5e1", 14);
+            txt(ctx, "Quay và va chạm với phân tử xung quanh → nội năng tăng. Nhiệt độ trung bình của gà: " + T + " °C", 16, 100, "#fde047", 14);
             txt(ctx, "Bấm đúp vào hình hoặc “Thu nhỏ” để quay lại", W - 16, H - 16, "#94a3b8", 13, "right");
             return;
           }
-          // ====== buồng lò + con gà ======
-          var pan = W >= 880, bx = 16, by = 16, bw = pan ? W * .6 : W - 32, bh = H - 32;
-          ctx.fillStyle = "#1e293b"; ctx.strokeStyle = "#94a3b8"; ctx.lineWidth = 4;
-          ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(bx, by, bw, bh, 12); else ctx.rect(bx, by, bw, bh); ctx.fill(); ctx.stroke();
-          txt(ctx, "Buồng lò vi sóng", bx + 14, by + bh - 34, "#94a3b8", 15);
-          ctx.fillStyle = "#475569"; ctx.fillRect(bx + 4, by + bh * .3, 22, bh * .4); txt(ctx, "Nguồn vi sóng", bx + 34, by + bh * .3 - 12, "#cbd5e1", 14);
-          var iS = IMG["ga-song"], iC = IMG["ga-chin"], hc = Math.min(bh * .66, bw * .5), wc = hc * 560 / 550, cx = bx + bw * .56, cy = by + bh * .5, ax = cx - wc / 2, ay = cy - hc / 2;
-          hit.anh = [ax, ay, wc, hc];
-          // đĩa xoay thủy tinh: vành, con lăn và các vạch quay theo thời gian
-          var dx = cx, dy = ay + hc * .95, drx = wc * .66, dry = hc * .15, ph = t * .9;
-          ctx.save();
-          var gd = ctx.createLinearGradient(0, dy - dry, 0, dy + dry); gd.addColorStop(0, "rgba(186,230,253,.30)"); gd.addColorStop(1, "rgba(148,163,184,.14)");
-          ctx.fillStyle = gd; ctx.strokeStyle = "rgba(203,213,225,.85)"; ctx.lineWidth = 3;
-          ctx.beginPath(); ctx.ellipse(dx, dy, drx, dry, 0, 0, TAU); ctx.fill(); ctx.stroke();
-          ctx.beginPath(); ctx.ellipse(dx, dy + 7, drx * .98, dry, 0, 0, Math.PI); ctx.strokeStyle = "rgba(148,163,184,.5)"; ctx.stroke();
+          var pan = W >= 880, bx = 16, by = 16, bw = pan ? W * .62 : W - 32, bh = H - 32;
+          // ====== khoang lò nhìn từ trên xuống ======
+          var L = Math.min(bw - 200, bh - 40), qx = bx + bw - L - 12, qy = by + 30, sc = L / LC;
+          if (L < 200) { L = Math.min(bw - 24, bh - 40); qx = bx + (bw - L) / 2; sc = L / LC }
+          hit.khoang = [qx, qy, sc];
+          var P = function (x, y) { return [qx + x * sc, qy + y * sc] };
+          ctx.fillStyle = "#0f172a"; ctx.fillRect(qx, qy, L, L);
+          ctx.strokeStyle = "#cbd5e1"; ctx.lineWidth = 7; ctx.strokeRect(qx - 3.5, qy - 3.5, L + 7, L + 7);
+          txt(ctx, "Khoang lò: thành kim loại phản xạ vi sóng", qx + L / 2, qy - 16, "#94a3b8", 13, "center");
+          // lỗ ống dẫn sóng ở thành phải (vi sóng từ magnetron đi vào)
+          var s1 = P(LC, 11), s2 = P(LC, 19.6);
+          ctx.fillStyle = "#f59e0b"; ctx.fillRect(s1[0] - 4, s1[1], 9, s2[1] - s1[1]);
+          txt(ctx, "Lỗ ống dẫn sóng", s1[0] - 8, s1[1] - 12, "#fbbf24", 12, "right");
+          txt(ctx, "(vi sóng từ magnetron)", s1[0] - 8, s1[1] + 4 - 30, "#fbbf24", 11, "right");
+          if (hTruong) veTruong(ctx, qx, qy, L, t, .55);
+          // đĩa xoay thủy tinh
+          var dc = P(LC / 2, LC / 2), rD = 14 * sc;
+          ctx.save(); ctx.fillStyle = "rgba(186,230,253,.16)"; ctx.strokeStyle = "rgba(203,213,225,.9)"; ctx.lineWidth = 3;
+          ctx.beginPath(); ctx.arc(dc[0], dc[1], rD, 0, TAU); ctx.fill(); ctx.stroke();
           ctx.strokeStyle = "rgba(226,232,240,.35)"; ctx.lineWidth = 2;
-          for (var j = 0; j < 8; j++) { var aa = ph + j * Math.PI / 4; ctx.beginPath(); ctx.moveTo(dx + Math.cos(aa) * drx * .2, dy + Math.sin(aa) * dry * .2); ctx.lineTo(dx + Math.cos(aa) * drx * .96, dy + Math.sin(aa) * dry * .96); ctx.stroke() }
-          ctx.fillStyle = "#fde047"; for (var j2 = 0; j2 < 3; j2++) { var ab = ph + j2 * TAU / 3; ctx.beginPath(); ctx.arc(dx + Math.cos(ab) * drx * .9, dy + Math.sin(ab) * dry * .9, 4, 0, TAU); ctx.fill() }
+          for (var j = 0; j < 12; j++) { var aa = phi + j * Math.PI / 6; ctx.beginPath(); ctx.moveTo(dc[0] + Math.cos(aa) * rD * .93, dc[1] + Math.sin(aa) * rD * .93); ctx.lineTo(dc[0] + Math.cos(aa) * rD, dc[1] + Math.sin(aa) * rD); ctx.stroke() }
+          ctx.fillStyle = "#fde047"; ctx.beginPath(); ctx.arc(dc[0] + Math.cos(phi) * rD * .96, dc[1] + Math.sin(phi) * rD * .96, 5, 0, TAU); ctx.fill();
           ctx.restore();
-          txt(ctx, "Đĩa xoay", dx + drx - 6, dy + dry + 14, "#cbd5e1", 13, "right");
-          if (iS.complete && iS.naturalWidth) {
-            ctx.drawImage(iS, ax, ay, wc, hc);
-            var qc = Math.max(0, Math.min(1, (q - .12) / .8)); qc = qc * qc * (3 - 2 * qc);
-            if (iC.complete && iC.naturalWidth) { ctx.save(); ctx.globalAlpha = qc; ctx.drawImage(iC, ax, ay, wc, hc); ctx.restore() }
-          } else txt(ctx, "Đang tải ảnh gà…", cx, cy, "#e2e8f0", 16, "center");
-          // vi sóng: đi từ nguồn, xuyên qua gà (vẽ đè lên gà), biên độ giảm dần khi đi trong thịt gà vì bị phân tử nước hấp thụ
-          if (hSong) {
-            var kk = TAU / 150, ex = wc * .47, ey = hc * .47;
-            ctx.save(); ctx.lineWidth = 2.6; ctx.lineJoin = "round";
-            [-.6, -.3, 0, .3, .6].forEach(function (f) {
-              var y0 = by + bh * .5 + f * bh * .44, A = 15 * cs, trong = 0, x, y, a2;
-              ctx.strokeStyle = "rgba(251,146,60," + (.35 + cs * .5) + ")"; ctx.beginPath();
-              for (x = bx + 30; x <= bx + bw - 12; x += 3) {
-                var vx = (x - cx) / ex, vy = (y0 - cy) / ey;
-                if (vx * vx + vy * vy < 1) trong += 3;
-                a2 = A * Math.exp(-trong * .006 * (.5 + cs));
-                y = y0 - a2 * Math.sin(w0 * t - kk * (x - bx));
-                if (x === bx + 30) ctx.moveTo(x, y); else ctx.lineTo(x, y);
-              }
-              ctx.stroke();
-            });
-            ctx.restore();
-            var gl = ctx.createRadialGradient(cx, cy, hc * .1, cx, cy, hc * .6); gl.addColorStop(0, "rgba(251,146,60," + (.10 + .22 * cs * (.4 + .6 * q)) + ")"); gl.addColorStop(1, "rgba(251,146,60,0)");
-            ctx.save(); ctx.fillStyle = gl; ctx.fillRect(ax - 20, ay - 20, wc + 40, hc + 40); ctx.restore();     // gà hấp thụ năng lượng → nóng dần
+          veGa(ctx, dc[0], dc[1], sc);
+          if (hTruong) {
+            veTruong(ctx, qx, qy, L, t, .22);   // trường vẫn có trong gà
+            var a1 = P(LC / M5 / 2, LC - 1.4), a2 = P(LC / M5 * 1.5, LC - 1.4);
+            V.kichThuoc(ctx, a1[0], a2[0], a1[1], "≈ λ/2 ≈ 6 cm", "#fde047");
           }
-          if (q > .25) {
-            ctx.save(); ctx.strokeStyle = "rgba(226,232,240," + (.15 + q * .3) + ")"; ctx.lineWidth = 3; ctx.lineCap = "round";
-            [-.3, 0, .3].forEach(function (f, j) { var x = cx + f * wc; ctx.beginPath(); for (var u = 0; u <= 30; u++) { var yy = ay - 6 - u * 1.4 - ((t * 20 + j * 14) % 20); ctx.lineTo(x + Math.sin(u * .35 + t * 3 + j) * 6, yy) } ctx.stroke() });
-            ctx.restore();
+          if (xoay) { ctx.save(); ctx.strokeStyle = "#fde047"; ctx.lineWidth = 2.5; ctx.beginPath(); ctx.arc(dc[0], dc[1], rD + 10, -2.4, -1.3); ctx.stroke(); var ea = -1.3; V.muiTen(ctx, dc[0] + Math.cos(ea - .15) * (rD + 10), dc[1] + Math.sin(ea - .15) * (rD + 10), dc[0] + Math.cos(ea) * (rD + 10), dc[1] + Math.sin(ea) * (rD + 10), "#fde047", 2.5); ctx.restore() }
+          // kính lúp kéo được
+          var lp = P(lensP[0], lensP[1]), rl = Math.max(24, L * .085);
+          hit.lens = [lp[0], lp[1], rl + 8];
+          truongPT(ctx, lp[0], lp[1], rl, t, fL, false, 3);
+          ctx.save(); ctx.strokeStyle = "#fde047"; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(lp[0], lp[1], rl + 4, 0, TAU); ctx.stroke();
+          ctx.lineWidth = 6; ctx.lineCap = "round"; ctx.beginPath(); ctx.moveTo(lp[0] + (rl + 4) * .71, lp[1] + (rl + 4) * .71); ctx.lineTo(lp[0] + (rl + 4) * .71 + 18, lp[1] + (rl + 4) * .71 + 18); ctx.stroke(); ctx.restore();
+          txt(ctx, "Kéo kính lúp", lp[0], lp[1] - rl - 14, "#fde047", 12, "center");
+          // cột chữ bên trái khoang lò
+          var tx = bx + 4, tw = qx - bx - 16;
+          if (tw > 150) {
+            var dong = [["NHÌN TỪ TRÊN XUỐNG", "#e2e8f0", 14], ["Vi sóng f ≈ 2,45 GHz,", "#cbd5e1", 13], ["λ = c/f ≈ 12,2 cm", "#fde047", 13], ["", "", 6],
+              ["Phản xạ ở thành kim loại", "#cbd5e1", 13], ["→ SÓNG ĐỨNG:", "#cbd5e1", 13], ["điểm nóng / điểm lạnh", "#fde047", 13], ["đứng yên, cách nhau ≈ λ/2", "#cbd5e1", 13], ["", "", 6],
+              ["■ đỏ: E hướng lên", "#f87171", 13], ["■ xanh: E hướng xuống", "#60a5fa", 13], ["đậm = mạnh, tối = nút", "#94a3b8", 12], ["", "", 6],
+              [xoay ? "Đĩa xoay đưa gà đi qua" : "Đĩa xoay ĐANG TẮT:", xoay ? "#cbd5e1" : "#fb923c", 13], [xoay ? "các điểm nóng → chín đều" : "chỗ chín, chỗ sống, chỗ cháy", xoay ? "#86efac" : "#fb923c", 13]];
+            var yy = qy + 8; dong.forEach(function (d) { if (d[0]) txt(ctx, d[0], tx, yy, d[1], d[2]); yy += d[2] + 9 });
           }
-          // kính lúp kéo được trên con gà
-          var rl = Math.max(26, hc * .15), lx = ax + lens[0] * wc, ly = ay + lens[1] * hc;
-          hit.lens = [lx, ly, rl + 8];
-          truongPT(ctx, lx, ly, rl, t, E, false, 4);
-          ctx.save(); ctx.strokeStyle = "#fde047"; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(lx, ly, rl + 5, 0, TAU); ctx.stroke();
-          ctx.lineWidth = 7; ctx.lineCap = "round"; ctx.beginPath(); ctx.moveTo(lx + (rl + 5) * .71, ly + (rl + 5) * .71); ctx.lineTo(lx + (rl + 5) * .71 + 22, ly + (rl + 5) * .71 + 22); ctx.stroke(); ctx.restore();
-          txt(ctx, "Kéo kính lúp", lx, ly - rl - 16, "#fde047", 13, "center");
-          // cột phải: trạng thái, ảnh phân tử phóng to, gà quay thật
-          V.hop(ctx, W - 16, 16, ["Nhiệt độ gà: *" + T + " °C*", q < .4 ? "Trạng thái: còn sống" : q < .95 ? "Trạng thái: đang chín" : "Trạng thái: đã chín"], { phai: true, co: 15 });
+          // cột phải: trạng thái, ảnh phân tử phóng to, mặt cắt sóng đứng
+          var deu = tb > .05 ? Math.max(0, 1 - lech / tb) : 1;
+          V.hop(ctx, W - 16, 16, ["Nhiệt độ trung bình: *" + T + " °C*",
+            "Độ đều: *" + Math.round(deu * 100) + "%*" + (chay ? "  ·  có chỗ cháy" : ""),
+            xong ? "Gà đã chín: lò tự tắt" : tb < .4 ? "Gà còn sống" : "Gà đang chín"], { phai: true, co: 14 });
           if (pan) {
-            var px0 = bx + bw + 16, pw = W - px0 - 16, pr = Math.max(60, Math.min(pw / 2, (H - 300) / 2, 170)), pcx = px0 + pw / 2, pcy = 112 + pr;
+            var px0 = bx + bw + 16, pw = W - px0 - 16, pr = Math.max(55, Math.min(pw / 2 - 4, (H - 330) / 2, 140)), pcx = px0 + pw / 2, pcy = 120 + pr;
             hit.panel = [pcx, pcy, pr];
-            truongPT(ctx, pcx, pcy, pr, t, E, hDT, 4);
-            txt(ctx, "Ảnh phóng to phân tử nước", pcx, pcy - pr - 14, "#e2e8f0", 14, "center");
-            txt(ctx, "(bấm đúp để phóng to toàn khung)", pcx, pcy + pr + 14, "#94a3b8", 12, "center");
-            var iQ = IMG["ga-quay"];
-            if (iQ.complete && iQ.naturalWidth && pcy + pr + 40 < H - 90) {
-              var rw = Math.min(pw, 220), rh = rw * iQ.naturalHeight / iQ.naturalWidth, rx = px0 + (pw - rw) / 2, ry = Math.min(H - 16 - rh, pcy + pr + 34);
-              ctx.save(); ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(rx, ry, rw, rh, 8); else ctx.rect(rx, ry, rw, rh); ctx.clip(); ctx.drawImage(iQ, rx, ry, rw, rh); ctx.restore();
-              txt(ctx, "Gà đã chín (ảnh thật)", rx + 8, ry + 14, "#fff", 12);
+            truongPT(ctx, pcx, pcy, pr, t, fL, hDT, 4);
+            txt(ctx, "Phân tử nước tại kính lúp", pcx, pcy - pr - 26, "#e2e8f0", 14, "center");
+            txt(ctx, moTa(fL), pcx, pcy - pr - 10, Math.abs(fL) > .7 ? "#fca5a5" : "#93c5fd", 12, "center");
+            txt(ctx, "(bấm đúp để phóng to toàn khung)", pcx, pcy + pr + 12, "#94a3b8", 11, "center");
+            // mặt cắt: sóng tới + sóng phản xạ giữa hai thành kim loại → sóng đứng
+            var my = pcy + pr + 36, mh = H - my - 16;
+            if (mh > 70) {
+              var mx0 = px0 + 8, mx1 = px0 + pw - 8, mc = my + mh / 2 + 6, ma = mh * .3, ct = Math.cos(w0 * t);
+              txt(ctx, "Mặt cắt: sóng tới + sóng phản xạ → sóng đứng", px0 + pw / 2, my + 4, "#e2e8f0", 12, "center");
+              ctx.fillStyle = "#94a3b8"; ctx.fillRect(mx0 - 5, mc - ma - 8, 5, 2 * ma + 16); ctx.fillRect(mx1, mc - ma - 8, 5, 2 * ma + 16);
+              var XX = function (x) { return mx0 + (mx1 - mx0) * x / LC };
+              ctx.save(); ctx.setLineDash([4, 4]); ctx.strokeStyle = "rgba(148,163,184,.6)"; ctx.lineWidth = 1.2;
+              [1, -1].forEach(function (sg) { ctx.beginPath(); for (var x = 0; x <= LC; x += .2) { var y = mc - sg * ma * Math.abs(Math.sin(kx * x)); if (x === 0) ctx.moveTo(XX(x), y); else ctx.lineTo(XX(x), y) } ctx.stroke() });
+              ctx.restore();
+              ctx.strokeStyle = "#f87171"; ctx.lineWidth = 2.5; ctx.beginPath();
+              for (var x2 = 0; x2 <= LC; x2 += .2) { var y2 = mc - ma * Math.sin(kx * x2) * ct; if (x2 === 0) ctx.moveTo(XX(x2), y2); else ctx.lineTo(XX(x2), y2) }
+              ctx.stroke();
+              ctx.save(); ctx.font = "bold 11px 'Segoe UI',sans-serif"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+              for (var m = 0; m <= 2 * M5; m++) { var xm = XX(m * LC / (2 * M5)); if (m % 2 === 0) { ctx.fillStyle = "#93c5fd"; ctx.beginPath(); ctx.arc(xm, mc, 3, 0, TAU); ctx.fill(); ctx.fillText("N", xm, mc + ma + 10) } else { ctx.fillStyle = "#fde047"; ctx.fillText("B", xm, mc - ma - 10) } }
+              ctx.restore();
+              txt(ctx, "N: nút (lạnh)  ·  B: bụng (nóng)", px0 + pw / 2, my + mh, "#94a3b8", 11, "center");
             }
           } else hit.panel = null;
-          V.hop(ctx, bx + 12, by + 12, ["Vi sóng có *f ≈ 2,45 GHz*: điện trường đổi chiều ≈ *2,45·10⁹ lần/s*",
-            "Phân tử nước (H₂O) *phân cực* nên quay theo điện trường",
-            "Quay, va chạm với phân tử xung quanh → *nội năng tăng, gà nóng lên và chín*"], { co: 14 });
-          ctx.save(); ctx.font = "11px 'Segoe UI',sans-serif"; ctx.fillStyle = "#64748b"; ctx.textAlign = "right"; ctx.textBaseline = "alphabetic";
-          ctx.fillText("Ảnh gà: Wikimedia Commons, CC BY-SA 4.0 (Ibrahim Husain Meraj; Jameswasswa). Gà chín trong lò là ảnh gà sống đã chỉnh màu.", bx + bw - 10, by + bh - 10); ctx.restore();
+          ctx.save(); ctx.font = "11px 'Segoe UI',sans-serif"; ctx.fillStyle = "#64748b"; ctx.textAlign = "left"; ctx.textBaseline = "alphabetic";
+          ctx.fillText("Ảnh gà: Ibrahim Husain Meraj, CC BY-SA 4.0, Wikimedia Commons (phần chín là ảnh chỉnh màu). Mẫu sóng đứng là mô hình đơn giản hóa.", bx + 4, H - 6); ctx.restore();
         }
       };
     }
