@@ -258,7 +258,7 @@ body:not(.isgv) #mrans,body:not(.isgv) #mrclick{display:none}
 body.bt header.top,body.bt nav.tabs,body.bt #p-mr>h2:not(#btH),body.bt #p-mr>.note,body.bt #p-mr [data-a=mrb]{display:none !important}
 body.bt #btH{margin:10px 0 6px}
 body.emb:not(.bt) [data-tab=mr]{display:none !important}
-</style></head>
+</style><!--bt-k12-am--></head>
 <body>
 <header class="top"><h1>Ôn tập Vật lí 12 – Chương II: Khí lí tưởng</h1><p id="sub"></p>
 <div class="tools"><button id="lk" title="Giáo viên: mở hoặc khoá từng tab cho học sinh">Điều khiển lớp (GV)</button><button id="gv" aria-pressed="false" title="Hiện đáp án và lời giải ở mọi câu">Chế độ giáo viên</button><button id="in">In / lưu PDF</button><button id="sang">Sáng / tối</button><button id="rs">Xóa dữ liệu đã lưu</button></div></header>
@@ -1723,4 +1723,22 @@ body.emb:not(.bt) [data-tab=mr]{display:none !important}
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(go,0)});else setTimeout(go,0);
   window.addEventListener('hashchange',go);
+})();</script><script>(function(){
+  function ph(k){try{if(window.amThanh)amThanh.phat(k)}catch(e){}}
+  function tien(){try{var o=JSON.parse(localStorage.getItem('vl12mrp')||'{}')[window.__mrb]||{};return{i:o.i||0,a:o.att||0}}catch(e){return{i:0,a:0}}}
+  function bai(){var p=document.querySelector('[data-a=mrb][aria-selected=true]');return p?p.getAttribute('data-b'):null}
+  document.addEventListener('click',function(e){
+    if(!e.isTrusted)return;var mb=e.target.closest('#mrbody');if(!mb)return;
+    var g=e.target.closest('[data-g=chkds],[data-g=chkin]');
+    if(g){window.__mrb=bai();var b=tien();setTimeout(function(){var a=tien();if(a.i>b.i)ph('dung');else if(a.i<b.i||a.a>b.a)ph('sai')},80);return}
+    if(e.target.closest('a,button,.msim'))return;
+    var o=e.target.closest('.mq[data-k=tn] .mo'),q=e.target.closest('.mq');
+    if(o){
+      if(mb.classList.contains('gated')&&!q.classList.contains('mq-active'))return;
+      if(o.classList.contains('wrong'))return;
+      if(!mb.classList.contains('gated')&&q.classList.contains('open')&&o.classList.contains('sel')){ph('dong');return}
+      ph(o.classList.contains('ok')?'dung':'sai');return;
+    }
+    if(q&&mb.classList.contains('click')&&!mb.classList.contains('gated')){var was=q.classList.contains('open');setTimeout(function(){ph(q.classList.contains('open')&&!was?'mo':'dong')},30)}
+  },true);
 })();</script></body></html>

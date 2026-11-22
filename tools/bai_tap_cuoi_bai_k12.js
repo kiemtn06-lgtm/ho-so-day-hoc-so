@@ -71,6 +71,29 @@ const JS_BG = `<script>(function(){
   },true);
 })();</script>`;
 
+
+/* Âm thanh cho phần bài tập (dùng nguon/lib/am_thanh.js, window.amThanh): chọn phương án, tiếng đúng/sai, Kiểm tra, bấm vào câu hiện/ẩn đáp án */
+const DAU_AT = '<!--bt-k12-am-->';
+const JS_AT = `<script>(function(){
+  function ph(k){try{if(window.amThanh)amThanh.phat(k)}catch(e){}}
+  function tien(){try{var o=JSON.parse(localStorage.getItem('vl12mrp')||'{}')[window.__mrb]||{};return{i:o.i||0,a:o.att||0}}catch(e){return{i:0,a:0}}}
+  function bai(){var p=document.querySelector('[data-a=mrb][aria-selected=true]');return p?p.getAttribute('data-b'):null}
+  document.addEventListener('click',function(e){
+    if(!e.isTrusted)return;var mb=e.target.closest('#mrbody');if(!mb)return;
+    var g=e.target.closest('[data-g=chkds],[data-g=chkin]');
+    if(g){window.__mrb=bai();var b=tien();setTimeout(function(){var a=tien();if(a.i>b.i)ph('dung');else if(a.i<b.i||a.a>b.a)ph('sai')},80);return}
+    if(e.target.closest('a,button,.msim'))return;
+    var o=e.target.closest('.mq[data-k=tn] .mo'),q=e.target.closest('.mq');
+    if(o){
+      if(mb.classList.contains('gated')&&!q.classList.contains('mq-active'))return;
+      if(o.classList.contains('wrong'))return;
+      if(!mb.classList.contains('gated')&&q.classList.contains('open')&&o.classList.contains('sel')){ph('dong');return}
+      ph(o.classList.contains('ok')?'dung':'sai');return;
+    }
+    if(q&&mb.classList.contains('click')&&!mb.classList.contains('gated')){var was=q.classList.contains('open');setTimeout(function(){ph(q.classList.contains('open')&&!was?'mo':'dong')},30)}
+  },true);
+})();</script>`;
+
 const NUT_TOP = '<button type="button" data-g="fs">Toàn màn hình (F)</button></div></div>';
 const NUT_TOP_MOI = '<button type="button" data-bt="1" title="Bài tập của bài này, có đáp án (phím B)">Bài tập cuối bài (B)</button><button type="button" data-g="fs">Toàn màn hình (F)</button></div></div>';
 const NUT_NAV = '<button type="button" data-g="next" aria-label="Tiếp">›</button></div><div class="bg-toc" hidden>';
@@ -87,7 +110,7 @@ function doi(h, cu, moi, ten) {
   if (n !== 1) { console.log('  KHÔNG áp được nút (' + n + ' chỗ):', ten); return h; }
   return h.replace(cu, () => moi);
 }
-function vaOnTap(h) { return chen(h, DAU_OT, CSS_OT, JS_OT); }
+function vaOnTap(h) { return chen(chen(h, DAU_OT, CSS_OT, JS_OT), DAU_AT, '', JS_AT); }
 function vaBaiGiang(h) {
   if (h.includes(DAU_BG)) return h;
   h = doi(h, NUT_TOP, NUT_TOP_MOI, 'thanh trên');
