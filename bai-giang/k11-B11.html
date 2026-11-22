@@ -364,6 +364,88 @@ window.MPve = {
   MP.dangKy("B11", 3, defThang);
   MP.dangKy("B11", 11, defThang);
   MP.dangKy("B11", 12, defThang);
+
+  /* ---------- Slide 11: lò vi sóng nấu gà — phân tử nước phân cực dao động theo điện trường của vi sóng ---------- */
+  MP.dangKy("B11", 10, {
+    ten: "Lò vi sóng nấu gà: phân tử nước dao động làm chín thức ăn",
+    goiY: "Vi sóng (f ≈ 2,45 GHz) tạo điện trường đổi chiều; các phân tử nước phân cực trong gà quay theo, va chạm nhau nên nóng lên. Kéo “Công suất” để đổi tốc độ chín.",
+    toc: 0.5,
+    tao: function (ui) {
+      var cs = 0.6, hSong = true, nhiet = 0, M = [], tPre = 0;
+      ui.truot("Công suất vi sóng", 0.1, 1, 0.05, cs, "", function (x) { cs = x });
+      ui.chon("Hiện sóng vi ba", hSong, function (x) { hSong = x });
+      for (var i = 0; i < 26; i++) {   // vị trí phân tử nước trong thân gà (toạ độ chuẩn hóa trong elip), pha dao động ngẫu nhiên
+        var a = i * 2.399963, r = Math.sqrt((i + .5) / 26) * .85;
+        M.push([Math.cos(a) * r, Math.sin(a) * r * .8, (i * 0.7371) % 1]);
+      }
+      function mauGa(q) {   // q từ 0 (sống, hồng nhạt) đến 1 (chín vàng nâu)
+        var c0 = [246, 190, 180], c1 = [214, 140, 60];
+        return "rgb(" + Math.round(c0[0] + (c1[0] - c0[0]) * q) + "," + Math.round(c0[1] + (c1[1] - c0[1]) * q) + "," + Math.round(c0[2] + (c1[2] - c0[2]) * q) + ")";
+      }
+      function nuoc(ctx, x, y, goc, s) {   // phân tử H2O: O đỏ ở giữa, hai H trắng lệch ±52° (cực dương về phía H)
+        ctx.save(); ctx.translate(x, y); ctx.rotate(goc);
+        ctx.fillStyle = "#f8fafc"; [-1, 1].forEach(function (d) { ctx.beginPath(); ctx.arc(Math.cos(d * .9) * s * 1.1, Math.sin(d * .9) * s * 1.1, s * .55, 0, TAU); ctx.fill() });
+        ctx.fillStyle = "#ef4444"; ctx.beginPath(); ctx.arc(0, 0, s, 0, TAU); ctx.fill();
+        ctx.restore();
+      }
+      return {
+        datLai: function () { nhiet = 0 },
+        ve: function (ctx, W, H, t, dt) {
+          nhiet = Math.min(1, nhiet + dt * cs * .03 * 1.0);
+          var g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, "#0b1530"); g.addColorStop(1, "#16254a"); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+          // buồng lò
+          var bx = 20, by = 20, bw = Math.min(W - 40, W * .74), bh = H - 40;
+          ctx.fillStyle = "#1e293b"; ctx.strokeStyle = "#94a3b8"; ctx.lineWidth = 4;
+          ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(bx, by, bw, bh, 12); else ctx.rect(bx, by, bw, bh); ctx.fill(); ctx.stroke();
+          nhanChu(ctx, "Buồng lò vi sóng", bx + 14, by + bh - 14, "#94a3b8", 15);
+          // nguồn magnetron
+          ctx.fillStyle = "#475569"; ctx.fillRect(bx + 4, by + bh * .3, 22, bh * .4); nhanChu(ctx, "Nguồn vi sóng", bx + 34, by + bh * .3 - 10, "#cbd5e1", 14);
+          var cx = bx + bw * .56, cy = by + bh * .52, rx = Math.min(bw * .3, 250), ry = Math.min(bh * .3, 150);
+          // sóng vi ba: dao động theo phương thẳng đứng (điện trường E), truyền sang phải
+          var w = TAU * 1.2, k = TAU / 150, E = Math.sin(w * t);
+          if (hSong) {
+            ctx.save(); ctx.strokeStyle = "rgba(251,146,60," + (.35 + cs * .5) + ")"; ctx.lineWidth = 2.5;
+            [-.55, 0, .55].forEach(function (f) {
+              var y0 = cy + f * ry * 1.4; ctx.beginPath();
+              for (var x = bx + 30; x <= bx + bw - 12; x += 3) { var y = y0 - 14 * cs * Math.sin(w * t - k * (x - bx)); if (x === bx + 30) ctx.moveTo(x, y); else ctx.lineTo(x, y) }
+              ctx.stroke();
+            });
+            ctx.restore();
+          }
+          // thân gà (elip) + đùi gà
+          var q = nhiet;
+          ctx.fillStyle = mauGa(q); ctx.strokeStyle = "#7c4a1d"; ctx.lineWidth = 3;
+          ctx.beginPath(); ctx.ellipse(cx, cy, rx, ry, 0, 0, TAU); ctx.fill(); ctx.stroke();
+          ctx.beginPath(); ctx.ellipse(cx + rx * .9, cy - ry * .75, rx * .22, ry * .3, -.6, 0, TAU); ctx.fill(); ctx.stroke();
+          ctx.beginPath(); ctx.ellipse(cx - rx * .95, cy + ry * .6, rx * .2, ry * .28, .7, 0, TAU); ctx.fill(); ctx.stroke();
+          // hơi nóng
+          if (q > .25) { ctx.save(); ctx.strokeStyle = "rgba(226,232,240," + (.15 + q * .35) + ")"; ctx.lineWidth = 3; ctx.lineCap = "round";
+            [-.5, 0, .5].forEach(function (f, j) { var x = cx + f * rx; ctx.beginPath(); for (var u = 0; u <= 30; u++) { var yy = cy - ry - 8 - u * 1.4 - ((t * 20 + j * 14) % 20); ctx.lineTo(x + Math.sin(u * .35 + t * 3 + j) * 6, yy) } ctx.stroke() });
+            ctx.restore() }
+          // phân tử nước: quay qua lại theo điện trường E, biên độ tăng theo công suất
+          var s = Math.max(5, Math.min(rx, ry) * .075);
+          M.forEach(function (m) {
+            var goc = (Math.PI / 2) * E * (.5 + .5 * cs) * (1 + .15 * Math.sin(m[2] * 20)) + m[2] * .3 - Math.PI / 2;
+            var rung = nhiet * 4 * cs;
+            nuoc(ctx, cx + m[0] * rx + (Math.random() - .5) * rung, cy + m[1] * ry + (Math.random() - .5) * rung, goc, s);
+          });
+          // thông tin
+          var T = 25 + Math.round(nhiet * 75);
+          V.hop(ctx, 12 + bx, 12 + by, ["Vi sóng có *f ≈ 2,45 GHz*: điện trường đổi chiều ≈ *2,45·10⁹ lần/s*",
+            "Phân tử nước (H₂O) *phân cực* nên quay theo điện trường",
+            "Quay, va chạm với phân tử xung quanh → *nội năng tăng, thức ăn nóng lên và chín*"], { co: 14 });
+          V.hop(ctx, W - 12, 12, ["Nhiệt độ gà: *" + T + " °C*", nhiet < .4 ? "Trạng thái: còn sống" : nhiet < .95 ? "Trạng thái: đang chín" : "Trạng thái: đã chín"], { phai: true, co: 15 });
+          // chú thích điện trường
+          var ex = W - 90, ey = H * .6;
+          ctx.save(); ctx.font = "bold 14px 'Segoe UI',sans-serif"; ctx.fillStyle = "#cbd5e1"; ctx.textAlign = "center"; ctx.fillText("Điện trường E", ex, ey - 62);
+          V.muiTen(ctx, ex, ey, ex, ey - E * 45, "#f87171", 5); ctx.restore();
+          ctx.save(); ctx.font = "13px 'Segoe UI',sans-serif"; ctx.fillStyle = "#e2e8f0"; ctx.textAlign = "center";
+          nuoc(ctx, ex - 12, ey + 60, 0, 6); ctx.fillText("● O  ○ H", ex + 8, ey + 85); ctx.restore();
+        }
+      };
+      function nhanChu(ctx, s, x, y, mau, co) { ctx.save(); ctx.font = "bold " + co + "px 'Segoe UI',sans-serif"; ctx.textAlign = "left"; ctx.textBaseline = "middle"; ctx.fillStyle = mau; ctx.fillText(s, x, y); ctx.restore() }
+    }
+  });
 })();
 </script>
 <script>
