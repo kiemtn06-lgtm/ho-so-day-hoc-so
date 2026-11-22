@@ -5,5 +5,6 @@ Trên máy giáo viên: dòng nào cột cuối là `chưa` thì phải áp bả
 
 | Ngày | Phiếu | Tệp đã sửa | Cũ → mới | Đã áp vào nguồn trên máy |
 |---|---|---|---|---|
+| 2026-11-22 | #7 | bai-giang/k10-B13.html, bai-giang/k10-B13/s08..s19.jpg | Bỏ slide 8/19 "Mini-quiz (củng cố tiết 1)": xóa ảnh s08, đánh số lại s09-s19 → s08-s18, bỏ tên slide, lùi chỉ số mô phỏng từ 8,9,10,11,12,15,16 → 7,8,9,10,11,14,15. Khi dựng lại từ pptx (dung.py) phải bỏ slide 8 và lùi chỉ số trong tools/k10_bai_giang/mo_phong/B13.js, dung.py (slide, xoa ảnh) | chưa |
 | 2026-11-20 | #3 | bai-giang/k10-B13-tuong-tac.html (trước là k10-B13.html) | Củng cố 2, câu 3 (Đúng/Sai) ý a, b: F<sub>K</sub>, F<sub>c</sub> → thêm kí hiệu vectơ (→) trên F | đã áp 2026-11-22 (vào `tools/va_bai_giang_roi.js`) |
 | 2026-11-18 | #2 | nguon/data/k12-2.js, Ho-so-day-hoc-so.html | Câu B8-TN2: "...các hạt khói chuyển động" → "...các hạt khói chuyển động như thế nào?" | chưa |
