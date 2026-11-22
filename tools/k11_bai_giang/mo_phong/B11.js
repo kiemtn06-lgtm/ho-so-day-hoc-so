@@ -21,38 +21,87 @@
   }
   var SUP = "⁰¹²³⁴⁵⁶⁷⁸⁹";
 
-  /* ---------- Slide 3: sóng điện từ truyền trong chân không, E ⟂ B ⟂ phương truyền ---------- */
+  /* ---------- Slide 3: sóng điện từ truyền trong chân không, E ⟂ B ⟂ phương truyền (vẽ phối cảnh 3 chiều) ---------- */
   MP.dangKy("B11", 2, {
     ten: "Sóng điện từ: điện trường E và từ trường B",
-    goiY: "Không cần môi trường vật chất: E (đỏ) và B (xanh) vuông góc nhau, cùng vuông góc phương truyền, luôn cùng pha.",
+    goiY: "E (đỏ, mặt phẳng thẳng đứng) và B (xanh, mặt phẳng nằm ngang) vuông góc nhau và cùng vuông góc phương truyền; luôn cùng pha. Kéo “Góc nhìn” để xoay, kéo “Điểm khảo sát” để đọc E, B.",
     toc: 0.5,
     tao: function (ui) {
-      var n = 3, hE = true, hB = true;      // n: số bước sóng hiển thị (không phải tần số thật)
+      var n = 3, phi = 38, pos = .5, hE = true, hB = true, hMat = true, hVec = true, hDT = true;
       ui.truot("Số bước sóng hiển thị", 1.5, 6, 0.5, n, "", function (x) { n = x });
-      ui.chon("Hiện điện trường E", hE, function (x) { hE = x });
-      ui.chon("Hiện từ trường B", hB, function (x) { hB = x });
+      ui.truot("Góc nhìn", 15, 70, 1, phi, "°", function (x) { phi = x });
+      ui.truot("Điểm khảo sát", 0.05, 0.95, 0.01, pos, "", function (x) { pos = x });
+      ui.chon("Điện trường E", hE, function (x) { hE = x });
+      ui.chon("Từ trường B", hB, function (x) { hB = x });
+      ui.chon("Mặt phẳng dao động", hMat, function (x) { hMat = x });
+      ui.chon("Vectơ tại từng điểm", hVec, function (x) { hVec = x });
+      ui.chon("Đồ thị tại điểm khảo sát", hDT, function (x) { hDT = x });
+      var RE = "#f87171", XB = "#38bdf8";
+      function nhan(ctx, s, x, y, mau, co, can) {
+        ctx.save(); ctx.font = "bold " + (co || 18) + "px 'Segoe UI',sans-serif"; ctx.textAlign = can || "left"; ctx.textBaseline = "middle";
+        ctx.lineWidth = 4; ctx.strokeStyle = "rgba(11,21,48,.9)"; ctx.strokeText(s, x, y); ctx.fillStyle = mau; ctx.fillText(s, x, y); ctx.restore();
+      }
       return {
         ve: function (ctx, W, H, t) {
           var g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, "#0b1530"); g.addColorStop(1, "#16254a"); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-          var x0 = 50, x1 = W - 50, y0 = H * .55, A = Math.min(H * .25, 150), k = TAU * n / (x1 - x0), w = TAU * .5;
-          var ph = function (x) { return Math.sin(w * t - k * (x - x0)) };
-          ctx.lineWidth = 1.5; ctx.strokeStyle = "rgba(226,232,240,.7)"; ctx.beginPath(); ctx.moveTo(x0 - 20, y0); ctx.lineTo(x1 - 30, y0); ctx.stroke();
-          V.muiTen(ctx, x1 - 60, y0, x1, y0, "#e2e8f0", 2);
-          ctx.fillStyle = "#e2e8f0"; ctx.font = "bold 16px 'Segoe UI',sans-serif"; ctx.textAlign = "right"; ctx.fillText("phương truyền (vận tốc c)", x1 + 30, H - 20); ctx.textAlign = "start";
-          function cuc(mau, vx, vy) {   // vectơ dao động (vx, vy) tính theo A; E đứng, B xiên (vẽ phối cảnh trục thứ ba)
-            ctx.save(); ctx.strokeStyle = mau; ctx.lineWidth = 3; ctx.beginPath();
-            for (var x = x0; x <= x1; x += 2) { var u = ph(x), X = x + vx * u * A, Y = y0 + vy * u * A; if (x === x0) ctx.moveTo(X, Y); else ctx.lineTo(X, Y) }
-            ctx.stroke(); ctx.globalAlpha = .5; ctx.lineWidth = 1.2;
-            for (var x2 = x0; x2 <= x1; x2 += 16) { var u2 = ph(x2); ctx.beginPath(); ctx.moveTo(x2, y0); ctx.lineTo(x2 + vx * u2 * A, y0 + vy * u2 * A); ctx.stroke() }
+          var x0 = 70, x1 = W - 70, y0 = H * .56, A = Math.min(H * .21, 140), k = TAU * n / (x1 - x0), w = TAU * .5, c = Math.cos(phi * Math.PI / 180), s = Math.sin(phi * Math.PI / 180);
+          var ph = function (x, tt) { return Math.sin(w * tt - k * (x - x0)) };
+          var PE = function (x, u) { return [x, y0 - u * A] };                       // điểm của E (trục thẳng đứng)
+          var PB = function (x, u) { return [x - u * A * c, y0 + u * A * s] };      // điểm của B (trục z hướng ra phía người xem, chiếu xiên)
+          // mặt phẳng dao động
+          if (hMat) {
+            [[hE, PE, "rgba(248,113,113,.10)", "rgba(248,113,113,.35)"], [hB, PB, "rgba(56,189,248,.10)", "rgba(56,189,248,.35)"]].forEach(function (m) {
+              if (!m[0]) return; var a = m[1](x0, 1), b = m[1](x1, 1), d = m[1](x1, -1), e = m[1](x0, -1);
+              ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); ctx.lineTo(d[0], d[1]); ctx.lineTo(e[0], e[1]); ctx.closePath();
+              ctx.fillStyle = m[2]; ctx.fill(); ctx.setLineDash([6, 6]); ctx.strokeStyle = m[3]; ctx.lineWidth = 1.2; ctx.stroke(); ctx.setLineDash([]);
+            });
+          }
+          // trục truyền
+          ctx.lineWidth = 2; ctx.strokeStyle = "rgba(226,232,240,.8)"; ctx.beginPath(); ctx.moveTo(x0 - 20, y0); ctx.lineTo(x1 - 10, y0); ctx.stroke();
+          V.muiTen(ctx, x1 - 40, y0, x1 + 10, y0, "#e2e8f0", 3);
+          nhan(ctx, "phương truyền, vận tốc v (v = c)", x1 + 24, H - 24, "#e2e8f0", 16, "right");
+          function truong(f, mau, hien) {
+            if (!hien) return;
+            ctx.save(); ctx.strokeStyle = mau; ctx.lineWidth = 3.2; ctx.beginPath();
+            for (var x = x0; x <= x1; x += 2) { var p = f(x, ph(x, t)); if (x === x0) ctx.moveTo(p[0], p[1]); else ctx.lineTo(p[0], p[1]) }
+            ctx.stroke(); ctx.restore();
+            if (!hVec) return;
+            for (var x2 = x0 + 8; x2 <= x1 - 4; x2 += 15) {
+              var u = ph(x2, t), p2 = f(x2, u); if (Math.abs(u) * A < 7) continue;
+              ctx.save(); ctx.globalAlpha = .75; V.muiTen(ctx, x2, y0, p2[0], p2[1], mau, 1.7); ctx.restore();
+            }
+          }
+          truong(PB, XB, hB); truong(PE, RE, hE);
+          // điểm khảo sát
+          var xp = x0 + pos * (x1 - x0), up = ph(xp, t), pe = PE(xp, up), pb = PB(xp, up);
+          ctx.save(); ctx.setLineDash([4, 5]); ctx.strokeStyle = "rgba(253,224,71,.7)"; ctx.lineWidth = 1.5;
+          var q1 = PE(xp, 1.25), q2 = PE(xp, -1.25); ctx.beginPath(); ctx.moveTo(q1[0], q1[1]); ctx.lineTo(q2[0], q2[1]); ctx.stroke(); ctx.restore();
+          if (hE && Math.abs(up) > .06) { V.muiTen(ctx, xp, y0, pe[0], pe[1], "#fecaca", 5); nhan(ctx, "E", pe[0] + 18, pe[1] + (up > 0 ? -8 : 8), "#fecaca", 22) }
+          if (hB && Math.abs(up) > .06) { V.muiTen(ctx, xp, y0, pb[0], pb[1], "#bae6fd", 5); nhan(ctx, "B", pb[0] - 20, pb[1] + (up > 0 ? 8 : -8), "#bae6fd", 22) }
+          V.muiTen(ctx, xp, y0, xp + 60, y0, "#fde047", 5); nhan(ctx, "v", xp + 70, y0 + 4, "#fde047", 22);
+          ctx.beginPath(); ctx.arc(xp, y0, 6, 0, TAU); ctx.fillStyle = "#fde047"; ctx.fill();
+          // chú thích
+          nhan(ctx, "● Điện trường E: dao động trong mặt phẳng thẳng đứng", 16, H - 52, "#fca5a5", 18);
+          nhan(ctx, "● Từ trường B: dao động trong mặt phẳng nằm ngang", 16, H - 24, "#7dd3fc", 18);
+          V.hop(ctx, 12, 12, ["Sóng điện từ là *điện từ trường lan truyền* trong không gian, không cần môi trường",
+            "*E ⟂ B ⟂ v* (sóng ngang); E → B → v theo quy tắc bàn tay phải",
+            "E và B *cùng pha*: cùng lúc cực đại, cùng lúc bằng 0 (E₀/B₀ = c = *3·10⁸ m/s*)",
+            "Tại điểm khảo sát: *E = " + so(up, 2) + "·E₀*,  *B = " + so(up, 2) + "·B₀*"], { co: 15 });
+          if (hDT && W >= 900) {   // đồ thị E(t), B(t) tại điểm khảo sát
+            var gw = Math.min(330, W * .27), gh = 150, gx = W - gw - 14, gy = 14, T = TAU / w, ym = gy + gh / 2 + 8;
+            ctx.save(); ctx.fillStyle = "rgba(15,23,42,.82)"; ctx.strokeStyle = "rgba(148,163,184,.35)"; ctx.lineWidth = 1;
+            ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(gx, gy, gw, gh, 8); else ctx.rect(gx, gy, gw, gh); ctx.fill(); ctx.stroke();
+            ctx.strokeStyle = "rgba(148,163,184,.5)"; ctx.beginPath(); ctx.moveTo(gx + 8, ym); ctx.lineTo(gx + gw - 8, ym); ctx.stroke();
+            [[RE, 3.2, []], [XB, 2, [7, 5]]].forEach(function (o, i) {
+              if (i === 0 && !hE || i === 1 && !hB) return;
+              ctx.strokeStyle = o[0]; ctx.lineWidth = o[1]; ctx.setLineDash(o[2]); ctx.beginPath();
+              for (var j = 0; j <= 120; j++) { var tau = -2 * T + 2 * T * j / 120, X = gx + 10 + (gw - 20) * j / 120, Y = ym - Math.sin(w * (t + tau) - k * (xp - x0)) * (gh / 2 - 28); if (j === 0) ctx.moveTo(X, Y); else ctx.lineTo(X, Y) }
+              ctx.stroke();
+            });
+            ctx.setLineDash([]); ctx.fillStyle = "#fde047"; ctx.beginPath(); ctx.arc(gx + gw - 10, ym - up * (gh / 2 - 28), 5, 0, TAU); ctx.fill();
+            ctx.fillStyle = "#e2e8f0"; ctx.font = "bold 13px 'Segoe UI',sans-serif"; ctx.textAlign = "left"; ctx.textBaseline = "alphabetic"; ctx.fillText("Tại điểm khảo sát theo thời gian: E và B trùng nhau", gx + 8, gy + 17);
             ctx.restore();
           }
-          if (hB) cuc("#38bdf8", .3, -.3);
-          if (hE) cuc("#f87171", 0, -1);
-          ctx.font = "bold 20px 'Segoe UI',sans-serif";
-          if (hE) { ctx.fillStyle = "#fca5a5"; ctx.fillText("Điện trường E", 14, H - 50) }
-          if (hB) { ctx.fillStyle = "#7dd3fc"; ctx.fillText("Từ trường B", 14, H - 22) }
-          V.hop(ctx, 12, 12, ["Sóng điện từ là *điện từ trường lan truyền* trong không gian", "*E ⟂ B ⟂ phương truyền* (sóng ngang); E và B *cùng pha*",
-            "Trong chân không: *c = 3·10⁸ m/s*, và c = λ·f"]);
         }
       };
     }
