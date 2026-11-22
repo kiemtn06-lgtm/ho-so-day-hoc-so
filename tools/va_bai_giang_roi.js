@@ -95,7 +95,10 @@ module.exports = function (ma) {
     ['<b id="e2l">2</b> kg <input id="e2" type="range" min="1" max="10" value="2"', '<b id="e2l">5</b> kg <input id="e2" type="range" min="1" max="10" value="5"'],
     /* Công thức tổng quát nằm trên một dòng; hình minh hoạ vuông góc vẽ đúng tỉ lệ 6 : 8 và nhãn không đè nét */
     ['<div class="eq math big">F² = F₁² + F₂² + 2F₁F₂cosα</div>', '<div class="eq math big" style="font-size:32px;white-space:nowrap">F² = F₁² + F₂² + 2F₁F₂cosα</div>'],
-    [/<svg viewBox="0 0 330 200" width="100%"><rect x="40" y="30"[\s\S]*?<\/svg>/, SVG_B13_VUONG]
+    [/<svg viewBox="0 0 330 200" width="100%"><rect x="40" y="30"[\s\S]*?<\/svg>/, SVG_B13_VUONG],
+    /* Củng cố 2, câu 3 (Đúng/Sai) ý a, b: thêm kí hiệu vectơ cho F_K, F_c (phiếu #3, 20/11/2026) */
+    ["['Khi tủ lạnh chưa chuyển động thì F<sub>K</sub> và F<sub>c</sub> là hai lực cân bằng.',1]", "[`Khi tủ lạnh chưa chuyển động thì ${v('F')}<sub>K</sub> và ${v('F')}<sub>c</sub> là hai lực cân bằng.`,1]"],
+    ["['Khi tủ lạnh bắt đầu chuyển động nhanh dần thì F<sub>K</sub> và F<sub>c</sub> là hai lực không cân bằng.',1]", "[`Khi tủ lạnh bắt đầu chuyển động nhanh dần thì ${v('F')}<sub>K</sub> và ${v('F')}<sub>c</sub> là hai lực không cân bằng.`,1]"]
   ];
   if (ma === 'B14') va.sua = [
     thayAnh('s14_3', 'b14-xe-va-vat', 'Xe lăn xuống dốc va vào tường – vật nhỏ trên xe', 190),

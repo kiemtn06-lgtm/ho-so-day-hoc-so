@@ -5,5 +5,5 @@ Trên máy giáo viên: dòng nào cột cuối là `chưa` thì phải áp bả
 
 | Ngày | Phiếu | Tệp đã sửa | Cũ → mới | Đã áp vào nguồn trên máy |
 |---|---|---|---|---|
-| 2026-11-20 | #3 | bai-giang/k10-B13.html | Củng cố 2, câu 3 (Đúng/Sai) ý a, b: F<sub>K</sub>, F<sub>c</sub> → thêm kí hiệu vectơ (→) trên F | chưa |
+| 2026-11-20 | #3 | bai-giang/k10-B13-tuong-tac.html (trước là k10-B13.html) | Củng cố 2, câu 3 (Đúng/Sai) ý a, b: F<sub>K</sub>, F<sub>c</sub> → thêm kí hiệu vectơ (→) trên F | đã áp 2026-11-22 (vào `tools/va_bai_giang_roi.js`) |
 | 2026-11-18 | #2 | nguon/data/k12-2.js, Ho-so-day-hoc-so.html | Câu B8-TN2: "...các hạt khói chuyển động" → "...các hạt khói chuyển động như thế nào?" | chưa |

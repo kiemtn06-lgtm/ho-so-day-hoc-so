@@ -11,6 +11,14 @@ Cập nhật: 12/11/2026. Ghi chú này để lần sau làm tiếp không phả
 - **Công cụ lớp ngay trong bài giảng (14/11/2026)**, Bài 12–15: nút "👥 Lớp" ở mép phải giữa màn hình. Có Gọi tên ngẫu nhiên (phím G, hiệu ứng quay tên, không lặp đến khi gọi hết lớp trong cùng bài, cùng ngày) kèm chấm +1 / +0,5 / 0; chấm em xung phong; Bấm giờ 30 giây–10 phút (đồng hồ lớn trên đầu, chuông khi hết); Chia nhóm ngẫu nhiên 2–8 nhóm; Ghi chú nhanh kèm slide. Danh sách lớp đọc từ hồ sơ (mục Lớp học) hoặc nhập ngay trong bài giảng. Điểm, ghi chú, lớp mới nằm ở hàng chờ localStorage `hsdh_bg`; hồ sơ tự nhận khi mở hoặc quay lại tab (`nhanTuBaiGiang` trong `nguon/app.js`). Tự ẩn khi chạy trong khung "Dạy ngay" của hồ sơ. Mã: `tools/cong_cu_lop.js`, gắn qua `tools/va_bai_giang_roi.js`. Ghi chú của Bài 12 lưu với khóa `10-2.B12` nhưng hồ sơ chưa hiện vì Chương II chưa có dữ liệu bài.
 - Nguồn: `OneDrive\Fujitsu\Tài liệu 10\04_Chương III - Động lực học\*.html`. File nguồn không bị sửa.
 
+## Bài 13 thay bằng bản pptx mới (22/11/2026)
+- Bài giảng Bài 13 trong hồ sơ nay là **19 slide ảnh** từ `K10/Bài 13- Tong_hop_va_Phan_tich_Luc_da_sua.pptx` (làm bằng NotebookLM, bản "đã sửa"): tiết 1 (tình huống, thí nghiệm 3 lực kế, quy tắc hình bình hành, độ lớn hợp lực, trường hợp đặc biệt, mini-quiz), tiết 2 (mặt phẳng nghiêng, phân tích lực, điều kiện cân bằng, luyện tập 3 dạng, dây phơi), phụ lục (phiếu học tập, đáp án). Trang `bai-giang/k10-B13.html`, ảnh `bai-giang/k10-B13/s01..s19.jpg`.
+- Dựng: `python -I -X utf8 tools/k10_bai_giang/dung.py` (dùng khung của `tools/k11_bai_giang`). Đã xóa số trang thừa (40–50) trong bánh răng slide 9–17 (khai báo `SUA_ANH`).
+- 12 mô phỏng (nút "Mô phỏng", phím M) ở slide 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 16, 17: ba lực kế có bảng số liệu và sai số đọc, hình bình hành + đồ thị F theo α, các trường hợp đặc biệt, mặt phẳng nghiêng, phân tích lực (xoay hệ trục), ba lực cân bằng (đa giác lực), vật treo hai dây, dây phơi (dây đứt khi T quá sức chịu), tìm F₁, F₂ từ đồ thị. Mã: `tools/k10_bai_giang/mo_phong/B13.js`.
+- Bài giảng tương tác cũ (20 slide, câu hỏi củng cố có chấm điểm, mô phỏng cũ) giữ lại thành `bai-giang/k10-B13-tuong-tac.html`; nút "Luyện tập tương tác" trong bài mới mở nó tại Củng cố 1. `dung_k10.sh` đã đổi đích dựng sang tên này.
+- LƯU Ý: trang `k10-B12..B15` và `k10-B13-tuong-tac` đã được chỉnh trực tiếp ở các lần trước (giọng đọc tiếng Việt, commit c808c60, 96be2bb) mà bản vá `tools/va_bai_giang_roi.js` chưa có; chạy lại `dung_k10.sh` sẽ XÓA các chỉnh sửa đó. Muốn dựng lại thì phải đưa chúng vào bản vá trước.
+- Việc dở: Bài 14, 15 làm tương tự khi có pptx mới; dữ liệu Bài tập của Bài 13 trong hồ sơ (`tools/noi_dung_k10_chuong3.json`) chưa đổi, vẫn theo bản cũ.
+
 ## Cách dựng lại (khi sửa file nguồn hoặc sửa bản vá)
 1. `sh tools/dung_k10.sh` : dựng 4 bài giảng vào `bai-giang/k10-B12..B15.html`.
 2. `node tools/build_du_lieu_roi.js tools/noi_dung_k10_chuong3.json` : dựng dữ liệu chương III.
