@@ -503,14 +503,15 @@ window.MPve = {
   }
 
   /* ============ 5. Vật treo bằng hai dây / dây phơi: 2T·sin α = P ============ */
-  function treo(ten, goiY, P0, a0) {
+  function treo(ten, goiY, P0, a0, anDapAn) {
     return {
       ten: ten, goiY: goiY,
       tao: function (ui) {
-        var P = P0, a = a0, Tmax = 100;
+        var P = P0, a = a0, Tmax = 100, hien = !anDapAn;
         ui.truot("Trọng lượng vật treo P", 5, 80, 5, P, "N", function (x) { P = x });
         ui.truot("Góc α (mỗi dây với phương ngang)", 2, 60, 1, a, "°", function (x) { a = x });
         ui.truot("Dây chịu được tối đa", 30, 200, 10, Tmax, "N", function (x) { Tmax = x });
+        if (anDapAn) { var nb = ui.nut("Hiện đáp án", function () { hien = !hien; nb.textContent = hien ? "Ẩn đáp án" : "Hiện đáp án" }) }
         return {
           ve: function (ctx, W, H) {
             nen(ctx, W, H);
@@ -530,7 +531,7 @@ window.MPve = {
             V.muiTen(ctx, xm, yv, xm - lt * Math.cos(a * R), yv - lt * sn, dut ? DO : XANH, 5); V.muiTen(ctx, xm, yv, xm + lt * Math.cos(a * R), yv - lt * sn, dut ? DO : XANH, 5);
             vt(ctx, "T", "₁", xm - lt * Math.cos(a * R) - 10, yv - lt * sn - 26, XANH); vt(ctx, "T", "₂", xm + lt * Math.cos(a * R) + 10, yv - lt * sn - 26, XANH);
             if (dut) { ctx.save(); ctx.font = "bold 34px " + FONT; ctx.textAlign = "center"; ctx.fillStyle = DO; ctx.fillText("⚠ DÂY ĐỨT!  T > " + Tmax + " N", xm, H - 26); ctx.restore() }
-            V.hop(ctx, 12, 12, ["Cân bằng: T₁ + T₂ + P = 0  →  theo phương thẳng đứng: *2T·sin α = P*",
+            if (hien) V.hop(ctx, 12, 12, ["Cân bằng: T₁ + T₂ + P = 0  →  theo phương thẳng đứng: *2T·sin α = P*",
               "T = P / (2·sin α) = " + P + " / (2·sin " + a + "°) = *" + so(T, 1) + " N*" + (cap ? "  (mũi tên T vẽ rút gọn)" : ""),
               a <= 5 ? "α rất nhỏ: sin α ≈ 0 → T rất lớn, dây căng ngang dễ *đứt*" : "Dây càng căng ngang (α nhỏ) thì lực căng T càng *lớn*",
               dut ? "T = " + so(T, 0) + " N vượt sức chịu " + Tmax + " N: dây đứt" : "T = " + so(T, 1) + " N ≤ " + Tmax + " N: dây còn an toàn"], { co: 15 });
@@ -627,7 +628,7 @@ window.MPve = {
   MP.dangKy("B13", 11, treo("Vật treo bằng hai dây", "T₁ + T₂ + P = 0 → 2T·sinα = P. Giảm α thì lực căng T tăng.", 20, 40));
   MP.dangKy("B13", 13, dungSai());
   MP.dangKy("B13", 14, tim);
-  MP.dangKy("B13", 15, treo("Bài toán dây phơi", "Dây phơi căng ngang (α nhỏ) → T rất lớn → dễ đứt. Thử giảm α đến khi dây đứt, rồi tăng lại.", 30, 20));
+  MP.dangKy("B13", 15, treo("Bài toán dây phơi", "Dây phơi căng ngang (α nhỏ) → T rất lớn → dễ đứt. Thử giảm α đến khi dây đứt, rồi tăng lại.", 30, 20, true));
 })();
 </script>
 <script>
