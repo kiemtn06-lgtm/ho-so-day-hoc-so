@@ -534,10 +534,11 @@ function initQuiz(){const tiles=$('#tiles');if(!tiles||typeof QZ==='undefined')r
   QZ.forEach((q,i)=>{const b=document.createElement('button');b.className='tile';b.textContent=i+1;b.onclick=()=>{qi=i;$('#mq').innerHTML=mathify('<b>Câu '+(i+1)+':</b> '+q[0]);speakQ('Câu '+(i+1)+'. '+q[0]);startClock();const a=$('#ma');a.innerHTML=mathify(q[1]);a.style.display='none';$('#modal').style.display='flex'};tiles.appendChild(b)})}
 
 let _ck=null,_cs=60,_vo=null;
+function chonVi(vs){var v=(vs||[]).filter(function(x){return /^vi([-_]|$)/i.test(x.lang)||/vietnam|tiếng việt|hoaimy|namminh/i.test(x.name)});if(!v.length)return null;function d(x){var n=x.name+" "+x.lang,s=0;if(/nam bộ|miền nam|southern|sài gòn|saigon|ho chi minh/i.test(n))s+=100;if(/hoaimy|hoài my|female|nữ|linh|lan|mai|thu|google/i.test(n))s+=20;if(/namminh|nam minh|male|nam|microsoft an/i.test(n))s-=50;if(/natural|online/i.test(n))s+=5;return s}return v.sort(function(a,b){return d(b)-d(a)})[0]}
 function speakQ(txt){try{const ss=window.speechSynthesis;if(!ss)return;ss.cancel();
   const t=txt.replace(/<[^>]+>/g,' ').replace(/\$[^$]*\$/g,' ').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').replace(/v[eé]c[\s-]*tơ/gi,'véc tơ').replace(/\bSI\b/g,'ét i').replace(/\bNewton\b/g,'Niu tơn').replace(/m\/s²/g,' mét trên giây bình phương').replace(/m\/s/g,' mét trên giây').replace(/\bkg\b/g,' ki lô gam').replace(/°/g,' độ ').replace(/\s+/g,' ');
   const u=new SpeechSynthesisUtterance(t);u.lang='vi-VN';u.rate=.95;
-  const vs=ss.getVoices();_vo=_vo||vs.find(x=>/^vi/i.test(x.lang));if(_vo)u.voice=_vo;ss.speak(u)}catch(e){}}
+  const vs=ss.getVoices();_vo=_vo||chonVi(vs);if(_vo)u.voice=_vo;ss.speak(u)}catch(e){}}
 function clockTxt(){const m=$('#mclock');if(!m)return;m.textContent='⏱ '+Math.floor(_cs/60)+':'+String(_cs%60).padStart(2,'0');m.style.background=_cs<=10?'#fee2e2':'#eaf1ff';m.style.color=_cs<=10?'#dc2626':'#14213d'}
 function tick(n){try{const C=window.AudioContext||window.webkitAudioContext;window._ac=window._ac||new C();const c=window._ac;if(c.state==='suspended')c.resume();const o=c.createOscillator(),g=c.createGain(),t=c.currentTime;
   o.type='square';o.frequency.value=n%2?900:650;o.connect(g);g.connect(c.destination);g.gain.setValueAtTime(.12,t);g.gain.exponentialRampToValueAtTime(.0001,t+.07);o.start(t);o.stop(t+.08)}catch(e){}}

@@ -254,7 +254,11 @@ main figure:not(.sgk){max-width:440px;margin-left:0;margin-right:auto}main figur
 body:not(.isgv) #mrans,body:not(.isgv) #mrclick{display:none}
 .pills .lk::after{content:" \1F512";font-size:.8em}.kqbai{margin-top:18px;padding-top:6px;border-top:2px solid var(--acc)}
 .msim.locked{opacity:.65}.msim.locked>:not(summary){display:none !important}.msim.locked>summary{cursor:not-allowed;color:var(--mut)}.msim.locked>summary::after{content:" \1F512"}
-@media print{.lkm,#lk{display:none}}</style></head>
+@media print{.lkm,#lk{display:none}}</style><!--bt-k12-ot--><style id="bt-k12">
+body.bt header.top,body.bt nav.tabs,body.bt #p-mr>h2:not(#btH),body.bt #p-mr>.note,body.bt #p-mr [data-a=mrb]{display:none !important}
+body.bt #btH{margin:10px 0 6px}
+body.emb:not(.bt) [data-tab=mr]{display:none !important}
+</style></head>
 <body>
 <header class="top"><h1>Ôn tập Vật lí 12 – Chương II: Khí lí tưởng</h1><p id="sub"></p>
 <div class="tools"><button id="lk" title="Giáo viên: mở hoặc khoá từng tab cho học sinh">Điều khiển lớp (GV)</button><button id="gv" aria-pressed="false" title="Hiện đáp án và lời giải ở mọi câu">Chế độ giáo viên</button><button id="in">In / lưu PDF</button><button id="sang">Sáng / tối</button><button id="rs">Xóa dữ liệu đã lưu</button></div></header>
@@ -1699,4 +1703,24 @@ body:not(.isgv) #mrans,body:not(.isgv) #mrclick{display:none}
   window.addEventListener('hashchange',go);
 })();</script><!--nut-sua--><script src="../nguon/lib/nut_sua.js" defer></script>
 <!--am-thanh--><script src="../nguon/lib/am_thanh.js" defer></script>
-</body></html>
+<script>(function(){
+  var KEY='onthi:vat-li:12:cuoi-ki-1:v1',framed=false;try{framed=parent!==window}catch(e){framed=true}
+  function bt(){return /^#bt-([0-9]+)$/.exec(location.hash)}
+  function giu(raw){try{if(raw===null)localStorage.removeItem(KEY);else localStorage.setItem(KEY,raw)}catch(e){}}
+  var goc;try{goc=localStorage.getItem(KEY)}catch(e){goc=null}
+  window.addEventListener('pagehide',function(){if(bt())giu(goc)});
+  function go(){
+    var m=bt();document.body.classList.toggle('bt',!!m);document.body.classList.toggle('emb',framed);
+    if(!m)return;
+    var t=document.querySelector('[data-tab=mr]');if(t)t.click();
+    setTimeout(function(){
+      var p=document.querySelector('[data-a=mrb][data-b="'+m[1]+'"]');if(p)p.click();
+      var h=document.getElementById('btH'),pn=document.getElementById('p-mr'),bd=document.getElementById('mrbody');
+      if(!h&&pn&&bd){h=document.createElement('h2');h.id='btH';pn.insertBefore(h,pn.firstChild)}
+      if(h)h.textContent='Bài tập cuối bài · Bài '+m[1];
+      giu(goc);
+    },300);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(go,0)});else setTimeout(go,0);
+  window.addEventListener('hashchange',go);
+})();</script></body></html>

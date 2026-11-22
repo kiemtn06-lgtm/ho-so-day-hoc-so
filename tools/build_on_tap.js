@@ -19,6 +19,7 @@ h = h.replace('</body>', JS + '</body>');
 const out = path.join(__dirname, '..', dst);
 fs.mkdirSync(path.dirname(out), { recursive: true });
 h = require('./sua_dap_an_on_tap')(h, dst);   // sửa đáp án đã được giáo viên xác nhận (tools/sua_dap_an_on_tap.js)
+h = require('./bai_tap_cuoi_bai_k12').onTap(h);   // #bt-N: Bài tập cuối bài = phần Mở rộng ôn tập (tools/bai_tap_cuoi_bai_k12.js)
 fs.writeFileSync(out, h);
 require('./gan_nut_sua').tep(out);   // nút ✎ Sửa (nguon/lib/nut_sua.js)
 console.log('Đã tạo', dst, (h.length / 1048576).toFixed(1) + ' MB');

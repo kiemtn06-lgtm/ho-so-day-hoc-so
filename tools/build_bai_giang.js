@@ -114,6 +114,7 @@ h = h.replace('</body>', JS + '</body>');
 
 fs.mkdirSync(require('path').dirname(dst), { recursive: true });
 h = require('./sua_dap_an_on_tap')(h, dst);   // sửa đáp án đã được giáo viên xác nhận (tools/sua_dap_an_on_tap.js)
+h = require('./bai_tap_cuoi_bai_k12').baiGiang(h);   // nút "Bài tập cuối bài" (tools/bai_tap_cuoi_bai_k12.js)
 fs.writeFileSync(dst, h);
 require('./gan_nut_sua').tep(dst);   // nút ✎ Sửa (nguon/lib/nut_sua.js)
 console.log('Đã tạo', dst, (h.length / 1048576).toFixed(1) + ' MB');
