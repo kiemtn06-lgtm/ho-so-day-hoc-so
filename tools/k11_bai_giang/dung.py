@@ -64,6 +64,19 @@ SUA_ANH = {
                   ('to', (453, 603, 510, 632)), ('chu', (452, 625), '1,50', 28, 'toan', (8, 8, 16)),
                   ('to', (548, 612, 890, 660)), ('chu', (549, 647), '0,59 μm.', 36, 'toan', (8, 8, 16))],
     # B12 slide 8: chữ lỗi của NotebookLM ("Column 1/2/3", "hẹp $ hai khe hẹp$")
+    # B11 slide 4 (thang sóng điện từ): ảnh gốc ngược chiều và sai số. Sửa: hình sóng lật lại (gamma dày nhất bên trái), "Năng lượng tăng dần" → "giảm dần"
+    # (mũi tên chỉ sang phải, về phía vô tuyến), hai nhãn bước sóng đổi chỗ, các mốc λ–f viết lại theo f = c/λ (c = 3·10⁸ m/s; mốc 10⁻⁹ m trùng 1 nm nên đổi thành 10⁻¹¹ m).
+    ('B11', 4): [('lat', (45, 120, 1335, 255)),
+                ('xoa', (570, 268, 806, 306)), ('chu', (688, 298), 'Năng lượng giảm dần', 24, 'thuong', (28, 38, 80), 'ms'),
+                ('xoa', (85, 497, 290, 535)), ('chu', (92, 524), 'Bước sóng ngắn', 27, 'thuong', (28, 38, 80)),
+                ('xoa', (1100, 497, 1300, 535)), ('chu', (1290, 524), 'Bước sóng dài', 27, 'thuong', (28, 38, 80), 'rs'),
+                ('xoa', (32, 404, 176, 468)), ('chu', (104, 428), '10⁻¹² m', 27, 'thuong', (28, 38, 80), 'ms'), ('chu', (104, 461), '3·10²⁰ Hz', 27, 'thuong', (28, 38, 80), 'ms'),
+                ('xoa', (218, 404, 362, 468)), ('chu', (290, 428), '10⁻¹¹ m', 27, 'thuong', (28, 38, 80), 'ms'), ('chu', (290, 461), '3·10¹⁹ Hz', 27, 'thuong', (28, 38, 80), 'ms'),
+                ('xoa', (406, 404, 550, 468)), ('chu', (478, 428), '10⁻⁸ m', 27, 'thuong', (28, 38, 80), 'ms'), ('chu', (478, 461), '3·10¹⁶ Hz', 27, 'thuong', (28, 38, 80), 'ms'),
+                ('xoa', (652, 404, 812, 468)), *[('chep', (638, 470, 690, 471), (0, y - 470)) for y in range(404, 468)], ('chu', (689, 428), '1 µm', 27, 'thuong', (28, 38, 80)), ('chu', (689, 461), '3·10¹⁴ Hz', 27, 'thuong', (28, 38, 80)),
+                ('xoa', (800, 404, 944, 468)), ('chu', (872, 428), '1 mm', 27, 'thuong', (28, 38, 80), 'ms'), ('chu', (872, 461), '3·10¹¹ Hz', 27, 'thuong', (28, 38, 80), 'ms'),
+                ('xoa', (990, 404, 1134, 468)), ('chu', (1062, 428), '1 m', 27, 'thuong', (28, 38, 80), 'ms'), ('chu', (1062, 461), '3·10⁸ Hz', 27, 'thuong', (28, 38, 80), 'ms'),
+                ('xoa', (1181, 404, 1325, 468)), ('chu', (1253, 428), '1 km', 27, 'thuong', (28, 38, 80), 'ms'), ('chu', (1253, 461), '3·10⁵ Hz', 27, 'thuong', (28, 38, 80), 'ms')],
     ('B12', 8): [('to', (180, 470, 340, 508)), ('chu', (258, 498), 'Nguồn sáng', 27, 'dam', (24, 36, 90), 'ms'),
                  ('to', (600, 470, 770, 508)), ('chu', (685, 498), 'Màn chắn', 27, 'dam', (24, 36, 90), 'ms'),
                  ('to', (1030, 470, 1205, 508)), ('chu', (1117, 498), 'Màn quan sát', 27, 'dam', (24, 36, 90), 'ms'),
@@ -80,6 +93,8 @@ def sua_anh(im, viec):
         if v[0] == 'chu':
             f, k = PHONG[v[4]]; ImageDraw.Draw(im).text(v[1], v[2], font=ImageFont.truetype(f, v[3], index=k), fill=v[5], anchor=v[6] if len(v) > 6 else 'ls'); continue
         x0, y0, x1, y1 = v[1]
+        if v[0] == 'lat':     # lật ngược trái-phải một vùng
+            im.paste(im.crop((x0, y0, x1, y1)).transpose(Image.FLIP_LEFT_RIGHT), (x0, y0)); px = im.load(); continue
         if v[0] == 'to':      # tô phẳng cả vùng bằng màu nền ở góc trên trái (chỉ dùng trên nền phẳng)
             ImageDraw.Draw(im).rectangle((x0, y0, x1 - 1, y1 - 1), fill=px[x0, y0]); continue
         if v[0] == 'xoa':     # tô lại bằng nền: mỗi cột nội suy từ mép trên xuống mép dưới của vùng (bóng mờ phía trên nhạt dần)

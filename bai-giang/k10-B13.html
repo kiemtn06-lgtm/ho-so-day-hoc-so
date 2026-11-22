@@ -32,7 +32,8 @@ html,body{margin:0;height:100%;background:#0b1220;color:#e5e7eb;font:16px/1.4 "S
 #luoi span{display:block;padding:5px 2px 1px}
 #btK{position:fixed;inset:0;z-index:9999;background:rgba(15,23,42,.7);display:none;padding:2vh 2vw}
 #btK iframe{width:100%;height:100%;border:0;border-radius:12px;background:#fff}
-#btK iframe{height:calc(100% - 46px)} #btK button{position:absolute;bottom:calc(2vh + 12px);right:calc(2vw + 22px);font:600 16px "Segoe UI",sans-serif;border:0;border-radius:999px;padding:7px 16px;background:#14213d;color:#fff;cursor:pointer;box-shadow:0 2px 10px #0006}
+.ttf{position:absolute;inset:0;width:100%;height:100%;border:0;background:#0b1220}#san.tt .vung{display:none}.ttK{aspect-ratio:1376/768;border-radius:6px;background:linear-gradient(135deg,#1e3a8a,#0f172a);display:flex;flex-direction:column;justify-content:center;gap:8px;padding:12px;font-weight:700;color:#e5e7eb}.ttK b{align-self:flex-start;background:#f59e0b;color:#111827;border-radius:999px;padding:2px 10px;font-size:12px}
+#btK button{position:absolute;bottom:calc(2vh + 12px);right:calc(2vw + 22px);font:600 16px "Segoe UI",sans-serif;border:0;border-radius:999px;padding:7px 16px;background:#14213d;color:#fff;cursor:pointer;box-shadow:0 2px 10px #0006}
 @media (max-width:720px){#td{display:none}#thanh{gap:5px;padding:0 6px}#thanh button{padding:6px 10px;font-size:14px}}
 @media print{#thanh,#thuoc,.vung{display:none}#san{inset:0}}
 
@@ -70,7 +71,7 @@ html,body{margin:0;height:100%;background:#0b1220;color:#e5e7eb;font:16px/1.4 "S
 </style>
 </head>
 <body>
-<div id="san"><img id="anh" alt=""><button class="vung" id="vTruoc" aria-label="Slide trước" title="Slide trước"></button><button class="vung" id="vSau" aria-label="Slide sau" title="Slide sau"></button></div>
+<div id="san"><img id="anh" alt=""><iframe id="llFrame" class="ttf" title="Hoạt động tương tác" hidden></iframe><button class="vung" id="vTruoc" aria-label="Slide trước" title="Slide trước"></button><button class="vung" id="vSau" aria-label="Slide sau" title="Slide sau"></button></div>
 <div id="luoi" role="list" aria-label="Tất cả slide"></div>
 <div id="thuoc"></div>
 <div id="thanh">
@@ -80,7 +81,7 @@ html,body{margin:0;height:100%;background:#0b1220;color:#e5e7eb;font:16px/1.4 "S
   <span id="td"></span>
   <button id="bMP" hidden title="Mô phỏng cho slide này (phím M)">📐 Mô phỏng</button>
   <button id="bLuoi" title="Xem tất cả slide (phím O)">Tất cả slide</button>
-  <button id="bBT" class="c" title="Câu hỏi củng cố tương tác, có chấm điểm (phím B)">Luyện tập tương tác</button>
+  <button id="bBT" class="c" hidden title="Bài tập của bài này, có đáp án (phím B)">Bài tập cuối bài</button>
   <button id="bToan" title="Toàn màn hình (phím F)">⛶ Toàn màn hình</button>
 </div>
 <div id="btK"><button type="button">Đóng ✕</button></div>
@@ -213,7 +214,7 @@ window.MPve = {
 };
 </script>
 <script>/* Mô phỏng Bài 13 (khối 10). Tổng hợp và phân tích lực. Cân bằng lực.
-   Gắn vào slide (đã bỏ slide Mini-quiz, chỉ số từ 7 trở đi lùi 1 so với) bản pptx "Bài 13- Tong_hop_va_Phan_tich_Luc_da_sua.pptx" (chỉ số slide đếm từ 0):
+   Gắn vào slide của bản pptx "Bài 13- Tong_hop_va_Phan_tich_Luc_da_sua.pptx" (chỉ số slide đếm từ 0):
      2, 3  Thí nghiệm ba lực kế, thu thập số liệu     4, 5, 6  Quy tắc hình bình hành, độ lớn hợp lực, trường hợp đặc biệt
      8, 10 Mặt phẳng nghiêng                          9        Phân tích lực
      11    Điều kiện cân bằng (ba lực)                12, 16   Vật treo hai dây, bài toán dây phơi
@@ -621,28 +622,59 @@ window.MPve = {
   MP.dangKy("B13", 4, tongHop("Kéo thanh trượt F₁, F₂, α: hợp lực là đường chéo của hình bình hành tạo bởi hai lực.", "Quy tắc hình bình hành", 60));
   MP.dangKy("B13", 5, tongHop("Độ lớn F phụ thuộc F₁, F₂ và góc α: F² = F₁² + F₂² + 2F₁F₂cosα, luôn nằm giữa |F₁ − F₂| và F₁ + F₂.", "Độ lớn hợp lực", 90));
   MP.dangKy("B13", 6, tongHop("Bấm các nút α = 0°, 90°, 180°, F₁ = F₂ để kiểm tra bốn trường hợp đặc biệt.", "Các trường hợp đặc biệt của hợp lực", 0));
-  MP.dangKy("B13", 7, nghieng("Vì sao vật trượt xuống mặt phẳng nghiêng?", "Tăng góc α: thành phần Pₓ = P·sinα kéo vật trượt tăng dần; α = 0° thì Pₓ = 0."));
-  MP.dangKy("B13", 8, phanTich);
-  MP.dangKy("B13", 9, nghieng("Giải mã mặt phẳng nghiêng", "Pₓ = P·sinα (kéo trượt), P_y = P·cosα (ép lên mặt dốc), N = P_y. Đổi m và α để thấy các thành phần thay đổi."));
-  MP.dangKy("B13", 10, thiNghiem("Điều kiện cân bằng: ba lực có hợp lực bằng 0", "F₁ + F₂ + F₃ = 0: đa giác lực khép kín. Đổi F₁, F₂, α; F₃ tự điều chỉnh để chất điểm cân bằng.", false));
-  MP.dangKy("B13", 11, treo("Vật treo bằng hai dây", "T₁ + T₂ + P = 0 → 2T·sinα = P. Giảm α thì lực căng T tăng.", 20, 40));
-  MP.dangKy("B13", 13, dungSai());
-  MP.dangKy("B13", 14, tim);
-  MP.dangKy("B13", 15, treo("Bài toán dây phơi", "Dây phơi căng ngang (α nhỏ) → T rất lớn → dễ đứt. Thử giảm α đến khi dây đứt, rồi tăng lại.", 30, 20, true));
+  MP.dangKy("B13", 8, nghieng("Vì sao vật trượt xuống mặt phẳng nghiêng?", "Tăng góc α: thành phần Pₓ = P·sinα kéo vật trượt tăng dần; α = 0° thì Pₓ = 0."));
+  MP.dangKy("B13", 9, phanTich);
+  MP.dangKy("B13", 10, nghieng("Giải mã mặt phẳng nghiêng", "Pₓ = P·sinα (kéo trượt), P_y = P·cosα (ép lên mặt dốc), N = P_y. Đổi m và α để thấy các thành phần thay đổi."));
+  MP.dangKy("B13", 11, thiNghiem("Điều kiện cân bằng: ba lực có hợp lực bằng 0", "F₁ + F₂ + F₃ = 0: đa giác lực khép kín. Đổi F₁, F₂, α; F₃ tự điều chỉnh để chất điểm cân bằng.", false));
+  MP.dangKy("B13", 12, treo("Vật treo bằng hai dây", "T₁ + T₂ + P = 0 → 2T·sinα = P. Giảm α thì lực căng T tăng.", 20, 40));
+  MP.dangKy("B13", 14, dungSai());
+  MP.dangKy("B13", 15, tim);
+  MP.dangKy("B13", 16, treo("Bài toán dây phơi", "Dây phơi căng ngang (α nhỏ) → T rất lớn → dễ đứt. Thử giảm α đến khi dây đứt, rồi tăng lại.", 30, 20, true));
 })();
 </script>
 <script>
-var MA="B13",TT="k10-B13-tuong-tac.html#B13@9",TEN=["Bài 13: Tổng hợp và phân tích lực. Cân bằng lực", "Tình huống thực tế: thay nhiều lực bằng một lực?", "Thí nghiệm tổng hợp hai lực đồng quy", "Thu thập và xử lí số liệu", "Quy tắc hình bình hành", "Tính độ lớn hợp lực", "Các trường hợp đặc biệt của hợp lực", "Khởi động tiết 2: Bí ẩn mặt phẳng nghiêng", "Phân tích lực thành hai thành phần vuông góc", "Ứng dụng: giải mã mặt phẳng nghiêng", "Điều kiện cân bằng của chất điểm", "Vận dụng trạng thái cân bằng", "Luyện tập dạng 1: Trắc nghiệm nhiều lựa chọn", "Luyện tập dạng 2: Đúng / Sai", "Luyện tập dạng 3: Trả lời ngắn từ đồ thị", "Vận dụng thực tế: Bài toán dây phơi", "Phụ lục 1: Phiếu học tập số 1", "Phụ lục 2: Đáp án chi tiết luyện tập"],THU="k10-"+MA+"/",slides=TEN.map(function(t,i){return {ten:t,src:THU+"s"+(i<9?"0":"")+(i+1)+".jpg"}}),cur=0;
+var MA="B13",TTB="k10-B13-tuong-tac.html",DAY=[{"t": "Bài 13: Tổng hợp và phân tích lực. Cân bằng lực", "a": 1, "tt": -1, "mp": 0}, {"t": "Khởi động: chọn ô số, trả lời nhanh", "a": 0, "tt": 1, "mp": -1}, {"t": "Tình huống thực tế: thay nhiều lực bằng một lực?", "a": 2, "tt": -1, "mp": 1}, {"t": "Dự đoán: tàu chở hàng đi hướng nào?", "a": 0, "tt": 2, "mp": -1}, {"t": "Hoạt động 1: Tổng hợp hai lực cùng phương", "a": 0, "tt": 4, "mp": -1}, {"t": "Thí nghiệm tổng hợp hai lực đồng quy", "a": 3, "tt": -1, "mp": 2}, {"t": "Thu thập và xử lí số liệu", "a": 4, "tt": -1, "mp": 3}, {"t": "Quy tắc hình bình hành", "a": 5, "tt": -1, "mp": 4}, {"t": "Hoạt động 2: Quy tắc hình bình hành, sắp xếp đúng bước", "a": 0, "tt": 5, "mp": -1}, {"t": "Tính độ lớn hợp lực", "a": 6, "tt": -1, "mp": 5}, {"t": "Các trường hợp đặc biệt của hợp lực", "a": 7, "tt": -1, "mp": 6}, {"t": "Vận dụng: Giải mã tàu chở hàng (SGK tr. 57, câu 2)", "a": 0, "tt": 8, "mp": -1}, {"t": "Củng cố 1: Tổng hợp lực", "a": 0, "tt": 9, "mp": -1}, {"t": "Khởi động tiết 2: Bí ẩn mặt phẳng nghiêng", "a": 8, "tt": -1, "mp": 8}, {"t": "Phân tích lực thành hai thành phần vuông góc", "a": 9, "tt": -1, "mp": 9}, {"t": "Ứng dụng: giải mã mặt phẳng nghiêng", "a": 10, "tt": -1, "mp": 10}, {"t": "Ví dụ: Vật trên mặt phẳng nghiêng nhẵn", "a": 0, "tt": 14, "mp": -1}, {"t": "Củng cố 3: Phân tích lực", "a": 0, "tt": 15, "mp": -1}, {"t": "Điều kiện cân bằng của chất điểm", "a": 11, "tt": -1, "mp": 11}, {"t": "Vận dụng trạng thái cân bằng", "a": 12, "tt": -1, "mp": 12}, {"t": "Hoạt động 3: Lực không cân bằng, phân loại tình huống", "a": 0, "tt": 11, "mp": -1}, {"t": "Củng cố 2: Cân bằng lực", "a": 0, "tt": 12, "mp": -1}, {"t": "Luyện tập dạng 1: Trắc nghiệm nhiều lựa chọn", "a": 13, "tt": -1, "mp": 13}, {"t": "Luyện tập dạng 2: Đúng / Sai", "a": 14, "tt": -1, "mp": 14}, {"t": "Luyện tập dạng 3: Trả lời ngắn từ đồ thị", "a": 15, "tt": -1, "mp": 15}, {"t": "Vận dụng thực tế: Bài toán dây phơi", "a": 16, "tt": -1, "mp": 16}, {"t": "Em có thể", "a": 0, "tt": 18, "mp": -1}, {"t": "Tổng kết: hệ thống kiến thức", "a": 0, "tt": 16, "mp": -1}, {"t": "Luyện tập: Bài tập tổng hợp", "a": 0, "tt": 17, "mp": -1}, {"t": "Vận dụng: Bài tập vận dụng", "a": 0, "tt": 19, "mp": -1}, {"t": "Phụ lục 1: Phiếu học tập số 1", "a": 17, "tt": -1, "mp": 17}, {"t": "Phụ lục 2: Đáp án chi tiết luyện tập", "a": 18, "tt": -1, "mp": 18}],THU="k10-"+MA+"/",slides=DAY.map(function(d){return {ten:d.t,src:d.a?THU+"s"+(d.a<10?"0":"")+d.a+".jpg":"",tt:d.tt,mp:d.mp}}),cur=0;
 (function(){
   var $=function(i){return document.getElementById(i)},anh=$("anh"),luoi=$("luoi"),btK=$("btK");
+  var ttF=document.querySelector("iframe.ttf");   /* id llFrame: trang con tự ẩn công cụ lớp (trang này đã có) */
+  function tiep(){if(!ttBuoc())go(cur+1)}
+  function ttBuoc(){          /* trang tương tác cũ hiện từng bước (.step): bấm tiếp thì hiện bước kế trước khi sang slide sau */
+    if(ttF.hidden||slides[cur].tt<0)return false;
+    try{var w=ttF.contentWindow,h=[].slice.call(w.slides[w.cur].querySelectorAll(".step")).filter(function(e){return !e.classList.contains("show")})[0];if(h){h.classList.add("show");return true}}catch(e){}
+    return false;
+  }
+  function ttNap(){           /* trang con tải xong: ẩn thanh điều khiển riêng, chuyển phím ← → về trang này */
+    var w,d;try{w=ttF.contentWindow;d=w.document;if(!w.go)return}catch(e){return}
+    if(!d.getElementById("hsdh-tt")){
+      var st=d.createElement("style");st.id="hsdh-tt";st.textContent="#bar,#toc{display:none!important}";d.head.appendChild(st);
+      w.addEventListener("keydown",function(e){
+        var t=e.target&&e.target.tagName,k=e.key,mui=k==="ArrowRight"||k==="ArrowLeft"||k==="PageDown"||k==="PageUp";
+        if(t==="INPUT"||t==="TEXTAREA"||t==="SELECT"){if(mui)e.stopImmediatePropagation();return}
+        if(k==="ArrowRight"||k==="PageDown"||(k===" "&&t!=="BUTTON")){e.preventDefault();e.stopImmediatePropagation();tiep()}
+        else if(k==="ArrowLeft"||k==="PageUp"){e.preventDefault();e.stopImmediatePropagation();go(cur-1)}
+        else if(k==="f"||k==="F"||k==="o"||k==="O"){e.preventDefault();e.stopImmediatePropagation();document.dispatchEvent(new KeyboardEvent("keydown",{key:k}))}
+      },true);
+    }
+    ttF.dataset.ok="1";var s=slides[cur];if(s.tt>=0)w.go(s.tt);
+  }
+  ttF.addEventListener("load",ttNap);
+  function ttHien(s,atras){
+    var san=$("san");
+    if(s.tt<0){ttF.hidden=true;san.classList.remove("tt");anh.style.display="";anh.src=s.src;anh.alt="Slide "+(cur+1)+": "+s.ten;return}
+    anh.style.display="none";ttF.hidden=false;san.classList.add("tt");
+    if(ttF.dataset.ok){try{ttF.contentWindow.go(s.tt,atras);ttF.focus();return}catch(e){}}
+    if(!ttF.getAttribute("src"))ttF.src=TTB+"#B13@"+s.tt;
+    else if(!ttF.dataset.ok)ttF.src=TTB+"?k="+Date.now()+"#B13@"+s.tt;
+  }
+
   window.go=function(i){
-    cur=Math.max(0,Math.min(slides.length-1,i|0));var s=slides[cur];
-    anh.src=s.src;anh.alt="Slide "+(cur+1)+": "+s.ten;
+    var atras=(i|0)<cur;cur=Math.max(0,Math.min(slides.length-1,i|0));var s=slides[cur];
+    ttHien(s,atras);
     $("vt").textContent=(cur+1)+" / "+slides.length;$("td").textContent=s.ten;
     $("bTruoc").disabled=cur===0;$("bSau").disabled=cur===slides.length-1;
     $("thuoc").style.width=((cur+1)/slides.length*100)+"%";
-    if(slides[cur+1]){(new Image()).src=slides[cur+1].src}
-    var mp=window.MP&&MP.co(MA,cur);$("bMP").hidden=!mp;if(window.MP&&MP.dangMo())MP.dong();
+    if(slides[cur+1]&&slides[cur+1].src){(new Image()).src=slides[cur+1].src}
+    var mp=window.MP&&MP.co(MA,slides[cur].mp);$("bMP").hidden=!mp;if(window.MP&&MP.dangMo())MP.dong();
     try{history.replaceState(null,"","#"+MA+"@"+cur)}catch(e){}
     dongLuoi();
   };
@@ -650,28 +682,28 @@ var MA="B13",TT="k10-B13-tuong-tac.html#B13@9",TEN=["Bài 13: Tổng hợp và p
   function moLuoi(){
     if(luoi.classList.contains("mo")){dongLuoi();return}
     if(!luoi.firstChild)slides.forEach(function(s,i){var b=document.createElement("button");b.setAttribute("role","listitem");b.dataset.i=i;
-      b.innerHTML='<img loading="lazy" width="1376" height="768" alt="" src="'+s.src+'"><span><b>'+(i+1)+'.</b> '+s.ten+'</span>';luoi.appendChild(b)});
+      b.innerHTML=(s.src?'<img loading="lazy" width="1376" height="768" alt="" src="'+s.src+'">':'<div class="ttK"><b>Tương tác</b>'+s.ten+'</div>')+'<span><b>'+(i+1)+'.</b> '+s.ten+'</span>';luoi.appendChild(b)});
     [].forEach.call(luoi.children,function(b,i){b.classList.toggle("on",i===cur)});
     luoi.classList.add("mo");$("bLuoi").textContent="Đóng tổng quan";
     var on=luoi.children[cur];if(on){on.focus();on.scrollIntoView({block:"center"})}
   }
   function toan(){var d=document;if(d.fullscreenElement)d.exitFullscreen();else if(d.documentElement.requestFullscreen)d.documentElement.requestFullscreen()}
-  function moBT(){if(!btK.querySelector("iframe")){var f=document.createElement("iframe");f.title="Luyện tập tương tác";f.id="llFrame";f.src=TT;btK.appendChild(f)}btK.style.display="block";btK.querySelector("button").focus()}
+  function moBT(){if(!btK.querySelector("iframe")){var f=document.createElement("iframe");f.title="Bài tập cuối bài";f.src="k11-bai-tap.html#"+MA;btK.appendChild(f)}btK.style.display="block";btK.querySelector("button").focus()}
   function dongBT(){btK.style.display="none";$("bBT").focus()}
   luoi.addEventListener("click",function(e){var b=e.target.closest("button");if(b)go(+b.dataset.i)});
   $("bTruoc").onclick=$("vTruoc").onclick=function(){go(cur-1)};
-  $("bSau").onclick=$("vSau").onclick=function(){go(cur+1)};
-  $("bLuoi").onclick=moLuoi;$("bToan").onclick=toan;$("bBT").onclick=moBT;$("bMP").onclick=function(){if(window.MP)MP.mo(MA,cur)};btK.querySelector("button").onclick=dongBT;
+  $("bSau").onclick=$("vSau").onclick=tiep;
+  $("bLuoi").onclick=moLuoi;$("bToan").onclick=toan;$("bBT").onclick=moBT;$("bMP").onclick=function(){if(window.MP)MP.mo(MA,slides[cur].mp)};btK.querySelector("button").onclick=dongBT;
   document.addEventListener("keydown",function(e){
     if(btK.style.display==="block"){if(e.key==="Escape")dongBT();return}
     var t=e.target.tagName;if(t==="INPUT"||t==="TEXTAREA"||t==="SELECT"||e.ctrlKey||e.altKey||e.metaKey)return;
     if(document.querySelector(".hl-ov")||(window.MP&&MP.dangMo()))return;
     var k=e.key;
-    if(k==="ArrowRight"||k==="PageDown"||(k===" "&&t!=="BUTTON")){go(cur+1);e.preventDefault()}
+    if(k==="ArrowRight"||k==="PageDown"||(k===" "&&t!=="BUTTON")){tiep();e.preventDefault()}
     else if(k==="ArrowLeft"||k==="PageUp"){go(cur-1);e.preventDefault()}
     else if(k==="Home")go(0);else if(k==="End")go(slides.length-1);
     else if(k==="f"||k==="F")toan();else if(k==="o"||k==="O")moLuoi();else if(k==="b"||k==="B")moBT();
-    else if((k==="m"||k==="M")&&window.MP&&MP.co(MA,cur))MP.mo(MA,cur);
+    else if((k==="m"||k==="M")&&window.MP&&MP.co(MA,slides[cur].mp))MP.mo(MA,slides[cur].mp);
     else if(k==="Escape")dongLuoi();
   });
   var x0=null;
