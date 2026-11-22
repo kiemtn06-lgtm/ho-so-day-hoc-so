@@ -243,24 +243,45 @@
           ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(bx, by, bw, bh, 12); else ctx.rect(bx, by, bw, bh); ctx.fill(); ctx.stroke();
           txt(ctx, "Buồng lò vi sóng", bx + 14, by + bh - 34, "#94a3b8", 15);
           ctx.fillStyle = "#475569"; ctx.fillRect(bx + 4, by + bh * .3, 22, bh * .4); txt(ctx, "Nguồn vi sóng", bx + 34, by + bh * .3 - 12, "#cbd5e1", 14);
-          var k = TAU / 150;
-          if (hSong) {
-            ctx.save(); ctx.strokeStyle = "rgba(251,146,60," + (.3 + cs * .5) + ")"; ctx.lineWidth = 2.5;
-            [-.6, -.2, .2, .6].forEach(function (f) {
-              var y0 = by + bh * .5 + f * bh * .42; ctx.beginPath();
-              for (var x = bx + 30; x <= bx + bw - 12; x += 3) { var y = y0 - 14 * cs * Math.sin(w0 * t - k * (x - bx)); if (x === bx + 30) ctx.moveTo(x, y); else ctx.lineTo(x, y) }
-              ctx.stroke();
-            });
-            ctx.restore();
-          }
           var iS = IMG["ga-song"], iC = IMG["ga-chin"], hc = Math.min(bh * .66, bw * .5), wc = hc * 560 / 550, cx = bx + bw * .56, cy = by + bh * .5, ax = cx - wc / 2, ay = cy - hc / 2;
           hit.anh = [ax, ay, wc, hc];
-          ctx.save(); ctx.fillStyle = "rgba(226,232,240,.14)"; ctx.beginPath(); ctx.ellipse(cx, cy + hc * .42, wc * .62, hc * .16, 0, 0, TAU); ctx.fill(); ctx.restore();   // đĩa
+          // đĩa xoay thủy tinh: vành, con lăn và các vạch quay theo thời gian
+          var dx = cx, dy = ay + hc * .95, drx = wc * .66, dry = hc * .15, ph = t * .9;
+          ctx.save();
+          var gd = ctx.createLinearGradient(0, dy - dry, 0, dy + dry); gd.addColorStop(0, "rgba(186,230,253,.30)"); gd.addColorStop(1, "rgba(148,163,184,.14)");
+          ctx.fillStyle = gd; ctx.strokeStyle = "rgba(203,213,225,.85)"; ctx.lineWidth = 3;
+          ctx.beginPath(); ctx.ellipse(dx, dy, drx, dry, 0, 0, TAU); ctx.fill(); ctx.stroke();
+          ctx.beginPath(); ctx.ellipse(dx, dy + 7, drx * .98, dry, 0, 0, Math.PI); ctx.strokeStyle = "rgba(148,163,184,.5)"; ctx.stroke();
+          ctx.strokeStyle = "rgba(226,232,240,.35)"; ctx.lineWidth = 2;
+          for (var j = 0; j < 8; j++) { var aa = ph + j * Math.PI / 4; ctx.beginPath(); ctx.moveTo(dx + Math.cos(aa) * drx * .2, dy + Math.sin(aa) * dry * .2); ctx.lineTo(dx + Math.cos(aa) * drx * .96, dy + Math.sin(aa) * dry * .96); ctx.stroke() }
+          ctx.fillStyle = "#fde047"; for (var j2 = 0; j2 < 3; j2++) { var ab = ph + j2 * TAU / 3; ctx.beginPath(); ctx.arc(dx + Math.cos(ab) * drx * .9, dy + Math.sin(ab) * dry * .9, 4, 0, TAU); ctx.fill() }
+          ctx.restore();
+          txt(ctx, "Đĩa xoay", dx + drx - 6, dy + dry + 14, "#cbd5e1", 13, "right");
           if (iS.complete && iS.naturalWidth) {
             ctx.drawImage(iS, ax, ay, wc, hc);
             var qc = Math.max(0, Math.min(1, (q - .12) / .8)); qc = qc * qc * (3 - 2 * qc);
             if (iC.complete && iC.naturalWidth) { ctx.save(); ctx.globalAlpha = qc; ctx.drawImage(iC, ax, ay, wc, hc); ctx.restore() }
           } else txt(ctx, "Đang tải ảnh gà…", cx, cy, "#e2e8f0", 16, "center");
+          // vi sóng: đi từ nguồn, xuyên qua gà (vẽ đè lên gà), biên độ giảm dần khi đi trong thịt gà vì bị phân tử nước hấp thụ
+          if (hSong) {
+            var kk = TAU / 150, ex = wc * .47, ey = hc * .47;
+            ctx.save(); ctx.lineWidth = 2.6; ctx.lineJoin = "round";
+            [-.6, -.3, 0, .3, .6].forEach(function (f) {
+              var y0 = by + bh * .5 + f * bh * .44, A = 15 * cs, trong = 0, x, y, a2;
+              ctx.strokeStyle = "rgba(251,146,60," + (.35 + cs * .5) + ")"; ctx.beginPath();
+              for (x = bx + 30; x <= bx + bw - 12; x += 3) {
+                var vx = (x - cx) / ex, vy = (y0 - cy) / ey;
+                if (vx * vx + vy * vy < 1) trong += 3;
+                a2 = A * Math.exp(-trong * .006 * (.5 + cs));
+                y = y0 - a2 * Math.sin(w0 * t - kk * (x - bx));
+                if (x === bx + 30) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+              }
+              ctx.stroke();
+            });
+            ctx.restore();
+            var gl = ctx.createRadialGradient(cx, cy, hc * .1, cx, cy, hc * .6); gl.addColorStop(0, "rgba(251,146,60," + (.10 + .22 * cs * (.4 + .6 * q)) + ")"); gl.addColorStop(1, "rgba(251,146,60,0)");
+            ctx.save(); ctx.fillStyle = gl; ctx.fillRect(ax - 20, ay - 20, wc + 40, hc + 40); ctx.restore();     // gà hấp thụ năng lượng → nóng dần
+          }
           if (q > .25) {
             ctx.save(); ctx.strokeStyle = "rgba(226,232,240," + (.15 + q * .3) + ")"; ctx.lineWidth = 3; ctx.lineCap = "round";
             [-.3, 0, .3].forEach(function (f, j) { var x = cx + f * wc; ctx.beginPath(); for (var u = 0; u <= 30; u++) { var yy = ay - 6 - u * 1.4 - ((t * 20 + j * 14) % 20); ctx.lineTo(x + Math.sin(u * .35 + t * 3 + j) * 6, yy) } ctx.stroke() });
