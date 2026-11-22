@@ -423,16 +423,23 @@ function sfx(ok){try{const C=window.AudioContext||window.webkitAudioContext;wind
   g.gain.setValueAtTime(.0001,t+a[1]);g.gain.exponentialRampToValueAtTime(ok?.3:.18,t+a[1]+.02);g.gain.exponentialRampToValueAtTime(.0001,t+a[1]+(ok?.22:.3));o.start(t+a[1]);o.stop(t+a[1]+.32)})}catch(e){}}
 let _ck=null,_cs=60,_vo=null;
 function chonVi(vs){var v=(vs||[]).filter(function(x){return /^vi([-_]|$)/i.test(x.lang)||/vietnam|tiếng việt|hoaimy|namminh/i.test(x.name)});if(!v.length)return null;function d(x){var n=x.name+" "+x.lang,s=0;if(/nam bộ|miền nam|southern|sài gòn|saigon|ho chi minh/i.test(n))s+=100;if(/hoaimy|hoài my|female|nữ|linh|lan|mai|thu|google/i.test(n))s+=20;if(/namminh|nam minh|male|nam|microsoft an/i.test(n))s-=50;if(/natural|online/i.test(n))s+=5;return s}return v.sort(function(a,b){return d(b)-d(a)})[0]}
-function speakQ(txt){try{const ss=window.speechSynthesis;if(!ss)return;ss.cancel();
+var _au=null,_aq=[];
+function stopSpeak(){_aq=[];try{if(_au){_au.onended=_au.onerror=null;_au.pause()}}catch(e){}_au=null;try{window.speechSynthesis&&speechSynthesis.cancel()}catch(e){}}
+function onlineSay(t){/* máy không có giọng tiếng Việt: đọc bằng giọng Việt trực tuyến (cần mạng), cắt đoạn ngắn */
+  _aq=(t.match(/.{1,160}(?:s|$)/g)||[t]).map(function(s){return s.trim()}).filter(Boolean);
+  (function nxt(){var s=_aq.shift();if(!s){_au=null;return}try{_au=new Audio("https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=vi&q="+encodeURIComponent(s));_au.onended=nxt;_au.onerror=function(){_aq=[]};_au.play().catch(function(){_aq=[]})}catch(e){_aq=[]}})();}
+function speakQ(txt){try{const ss=window.speechSynthesis;
   const t=txt.replace(/<[^>]+>/g,' ').replace(/\$[^$]*\$/g,' ').replace(/&nbsp;/g,' ').replace(/v[eé]c[\s-]*tơ/gi,'véc tơ').replace(/\bSI\b/g,'ét i').replace(/\bNewton\b/g,'Niu tơn').replace(/m\/s²/g,' mét trên giây bình phương').replace(/m\/s/g,' mét trên giây').replace(/\bkg\b/g,' ki lô gam').replace(/°/g,' độ ').replace(/\s+/g,' ');
-  const u=new SpeechSynthesisUtterance(t);u.lang='vi-VN';u.rate=.95;
-  const vs=ss.getVoices();_vo=_vo||chonVi(vs);if(_vo)u.voice=_vo;ss.speak(u)}catch(e){}}
+  stopSpeak();
+  const go=()=>{const vs=ss?ss.getVoices():[];_vo=_vo||chonVi(vs);if(_vo&&ss){const u=new SpeechSynthesisUtterance(t);u.lang=_vo.lang||'vi-VN';u.rate=.95;u.voice=_vo;ss.speak(u)}else onlineSay(t)};
+  if(ss&&ss.getVoices().length)go();else if(ss){let d=0;const once=()=>{if(d)return;d=1;go()};ss.onvoiceschanged=once;setTimeout(once,600)}else go();
+}catch(e){}}
 function clockTxt(){const m=document.getElementById('mclock');if(!m)return;m.textContent='⏱ '+Math.floor(_cs/60)+':'+String(_cs%60).padStart(2,'0');m.style.background=_cs<=10?'#fee2e2':'#eaf1ff';m.style.color=_cs<=10?'#dc2626':'#14213d'}
 function tick(n){try{const C=window.AudioContext||window.webkitAudioContext;window._ac=window._ac||new C();const c=window._ac;if(c.state==='suspended')c.resume();const o=c.createOscillator(),g=c.createGain(),t=c.currentTime;
   o.type='square';o.frequency.value=n%2?900:650;o.connect(g);g.connect(c.destination);g.gain.setValueAtTime(.12,t);g.gain.exponentialRampToValueAtTime(.0001,t+.07);o.start(t);o.stop(t+.08)}catch(e){}}
 function alarm(){try{const C=window.AudioContext||window.webkitAudioContext;window._ac=window._ac||new C();const c=window._ac;if(c.state==='suspended')c.resume();const t=c.currentTime;
   for(let k=0;k<6;k++){const o=c.createOscillator(),g=c.createGain(),s=t+k*.35;o.type='sawtooth';o.frequency.value=k%2?740:988;o.connect(g);g.connect(c.destination);g.gain.setValueAtTime(.0001,s);g.gain.exponentialRampToValueAtTime(.3,s+.02);g.gain.exponentialRampToValueAtTime(.0001,s+.32);o.start(s);o.stop(s+.34)}}catch(e){}}
-function stopClock(){clearInterval(_ck);_ck=null;try{window.speechSynthesis&&speechSynthesis.cancel()}catch(e){}}
+function stopClock(){clearInterval(_ck);_ck=null;stopSpeak()}
 function startClock(){clearInterval(_ck);_cs=60;clockTxt();let n=0;_ck=setInterval(()=>{_cs--;n++;clockTxt();if(_cs<=0){clearInterval(_ck);_ck=null;alarm()}else tick(n)},1000)}
 function award(t){if(qi<0)return;const b=tiles.children[qi];b.className='tile '+t;b.disabled=true;if(t!='X'){sc[t]++;$('#s'+t.toLowerCase()).textContent=sc[t]}stopClock();sfx(t!='X');$('#modal').style.display='none'}
 function resetQuiz(){sc={A:0,B:0};$('#sa').textContent=0;$('#sb').textContent=0;[...tiles.children].forEach(b=>{b.className='tile';b.disabled=false})}
