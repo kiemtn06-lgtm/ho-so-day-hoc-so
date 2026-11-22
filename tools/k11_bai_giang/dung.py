@@ -11,7 +11,7 @@ Mô phỏng: file mo_phong/<MA>.js (dùng khung mo_phong/khung.js) đăng kí m�
 File .pptx gốc không bị sửa. Thêm bài mới: thêm một mục vào BAI (tên slide dùng cho trang tổng quan và người dùng trình đọc màn hình).
 """
 import os, re, io, json, zipfile, subprocess
-from PIL import Image, ImageFilter
+from PIL import Image, ImageFilter, ImageDraw, ImageFont
 
 DIR = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(os.path.join(DIR, '..', '..'))
@@ -33,10 +33,11 @@ BAI = {
         'Bài 11: Sóng điện từ', 'Mục tiêu bài học', 'Đặc điểm cốt lõi của sóng điện từ', 'Thang sóng điện từ', 'Ánh sáng nhìn thấy', 'Tia hồng ngoại',
         'Tia tử ngoại', 'Sóng vô tuyến', 'Tia Rơn-ghen (tia X)', 'Tia gamma', 'Tổng hợp và so sánh thang sóng điện từ', 'Luyện tập 1: Phân loại theo bước sóng',
         'Luyện tập 2: Phân loại theo tần số', 'Tổng kết bài học']),
-    'B12': dict(file='Bài 12 Giao_Thoa_Sóng.pptx', ten='Bài 12. Giao thoa sóng', slide=[
-        'Bài 12: Giao thoa sóng', 'Mục tiêu bài học', 'Tình huống mở đầu: hai loa và micro', 'Giao thoa sóng mặt nước', 'Bản chất: cực đại và cực tiểu giao thoa',
-        'Điều kiện: hai nguồn kết hợp', 'Thí nghiệm Y-âng về giao thoa ánh sáng', 'Công thức khoảng vân và bước sóng', 'Ví dụ minh họa 1 (sóng nước)',
-        'Ví dụ minh họa 2 (giao thoa Y-âng)', 'Luyện tập thi THPT (phần 1)', 'Luyện tập thi THPT (phần 2: vận dụng)', 'Ứng dụng thực tế của giao thoa sóng', 'Tổng kết bài học']),
+    'B12': dict(file='Bài 12 - hc- Giao_Thoa_Sóng.pptx', ten='Bài 12. Giao thoa sóng', slide=[
+        'Bài 12: Giao thoa sóng', 'Mục tiêu bài học', 'Khởi động: tình huống hai loa và micro', 'I. Giao thoa hai sóng mặt nước: bố trí thí nghiệm', 'I.1. Kết quả quan sát',
+        'I.2. Giải thích hiện tượng', 'I.3. Điều kiện xảy ra giao thoa', 'II. Thí nghiệm Y-âng về giao thoa ánh sáng', 'II.1. Hiện tượng quan sát trên màn',
+        'II.2. Công thức xác định bước sóng ánh sáng', 'Ví dụ minh họa 1 (tính toán cơ bản)', 'Ví dụ minh họa 2 (phân tích khoảng vân)', 'Luyện tập (định dạng thi THPT)',
+        'Em có thể: liên hệ thực tế', 'Tổng kết: sơ đồ giao thoa sóng']),
     'B13': dict(file='Bài 13 Sóng_Dừng.pptx', ten='Bài 13. Sóng dừng', slide=[
         'Bài 13: Sóng dừng', 'Mục tiêu bài học', 'Thí nghiệm tạo sóng dừng', 'Bản chất của sóng dừng', 'Đặc điểm hình học: nút và bụng', 'Khoảng cách quan trọng cần nhớ',
         'Điều kiện sóng dừng: hai đầu cố định', 'Điều kiện sóng dừng: một đầu cố định, một đầu tự do', 'Ví dụ minh họa (thực hành)', 'Sóng dừng trong thế giới nhạc cụ',
@@ -47,16 +48,40 @@ BAI = {
 # Chỉnh trên ảnh slide khi đưa vào hồ sơ (file .pptx gốc không bị sửa). Tọa độ theo ảnh gốc 1376x768.
 #   ('xoa', (x0, y0, x1, y1))            xóa một vùng: tô lại bằng nền, nội suy theo chiều dọc từ mép trên xuống mép dưới
 #   ('chep', (x0, y0, x1, y1), (dx, dy)) chép một vùng sang vị trí lệch (dx, dy)
+#   ('to', (x0, y0, x1, y1))  tô phẳng vùng bằng màu nền (nền phẳng)
+#   ('chu', (x, y_đường_chữ), 'chữ', cỡ, phông, (r, g, b)[, neo 'ls' (mặc định) hoặc 'ms' = căn giữa])  viết chữ (phông 'toan' = Cambria Math, 'thuong' = Segoe UI, 'dam' = Segoe UI đậm)
 SUA_ANH = {
     ('B9', 8): [('xoa', (150, 290, 370, 336)), ('xoa', (580, 290, 800, 336)), ('xoa', (1010, 290, 1240, 336)),   # hàng nhãn trên bị lỗi chữ ("Thờn gian 3")
                 ('chep', (165, 548, 355, 592), (-5, -256)), ('chep', (595, 548, 785, 592), (-5, -256)), ('chep', (1030, 548, 1220, 592), (-7, -256))],
+    # B12 (bản hc): slide 11, 12 sai đơn vị (0,06 mm = 0,6 μm là sai) nên đổi a = 0,2 mm → 2,0 mm và a = 0,15 mm → 1,50 mm để đáp số 0,6 μm và 0,59 μm của tác giả đúng.
+    # Nền ô tính slide 11 có kẻ ô (chu kì ≈ 31,4 × 33 px): chép nền sạch từ chỗ trống cách đúng số chu kì rồi viết chữ.
+    ('B12', 11): [('to', (978, 190, 1032, 226)), ('chu', (980, 216), '2,0', 38, 'toan', (8, 8, 16)),
+                  ('chep', (1081, 396, 1137, 440), (-597, 0)), ('chu', (486, 426), '2,0', 38, 'toan', (8, 8, 16)),
+                  ('chep', (660, 446, 718, 500), (0, 66)), ('chu', (663, 556), '2,0', 38, 'toan', (8, 8, 16)),
+                  ('chep', (755, 446, 1075, 511), (0, 99)), ('chu', (761, 584), '0,6 μm', 38, 'toan', (8, 8, 16)),
+                  ('to', (370, 696, 1110, 736)), ('chu', (373, 722), '(0.36 x 2)/1.2 = 0.6 μm.', 29, 'thuong', (30, 30, 30))],
+    ('B12', 12): [('to', (760, 138, 822, 176)), ('chu', (761, 167), '1,50', 35, 'toan', (8, 8, 16)),
+                  ('to', (453, 603, 510, 632)), ('chu', (452, 625), '1,50', 28, 'toan', (8, 8, 16)),
+                  ('to', (548, 612, 890, 660)), ('chu', (549, 647), '0,59 μm.', 36, 'toan', (8, 8, 16))],
+    # B12 slide 8: chữ lỗi của NotebookLM ("Column 1/2/3", "hẹp $ hai khe hẹp$")
+    ('B12', 8): [('to', (180, 470, 340, 508)), ('chu', (258, 498), 'Nguồn sáng', 27, 'dam', (24, 36, 90), 'ms'),
+                 ('to', (600, 470, 770, 508)), ('chu', (685, 498), 'Màn chắn', 27, 'dam', (24, 36, 90), 'ms'),
+                 ('to', (1030, 470, 1205, 508)), ('chu', (1117, 498), 'Màn quan sát', 27, 'dam', (24, 36, 90), 'ms'),
+                 ('to', (569, 543, 766, 579)), ('chep', (768, 543, 848, 579), (-191, 0)), ('to', (766, 543, 852, 579))],
 }
+
+
+PHONG = {'toan': (r'C:\Windows\Fonts\cambria.ttc', 1), 'thuong': (r'C:\Windows\Fonts\segoeui.ttf', 0), 'dam': (r'C:\Windows\Fonts\segoeuib.ttf', 0)}
 
 
 def sua_anh(im, viec):
     px = im.load()
     for v in viec:
+        if v[0] == 'chu':
+            f, k = PHONG[v[4]]; ImageDraw.Draw(im).text(v[1], v[2], font=ImageFont.truetype(f, v[3], index=k), fill=v[5], anchor=v[6] if len(v) > 6 else 'ls'); continue
         x0, y0, x1, y1 = v[1]
+        if v[0] == 'to':      # tô phẳng cả vùng bằng màu nền ở góc trên trái (chỉ dùng trên nền phẳng)
+            ImageDraw.Draw(im).rectangle((x0, y0, x1 - 1, y1 - 1), fill=px[x0, y0]); continue
         if v[0] == 'xoa':     # tô lại bằng nền: mỗi cột nội suy từ mép trên xuống mép dưới của vùng (bóng mờ phía trên nhạt dần)
             for x in range(x0, x1):
                 a, b = px[x, y0 - 1], px[x, y1]
