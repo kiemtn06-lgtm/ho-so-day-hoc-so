@@ -564,6 +564,57 @@ window.MPve = {
     }
   };
 
+  /* ============ 7. Luyện tập dạng 2: Đúng / Sai (F₁ = 6 N, F₂ = 8 N) ============ */
+  function dungSai(chiSo) {
+    return {
+      ten: "Luyện tập dạng 2: Đúng / Sai",
+      goiY: "Chọn Đúng hoặc Sai cho từng phát biểu; bấm “Kiểm tra” để xem đáp án và lời giải.",
+      tao: function (ui) {
+        var CAU = [
+          ["1. Hợp lực của chúng có thể đạt giá trị F = 15 N.", false, "Sai: F lớn nhất là 6 + 8 = 14 N."],
+          ["2. Nếu hợp lực F = 10 N, góc giữa hai lực là 90°.", true, "Đúng: 6² + 8² = 10² (định lí Py-ta-go) nên α = 90°."],
+          ["3. Nếu hợp lực F = 2 N, hai lực đang tác dụng cùng chiều nhau.", false, "Sai: 2 N = 8 − 6 là giá trị nhỏ nhất, hai lực ngược chiều (α = 180°)."],
+          ["4. Nếu góc α tăng dần từ 0° đến 180°, độ lớn hợp lực sẽ giảm dần.", true, "Đúng: α tăng thì cos α giảm nên F giảm từ 14 N xuống 2 N."]
+        ], chon = [null, null, null, null], kt = false, vung = [];
+        ui.nut("Kiểm tra", function () { kt = true });
+        ui.nut("Làm lại", function () { chon = [null, null, null, null]; kt = false });
+        return {
+          datLai: function () { chon = [null, null, null, null]; kt = false },
+          nhap: function (x, y) {
+            vung.forEach(function (v) { if (x >= v[0] && x <= v[0] + v[2] && y >= v[1] && y <= v[1] + v[3]) { if (!kt) chon[v[4]] = v[5] } });
+          },
+          ve: function (ctx, W, H) {
+            nen(ctx, W, H); vung = [];
+            var w = Math.min(W - 40, 960), x0 = (W - w) / 2, co = Math.max(14, Math.min(20, w / 48)), rh = Math.min(96, (H - 120) / 4);
+            chu(ctx, "Cho hai lực đồng quy F₁ = 6 N và F₂ = 8 N. Xem xét các phát biểu sau:", W / 2, 30, VANG, co + 2, "center");
+            var dung = 0;
+            CAU.forEach(function (c, i) {
+              var y = 60 + i * rh, c1 = chon[i];
+              ctx.fillStyle = "rgba(15,23,42,.8)"; ctx.strokeStyle = "rgba(148,163,184,.35)"; ctx.lineWidth = 1;
+              ctx.beginPath(); ctx.rect(x0, y, w, rh - 8); ctx.fill(); ctx.stroke();
+              chu(ctx, c[0], x0 + 12, y + (kt ? 20 : (rh - 8) / 2), "#e2e8f0", co);
+              var bw = 84, bh = 34, by = y + (rh - 8) / 2 - bh / 2;
+              [[true, "Đúng"], [false, "Sai"]].forEach(function (o, j) {
+                var bx = x0 + w - 2 * bw - 22 + j * (bw + 8), sel = c1 === o[0], tot = kt && c[1] === o[0];
+                ctx.fillStyle = kt ? (tot ? "#166534" : (sel ? "#991b1b" : "#1c2742")) : (sel ? "#1d4ed8" : "#1c2742");
+                ctx.strokeStyle = sel ? "#fff" : "#33415f"; ctx.lineWidth = sel ? 2.5 : 1;
+                ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(bx, by, bw, bh, 17); else ctx.rect(bx, by, bw, bh); ctx.fill(); ctx.stroke();
+                chu(ctx, o[1], bx + bw / 2, by + bh / 2, "#fff", 15, "center"); vung.push([bx, by, bw, bh, i, o[0]]);
+              });
+              if (kt) {
+                var ok = c1 === c[1]; if (ok) dung++;
+                chu(ctx, (ok ? "✓ " : (c1 === null ? "(chưa chọn) " : "✗ ")) + c[2], x0 + 12, y + (rh - 8) - 20, ok ? "#86efac" : "#fca5a5", Math.max(13, co - 2));
+              }
+            });
+            var xong = chon.every(function (v) { return v !== null });
+            chu(ctx, kt ? "Đúng " + dung + " / 4 ý" : (xong ? "Đã chọn đủ 4 ý, bấm “Kiểm tra”" : "Đã chọn " + chon.filter(function (v) { return v !== null }).length + " / 4 ý"),
+              W / 2, 60 + 4 * rh + 14, kt ? (dung === 4 ? "#86efac" : VANG) : XAM, co + 2, "center");
+          }
+        };
+      }
+    };
+  }
+
   MP.dangKy("B13", 2, thiNghiem("Thí nghiệm tổng hợp hai lực đồng quy (ba lực kế)", "Vòng O đứng yên khi F₃ cân bằng với hợp lực của F₁ và F₂. Ghi số liệu nhiều lần, so sánh F₃ đo với F tính theo hình bình hành.", true));
   MP.dangKy("B13", 3, thiNghiem("Thu thập và xử lí số liệu", "Bấm “Ghi số liệu” nhiều lần với F₁, F₂, α khác nhau; so sánh cột F₃ đo với cột F tính. Giữ lực kế song song mặt bảng để tránh sai số.", true));
   MP.dangKy("B13", 4, tongHop("Kéo thanh trượt F₁, F₂, α: hợp lực là đường chéo của hình bình hành tạo bởi hai lực.", "Quy tắc hình bình hành", 60));
@@ -574,6 +625,7 @@ window.MPve = {
   MP.dangKy("B13", 9, nghieng("Giải mã mặt phẳng nghiêng", "Pₓ = P·sinα (kéo trượt), P_y = P·cosα (ép lên mặt dốc), N = P_y. Đổi m và α để thấy các thành phần thay đổi."));
   MP.dangKy("B13", 10, thiNghiem("Điều kiện cân bằng: ba lực có hợp lực bằng 0", "F₁ + F₂ + F₃ = 0: đa giác lực khép kín. Đổi F₁, F₂, α; F₃ tự điều chỉnh để chất điểm cân bằng.", false));
   MP.dangKy("B13", 11, treo("Vật treo bằng hai dây", "T₁ + T₂ + P = 0 → 2T·sinα = P. Giảm α thì lực căng T tăng.", 20, 40));
+  MP.dangKy("B13", 13, dungSai());
   MP.dangKy("B13", 14, tim);
   MP.dangKy("B13", 15, treo("Bài toán dây phơi", "Dây phơi căng ngang (α nhỏ) → T rất lớn → dễ đứt. Thử giảm α đến khi dây đứt, rồi tăng lại.", 30, 20));
 })();
