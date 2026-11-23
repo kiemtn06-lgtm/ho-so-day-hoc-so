@@ -5,6 +5,7 @@ Trên máy giáo viên: dòng nào cột cuối là `chưa` thì phải áp bả
 
 | Ngày | Phiếu | Tệp đã sửa | Cũ → mới | Đã áp vào nguồn trên máy |
 |---|---|---|---|---|
+| 2026-11-23 | #16 | bai-giang/k11-B11.html, tools/k11_bai_giang/mo_phong/B11.js | Slide 11 (@10) mô phỏng lò vi sóng: thêm nút "▶ Video tham khảo 2" mở https://www.youtube.com/watch?v=D9_2qtD8flo (nút video cũ giữ nguyên) | chưa |
 | 2026-11-22 | #15 | bai-giang/k11-B11.html, tools/k11_bai_giang/mo_phong/B11.js | Slide 11 (@10) "Tổng hợp và so sánh thang sóng điện từ": thêm mô phỏng mới "Lò vi sóng nấu gà" (phân tử nước H₂O quay theo điện trường vi sóng 2,45 GHz, gà nóng lên và chuyển màu chín; thanh công suất, bật/tắt sóng) | chưa |
 | 2026-11-22 | #12 | bai-giang/k10-B14.html | Slide 13 (#13) "Quán tính trong đời sống": thay 2 ảnh tĩnh (Hình 14.4 đầu búa, 14.5 giật giấy) bằng mô phỏng SVG động có nút ▶ (đập cán xuống đất; giật mạnh / kéo từ từ) + Đặt lại; thêm hàm `svgRun` ở đầu một thẻ script | chưa |
 | 2026-11-22 | #10 | bai-giang/k10-B13.html, tools/k10_bai_giang/mo_phong/B13.js | Slide 16 (@15) "Bài toán dây phơi": khung công thức/đáp án T = P/(2·sin α) mặc định ẩn, thêm nút "Hiện đáp án" / "Ẩn đáp án" cho giáo viên bật (hàm treo thêm tham số anDapAn, chỉ dây phơi dùng) | chưa |

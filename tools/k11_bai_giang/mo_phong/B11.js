@@ -176,6 +176,7 @@
       nutZ = ui.nut("🔍 Phóng to ảnh phân tử", function () { api.doiToan() });
       ui.nut("🗑 Gà mới", function () { heat.fill(0); xong = false });
       ui.nut("▶ Video tham khảo", function () { window.open("https://www.youtube.com/watch?v=kp33ZprO0Ck", "_blank", "noopener") });
+      ui.nut("▶ Video tham khảo 2", function () { window.open("https://www.youtube.com/watch?v=D9_2qtD8flo", "_blank", "noopener") });
 
       var kx = M5 * Math.PI / LC, kb = 5 * Math.PI / LC;
       /* biên độ điện trường tại (x, y) cm, khoảng −1..1: chồng hai kiểu sóng đứng của khoang (6×6 và 5×5 nửa bước sóng), như lò thật có nhiều kiểu sóng;
