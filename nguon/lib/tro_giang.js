@@ -7,6 +7,9 @@
        Robot nhớ câu trả lời trên máy này (localStorage tgHoc / tgBo): lần sau nói vậy là làm ngay, hoặc không hỏi nữa.
    Lệnh: Chuyển / Lùi / Slide 5 / Về đầu / Slide cuối · Đáp án (câu 2) / Ẩn đáp án · Mô phỏng; trong mô phỏng: Chạy, Dừng, Đặt lại
          · Gọi tên · Chia 4 nhóm · Đếm ngược 3 phút, Dừng giờ, Tắt đồng hồ · Đóng / Kết thúc · Sửa <yêu cầu> · Tắt micro · Trợ giúp
+         · TRA CỨU (giai đoạn 4, không AI): “Công thức định luật 2 Newton”, “Nhắc lại bài 13”, “Dạng bài đẳng áp”, “Lỗi hay mắc”, “Câu hỏi nhanh” → “Đáp án”, “Câu khác”.
+           Trả lời ở ô chat; nút ⤢ Mở lớn (hoặc nói “Phóng to”) mở khung lớn để chiếu. Tra bài đang giảng (theo tên trang) → chương → cả hồ sơ.
+           Dữ liệu: nguon/lib/tro_giang_du_lieu.js, TỰ TẠO từ nguon/data bằng tools/tao_tra_cuu.js (dong_goi.js tự gọi); chỉ tải khi cô hỏi lần đầu.
    - Nút 🎤 chỉ hiện trên máy đã bật nút Sửa (mở trang một lần với ?sua), học sinh không thấy. Bấm 🎤 bắt đầu / dừng nghe; kéo được.
    - Nhận giọng nói bằng Web Speech API của trình duyệt (Chrome, Edge; cần mạng). Nhật kí lệnh (tgNhatKi) chỉ ghi câu giống lệnh, chỉ trên máy này.
    - Không sửa trang nào: chỉ bấm hộ nút và phím có sẵn (→ ← Esc, G, công cụ 👥 Lớp), nên dùng được cho mọi kiểu trang.
@@ -50,7 +53,7 @@
     });
     return ds;
   }
-  var CUA_TOI = "#tgNut,#tgChat,#tgHop,#tgGio,#nsNut,#nsHop,#hl-nut";
+  var CUA_TOI = "#tgNut,#tgChat,#tgHop,#tgGio,#tgLon,#nsNut,#nsHop,#hl-nut";
   function cacNut(mau, goc, coDau) {   // mọi nút đang hiện có chữ khớp mẫu, xếp theo mẫu (mẫu trước ưu tiên)
     var ds = goc ? [goc] : cacTrang(), ung = [], kq = [];
     ds.forEach(function (d) {
@@ -202,11 +205,41 @@
   /* ---------- hiểu câu nói ---------- */
   var HOC = docLS("tgHoc", {}), BO = docLS("tgBo", {});   // câu cô đã dạy: khóa → lệnh; câu cô bảo "không phải lệnh"
   var RE_SUA = /^\s*((trợ giảng|trợ lý|trợ lí|robot)(\s*ơi)?[\s,]*)?(cần sửa|ghi sửa|phiếu sửa|sửa)(?=\s|:|,|$)\s*[:,]?\s*/i;
+  /* TRA CỨU (giai đoạn 4): câu MỞ ĐẦU bằng từ khóa tra cứu → ["tra", loại, chủ đề]. Loại: ct công thức, kt kiến thức, db dạng bài, loi lỗi hay mắc, hn câu hỏi nhanh.
+     Chỉ nhận câu ngắn; câu có "là", "bằng", "thì"... là lời giảng ("Công thức này là F bằng m a"), bỏ qua. "Các em nhắc lại…" là cô giao cho học sinh, bỏ qua. */
+  var RE_GOI_TRA = /^((trợ giảng|trợ lý|trợ lí|robot|rô bốt)( ơi)? )?((cô|chúng ta|mình|ta|bây giờ|giờ|cả lớp|lớp mình|cùng|hãy|cho cô|cho cả lớp|cho lớp|giúp cô) )*((xem|mở|hiện|tra|tìm|đọc|cho xem) )?((lại|các|những|toàn bộ|tất cả) )?/;
+  var TRA = [
+    ["hnk", /^(câu hỏi khác|câu khác|một câu hỏi khác|một câu khác|hỏi câu khác|câu hỏi nhanh khác|câu hỏi tiếp|câu tiếp)( nữa| đi| nào)*$/],   // cùng chủ đề câu vừa hỏi
+    ["hn", /^(câu hỏi nhanh|hỏi nhanh|kiểm tra nhanh|câu hỏi ôn tập|câu hỏi ôn|thẻ ôn tập|thẻ ôn|thẻ nhớ|một câu hỏi|đố vui)( .*)?$/],
+    ["ct", /^(công thức|biểu thức|hệ thức)( .*)?$/],
+    ["db", /^(dạng bài tập|dạng bài|dạng toán|cách làm dạng|cách giải dạng|cách làm bài|phương pháp giải)( .*)?$/],
+    ["loi", /^(lỗi hay mắc|lỗi thường gặp|lỗi hay gặp|lỗi thường mắc|lỗi sai|lỗi|sai lầm hay gặp|sai lầm thường gặp|sai lầm|học sinh hay sai|chỗ hay sai)( .*)?$/],
+    ["kt", /^(nhắc lại|ôn lại|tóm tắt|kiến thức trọng tâm|kiến thức|tra cứu|nội dung chính|ghi nhớ)( .*)?$/]
+  ];
+  var RE_LON = /^((trợ giảng|robot)( ơi)? )?(phóng to|phóng lớn|mở lớn|mở to|xem lớn|mở khung lớn|khung lớn|toàn màn hình)( ra| lên| khung| cho cô)*$/;
+  function phanTra(s) {   // s đã chuẩn hóa (chữ thường, có dấu)
+    if (RE_LON.test(s)) return ["moLon"];
+    var r = s.replace(RE_GOI_TRA, "");
+    for (var i = 0; i < TRA.length; i++) {
+      var m = TRA[i][1].exec(r);
+      if (!m) continue;
+      if (TRA[i][0] === "hnk") return ["tra", "hnk", ""];
+      var chu = (" " + (m[2] || "") + " ").replace(/ (là gì|là như thế nào|như thế nào|thế nào|ra sao|đi|nhé|nha|nào|với|giúp cô|cho cô|ạ)(?= )/g, " ").replace(/\s+/g, " ").trim(), cu;
+      do { cu = chu; chu = chu.replace(/^(về|của|cho|lại|kiến thức|bài học|trong|ở|khi|các|những|chính|trọng tâm)( |$)/, "").trim(); } while (chu !== cu);
+      var w = (" " + chu + " ").replace(/ (cân bằng|thăng bằng|bằng nhau)(?= )/g, " ");
+      if (/ (là|bằng|thì|ta có|được tính|có dạng|cho biết|nên|vì|lần nữa|câu hỏi|đề bài|các em|các bạn|em|rất|lắm|quá|không|chưa|sao) /.test(w)) return null;   // lời giảng
+      if (chu.split(" ").length > (TRA[i][0] === "hn" ? 5 : 9)) return null;
+      return ["tra", TRA[i][0], chu];
+    }
+    return null;
+  }
   /* trả về { lenh } (làm ngay), { hoi, khoa } (gần giống lệnh: hỏi lại), { khoa } (có ý lệnh nhưng không rõ), hoặc null (lời giảng) */
   function phanTich(cau) {
     var goc = String(cau || "").normalize("NFC").trim(), s = chuan(goc);
     if (!s) return null;
     if (RE_SUA.test(goc)) return { lenh: ["sua", goc.replace(RE_SUA, "")], khoa: "sửa" };
+    var tr = phanTra(s);
+    if (tr) return { lenh: tr, khoa: "" };
     var m = tach(s);
     if (!m.length) return null;
     var khoa = m.map(function (x) { return x.w; }).join(" ");
@@ -229,11 +262,93 @@
     var a = l[1];
     return { tiep: "chuyển slide tiếp", lui: "lùi về slide trước", den: a === "cuoi" ? "đến slide cuối" : "đến slide " + a,
       dapAn: a ? "hiện đáp án câu " + a : "hiện đáp án", anDapAn: "ẩn đáp án", goiTen: "gọi tên ngẫu nhiên", moPhong: "mở mô phỏng",
-      dong: "đóng khung đang mở", nhom: "chia " + a + " nhóm", tatMic: "tắt micro", giup: "xem bảng lệnh", sua: "mở phiếu Sửa",
+      dong: "đóng khung đang mở", moLon: "mở khung lớn", tra: "tra " + ({ ct: "công thức", kt: "kiến thức", db: "dạng bài", loi: "lỗi hay mắc", hn: "câu hỏi nhanh", hnk: "câu hỏi khác" }[a] || "") + (l[2] ? " “" + l[2] + "”" : ""), nhom: "chia " + a + " nhóm", tatMic: "tắt micro", giup: "xem bảng lệnh", sua: "mở phiếu Sửa",
       gio: a === "tat" ? "tắt đồng hồ" : a === "dung" ? "tạm dừng đồng hồ" : a === "chay" ? "chạy tiếp đồng hồ" : "đếm ngược " + dongHo(a),
       mp: { chay: "bấm Chạy", dung: "bấm Dừng", datLai: "bấm Đặt lại" }[a] }[l[0]] || l[0];
   }
   function dongHo(s) { s = +s || 0; return Math.floor(s / 60) + ":" + ("0" + s % 60).slice(-2); }
+
+  /* ---------- TRA CỨU trong dữ liệu hồ sơ (window.TG_DL, tạo bằng tools/tao_tra_cuu.js). Thứ tự: bài đang giảng → chương → cả hồ sơ ---------- */
+  var BIET_DANH = [   // cách nhận giọng nói hay viết tên riêng → tên trong sách
+    [/niu ?tơn|niu tơn|niutơn|nui tơn|newtons/g, "newton"], [/bôi ?lơ|boi ?lơ|bôi lờ|bôilơ|boil\b|bôi lơ/g, "boyle"],
+    [/sác ?lơ|sạc ?lơ|sắc ?lơ|saclơ|charle\b/g, "charles"], [/cla ?pê ?rôn|clapêrôn|claperon|cla pe rôn/g, "clapeyron"],
+    [/ken ?vin|kenvin/g, "kelvin"], [/bơ ?rao|bờ ?rao|brao/g, "brown"], [/xen ?xi ?út|celsius|độ xê/g, "celsius"], [/pi ?ta ?go|pitago/g, "pythagore"]
+  ];
+  var DUNG_TRA = " của về là gì như thế nào ra sao cho tính các những một và với trong này đó ở khi thì được có cô em hôm nay dùng ta chúng ";
+  function tuTra(s) {   // chữ → các từ để so (bỏ LaTeX, bỏ từ đệm, bỏ dấu)
+    s = String(s || "").replace(/\\(text|mathrm)\{([^}]*)\}/g, " $2 ").replace(/\\[a-zA-Z]+/g, " ").replace(/[{}^_$\\|=+*/<>]/g, " ");
+    return chuan(s).split(" ").filter(function (w) { return w && DUNG_TRA.indexOf(" " + w + " ") < 0; }).map(bo).filter(Boolean);
+  }
+  function chuDeTra(chu) {   // "định luật hai niu tơn bài 15 lớp 10" → { q: "định luật 2 newton", bai: 15, lop: 10, nay: false }
+    var s = " " + chuan(chu) + " ", kq = { bai: null, lop: null, nay: false };
+    BIET_DANH.forEach(function (x) { s = s.replace(x[0], x[1]); });
+    s = s.replace(/ (luật|bài|lớp|khối|chương) ((?:một|hai|ba|bốn|năm|sáu|bảy|tám|chín|mười|mươi|mốt|lăm|tư)(?: (?:một|hai|ba|bốn|năm|sáu|bảy|tám|chín|mốt|lăm|tư))?)(?= )/g,
+      function (a, k, so) { var v = giaTri(so.split(" ")); return v == null ? a : " " + k + " " + v; });
+    s = s.replace(/ bài (này|hôm nay|đang học|đang giảng|học hôm nay)(?= )/g, function () { kq.nay = true; return " "; });
+    s = s.replace(/ (lớp|khối) (\d+)(?= )/g, function (a, k, n) { kq.lop = +n; return " "; });
+    s = s.replace(/ bài (?:số )?(\d+)(?= )/g, function (a, n) { kq.bai = +n; return " "; });
+    s = s.replace(/ (bài|chương) (?= )/g, " ");
+    kq.q = s.replace(/\s+/g, " ").trim();
+    return kq;
+  }
+  function bangChu(m, loai) {   // các chữ của một mục: [chữ mạnh (tên), chữ thường]
+    if (loai === "ct") return [m.t, m.dk + " " + m.l];
+    if (loai === "db") return [m.t, m.nb + " " + m.cl];
+    if (loai === "hn") return ["", m.de + " " + (m.pa || []).join(" ")];
+    if (loai === "the") return [m[0], m[1]];
+    return ["", m];
+  }
+  function cacMuc(b, loai) {   // các mục một loại trong một bài; câu hỏi nhanh = thẻ ôn + trắc nghiệm + trả lời ngắn
+    if (loai === "hn") return (b.the || []).map(function (x) { return { kieu: "the", m: x }; }).concat((b.hn || []).map(function (x) { return { kieu: x.pa ? "tn" : "tln", m: x }; }));
+    return (b[loai] || []).map(function (x) { return { kieu: loai, m: x }; });
+  }
+  function timBai(DL, so, lop) {   // "bài 9": ưu tiên lớp đang dạy
+    var ds = [];
+    DL.chuong.forEach(function (c) { c.bai.forEach(function (b) { if (b.ma === "B" + so) ds.push({ c: c, b: b }); }); });
+    return ds.filter(function (x) { return x.c.lop === lop; })[0] || ds[0] || null;
+  }
+  /* tim(DL, loại, chủ đề, ngữ cảnh {lop, c, b}) → { loai, muc:[{kieu, m, c, b, d}], pv: "bai"|"tim", c, b } hoặc { loi: "…" } */
+  function tim(DL, loai, chu, nc) {
+    nc = nc || {};
+    var cd = chuDeTra(chu || ""), lop = cd.lop || nc.lop || null, tq = tuTra(cd.q), cb = null;
+    if (cd.bai) { cb = timBai(DL, cd.bai, lop); if (!cb) return { loi: "Hồ sơ chưa có dữ liệu Bài " + cd.bai + (lop ? " lớp " + lop : "") }; }
+    else if (!tq.length && nc.b) cb = { c: nc.c, b: nc.b };
+    var TEN = { ct: "công thức", kt: "kiến thức", db: "dạng bài", loi: "lỗi hay mắc", hn: "câu hỏi nhanh" };
+    if (!tq.length) {   // không nói chủ đề: lấy cả bài
+      if (!cb && loai === "hn" && nc.c) {   // câu hỏi nhanh của cả chương
+        var tat = []; nc.c.bai.forEach(function (b) { cacMuc(b, "hn").forEach(function (x) { x.c = nc.c; x.b = b; tat.push(x); }); });
+        return tat.length ? { loai: loai, muc: tat, pv: "bai", c: nc.c } : { loi: "Chương này chưa có câu hỏi nhanh" };
+      }
+      if (!cb) return { loi: nc.c ? "Cô nói rõ bài, ví dụ “" + (TEN[loai] === "kiến thức" ? "Nhắc lại" : TEN[loai].charAt(0).toUpperCase() + TEN[loai].slice(1)) + " bài " + String(nc.c.bai[0].ma).slice(1) + "”"
+        : "Hồ sơ chưa có dữ liệu bài này. Cô nói rõ, ví dụ “" + { ct: "Công thức định luật Boyle", kt: "Nhắc lại định luật 1 Newton", db: "Dạng bài đẳng áp", loi: "Lỗi hay mắc bài 10", hn: "Câu hỏi nhanh bài 9" }[loai] + "”" };
+      var ds = cacMuc(cb.b, loai); ds.forEach(function (x) { x.c = cb.c; x.b = cb.b; });
+      return ds.length ? { loai: loai, muc: ds, pv: "bai", c: cb.c, b: cb.b } : { loi: cb.b.ten + " chưa có " + TEN[loai] + " trong hồ sơ" };
+    }
+    var cau = bo(cd.q), kq = [];
+    DL.chuong.forEach(function (c) {
+      c.bai.forEach(function (b) {
+        if (cb && b !== cb.b) return;
+        var tb = tuTra(String(b.ten).replace(/^Bài \d+\.\s*/, ""));
+        cacMuc(b, loai).forEach(function (x, i) {
+          var bc = bangChu(x.m, x.kieu === "tn" || x.kieu === "tln" ? "hn" : x.kieu), tm = tuTra(bc[0]), tt = tuTra(bc[1]), d = 0, trung = 0, thay = 0;
+          tq.forEach(function (w) {
+            if (tm.indexOf(w) >= 0) { d += 2; trung++; thay++; } else if (tt.indexOf(w) >= 0) { d += 1.3; trung++; thay++; } else if (tb.indexOf(w) >= 0) { d += 1; thay++; }
+          });
+          if (!trung && thay < tq.length) return;
+          if (thay / tq.length < .7) return;   // "định luật Ôm": chữ "ôm" không có ở đâu cả, không lấy các định luật khác
+          d = d / (2 * tq.length);
+          if (cau.length > 4 && bo(bc[0] + " " + bc[1]).indexOf(cau) >= 0) d += .4;
+          if (nc.b === b) d += .15; else if (nc.c === c) d += .08; else if (lop && c.lop === lop) d += .04;
+          d -= i * .002;   // cùng điểm: mục đứng trước (thường là ý chính) lên trước
+          if (d >= .45) kq.push({ kieu: x.kieu, m: x.m, c: c, b: b, d: d });
+        });
+      });
+    });
+    kq.sort(function (a, b) { return b.d - a.d; });
+    if (!kq.length) return { loi: "Hồ sơ chưa có " + TEN[loai] + " về “" + (chu || "").trim() + "”", it: tq.length <= 3 };
+    kq = kq.filter(function (x) { return x.d >= kq[0].d * .6; });   // "liên quan" phải gần bằng mục tốt nhất
+    return { loai: loai, muc: kq.slice(0, 6), pv: "tim", c: kq[0].c, b: kq[0].b };
+  }
 
   /* ---------- đồng hồ đếm ngược ---------- */
   var GIO = { con: 0, tm: null, el: null };
@@ -304,6 +419,7 @@
       veSlide(); go_(n - 1); return "Slide " + n + " / " + tong;
     },
     dapAn: function (n) {
+      if (!n && traCoDA()) { if (TC.da) return "!Đáp án câu hỏi nhanh đang hiện rồi"; traDA(true); return "Hiện đáp án câu hỏi nhanh"; }
       var goc = hopMP() || undefined;   // mô phỏng đang mở: chỉ tìm trong khung mô phỏng
       if (n) {   // "Đáp án câu 2": chỉ mở đáp án của câu đó
         var ds = cacNut(MAU_DA, goc).concat(oTrong(false), cacNut(MAU_KT, goc)).filter(function (x) { return thuocCau(x, n); });
@@ -323,6 +439,7 @@
       b.click(); return "Hiện đáp án";
     },
     anDapAn: function () {
+      if (traCoDA() && TC.da) { traDA(false); return "Ẩn đáp án câu hỏi nhanh"; }
       var b = timNut([/^(👁 )?an (tat ca )?(dap an|loi giai|ket qua)/], hopMP() || undefined);
       var o = oTrong(true);
       if (!b && o.length) { o.forEach(function (x) { x.click(); }); return "Ẩn " + o.length + " ô đáp án"; }
@@ -381,6 +498,8 @@
     },
     dong: function () {
       if (hop) { dongHop(); return "Đóng bảng lệnh"; }
+      if (TC.lon) { dongLon(); return "Đóng khung lớn"; }
+      if (TC.the && TC.the.parentNode) { boTra(); return "Đóng ô tra cứu"; }
       try { if (window.HSDH_SUA && HSDH_SUA.dangMo()) { HSDH_SUA.dong(); return "Đóng phiếu Sửa"; } } catch (e) {}
       if (mpMo()) { MP.dong(); return "Đóng mô phỏng"; }
       if (gioDangHien() && !GIO.tm) { tatGio(); return "Tắt đồng hồ"; }
@@ -392,6 +511,11 @@
       if (!window.HSDH_SUA) return "!Chưa bật nút ✎ Sửa trên trang này";
       HSDH_SUA.mo(yc); return "Mở phiếu Sửa: cô đọc lại rồi bấm Gửi";
     },
+    tra: function (loai, chu) {
+      if (loai === "hnk") { loai = "hn"; chu = TC.tq && TC.tq[0] === "hn" ? TC.tq[1] : ""; }   // "Câu khác": giữ chủ đề câu vừa hỏi
+      traCuu(loai, chu);
+    },   // tải dữ liệu xong mới trả lời (ô chat)
+    moLon: function () { if (!TC.kq) return "!Chưa tra gì để mở lớn. Cô nói ví dụ “Công thức định luật 2 Newton”"; moLon(); return "Mở khung lớn"; },
     tatMic: function () { setTimeout(tat, 0); return "Tắt micro"; },
     giup: function () { moHop(); return "Bảng lệnh"; }
   };
@@ -402,7 +526,7 @@
     "#tgNut{position:fixed;left:10px;bottom:64px;z-index:2147483000;font:600 14px system-ui,sans-serif;padding:7px 12px;border-radius:20px;border:1px solid #1d4ed8;background:#eff6ff;color:#1e3a8a;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.2);opacity:.8;user-select:none;touch-action:none}" +
     "#tgNut:hover{opacity:1}#tgNut.on{background:#dc2626;border-color:#dc2626;color:#fff;opacity:1;animation:tgTho 1.6s infinite}" +
     "@keyframes tgTho{0%,100%{box-shadow:0 0 0 0 rgba(220,38,38,.55)}50%{box-shadow:0 0 0 9px rgba(220,38,38,0)}}" +
-    "#tgChat{position:fixed;z-index:2147483002;width:min(340px,calc(100vw - 20px));display:flex;flex-direction:column;gap:6px;font:14px/1.4 system-ui,sans-serif;pointer-events:none}" +
+    "#tgChat{position:fixed;z-index:2147483002;width:min(420px,calc(100vw - 20px));display:flex;flex-direction:column;gap:6px;font:14px/1.4 system-ui,sans-serif;pointer-events:none}" +
     "#tgChat .m{background:#fff;color:#1f2937;border:1px solid #d1d5db;border-radius:12px 12px 12px 3px;padding:7px 11px;box-shadow:0 3px 12px rgba(0,0,0,.2);transition:opacity .4s;pointer-events:auto}" +
     "#tgChat .m.ok{background:#ecfdf5;border-color:#86efac;color:#14532d;padding:4px 10px;font-weight:600;font-size:13px;align-self:flex-start}" +
     "#tgChat .m.loi{background:#fff7ed;border-color:#fdba74;color:#7c2d12}#tgChat .m.hoi{border:2px solid #1d4ed8}" +
@@ -414,7 +538,16 @@
     "#tgHop h4{margin:12px 0 4px;font-size:14px}#tgHop .gc{font-size:12px;color:#6b7280}#tgHop .dong{float:right}#tgHop select{padding:2px 4px;font-weight:400;max-width:150px}" +
     "#tgGio{position:fixed;top:10px;right:14px;z-index:2147483000;font:700 34px/1 system-ui,sans-serif;background:#fff;color:#14213d;border:3px solid #1d4ed8;border-radius:14px;padding:6px 16px;box-shadow:0 2px 12px #0005;cursor:pointer;font-variant-numeric:tabular-nums}" +
     "#tgGio[hidden]{display:none}#tgGio.gan{border-color:#f59e0b;color:#b45309}#tgGio.het{border-color:#dc2626;color:#fff;background:#dc2626;animation:tgNhay 1s infinite}@keyframes tgNhay{50%{opacity:.55}}" +
-    "@media print{#tgNut,#tgChat,#tgHop,#tgGio{display:none!important}}";
+    "#tgChat .m.tra{max-height:min(60vh,420px);overflow:auto;border-color:#93c5fd;border-width:2px}#tgChat .tgDau,#tgLon .tgDau{font-size:12px;color:#1d4ed8;font-weight:600;margin-bottom:3px}" +
+    ".tgTen{font-weight:700;color:#14213d}.tgGc{color:#4b5563;font-size:.92em}.tgCT{text-align:center;margin:4px 0;overflow-x:auto;overflow-y:hidden}.tgVd{margin-top:4px}.tgPA{margin:4px 0;padding-left:0;list-style:none}" +
+    ".tgDA{display:none;margin-top:6px;padding:6px 9px;border-radius:8px;background:#ecfdf5;color:#14532d}.da .tgDA{display:block}.tgThem{font-size:12px;color:#6b7280;margin-top:3px}" +
+    "#tgLon{position:fixed;inset:3vh 3vw;z-index:2147483003;background:#fff;color:#111827;border-radius:16px;box-shadow:0 12px 48px rgba(0,0,0,.45);overflow:auto;padding:0 34px 26px;font:26px/1.5 system-ui,sans-serif;box-sizing:border-box}" +
+    "#tgLon .dau{position:sticky;top:0;background:#fff;display:flex;gap:10px;align-items:center;padding:14px 0 10px;border-bottom:2px solid #dbeafe;margin-bottom:12px;z-index:1}" +
+    "#tgLon .dau b{flex:1;font-size:22px;color:#1e3a8a}#tgLon .dau button{font:600 18px system-ui,sans-serif;padding:8px 16px;border-radius:8px;border:1px solid #d1d5db;background:#f3f4f6;color:#111;cursor:pointer}" +
+    "#tgLon .dau button.c{background:#1d4ed8;border-color:#1d4ed8;color:#fff}#tgLon .muc{padding:12px 0;border-bottom:1px solid #e5e7eb}#tgLon .muc:last-child{border-bottom:0}" +
+    "#tgLon .tgDau{font-size:16px}#tgLon .tgCT{font-size:1.25em;margin:10px 0}#tgLon h4{margin:18px 0 0;font-size:18px;color:#6b7280}" +
+    "@media (max-width:700px){#tgLon{inset:0;border-radius:0;padding:0 16px 16px;font-size:19px}#tgLon .dau b{font-size:17px}#tgLon .dau button{font-size:15px;padding:6px 10px}}" +
+    "@media print{#tgNut,#tgChat,#tgHop,#tgGio,#tgLon{display:none!important}}";
   document.head.appendChild(css);
 
   /* ô chat cạnh nút 🎤: báo đã làm (xanh, ngắn), báo lỗi (cam), hỏi lại (viền xanh, có nút) */
@@ -438,6 +571,156 @@
   }
   function boTin(t) { if (!t || !t.parentNode) return; t.style.opacity = "0"; setTimeout(function () { if (t.parentNode) t.remove(); datChat(); }, 400); }
   function thongBao(chinh, phu, loi) { nhan(chinh, phu, loi ? "loi" : ""); }
+
+  /* ---------- TRA CỨU: tải dữ liệu, ô tra cứu trong chat, khung lớn ---------- */
+  var GOC = (function () {   // thư mục chứa tro_giang.js: dữ liệu tra cứu, KaTeX nằm cùng chỗ
+    var s = document.currentScript && document.currentScript.src;
+    if (!s) { var e = document.querySelector('script[src*="tro_giang.js"]'); s = e && e.src; }
+    return s ? s.replace(/tro_giang\.js.*$/, "") : "../nguon/lib/";
+  })();
+  var NAP = null;
+  function napJS(u, cb) { var s = document.createElement("script"); s.src = u; s.onload = function () { cb(true); }; s.onerror = function () { cb(false); }; document.head.appendChild(s); }
+  function napDL(cb) {   // tải dữ liệu tra cứu và KaTeX (nếu trang chưa có) một lần, khi cô hỏi lần đầu
+    if (window.TG_DL && window.katex) return cb(true);
+    if (NAP) { NAP.push(cb); return; }
+    NAP = [cb]; var con = 0;
+    function xong() { if (--con) return; var ds = NAP; NAP = null; ds.forEach(function (f) { f(!!window.TG_DL); }); }
+    if (!window.TG_DL) con++;
+    if (!window.katex) con++;
+    if (!window.TG_DL) napJS(GOC + "tro_giang_du_lieu.js", xong);
+    if (!window.katex) {
+      var l = document.createElement("link"); l.rel = "stylesheet"; l.href = GOC + "katex.css"; document.head.appendChild(l);
+      napJS(GOC + "katex.js", xong);
+    }
+  }
+  function ngCanh(DL) {   // bài đang giảng, theo tên trang: k10-B13.html → lớp 10 Bài 13; k12-chuong2.html → chương 12-2 (bài đoán theo slide đang hiện)
+    var p = decodeURIComponent(location.pathname || ""), m, lop = null, so = null, cm = null, c = null, b = null;
+    if ((m = /k(\d+)-B(\d+)/i.exec(p))) { lop = +m[1]; so = +m[2]; }
+    else if ((m = /k(\d+)-chuong(\d+)/i.exec(p))) { lop = +m[1]; cm = m[1] + "-" + m[2]; }
+    DL.chuong.forEach(function (x) {
+      if (so && x.lop === lop) x.bai.forEach(function (y) { if (y.ma === "B" + so) { c = x; b = y; } });
+      if (cm && x.ma === cm) c = x;
+    });
+    if (c && !b) {   // slide đang hiện, rồi slide đầu của bộ slide đó (bài giảng K12 dựng slide theo từng bài, slide đầu ghi "Bài 8 · …")
+      var el = document.querySelector(".bg-s.on,.slide.on,.slide.active,section.on"), ts = [];
+      if (el) { ts.push(el.textContent); if (el.parentElement && el.parentElement.firstElementChild) ts.push(el.parentElement.firstElementChild.textContent); }
+      ts.push(document.title);
+      for (var i = 0; i < ts.length && !b; i++) {
+        var so_ = {}, mm, re = /Bài\s*(\d+)/g, t = String(ts[i] || "").slice(0, 400);
+        while ((mm = re.exec(t))) so_[mm[1]] = 1;
+        var k = Object.keys(so_);
+        if (k.length === 1) c.bai.forEach(function (y) { if (y.ma === "B" + k[0]) b = y; });   // nhắc nhiều bài (mục lục) thì không đoán
+      }
+    }
+    return { lop: lop, c: c, b: b };
+  }
+  var TC = { kq: null, chon: null, the: null, lon: null, da: false, tq: null, daHoi: [], cau: "" };
+  var TEN_TRA = { ct: "📐 Công thức", kt: "📘 Kiến thức", db: "🧩 Dạng bài", loi: "⚠ Lỗi hay mắc", hn: "❓ Câu hỏi nhanh" };
+  function tex(l, lon) {
+    try { if (window.katex) return katex.renderToString(String(l), { throwOnError: false, displayMode: !!lon }); } catch (e) {}
+    return "<code>" + esc(l) + "</code>";
+  }
+  function toan(s) {   // chữ có công thức $…$
+    var h = "", i = 0, re = /\$([^$]+)\$/g, m; s = String(s || "");
+    while ((m = re.exec(s))) { h += esc(s.slice(i, m.index)) + tex(m[1]); i = re.lastIndex; }
+    return h + esc(s.slice(i));
+  }
+  function nhanBai(x) { return x.b ? x.b.ten.replace(/\.\s.*$/, "") + " · lớp " + x.c.lop : ""; }
+  function veLuaChon(pa) { return '<ul class="tgPA">' + pa.map(function (p, i) { return "<li><b>" + "ABCDEFGH".charAt(i) + ".</b> " + toan(p) + "</li>"; }).join("") + "</ul>"; }
+  function veMuc(x, lon) {
+    var m = x.m, h = "";
+    if (x.kieu === "ct") {
+      h = (m.t ? '<div class="tgTen">' + esc(m.t) + "</div>" : "") + '<div class="tgCT">' + tex(m.l, true) + "</div>" + (m.dk ? '<div class="tgGc">' + toan(m.dk) + "</div>" : "");
+      if (lon && m.vd) h += '<div class="tgVd"><b>Ví dụ:</b> ' + toan(m.vd) + "</div>";
+    } else if (x.kieu === "kt") h = toan(m);
+    else if (x.kieu === "loi") h = "⚠ " + toan(m);
+    else if (x.kieu === "db") {
+      h = '<div class="tgTen">' + toan(m.t) + "</div><div><b>Nhận biết:</b> " + toan(m.nb) + "</div><div><b>Cách làm:</b> " + toan(m.cl) + "</div>";
+      if (lon && m.vd) h += '<div class="tgVd"><b>Ví dụ:</b> ' + toan(m.vd.de) + (m.vd.pa ? veLuaChon(m.vd.pa) : "") +
+        (m.vd.gi ? '<div class="tgDA"><b>Lời giải:</b> ' + toan(m.vd.gi) + "</div>" : "") + "</div>";
+    } else if (x.kieu === "the") h = '<div class="tgTen">' + toan(m[0]) + '</div><div class="tgDA">' + toan(m[1]) + "</div>";
+    else if (x.kieu === "tn") h = "<div>" + toan(m.de) + "</div>" + veLuaChon(m.pa) + '<div class="tgDA"><b>Đáp án ' + esc(m.da) + ".</b> " + toan(m.gt) + "</div>";
+    else if (x.kieu === "tln") h = "<div>" + toan(m.de) + '</div><div class="tgDA"><b>Đáp số: ' + esc(m.ds) + ".</b> " + toan(m.gt) + "</div>";
+    return h;
+  }
+  function coDA(x) { return x && (x.kieu === "the" || x.kieu === "tn" || x.kieu === "tln" || (x.kieu === "db" && x.m.vd && x.m.vd.gi)); }
+  function traCoDA() { return !!(TC.kq && TC.kq.loai === "hn" && ((TC.the && TC.the.parentNode) || TC.lon)); }
+  function traDA(hien) {
+    TC.da = hien;
+    [TC.the, TC.lon].forEach(function (e) { if (e) e.classList.toggle("da", hien); });
+    [].forEach.call(document.querySelectorAll("#tgChat .tra [data-t=da],#tgLon [data-t=da]"), function (b) { b.textContent = hien ? "Ẩn đáp án" : "Đáp án"; });
+  }
+  function nutTra(lon) {
+    var h = "";
+    if (!lon) h += '<button type="button" class="c" data-t="lon">⤢ Mở lớn</button>';
+    if (TC.kq.loai === "hn" || (lon && TC.kq.muc.some(coDA))) h += '<button type="button" data-t="da">' + (TC.da ? "Ẩn đáp án" : "Đáp án") + "</button>";
+    if (TC.kq.loai === "hn") h += '<button type="button" data-t="khac">↻ Câu khác</button>';
+    return h + '<button type="button" data-t="dong">✕' + (lon ? " Đóng" : "") + "</button>";
+  }
+  function bamTra(e) {
+    var b = e.target.closest("button[data-t]"); if (!b) return;
+    var t = b.getAttribute("data-t");
+    if (t === "lon") moLon();
+    else if (t === "da") traDA(!TC.da);
+    else if (t === "khac") { TC.cau = "↻ Câu khác"; traCuu("hn", TC.tq ? TC.tq[1] : ""); }
+    else if (t === "dong") { if (b.closest("#tgLon")) dongLon(); else boTra(); }
+  }
+  function boTra() { if (TC.the) { clearTimeout(TC.the._tq); boTin(TC.the); } TC.the = null; }
+  function hienTra() {   // ô tra cứu trong chat: mục chính + nút Mở lớn
+    var kq = TC.kq, x = TC.chon;
+    boTra();
+    if (!chat) { chat = document.createElement("div"); chat.id = "tgChat"; chat.setAttribute("role", "status"); document.body.appendChild(chat); }
+    var t = document.createElement("div"); t.className = "m tra";
+    var con = kq.loai === "hn" ? 0 : kq.muc.length - 1, ten = { ct: "công thức", kt: "ý", db: "dạng", loi: "lỗi" }[kq.loai];
+    t.innerHTML = '<div class="tgDau">' + TEN_TRA[kq.loai] + (x.b ? " · " + esc(nhanBai(x)) : "") + "</div>" + veMuc(x, false) +
+      (con > 0 ? '<div class="tgThem">+ ' + con + " " + ten + (kq.pv === "tim" ? " liên quan" : " nữa của bài") + ": bấm ⤢ Mở lớn</div>" : "") +
+      '<div class="r">' + nutTra(false) + "</div>";
+    t.addEventListener("click", bamTra);
+    t.addEventListener("mouseenter", function () { clearTimeout(t._tq); });
+    t._tq = setTimeout(function () { if (TC.the === t && !TC.lon) boTra(); }, 45000);   // tự ẩn sau 45 giây (đưa chuột vào thì giữ)
+    chat.appendChild(t); TC.the = t;
+    while (chat.children.length > 3) chat.removeChild(chat.firstChild);
+    datChat();
+  }
+  function moLon() {   // khung lớn trên màn chiếu: mục chính (và các mục khác của bài / liên quan)
+    var kq = TC.kq; if (!kq) return;
+    dongLon();
+    var l = document.createElement("div"); l.id = "tgLon"; l.setAttribute("role", "dialog");
+    var ds = kq.loai === "hn" ? [TC.chon] : kq.muc,
+      tieu = TEN_TRA[kq.loai] + (kq.pv === "bai" && kq.b ? " · " + kq.b.ten : kq.pv === "bai" && kq.c ? " · Chương " + kq.c.ten : "");
+    l.innerHTML = '<div class="dau"><b>' + esc(tieu) + "</b>" + nutTra(true) + "</div>" +
+      ds.map(function (x, i) {
+        return (kq.pv === "tim" && i === 1 ? "<h4>Liên quan</h4>" : "") + '<div class="muc">' +
+          (kq.pv === "tim" || kq.loai === "hn" ? '<div class="tgDau">' + esc(nhanBai(x)) + "</div>" : "") + veMuc(x, true) + "</div>";
+      }).join("");
+    if (TC.da) l.classList.add("da");
+    l.addEventListener("click", bamTra);
+    document.body.appendChild(l); TC.lon = l;
+  }
+  function dongLon() { if (TC.lon) TC.lon.remove(); TC.lon = null; }
+  document.addEventListener("keydown", function (e) { if (TC.lon && e.key === "Escape" && e.isTrusted) { dongLon(); e.stopPropagation(); e.preventDefault(); } }, true);
+  function traCuu(loai, chu) {
+    var cau = TC.cau || chu || ""; TC.cau = "";
+    napDL(function (ok) {
+      if (!ok) { nhan("Không tải được dữ liệu tra cứu", "Kiểm tra mạng rồi nói lại", "loi"); ghiNK(cau, "✗ không tải được dữ liệu"); return; }
+      var kq = tim(window.TG_DL, loai, chu, ngCanh(window.TG_DL));
+      if (kq.loi) {
+        if (kq.it === false) { ghiNK(cau, "bỏ qua: " + kq.loi); return; }   // câu dài không khớp gì: có lẽ là lời giảng
+        nhan(kq.loi, "“" + cau + "”", "loi"); ghiNK(cau, "✗ " + kq.loi); return;
+      }
+      var chon = kq.muc[0];
+      if (loai === "hn") {   // chọn ngẫu nhiên, tránh câu vừa hỏi
+        var con = kq.muc.filter(function (x) { return TC.daHoi.indexOf(x.m) < 0; });
+        if (!con.length) { TC.daHoi = []; con = kq.muc; }
+        chon = con[Math.floor(Math.random() * con.length)];
+        TC.daHoi.push(chon.m); if (TC.daHoi.length > 30) TC.daHoi.shift();
+      }
+      TC.kq = kq; TC.chon = chon; TC.da = false; TC.tq = [loai, chu];
+      hienTra();
+      if (TC.lon) moLon();   // khung lớn đang mở thì thay nội dung luôn
+      ghiNK(cau, "✓ " + TEN_TRA[loai].replace(/^\S+ /, "") + (chon.b ? " · " + nhanBai(chon) : ""));
+    });
+  }
 
   /* hỏi lại khi câu nói gần giống lệnh */
   var hoi = null, lanHoi = 0;
@@ -487,6 +770,7 @@
        ["Gọi tên", "“Gọi tên”, “Gọi một bạn lên bảng”; “Chia 4 nhóm”"],
        ["Đếm ngược", "“Đếm ngược 3 phút”, “Hẹn giờ 1 phút rưỡi”, “Dừng giờ”, “Tắt đồng hồ”"],
        ["Đóng", "“Đóng”, “Tắt”, “Kết thúc”: đóng mô phỏng, khung gọi tên, phiếu…"],
+       ["Tra cứu", "“Công thức định luật 2 Newton”, “Nhắc lại bài 13”, “Dạng bài đẳng áp”, “Lỗi hay mắc”, “Câu hỏi nhanh” rồi “Đáp án”: trả lời ở ô chat, bấm ⤢ Mở lớn (hoặc nói “Phóng to”) để chiếu cho lớp. Tra bài đang giảng trước, rồi cả chương, cả hồ sơ"],
        ["Sửa …", "“Sửa đáp án câu 3 là B”: mở phiếu ✎ Sửa đã điền sẵn, cô đọc lại rồi bấm Gửi"],
        ["Tắt micro", "“Tắt micro”, “Ngừng nghe”"], ["Trợ giúp", "hiện bảng này"]]
         .map(function (r) { return "<tr><td>" + r[0] + "</td><td>" + r[1] + "</td></tr>"; }).join("") + "</table>" +
@@ -542,7 +826,7 @@
   var mic = null, dangNghe = false, choLenh = null;   // choLenh: hàm nhận câu nói một lần (đọc chính tả vào phiếu Sửa)
   function chayLenh(l, cau, ghiChu, khoa) {
     var kq;
-    try { kq = VIEC[l[0]](l[1]); } catch (e) { kq = "!Lỗi khi làm lệnh: " + e.message; }
+    try { kq = VIEC[l[0]](l[1], l[2]); } catch (e) { kq = "!Lỗi khi làm lệnh: " + e.message; }
     if (typeof kq !== "string") return;
     if (kq.charAt(0) === "!") { nhan(kq.slice(1), "“" + cau + "”", "loi"); ghiNK(cau, "✗ " + kq.slice(1), khoa); }
     else { nhan("✓ " + kq + (ghiChu ? " (" + ghiChu + ")" : ""), "", "ok"); ghiNK(cau, "✓ " + kq, khoa); }
@@ -556,7 +840,7 @@
     }
     p = p || phanTich(cau);
     if (!p) return;   // lời giảng: im lặng
-    if (p.lenh) { dongHoi(); chayLenh(p.lenh, cau, "", p.lenh[0] === "sua" ? "" : p.khoa); return; }
+    if (p.lenh) { dongHoi(); TC.cau = cau; chayLenh(p.lenh, cau, "", p.lenh[0] === "sua" || p.lenh[0] === "tra" ? "" : p.khoa); return; }
     if (p.hoi) { if (!hoi && Date.now() - lanHoi > 4000) moiHoi(p, cau); ghiNK(cau, "hỏi: " + tenLenh(p.hoi) + "?", p.khoa); return; }
     ghiNK(cau, "chưa hiểu", p.khoa);
   }
@@ -607,6 +891,7 @@
   window.TroGiang = {
     hieu: hieu,
     phanTich: phanTich,
+    tim: tim,
     lam: lam,
     docMotCau: function (cb) {
       if (!SR) { thongBao("Trình duyệt này không nghe được giọng nói", "Mở trang bằng Chrome hoặc Edge", true); return false; }

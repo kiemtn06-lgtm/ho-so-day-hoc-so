@@ -9,3 +9,5 @@ h = h.replace(/<script src="([^"]+)"><\/script>/g, (m, f) => '<script>\n' + rd(f
 const out = path.join(__dirname, '..', 'Ho-so-day-hoc-so.html');
 fs.writeFileSync(out, h);
 console.log('Đã tạo Ho-so-day-hoc-so.html', (h.length / 1024).toFixed(0) + ' KB');
+const tc = require('./tao_tra_cuu.js')();   // dữ liệu tra cứu của trợ giảng 🎤 lấy từ nguon/data, luôn khớp với hồ sơ
+console.log('Đã tạo nguon/lib/tro_giang_du_lieu.js', tc.kb + ' KB');

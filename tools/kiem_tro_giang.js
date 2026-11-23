@@ -1,6 +1,7 @@
 /* Kiểm tra cách trợ giảng giọng nói 🎤 (nguon/lib/tro_giang.js) hiểu câu nói, không cần trình duyệt.
    Chạy: node tools/kiem_tro_giang.js
    Mỗi dòng: [câu nói, kết quả mong đợi]. Kết quả: lệnh dạng "tiep", "den 5", "dapAn 2"...; "hỏi tiep" (hỏi lại cô); null (lời giảng, bỏ qua).
+   Tra cứu (giai đoạn 4): "tra ct định luật 2 newton" (loại + chủ đề); bảng TRA kiểm tra robot tìm ra mục nào trong dữ liệu hồ sơ.
    Thêm câu vào đây mỗi khi cô báo robot hiểu sai, để lần sửa sau không làm hỏng lại. */
 const fs = require('fs'), path = require('path');
 const src = fs.readFileSync(path.join(__dirname, '..', 'nguon', 'lib', 'tro_giang.js'), 'utf8');
@@ -43,7 +44,37 @@ const CAU = [
   ['Ta về nhà làm bài', null], ['Sang phần hai', null], ['Năm', null], ['Ba', null], ['Kết quả là 5 mét', null], ['Dao động tắt dần', null],
   ['Các em sửa bài', null], ['Vật đi qua vị trí cân bằng', null], ['Lực tác dụng lên vật', null], ['Vận tốc ban đầu bằng không', null],
   ['Dòng điện chạy qua dây dẫn', null], ['Tiếp tuyến của quỹ đạo', null], ['Mắc nối tiếp hai điện trở', null], ['Đóng khóa K', null],
-  ['Thời gian vật rơi', null], ['Lùi xe', null], ['Ai làm xong chưa', null], ['Các em mở sách giáo khoa', null], ['Trước tiên ta xét', null]
+  ['Thời gian vật rơi', null], ['Lùi xe', null], ['Ai làm xong chưa', null], ['Các em mở sách giáo khoa', null], ['Trước tiên ta xét', null],
+  // tra cứu trong hồ sơ (giai đoạn 4): "tra <loại> <chủ đề>"
+  ['Công thức định luật 2 Newton', 'tra ct định luật 2 newton'], ['Trợ giảng ơi công thức định luật Bôi lơ', 'tra ct định luật bôi lơ'],
+  ['Cho cô xem công thức bài 9', 'tra ct bài 9'], ['Công thức', 'tra ct'], ['Công thức cân bằng lực', 'tra ct cân bằng lực'],
+  ['Nhắc lại kiến thức', 'tra kt'], ['Nhắc lại bài 14', 'tra kt bài 14'], ['Chúng ta nhắc lại định luật 1 Newton', 'tra kt định luật 1 newton'],
+  ['Nội dung chính bài 8', 'tra kt bài 8'], ['Dạng bài đẳng áp', 'tra db đẳng áp'], ['Các dạng bài', 'tra db'],
+  ['Lỗi hay mắc', 'tra loi'], ['Lỗi thường gặp định luật Charles', 'tra loi định luật charles'],
+  ['Câu hỏi nhanh', 'tra hn'], ['Câu hỏi nhanh bài 11', 'tra hn bài 11'], ['Câu khác', 'tra hnk'], ['Câu hỏi khác nữa', 'tra hnk'],
+  ['Phóng to', 'moLon'], ['Mở lớn', 'moLon'],
+  // lời giảng có từ tra cứu: bỏ qua
+  ['Công thức này là F bằng m a', null], ['Các em nhắc lại định luật 1 Newton', null], ['Kiến thức hôm nay rất quan trọng các em ạ', null],
+  ['Lỗi sai của bạn là đổi đơn vị', null], ['Câu khác thì sao các em', null], ['Công thức tính gia tốc là a bằng F chia m', null]
+];
+
+/* TRA: [câu nói, trang đang mở ("10-B13", "12-chuong2"; "" là trang chưa có dữ liệu), mục đứng đầu mong đợi]
+   Mục: mã bài + đầu tên/nội dung của mục ("B15 Định luật 2 Newton"), hoặc "✗" khi robot phải báo "hồ sơ chưa có".
+   Dữ liệu: nguon/lib/tro_giang_du_lieu.js (node tools/tao_tra_cuu.js). */
+const TRA = [
+  ['Công thức định luật 2 Newton', '', 'B15 Định luật 2 Newton'], ['Công thức định luật hai niu tơn', '', 'B15 Định luật 2 Newton'],
+  ['Công thức định luật Bôi lơ', '', 'B9 Định luật Boyle'], ['Công thức định luật Sác lơ', '', 'B10 Định luật Charles'],
+  ['Công thức phương trình Cla pê rôn', '', 'B11 Phương trình Clapeyron'], ['Công thức đổi độ C sang ken vin', '', 'B10 Đổi nhiệt độ Celsius'],
+  ['Công thức', '10-B15', 'B15 Định luật 2 Newton'], ['Công thức', '', '✗'], ['Công thức bài 9', '', 'B9 Định luật Boyle'],
+  ['Công thức hợp lực hai lực vuông góc', '10-B13', 'B13 Độ lớn hợp lực'], ['Công thức cân bằng lực', '', 'B14 Định luật 1 Newton'],
+  ['Công thức gia tốc', '10-B15', 'B15 Gia tốc từ quãng đường'], ['Công thức động năng trung bình phân tử', '', 'B12 Động năng tịnh tiến'],
+  ['Công thức định luật Ôm', '', '✗'],
+  ['Nhắc lại kiến thức', '10-B13', 'B13 Tổng hợp lực'], ['Nhắc lại bài 14', '', 'B14 Lực và chuyển động'], ['Nhắc lại định luật 1 Newton', '', 'B14 Định luật 1 Newton'],
+  ['Kiến thức quán tính', '', 'B14 Quán tính'], ['Tóm tắt bài 12 lớp 12', '', 'B12 Mật độ phân tử'],
+  ['Nhắc lại bài 13', '12-chuong2', 'B13 '], ['Nhắc lại bài 13', '10-B15', 'B13 Tổng hợp lực'],
+  ['Dạng bài đẳng áp', '', 'B10 Tính thể tích hoặc nhiệt độ'], ['Dạng bài', '10-B14', 'B14 Nhận biết nội dung định luật 1'],
+  ['Lỗi hay mắc', '10-B15', 'B15 Quên đổi khối lượng'], ['Lỗi hay mắc bài 10', '', 'B10 Dùng nhiệt độ Celsius'],
+  ['Câu hỏi nhanh', '10-B13', 'B13'], ['Câu hỏi nhanh', '', '✗'], ['Câu hỏi nhanh bài 11', '', 'B11']
 ];
 
 function ra(cau) {
@@ -59,5 +90,22 @@ for (const [c, mong] of CAU) {
   const kq = ra(c);
   if (kq !== mong) { sai++; console.log('SAI  “' + c + '”  →  ' + JSON.stringify(kq) + '   (mong: ' + JSON.stringify(mong) + ')'); }
 }
-console.log(sai ? '\n' + sai + '/' + CAU.length + ' câu sai' : 'Đúng cả ' + CAU.length + ' câu');
+new Function('window', fs.readFileSync(path.join(__dirname, '..', 'nguon', 'lib', 'tro_giang_du_lieu.js'), 'utf8'))(g);
+const DL = g.TG_DL;
+function ngCanh(t) {   // giống ngCanh trong tro_giang.js, theo tên trang
+  const m = /^(\d+)-B(\d+)$/.exec(t), n = /^(\d+)-chuong(\d+)$/.exec(t); let c = null, b = null;
+  if (m) DL.chuong.forEach(x => { if (x.lop === +m[1]) x.bai.forEach(y => { if (y.ma === 'B' + m[2]) { c = x; b = y; } }); });
+  if (n) c = DL.chuong.find(x => x.ma === n[1] + '-' + n[2]) || null;
+  return m || n ? { lop: +(m || n)[1], c, b } : {};
+}
+const tenMuc = x => x.b.ma + ' ' + String(x.kieu === 'ct' || x.kieu === 'db' ? x.m.t : x.kieu === 'the' ? x.m[0] : x.m.de || x.m);
+for (const [c, trang, mong] of TRA) {
+  const p = TG.phanTich(c), l = p && p.lenh;
+  let kq;
+  if (!l || l[0] !== 'tra') kq = 'không hiểu là tra cứu';
+  else { const k = TG.tim(DL, l[1], l[2], ngCanh(trang)); kq = k.loi ? '✗' : tenMuc(k.muc[0]); }
+  if (!(mong === '✗' ? kq === '✗' : kq.startsWith(mong))) { sai++; console.log('SAI tra “' + c + '” (' + (trang || 'trang chưa có dữ liệu') + ')  →  ' + kq.slice(0, 70) + '   (mong: ' + mong + ')'); }
+}
+const tong = CAU.length + TRA.length;
+console.log(sai ? '\n' + sai + '/' + tong + ' câu sai' : 'Đúng cả ' + tong + ' câu (' + CAU.length + ' lệnh, ' + TRA.length + ' tra cứu)');
 process.exit(sai ? 1 : 0);
