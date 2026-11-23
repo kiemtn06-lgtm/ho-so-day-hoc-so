@@ -26,12 +26,12 @@ BAI = {
         'Ôn tập: định luật Boyle và Charles', 'Thiết lập phương trình: trạng thái (1) → (1′)', 'Thiết lập phương trình: trạng thái (1′) → (2)',
         'Từ phương trình trạng thái suy ra các định luật', 'Ví dụ 1: ba thông số cùng đổi', 'Phương trình Clapeyron', 'Hằng số khí và đơn vị chuẩn (SI)',
         'Ví dụ 2: dùng phương trình Clapeyron', 'Lỗi hay mắc khi làm bài tập', 'Vận dụng thực tế', 'Tổng kết bài học']),
-    'B12': dict(file='VL12_Bai12_Ap_suat_khi_theo_mo_hinh_dong_hoc_phan_tu.pptx', ten='Bài 12. Áp suất khí theo mô hình động học phân tử', slide=[
-        'Bài 12: Áp suất khí theo mô hình động học phân tử', 'Khởi động: áp suất khí phụ thuộc vào đâu?', 'Thiết lập mô hình khảo sát',
-        'Một phân tử va chạm đàn hồi với thành bình', 'Lực và áp suất do một phân tử gây ra', 'Mở rộng: tác dụng của N phân tử',
-        'Công thức áp suất khí (12.1)', 'Áp suất và động năng phân tử (12.2)', 'Cầu nối nhiệt học – cơ học vi mô',
-        'Hằng số Boltzmann', 'Động năng và nhiệt độ tuyệt đối (12.3)', 'Ý nghĩa vật lí và tốc độ căn quân phương',
-        'Vận dụng 1: định luật Boyle', 'Vận dụng 2: quá trình đẳng tích', 'Tổng kết: bức tranh chất khí']),
+    'B12': dict(file='VL12_Bai12_Ap_suat_khi_theo_mo_hinh_dong_hoc_phan_tu_v2.pptx', ten='Bài 12. Áp suất khí theo mô hình động học phân tử', slide=[
+        'Bài 12: Áp suất khí theo mô hình động học phân tử', 'Mục tiêu bài học', 'Khởi động: áp suất khí phụ thuộc vào đâu?',
+        'Thiết lập mô hình khảo sát', 'Một phân tử va chạm đàn hồi với thành bình', 'Lực và áp suất do một phân tử gây ra',
+        'N phân tử và hệ thức (12.1)', 'Hệ thức (12.2): áp suất và động năng', 'Hằng số Boltzmann',
+        'Hệ thức (12.3): động năng và nhiệt độ', 'Nhiệm vụ Năng lực số', 'Nhiệm vụ Năng lực AI',
+        'Luyện tập: trả lời khởi động và hệ quả', 'Vận dụng: định luật Boyle và quá trình đẳng tích', 'Tổng kết và dặn dò']),
 }
 
 # Chỉnh trên ảnh slide (toạ độ theo ảnh 1376x768). ('trang', (x0, y0, x1, y1)) tô trắng một vùng.
