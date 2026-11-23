@@ -4,6 +4,7 @@
    Tên chương theo chương trình GDPT 2018, bộ KNTT. [CẦN KIỂM TRA] với SGK thật. */
 var MR_GC = "Chép từ tài liệu scan Chương II (tr. 22–58), có tóm tắt lí thuyết (Bài 10–12) và bài tập 3 phần. Công thức hiển thị bằng KaTeX, hình cắt từ bản scan. Có file Word của bài (công thức là Equation), bản đề và bản có đáp án. Bản gốc không có đáp án; đáp án và lời giải được soạn bổ sung (bấm \"Đáp án\" ở mỗi câu), giáo viên cần duyệt lại.";
 var BT11_GC = "Lấy từ tập Bài tập Vật lí 11 học kì I (bản giáo viên), xếp theo bài: trắc nghiệm, đúng sai, trả lời ngắn, tự luận. Công thức hiển thị bằng KaTeX, hình lấy từ file Word. Đáp án theo bản giáo viên (bấm \"Đáp án\" ở mỗi câu). Có file Word của bài và của chương (công thức là Equation), bản đề và bản có đáp án.";
+var BG12_GC = "Bài giảng trình chiếu (14 slide, làm bằng NotebookLM): bấm vào khung rồi dùng phím ← → để chuyển slide, phím O xem tất cả slide, phím F toàn màn hình. Nút \"Bài tập cuối bài\" mở bài tập có sẵn của bài kèm đáp án. Mở toàn trang để dùng nút \"Lớp\" (Gọi tên, Bấm giờ, Chia nhóm, Ghi chú).";
 var BT12_GC = "Bài tập cuối bài lấy từ tệp .docx do giáo viên cung cấp (phần Mở rộng ôn tập Bài 8-12): trắc nghiệm, đúng sai, trả lời ngắn, có mô phỏng ở một số câu. Đáp án đang ẩn: bấm \"Hiện đáp án (tất cả)\" hoặc bấm vào từng câu. Đáp án trong tệp gốc chưa được tính lại, cần đối chiếu khi có nghi ngờ. Phần này dùng chung một bản dữ liệu với trang Ôn tập nên giống hệt bản gốc.";
 var BG11_GC = "Bài giảng trình chiếu (15 slide): bấm vào khung rồi dùng phím ← → để chuyển slide, phím O xem tất cả slide, phím F toàn màn hình. Nút \"Bài tập cuối bài\" mở bài tập của bài kèm đáp án. Mở toàn trang để dùng nút \"Lớp\" (Gọi tên, Bấm giờ, Chia nhóm, Ghi chú).";
 window.HO_SO = {
@@ -79,6 +80,7 @@ window.HO_SO = {
         /* Mở rộng ôn tập Bài 8-12 đã chuyển thành "Bài tập cuối bài" (luyenTap bên dưới, trang on-tap/k12-chuong2.html#bt-N), nên không còn nút Mở rộng ôn tập ở đây */
         onTapMoRong: [],
         luyenTap: [
+          { ten: "Bài giảng Bài 11. Phương trình trạng thái của khí lí tưởng", trang: "bai-giang/k12-B11.html", ghiChu: BG12_GC },
           { ten: "Bài tập cuối bài · Bài 8. Mô hình động học phân tử chất khí", trang: "on-tap/k12-chuong2.html#bt-8", ghiChu: BT12_GC },
           { ten: "Bài tập cuối bài · Bài 9. Định luật Boyle", trang: "on-tap/k12-chuong2.html#bt-9", ghiChu: BT12_GC },
           { ten: "Bài tập cuối bài · Bài 10. Định luật Charles", trang: "on-tap/k12-chuong2.html#bt-10", ghiChu: BT12_GC },
