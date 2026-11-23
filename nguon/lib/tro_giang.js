@@ -523,7 +523,7 @@
   /* ---------- giao diện ---------- */
   var css = document.createElement("style");
   css.textContent =
-    "#tgNut{position:fixed;left:10px;bottom:64px;z-index:2147483000;font:600 14px system-ui,sans-serif;padding:7px 12px;border-radius:20px;border:1px solid #1d4ed8;background:#eff6ff;color:#1e3a8a;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.2);opacity:.8;user-select:none;touch-action:none}" +
+    "#tgNut{position:fixed;left:10px;bottom:64px;z-index:2147483000;font:600 14px system-ui,sans-serif;padding:7px 12px;border-radius:20px;border:1px solid #1d4ed8;background:#eff6ff;color:#1e3a8a;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.2);opacity:.8;user-select:none;touch-action:none;max-width:280px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}" +
     "#tgNut:hover{opacity:1}#tgNut.on{background:#dc2626;border-color:#dc2626;color:#fff;opacity:1;animation:tgTho 1.6s infinite}" +
     "@keyframes tgTho{0%,100%{box-shadow:0 0 0 0 rgba(220,38,38,.55)}50%{box-shadow:0 0 0 9px rgba(220,38,38,0)}}" +
     "#tgChat{position:fixed;z-index:2147483002;width:min(420px,calc(100vw - 20px));display:flex;flex-direction:column;gap:6px;font:14px/1.4 system-ui,sans-serif;pointer-events:none}" +
@@ -782,9 +782,13 @@
       (daDay.length ? "<h4>Câu cô đã dạy robot</h4><table>" + daDay.map(function (k) {
           return "<tr><td>“" + esc(k) + "”</td><td>" + esc(tenLenh(HOC[k])) + "</td><td><button type='button' data-quen='" + esc(k) + "'>Quên</button></td></tr>";
         }).join("") + "</table>" : "") +
+      '<h4>Tốc độ phản hồi</h4><select data-x="cham"><option value="0"' + (cham ? "" : " selected") + '>⚡ Nhanh: làm ngay khi nghe ra lệnh</option><option value="1"' + (cham ? " selected" : "") + '>Chắc chắn: chờ cô nói hết câu (chậm hơn 1-2 giây)</option></select>' +
+      '<div class="gc">Nếu robot hay làm nhầm khi cô ngập ngừng giữa câu (ví dụ “Tiếp theo… là gia tốc”), chọn Chắc chắn.</div>' +
       '<div class="gc" style="margin-top:8px">Cần Chrome hoặc Edge và có mạng. Giọng nói được trình duyệt chuyển thành chữ, robot không nói, chỉ trả lời trong ô chat. Nhật kí chỉ lưu câu giống lệnh, trên máy này. Không đọc tên, điểm học sinh vào micro.</div>';
     hop.querySelector(".dong").onclick = dongHop;
     hop.addEventListener("change", function (e) {
+      var sc = e.target.closest("select[data-x=cham]");
+      if (sc) { cham = sc.value === "1"; ghiLS("tgCham", cham ? 1 : 0); huyTam(); nhan(cham ? "Robot chờ cô nói hết câu" : "⚡ Robot làm ngay khi nghe ra lệnh", "", "ok"); return; }
       var s = e.target.closest("select[data-khoa]"); if (!s || !s.value) return;
       var k = s.getAttribute("data-khoa"), v = s.value.split(":");
       if (v[0] === "-") { BO[k] = 1; delete HOC[k]; } else { HOC[k] = v[1] ? [v[0], v[1]] : [v[0]]; delete BO[k]; }
@@ -844,12 +848,44 @@
     if (p.hoi) { if (!hoi && Date.now() - lanHoi > 4000) moiHoi(p, cau); ghiNK(cau, "hỏi: " + tenLenh(p.hoi) + "?", p.khoa); return; }
     ghiNK(cau, "chưa hiểu", p.khoa);
   }
+  /* PHẢN HỒI NHANH: trình duyệt gửi chữ nghe được ngay khi cô đang nói (kết quả tạm). Chữ tạm đã là một lệnh rõ (Chuyển, Lùi, Đáp án, Đóng…)
+     và đứng yên một chút (cô ngừng nói) thì làm luôn, không chờ trình duyệt chốt câu (chậm 1-2 giây). Lệnh tra cứu, Sửa, câu cần hỏi lại vẫn chờ chốt câu.
+     Câu đã làm theo chữ tạm thì khi chốt không làm lại. Bảng Trợ giúp có chỗ chọn "Chắc chắn" (chờ chốt câu như cũ): localStorage tgCham = 1. */
+  var NHANH_OK = { tiep: 1, lui: 1, den: 1, dapAn: 1, anDapAn: 1, dong: 1, mp: 1, moPhong: 1, goiTen: 1, nhom: 1, gio: 1, moLon: 1, tatMic: 1, giup: 1 };
+  var CHO_TAM = 350, CHO_TAM_SO = 650;   // ms chữ tạm phải đứng yên; lệnh có số chờ lâu hơn ("slide mười" … "mười hai")
+  var cham = docLS("tgCham", 0) === 1, phien = 0, daLam = {}, tam = null;
+  function huyTam() { if (tam) { clearTimeout(tam.tm); tam = null; } }
+  function lenhNhanh(t) {   // chữ tạm → { p, cho } nếu làm ngay được
+    if (cham || choLenh || !t) return null;
+    if (hoi) { var s = chuan(t).replace(/^(trợ giảng|trợ lý|robot)( ơi)?\s*/, "").replace(/^(cô|cô nói)\s+/, ""); return RE_CO.test(s) || RE_KHONG.test(s) ? { cho: CHO_TAM } : null; }
+    var p = phanTich(t);
+    if (!p || !p.lenh || !NHANH_OK[p.lenh[0]]) return null;
+    return { p: p, cho: typeof p.lenh[1] === "number" || p.lenh[0] === "den" ? CHO_TAM_SO : CHO_TAM };
+  }
+  function nghe(t) {   // hiện chữ đang nghe trên nút 🎤 để cô biết robot đã nghe
+    if (!dangNghe) return;
+    nut.textContent = t ? "🎤 " + (t.length > 26 ? "…" + t.slice(-25) : t) : "🎤 Đang nghe";
+  }
+  function chuTam(k, t) {
+    nghe(t);
+    if (daLam[k]) return;
+    var n = lenhNhanh(t);
+    if (!n) { huyTam(); return; }
+    if (tam && tam.k === k && tam.t === t) return;
+    huyTam();
+    tam = { k: k, t: t, tm: setTimeout(function () { tam = null; daLam[k] = 1; lam(t, n.p); }, n.cho) };
+  }
   function taoMic() {
     var r = new SR();
-    r.lang = "vi-VN"; r.continuous = true; r.interimResults = false; r.maxAlternatives = 3;
+    r.lang = "vi-VN"; r.continuous = true; r.interimResults = true; r.maxAlternatives = 3;
+    r.onstart = function () { phien++; daLam = {}; huyTam(); };
     r.onresult = function (e) {
       for (var i = e.resultIndex; i < e.results.length; i++) {
-        if (!e.results[i].isFinal) continue;
+        var k = phien + ":" + i;
+        if (!e.results[i].isFinal) { chuTam(k, e.results[i][0].transcript.trim()); continue; }
+        if (tam && tam.k === k) huyTam();
+        nghe("");
+        if (daLam[k]) { delete daLam[k]; continue; }   // đã làm theo chữ tạm
         var kq = e.results[i], cau = kq[0].transcript.trim(), p = null;
         if (!choLenh && !hoi) {   // chọn cách nghe hợp lệnh nhất trong các phương án của trình duyệt
           var ds = [];
@@ -877,11 +913,12 @@
     mic = mic || taoMic(); dangNghe = true;
     try { mic.start(); } catch (e) {}
     nut.classList.add("on"); nut.textContent = "🎤 Đang nghe";
+    setTimeout(function () { if (dangNghe) napDL(function () {}); }, 2500);   // tải sẵn dữ liệu tra cứu để lần hỏi đầu trả lời ngay
     var daXem = false; try { daXem = localStorage.getItem("tgDaXem") === "1"; localStorage.setItem("tgDaXem", "1"); } catch (e) {}
     if (!daXem) moHop(); else nhan("🎤 Robot đang nghe lệnh", "Cô cứ giảng bình thường, robot chỉ làm khi nghe lệnh", "ok");
   }
   function tat() {
-    dangNghe = false; choLenh = null; dongHoi();
+    dangNghe = false; choLenh = null; dongHoi(); huyTam();
     try { mic && mic.stop(); } catch (e) {}
     nut.classList.remove("on"); nut.textContent = "🎤";
     nhan("Đã tắt micro", "", "ok");
