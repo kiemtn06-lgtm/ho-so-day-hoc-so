@@ -21,6 +21,9 @@ const CAU = [
   // lệnh, nói kiểu nào cũng được
   ['Chuyển', 'tiep'], ['Tiếp', 'tiep'], ['Tiếp theo', 'tiep'], ['Chúng ta qua slide tiếp theo', 'tiep'], ['Chúng ta tiếp tục', 'tiep tt'],
   ['Bây giờ chúng ta sang phần tiếp theo nhé', 'tiep'], ['Slide sau', 'tiep'], ['Next', 'tiep'], ['Trợ giảng ơi chuyển slide', 'tiep'],
+  ['Qua phần tiếp theo', 'tiep'], ['Nội dung tiếp theo', 'tiep'], ['Chúng ta qua phần tiếp theo của bài', 'tiep'], ['Ta chuyển qua nội dung tiếp theo', 'tiep'],
+  ['Nội dung kế tiếp', 'tiep'], ['Qua', 'tiep'], ['Quà', 'tiep'], ['Quá', 'tiep'], ['Qua đi', 'tiep'], ['Niu ơi qua', 'tiep'], ['Niu ơi slide 5', 'den 5'],
+  ['Niu ơi công thức định luật 2 Newton', 'tra ct định luật 2 newton'], ['Niu sửa đáp án câu 3 là B', 'sua đáp án câu 3 là B'], ['Qua nội dung tiếp nhé các em', 'tiep'],
   ['Lùi', 'lui'], ['Quay lại', 'lui'], ['Quay lại slide trước', 'lui'], ['Chuyển lại', 'lui'], ['Slide vừa rồi', 'lui'],
   ['Slide 5', 'den 5'], ['Chuyển đến slide mười hai', 'den 12'], ['Slide hai mươi mốt', 'den 21'], ['Slide sáu', 'den 6'], ['Qua slide số 7', 'den 7'],
   ['Về đầu', 'den 1'], ['Về slide đầu tiên', 'den 1'], ['Slide cuối', 'den cuoi'], ['Chuyển đến slide cuối cùng', 'den cuoi'],
@@ -41,7 +44,7 @@ const CAU = [
   // lời giảng: bỏ qua
   ['Chuyển động thẳng đều', null], ['Chuyển động', null], ['Đúng rồi', null], ['Động năng của vật', null], ['Tất cả các em chú ý', null],
   ['Đồng hồ bấm giây', null], ['Đáp án của câu này là B', null], ['Sau đó ta xét lực ma sát', null], ['Tiếp theo là gia tốc', null],
-  ['Ta về nhà làm bài', null], ['Sang phần hai', null], ['Năm', null], ['Ba', null], ['Kết quả là 5 mét', null], ['Dao động tắt dần', null],
+  ['Ta về nhà làm bài', null], ['Sang phần hai', null], ['Nhanh quá', null], ['Hay quá các em', null], ['Qua thí nghiệm này ta thấy', null], ['Quả bóng rơi', null], ['Phần tiếp theo là lực ma sát', null], ['Nội dung tiếp theo là gì', null], ['Năm', null], ['Ba', null], ['Kết quả là 5 mét', null], ['Dao động tắt dần', null],
   ['Các em sửa bài', null], ['Vật đi qua vị trí cân bằng', null], ['Lực tác dụng lên vật', null], ['Vận tốc ban đầu bằng không', null],
   ['Dòng điện chạy qua dây dẫn', null], ['Tiếp tuyến của quỹ đạo', null], ['Mắc nối tiếp hai điện trở', null], ['Đóng khóa K', null],
   ['Thời gian vật rơi', null], ['Lùi xe', null], ['Ai làm xong chưa', null], ['Các em mở sách giáo khoa', null], ['Trước tiên ta xét', null],

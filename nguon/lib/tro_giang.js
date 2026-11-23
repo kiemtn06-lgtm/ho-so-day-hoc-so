@@ -85,9 +85,9 @@
 
   /* ---------- từ điển ý: cụm từ (có dấu) → ý. "_" là từ đệm, "NOI" là cụm từ của lời giảng (tính như chữ lạ) ---------- */
   var Y = {
-    _: "trợ giảng|trợ lý|trợ lí|robot|rô bốt|rô bô|ơi|em ơi|bạn ơi|chúng ta|chúng mình|bọn mình|mình|ta|các em|các bạn|cả lớp|lớp mình|lớp|cô|thầy|" +
+    _: "trợ giảng|trợ lý|trợ lí|robot|rô bốt|rô bô|niu|ơi|em ơi|bạn ơi|chúng ta|chúng mình|bọn mình|mình|ta|các em|các bạn|cả lớp|lớp mình|lớp|cô|thầy|" +
        "bây giờ|giờ thì|giờ|rồi|sẽ|hãy|cùng|cùng nhau|nhé|nhá|nha|nhen|nào|đi|ạ|à|nhỉ|luôn|giúp cô|cho cô|giúp mình|cho mình|giúp tôi|cho tôi|tôi|" +
-       "ok|okay|oke|ô kê|được rồi|vậy|vậy thì|thì|nhanh|ngay|với|cái|này|đó|kia|của|để|thôi|làm ơn|xin|vui lòng|nữa|thành|ra|cho|tiếp đây",
+       "ok|okay|oke|ô kê|được rồi|vậy|vậy thì|thì|nhanh|ngay|với|cái|này|đó|kia|của|để|thôi|làm ơn|xin|vui lòng|nữa|thành|ra|cho|tiếp đây|của bài|của bài học|trong bài|bài học|của bài này",
     NOI: "chuyển động|chuyển hóa|chuyển hoá|chuyển đổi|chuyển dời|chuyển thể|dịch chuyển|di chuyển|động năng|tiếp tuyến|tiếp xúc|tiếp điểm|nối tiếp|" +
        "trực tiếp|gián tiếp|tắt dần|gọi là|được gọi|mở rộng|đóng góp|đóng vai|đóng mạch|đóng khóa|đóng khoá|đóng công tắc|mở công tắc|ngắt mạch|" +
        "đi qua|đi sang|truyền qua|xuyên qua|sang trái|sang phải|qua trái|qua phải|phía trước|phía sau|đằng trước|đằng sau|trước tiên|trước đó|trước khi|" +
@@ -204,10 +204,10 @@
 
   /* ---------- hiểu câu nói ---------- */
   var HOC = docLS("tgHoc", {}), BO = docLS("tgBo", {});   // câu cô đã dạy: khóa → lệnh; câu cô bảo "không phải lệnh"
-  var RE_SUA = /^\s*((trợ giảng|trợ lý|trợ lí|robot)(\s*ơi)?[\s,]*)?(cần sửa|ghi sửa|phiếu sửa|sửa)(?=\s|:|,|$)\s*[:,]?\s*/i;
+  var RE_SUA = /^\s*((trợ giảng|trợ lý|trợ lí|robot|niu)(\s*ơi)?[\s,]*)?(cần sửa|ghi sửa|phiếu sửa|sửa)(?=\s|:|,|$)\s*[:,]?\s*/i;
   /* TRA CỨU (giai đoạn 4): câu MỞ ĐẦU bằng từ khóa tra cứu → ["tra", loại, chủ đề]. Loại: ct công thức, kt kiến thức, db dạng bài, loi lỗi hay mắc, hn câu hỏi nhanh.
      Chỉ nhận câu ngắn; câu có "là", "bằng", "thì"... là lời giảng ("Công thức này là F bằng m a"), bỏ qua. "Các em nhắc lại…" là cô giao cho học sinh, bỏ qua. */
-  var RE_GOI_TRA = /^((trợ giảng|trợ lý|trợ lí|robot|rô bốt)( ơi)? )?((cô|chúng ta|mình|ta|bây giờ|giờ|cả lớp|lớp mình|cùng|hãy|cho cô|cho cả lớp|cho lớp|giúp cô) )*((xem|mở|hiện|tra|tìm|đọc|cho xem) )?((lại|các|những|toàn bộ|tất cả) )?/;
+  var RE_GOI_TRA = /^((trợ giảng|trợ lý|trợ lí|robot|rô bốt|niu)( ơi)? )?((cô|chúng ta|mình|ta|bây giờ|giờ|cả lớp|lớp mình|cùng|hãy|cho cô|cho cả lớp|cho lớp|giúp cô) )*((xem|mở|hiện|tra|tìm|đọc|cho xem) )?((lại|các|những|toàn bộ|tất cả) )?/;
   var TRA = [
     ["hnk", /^(câu hỏi khác|câu khác|một câu hỏi khác|một câu khác|hỏi câu khác|câu hỏi nhanh khác|câu hỏi tiếp|câu tiếp)( nữa| đi| nào)*$/],   // cùng chủ đề câu vừa hỏi
     ["hn", /^(câu hỏi nhanh|hỏi nhanh|kiểm tra nhanh|câu hỏi ôn tập|câu hỏi ôn|thẻ ôn tập|thẻ ôn|thẻ nhớ|một câu hỏi|đố vui)( .*)?$/],
@@ -234,6 +234,7 @@
     return null;
   }
   /* trả về { lenh } (làm ngay), { hoi, khoa } (gần giống lệnh: hỏi lại), { khoa } (có ý lệnh nhưng không rõ), hoặc null (lời giảng) */
+  var QUA_NGHE_SAI = { "quà": 1, "quả": 1, "quá": 1, "quạ": 1, "wa": 1, "goa": 1, "qua à": 1, "qua ạ": 1 };   // chỉ khi cả câu chỉ có tiếng đó
   function phanTich(cau) {
     var goc = String(cau || "").normalize("NFC").trim(), s = chuan(goc);
     if (!s) return null;
@@ -244,6 +245,7 @@
     if (!m.length) return null;
     var khoa = m.map(function (x) { return x.w; }).join(" ");
     if (HOC[khoa]) return { lenh: HOC[khoa], khoa: khoa, hoc: true };
+    if (QUA_NGHE_SAI[s]) return { lenh: ["tiep", ""], khoa: khoa };   // cô nói một tiếng "Qua", trình duyệt hay nghe ra "Quà", "Quá"…
     if (BO[khoa]) return null;
     var C = {}, la = 0, so = null, coY = false;
     m.forEach(function (x) {
@@ -838,7 +840,7 @@
   function lam(cau, p) {
     if (choLenh) { var f = choLenh; choLenh = null; f(cau); return; }
     if (hoi) {   // đang hỏi lại: nghe “Đúng” / “Không”
-      var s = chuan(cau).replace(/^(trợ giảng|trợ lý|robot)( ơi)?\s*/, "").replace(/^(cô|cô nói)\s+/, "");
+      var s = chuan(cau).replace(/^(trợ giảng|trợ lý|robot|niu)( ơi)?\s*/, "").replace(/^(cô|cô nói)\s+/, "");
       if (RE_CO.test(s)) { traLoi(true); return; }
       if (RE_KHONG.test(s)) { traLoi(false); return; }
     }
@@ -857,10 +859,13 @@
   function huyTam() { if (tam) { clearTimeout(tam.tm); tam = null; } }
   function lenhNhanh(t) {   // chữ tạm → { p, cho } nếu làm ngay được
     if (cham || choLenh || !t) return null;
-    if (hoi) { var s = chuan(t).replace(/^(trợ giảng|trợ lý|robot)( ơi)?\s*/, "").replace(/^(cô|cô nói)\s+/, ""); return RE_CO.test(s) || RE_KHONG.test(s) ? { cho: CHO_TAM } : null; }
+    if (hoi) { var s = chuan(t).replace(/^(trợ giảng|trợ lý|robot|niu)( ơi)?\s*/, "").replace(/^(cô|cô nói)\s+/, ""); return RE_CO.test(s) || RE_KHONG.test(s) ? { cho: CHO_TAM } : null; }
     var p = phanTich(t);
     if (!p || !p.lenh || !NHANH_OK[p.lenh[0]]) return null;
-    return { p: p, cho: typeof p.lenh[1] === "number" || p.lenh[0] === "den" ? CHO_TAM_SO : CHO_TAM };
+    // "Sang phần…", "Qua mục…" chưa có chữ Tiếp: chờ chốt câu, vì có thể là "Sang phần hai" (lời giảng)
+    if (p.lenh[0] === "tiep" && /(^| )(phần|mục|nội dung|bước|câu|ý|hình)( |$)/.test(p.khoa || "") && !/(tiếp|kế|sau|next)/.test(p.khoa || "")) return null;
+    // một tiếng "Qua"/"Sang" chờ lâu hơn: có thể là đầu câu giảng "Qua thí nghiệm này…"
+    return { p: p, cho: typeof p.lenh[1] === "number" || p.lenh[0] === "den" || /^(qua|sang|quà|quả|quá)$/.test(p.khoa || "") ? CHO_TAM_SO : CHO_TAM };
   }
   function nghe(t) {   // hiện chữ đang nghe trên nút 🎤 để cô biết robot đã nghe
     if (!dangNghe) return;
