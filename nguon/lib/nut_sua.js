@@ -69,17 +69,19 @@
   nut.addEventListener("click", function () { if (keo) { keo = false; return; } if (hop) dong(); else mo(); });
 
   function dong() { if (hop) hop.remove(); hop = null; }
-  function mo() {
-    var vt = viTri();
+  function mo(ycSan) {
+    dong(); var vt = viTri();
     hop = document.createElement("div"); hop.id = "nsHop";
     hop.innerHTML = '<div style="font-weight:700">Gửi yêu cầu sửa</div>' +
       '<b>Vị trí</b><div class="vt"></div>' +
       '<b>Đoạn cần sửa (đoạn đang bôi đen, sửa lại nếu cần)</b><textarea rows="3" data-k="doan"></textarea>' +
-      '<b>Cần sửa thế nào?</b><textarea rows="4" data-k="yc" placeholder="Ví dụ: đáp án câu 3 phải là B; viết lại lời giải cho rõ; công thức bị lỗi hiển thị"></textarea>' +
+      '<b>Cần sửa thế nào? <button type="button" data-k="noi" title="Nói yêu cầu sửa, trang tự ghi thành chữ" style="float:right;padding:2px 9px" hidden>🎤 Nói</button></b><textarea rows="4" data-k="yc" placeholder="Ví dụ: đáp án câu 3 phải là B; viết lại lời giải cho rõ; công thức bị lỗi hiển thị"></textarea>' +
       '<div class="gc">Bấm Gửi sẽ mở GitHub trong thẻ mới, bấm tiếp <i>Create</i> (hoặc <i>Submit new issue</i>) để gửi. Claude sửa xong sẽ trả lời trong phiếu, trang trên mạng tự cập nhật sau vài phút.</div>' +
       '<div class="h"><button type="button" data-k="huy">Hủy</button><button type="button" class="go" data-k="gui">Gửi</button></div>';
     hop.querySelector(".vt").textContent = vt;
     hop.querySelector('[data-k="doan"]').value = cat(chon, 1500);
+    if (ycSan) hop.querySelector('[data-k="yc"]').value = ycSan;
+    if (window.TroGiang) hop.querySelector('[data-k="noi"]').hidden = false;   // đọc chính tả (nguon/lib/tro_giang.js)
     document.body.appendChild(hop);
     (function () {   // đặt hộp gần nút, không tràn khỏi màn hình
       var r = nut.getBoundingClientRect(), w = Math.min(420, window.innerWidth - 20);
@@ -91,6 +93,10 @@
     hop.addEventListener("click", function (e) {
       var k = e.target.getAttribute && e.target.getAttribute("data-k");
       if (k === "huy") dong();
+      else if (k === "noi") {
+        var o = hop.querySelector('[data-k="yc"]');
+        window.TroGiang.docMotCau(function (cau) { if (!hop) return; o.value = (o.value.trim() ? o.value.trim() + " " : "") + cau; o.focus(); });
+      }
       else if (k === "gui") {
         var yc = hop.querySelector('[data-k="yc"]').value.trim(), doan = hop.querySelector('[data-k="doan"]').value.trim();
         if (!yc) { hop.querySelector('[data-k="yc"]').focus(); return; }
@@ -113,5 +119,7 @@
       }
     } catch (e) {}
   }
+  /* cho trợ giảng giọng nói (nguon/lib/tro_giang.js): lệnh “Sửa …” mở phiếu đã điền sẵn, lệnh “Đóng” đóng phiếu */
+  window.HSDH_SUA = { mo: function (yc) { mo(yc || ""); }, dong: dong, dangMo: function () { return !!hop; } };
   if (document.body) gan(); else document.addEventListener("DOMContentLoaded", gan);
 })();

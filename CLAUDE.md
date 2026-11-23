@@ -20,6 +20,7 @@ Trao đổi với giáo viên bằng tiếng Việt. Nhiều tệp nguồn của
 
 Ứng dụng cài được trên điện thoại (PWA): `manifest.webmanifest`, `sw.js` (ưu tiên mạng, mất mạng dùng bản đã lưu; đổi logic thì tăng `VER`), `icons/` (tạo bằng `node tools/tao_icon.js`), `nguon/lib/di_dong.js` (menu "Bài", nút cài) và khối cuối `nguon/style.css`. Sửa các tệp này ở nguồn rồi `node tools/dong_goi.js`.
 
+Trợ giảng giọng nói 🎤 (`nguon/lib/tro_giang.js`, hiện cùng điều kiện với nút Sửa): lệnh Chuyển/Lùi/slide N, Đáp án, Gọi tên, Mô phỏng, Đóng, "Sửa …" (mở phiếu Sửa điền sẵn). Chỉ bấm hộ nút/phím có sẵn của trang, không sửa trang; gắn bằng `tools/gan_nut_sua.js`.
 Nút `✎ Sửa` (`nguon/lib/nut_sua.js`) có trên mọi trang. Trang mới dựng phải có nút: các `build_*.js` và `k11_bai_giang/dung.py` tự gắn; công cụ khác thì chạy `node tools/gan_nut_sua.js` sau khi dựng.
 Trang `.html` lớn (vài MB, dòng rất dài): tìm bằng Grep, sửa bằng `node -e` thay đúng một chuỗi (kiểm tra chuỗi cũ khớp đúng 1 lần), không đọc cả tệp.
 

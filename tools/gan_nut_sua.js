@@ -1,14 +1,14 @@
-/* Gắn nút "✎ Sửa" (nguon/lib/nut_sua.js) vào các trang bài giảng, ôn tập đã dựng.
+/* Gắn nút "✎ Sửa" (nguon/lib/nut_sua.js), âm thanh (am_thanh.js) và trợ giảng giọng nói 🎤 (tro_giang.js) vào các trang bài giảng, ôn tập đã dựng.
    Chạy: node tools/gan_nut_sua.js            (mọi trang .html trong bai-giang/ và on-tap/)
          node tools/gan_nut_sua.js <tệp.html>  (chỉ các tệp nêu)
    Chạy lại không sao: trang đã có nút thì bỏ qua. Các công cụ dựng trang (build_*.js) tự gọi sau khi ghi;
    công cụ Python (tools/k11_bai_giang/dung.py, tools/k10_chuong2_mo_rong/dung.py ...) thì chạy lệnh này sau khi dựng. */
 const fs = require('fs'), path = require('path');
-const ROOT = path.join(__dirname, '..'), DAU = '<!--nut-sua-->', DAU2 = '<!--am-thanh-->';
+const ROOT = path.join(__dirname, '..'), DAU = '<!--nut-sua-->', DAU2 = '<!--am-thanh-->', DAU3 = '<!--tro-giang-->';
 
 function gan(f) {
   let h = fs.readFileSync(f, 'utf8'), doi = false;
-  for (const [dau, tep] of [[DAU, 'nut_sua.js'], [DAU2, 'am_thanh.js']]) {   // nút ✎ Sửa và âm thanh thao tác
+  for (const [dau, tep] of [[DAU, 'nut_sua.js'], [DAU2, 'am_thanh.js'], [DAU3, 'tro_giang.js']]) {   // nút ✎ Sửa, âm thanh thao tác, trợ giảng giọng nói 🎤
     if (h.includes(dau)) continue;
     const rel = path.relative(path.dirname(f), path.join(ROOT, 'nguon', 'lib', tep)).split(path.sep).join('/');
     const the = dau + '<script src="' + rel + '" defer></script>\n';
