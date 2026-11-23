@@ -4,7 +4,7 @@
 Chạy:  python -I -X utf8 tools/k12_bai_giang/dung.py
 Dùng lại khung của tools/k11_bai_giang (trang trình chiếu, công cụ lớp). Khác K11: nguồn là thư mục K12/chương 2- Chất khí,
 mã dữ liệu '12-2', ảnh vào bai-giang/k12-B11/s01.jpg ..., trang bai-giang/k12-B11.html, nút "Bài tập cuối bài" mở
-on-tap/k12-chuong2.html#bt-11 (bài tập có sẵn của hồ sơ, không đổi).
+on-tap/k12-chuong2.html#bt-11 (bài tập có sẵn của hồ sơ, không đổi); mỗi bài trong BAI.
 File .pptx gốc không bị sửa. Chỉ lấy các slide là MỘT ẢNH (slide có chữ thật như slide QR cuối file pptx bị bỏ qua,
 vì trang web đã có nút "Bài tập cuối bài").
 """
@@ -26,6 +26,12 @@ BAI = {
         'Ôn tập: định luật Boyle và Charles', 'Thiết lập phương trình: trạng thái (1) → (1′)', 'Thiết lập phương trình: trạng thái (1′) → (2)',
         'Từ phương trình trạng thái suy ra các định luật', 'Ví dụ 1: ba thông số cùng đổi', 'Phương trình Clapeyron', 'Hằng số khí và đơn vị chuẩn (SI)',
         'Ví dụ 2: dùng phương trình Clapeyron', 'Lỗi hay mắc khi làm bài tập', 'Vận dụng thực tế', 'Tổng kết bài học']),
+    'B12': dict(file='VL12_Bai12_Ap_suat_khi_theo_mo_hinh_dong_hoc_phan_tu.pptx', ten='Bài 12. Áp suất khí theo mô hình động học phân tử', slide=[
+        'Bài 12: Áp suất khí theo mô hình động học phân tử', 'Khởi động: áp suất khí phụ thuộc vào đâu?', 'Thiết lập mô hình khảo sát',
+        'Một phân tử va chạm đàn hồi với thành bình', 'Lực và áp suất do một phân tử gây ra', 'Mở rộng: tác dụng của N phân tử',
+        'Công thức áp suất khí (12.1)', 'Áp suất và động năng phân tử (12.2)', 'Cầu nối nhiệt học – cơ học vi mô',
+        'Hằng số Boltzmann', 'Động năng và nhiệt độ tuyệt đối (12.3)', 'Ý nghĩa vật lí và tốc độ căn quân phương',
+        'Vận dụng 1: định luật Boyle', 'Vận dụng 2: quá trình đẳng tích', 'Tổng kết: bức tranh chất khí']),
 }
 
 # Chỉnh trên ảnh slide (toạ độ theo ảnh 1376x768). ('trang', (x0, y0, x1, y1)) tô trắng một vùng.
