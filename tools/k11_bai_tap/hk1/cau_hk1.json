@@ -1,0 +1,2777 @@
+{
+ "nhom": [
+  [
+   "DDH",
+   "Mở rộng ôn tập HK I · Dao động điều hòa"
+  ],
+  [
+   "TD",
+   "Mở rộng ôn tập HK I · Dao động tắt dần. Dao động cưỡng bức. Cộng hưởng"
+  ],
+  [
+   "SC",
+   "Mở rộng ôn tập HK I · Sóng cơ. Mô tả sóng. Sóng ngang, sóng dọc"
+  ],
+  [
+   "DT",
+   "Mở rộng ôn tập HK I · Sóng điện từ"
+  ],
+  [
+   "GT",
+   "Mở rộng ôn tập HK I · Giao thoa sóng"
+  ],
+  [
+   "SD",
+   "Mở rộng ôn tập HK I · Sóng dừng"
+  ],
+  [
+   "SA",
+   "Mở rộng ôn tập HK I · Sóng âm. Đo tốc độ truyền âm"
+  ]
+ ],
+ "cau": [
+  {
+   "so": 1,
+   "nhom": "DDH",
+   "than": [
+    "Dao động của hệ xảy ra dưới tác dụng chỉ của nội lực được gọi là"
+   ],
+   "lc": [
+    "dao động cơ học.",
+    "dao động tuần hoàn.",
+    "dao động tự do.",
+    "dao động điều hòa."
+   ],
+   "da": "C",
+   "go_lai": false
+  },
+  {
+   "so": 2,
+   "nhom": "DDH",
+   "than": [
+    "Chu kì dao động là"
+   ],
+   "lc": [
+    "số dao động vật thực hiện được trong hai giây.",
+    "số dao động vật thực hiện được trong một giây.",
+    "là khoảng thời gian để vật thực hiện được hai dao động.",
+    "là khoảng thời gian để vật thực hiện được một dao động."
+   ],
+   "da": "D",
+   "go_lai": false
+  },
+  {
+   "so": 3,
+   "nhom": "DDH",
+   "than": [
+    "Tần số dao động là"
+   ],
+   "lc": [
+    "số dao động vật thực hiện được trong hai giây.",
+    "số dao động vật thực hiện được trong một giây.",
+    "là khoảng thời gian để vật thực hiện được hai dao động.",
+    "là khoảng thời gian để vật thực hiện được một dao động."
+   ],
+   "da": "B",
+   "go_lai": false
+  },
+  {
+   "so": 4,
+   "nhom": "DDH",
+   "than": [
+    "Một vật dao động điều hòa có chu kì T và tần số f, mối liên hệ giữa T và f là"
+   ],
+   "lc": [
+    "$T=\\dfrac{2\\pi}{f}$.",
+    "$T=\\dfrac{1}{f}$.",
+    "$T=2\\pi f$.",
+    "$T=f$."
+   ],
+   "da": "B",
+   "go_lai": true
+  },
+  {
+   "so": 5,
+   "nhom": "DDH",
+   "than": [
+    "Dao động điều hòa là"
+   ],
+   "lc": [
+    "dao động qua lại quanh một vị trí đặc biệt, gọi là vị trí cân bằng.",
+    "dao động có sự nhanh dần và chậm dần.",
+    "dao động mà trạng thái của vật lập lại như cũ sau những khoảng thời gian nhất định gọi là chu kì.",
+    "dao động tuần hoàn mà li độ của vật dao động là một hàm cosin (hoặc sin) theo thời gian."
+   ],
+   "da": "D",
+   "go_lai": false
+  },
+  {
+   "so": 6,
+   "nhom": "DDH",
+   "than": [
+    "Đại lượng đặc trưng cho trạng thái của vật trong quá trình dao động được gọi là"
+   ],
+   "lc": [
+    "pha dao động.",
+    "chu kì dao động.",
+    "tần số dao động.",
+    "biên độ dao động."
+   ],
+   "da": "A",
+   "go_lai": false
+  },
+  {
+   "so": 8,
+   "nhom": "DDH",
+   "than": [
+    "Đại lượng đặc trưng cho tốc độ biến thiên của pha dao động được gọi là"
+   ],
+   "lc": [
+    "pha dao động.",
+    "chu kì dao động.",
+    "tần số dao động.",
+    "tần số góc của dao động."
+   ],
+   "da": "D",
+   "go_lai": false
+  },
+  {
+   "so": 10,
+   "nhom": "DDH",
+   "than": [
+    "Gọi T là chu kì dao động, Δt là khoảng thời gian ngắn nhất hai vật đạt trạng thái tương tự với nhau. Độ lệch pha Δϕ giữa hai dao động được tính theo công thức"
+   ],
+   "lc": [
+    "$\\Delta\\varphi=\\dfrac{\\pi\\Delta t}{T}$.",
+    "$\\Delta\\varphi=\\dfrac{2\\pi T}{\\Delta t}$.",
+    "$\\Delta\\varphi=\\dfrac{\\Delta t}{2\\pi T}$.",
+    "$\\Delta\\varphi=\\dfrac{2\\pi\\Delta t}{T}$."
+   ],
+   "da": "D",
+   "go_lai": true
+  },
+  {
+   "so": 12,
+   "nhom": "DDH",
+   "than": [
+    "Chọn câu sai. Một vật dao động điều hòa với biên độ A dọc theo trục Ox có gốc tọa độ tại O là vị trí cân bằng."
+   ],
+   "lc": [
+    "Li độ của vật (x) là tọa độ của vật.",
+    "Biên độ (A) bằng li độ cực đại.",
+    "Biên độ luôn dương.",
+    "Li độ luôn dương."
+   ],
+   "da": "D",
+   "go_lai": false
+  },
+  {
+   "so": 14,
+   "nhom": "DDH",
+   "than": [
+    "Một vật dao động điều hòa theo phương trình x = Acos(ωt + $\\varphi_{0}$) với A > 0, ω > 0. Đại lượng x được gọi là"
+   ],
+   "lc": [
+    "tần số dao động.",
+    "li độ dao động.",
+    "biên độ dao động.",
+    "pha ban đầu."
+   ],
+   "da": "B",
+   "go_lai": false
+  },
+  {
+   "so": 15,
+   "nhom": "DDH",
+   "than": [
+    "Một vật dao động điều hòa theo phương trình x = Acos(ωt + $\\varphi_{0}$) với A > 0, ω > 0. Đại lượng A được gọi là"
+   ],
+   "lc": [
+    "tần số dao động.",
+    "li độ dao động.",
+    "biên độ dao động.",
+    "pha của dao động."
+   ],
+   "da": "C",
+   "go_lai": false
+  },
+  {
+   "so": 16,
+   "nhom": "DDH",
+   "than": [
+    "Một vật dao động điều hòa theo phương trình x = Acos(ωt + $\\varphi_{0}$) với A > 0, ω > 0. Đại lượng $\\varphi_{0}$ được gọi là"
+   ],
+   "lc": [
+    "tần số dao động.",
+    "li độ dao động.",
+    "biên độ dao động.",
+    "pha của dao động."
+   ],
+   "da": "D",
+   "go_lai": false
+  },
+  {
+   "so": 17,
+   "nhom": "DDH",
+   "than": [
+    "Một vật dao động điều hòa theo phương trình x = Acos(ωt + $\\varphi_{0}$) với A > 0, ω > 0. Đại lượng ω được gọi là"
+   ],
+   "lc": [
+    "tần số góc dao động.",
+    "li độ dao động.",
+    "biên độ dao động.",
+    "pha của dao động."
+   ],
+   "da": "A",
+   "go_lai": false
+  },
+  {
+   "so": 18,
+   "nhom": "DDH",
+   "than": [
+    "Một vật dao động điều hòa theo phương trình x = Acos(ωt + $\\varphi_{0}$) với A > 0; ω > 0. Phương trình vận tốc của vật dao động có dạng"
+   ],
+   "lc": [
+    "$v=\\omega^{2}A\\cos \\left(\\omega t+\\varphi_{0}+\\pi \\right)$.",
+    "$v=\\omega A\\cos \\left(\\omega t+\\varphi_{0}+\\pi \\right)$.",
+    "$v=\\omega A\\cos \\left(\\omega t+\\varphi_{0}+\\dfrac{\\pi}{2}\\right)$.",
+    "$v=\\omega A\\cos \\left(\\omega t+\\varphi_{0}\\right)$."
+   ],
+   "da": "C",
+   "go_lai": false
+  },
+  {
+   "so": 19,
+   "nhom": "DDH",
+   "than": [
+    "Một vật dao động điều hòa theo phương trình x = Acos(ωt + $\\varphi_{0}$) với A > 0; ω > 0. Phương trình gia tốc của vật dao động có dạng"
+   ],
+   "lc": [
+    "$a=\\omega^{2}A\\cos \\left(\\omega t+\\varphi_{0}+\\pi \\right)$.",
+    "$a=\\omega A\\cos \\left(\\omega t+\\varphi_{0}+\\pi \\right)$.",
+    "$a=\\omega^{2}A\\cos \\left(\\omega t+\\varphi_{0}+\\dfrac{\\pi}{2}\\right)$.",
+    "$a=\\omega A\\cos \\left(\\omega t+\\varphi_{0}\\right)$."
+   ],
+   "da": "A",
+   "go_lai": true
+  },
+  {
+   "so": 21,
+   "nhom": "DDH",
+   "than": [
+    "Một vật dao động điều hòa theo phương trình x = Acos(ωt + $\\varphi_{0}$). Vận tốc của vật được tính bằng công thức"
+   ],
+   "lc": [
+    "v = ω²Acos(ωt + $\\varphi_{0}$).",
+    "v = ωAsin(ωt + $\\varphi_{0}$).",
+    "v = - ω²Acos(ωt + $\\varphi_{0}$).",
+    "v= - ωAsin(ωt + $\\varphi_{0}$)."
+   ],
+   "da": "D",
+   "go_lai": false
+  },
+  {
+   "so": 24,
+   "nhom": "DDH",
+   "than": [
+    "Một vật nhỏ dao động điều hòa trên trục Ox với tần số góc ω. Ở li độ x, vật có gia tốc là"
+   ],
+   "lc": [
+    "-ω²x.",
+    "ω²x",
+    "-ωx².",
+    "-ωx."
+   ],
+   "da": "A",
+   "go_lai": false
+  },
+  {
+   "so": 25,
+   "nhom": "DDH",
+   "than": [
+    "Trong dao động điều hòa, li độ, vận tốc và gia tốc biến thiên điều hòa theo thời gian và có cùng"
+   ],
+   "lc": [
+    "biên độ.",
+    "tần số.",
+    "pha ban đầu.",
+    "pha."
+   ],
+   "da": "B",
+   "go_lai": false
+  },
+  {
+   "so": 26,
+   "nhom": "DDH",
+   "than": [
+    "Biểu thức li độ của vật dao động điều hòa có dạng x = Acos(ωt + $\\varphi_{0}$), tốc độ cực đại của vật là"
+   ],
+   "lc": [
+    "ωA.",
+    "ω²A.",
+    "2ωA.",
+    "ωA²."
+   ],
+   "da": "A",
+   "go_lai": false
+  },
+  {
+   "so": 27,
+   "nhom": "DDH",
+   "than": [
+    "Biểu thức li độ của vật dao động điều hòa có dạng x = Acos(ωt + $\\varphi_{0}$), gia tốc cực đại của vật là"
+   ],
+   "lc": [
+    "ωA.",
+    "ω²A.",
+    "2ωA.",
+    "ωA²."
+   ],
+   "da": "B",
+   "go_lai": false
+  },
+  {
+   "so": 32,
+   "nhom": "DDH",
+   "than": [
+    "Trong dao động điều hoà vận tốc biến đổi"
+   ],
+   "lc": [
+    "cùng pha với li độ.",
+    "sớm pha $\\dfrac{\\pi}{2}$ so với li độ.",
+    "ngược pha với li độ.",
+    "trễ pha $\\dfrac{\\pi}{2}$ so với li độ."
+   ],
+   "da": "B",
+   "go_lai": false
+  },
+  {
+   "so": 33,
+   "nhom": "DDH",
+   "than": [
+    "Trong dao động điều hoà vận tốc biến đổi"
+   ],
+   "lc": [
+    "cùng pha với li độ.",
+    "trễ pha $\\dfrac{\\pi}{2}$ so với gia tốc",
+    "ngược pha với li độ.",
+    "trễ pha $\\dfrac{\\pi}{2}$ so với li độ."
+   ],
+   "da": "B",
+   "go_lai": true
+  },
+  {
+   "so": 34,
+   "nhom": "DDH",
+   "than": [
+    "Trong dao động điều hoà gia tốc biến đổi"
+   ],
+   "lc": [
+    "cùng pha với li độ.",
+    "sớm pha $\\dfrac{\\pi}{2}$ so với li độ.",
+    "ngược pha với li độ.",
+    "trễ pha $\\dfrac{\\pi}{2}$ so với li độ."
+   ],
+   "da": "C",
+   "go_lai": false
+  },
+  {
+   "so": 35,
+   "nhom": "DDH",
+   "than": [
+    "Trong dao động điều hoà gia tốc biến đổi"
+   ],
+   "lc": [
+    "cùng pha với li độ.",
+    "sớm pha $\\dfrac{\\pi}{2}$ so với li độ.",
+    "sớm pha $\\dfrac{\\pi}{2}$ so với vận tốc",
+    "trễ pha $\\dfrac{\\pi}{2}$ so với li độ."
+   ],
+   "da": "C",
+   "go_lai": false
+  },
+  {
+   "so": 36,
+   "nhom": "DDH",
+   "than": [
+    "Đối với dao động tuần hoàn, khoảng thời gian ngắn nhất mà sau đó trạng thái dao động",
+    "của vật được lặp lại như cũ được gọi là"
+   ],
+   "lc": [
+    "tần số dao động.",
+    "chu kì dao động.",
+    "chu kì riêng của dao động.",
+    "tần số riêng của dao động."
+   ],
+   "da": "B",
+   "go_lai": false
+  },
+  {
+   "so": 37,
+   "nhom": "DDH",
+   "than": [
+    "Phương trình tổng quát của dao động điều hoà là"
+   ],
+   "lc": [
+    "x = Acot(ωt + φ).",
+    "x = Atan(ωt + φ).",
+    "x = Acos(ωt + φ).",
+    "x = Acos(ω + φ)."
+   ],
+   "da": "C",
+   "go_lai": false
+  },
+  {
+   "so": 38,
+   "nhom": "DDH",
+   "than": [
+    "Một vật dao động điều hòa theo phương trình $x=A\\cos \\left(\\omega t+\\varphi_{0}\\right)$. Đại lượng x được gọi là"
+   ],
+   "lc": [
+    "tần số dao động.",
+    "chu kì dao động.",
+    "li độ dao động.",
+    "biên độ dao động."
+   ],
+   "da": "C",
+   "go_lai": true
+  },
+  {
+   "so": 39,
+   "nhom": "DDH",
+   "than": [
+    "Một vật dao động điều hòa theo phương trình $x=A\\cos \\left(\\omega t+\\varphi_{0}\\right)$. Pha ban đầu là"
+   ],
+   "lc": [
+    "$\\omega$.",
+    "$\\varphi_{0}$.",
+    "$\\omega t+\\varphi_{0}$.",
+    "$A$."
+   ],
+   "da": "B",
+   "go_lai": true
+  },
+  {
+   "so": 40,
+   "nhom": "DDH",
+   "than": [
+    "Trong phương trình của vật dao động điều hòa x = Acos(ωt + φ). Rad/s là đơn vị của đại",
+    "lượng"
+   ],
+   "lc": [
+    "biên độ dao động.",
+    "tần số góc.",
+    "pha dao động.",
+    "chu kỳ dao động."
+   ],
+   "da": "B",
+   "go_lai": false
+  },
+  {
+   "so": 41,
+   "nhom": "DDH",
+   "than": [
+    "Một vật dao động điều hòa với tần số f. Chu kì dao động của vật được tính bằng công thức"
+   ],
+   "lc": [
+    "T = f.",
+    "T = 2π f.",
+    "$T=\\dfrac{1}{f}$.",
+    "$T=\\dfrac{2\\pi}{f}$."
+   ],
+   "da": "C",
+   "go_lai": false
+  },
+  {
+   "so": 42,
+   "nhom": "DDH",
+   "than": [
+    "Khi một chất điểm dao động điều hoà thì một trong những đại lượng không đổi theo thời gian là"
+   ],
+   "lc": [
+    "vận tốc.",
+    "gia tốc.",
+    "biên độ.",
+    "li độ."
+   ],
+   "da": "C",
+   "go_lai": false
+  },
+  {
+   "so": 43,
+   "nhom": "DDH",
+   "than": [
+    "Biểu thức quan hệ giữa biên độ A, li độ x và tần số góc ω của chất điểm dao động điều hòa ở thời điểm t là"
+   ],
+   "lc": [
+    "A² = x² + $\\dfrac{v^{2}}{\\omega^{2}}$.",
+    "A² = v² + $\\dfrac{x^{2}}{\\omega^{2}}$.",
+    "A² = v² + ω²x².",
+    "A² = x² + ω²v²."
+   ],
+   "da": "A",
+   "go_lai": false
+  },
+  {
+   "so": 44,
+   "nhom": "DDH",
+   "than": [
+    "Một vật dao động có phương trình x = Acos(ωt + ϕ). Gọi v và a lần lượt là vận tốc và gia tốc của vật. Hệ thức đúng là"
+   ],
+   "lc": [
+    "$\\dfrac{v^{2}}{\\omega^{4}}+\\dfrac{a^{2}}{\\omega^{2}}=A^{2}$.",
+    "$\\dfrac{v^{2}}{\\omega^{2}}+\\dfrac{a^{2}}{\\omega^{2}}=A^{2}$",
+    "$\\dfrac{v^{2}}{\\omega^{2}}+\\dfrac{a^{2}}{\\omega^{4}}=A^{2}$.",
+    "$\\dfrac{\\omega^{2}}{v^{2}}+\\dfrac{a^{2}}{\\omega^{4}}=A^{2}$."
+   ],
+   "da": "C",
+   "go_lai": false
+  },
+  {
+   "so": 45,
+   "nhom": "DDH",
+   "than": [
+    "Vật dao động điều hòa với biên độ A, tần số góc ω. Gọi $a_{\\max}$ và $v_{\\max}$ lần lượt là gia tốc cực đại là tốc độ cực đại. Liên hệ giữa chúng là"
+   ],
+   "lc": [
+    "$a_{\\max}$ = ω.$v_{\\max}$",
+    "$a_{\\max}$ = ω².$v_{\\max}$",
+    "$v_{\\max}$ = ω.$a_{\\max}$",
+    "$v_{\\max}$ = ω².$a_{\\max}$"
+   ],
+   "da": "A",
+   "go_lai": false
+  },
+  {
+   "so": 46,
+   "nhom": "TD",
+   "than": [
+    "Dao động có biên độ giảm dần theo thời gian gọi là"
+   ],
+   "lc": [
+    "dao động tắt dần.",
+    "dao động tuần hoàn.",
+    "dao động cưỡng bức.",
+    "dao động duy trì."
+   ],
+   "da": "A",
+   "go_lai": false
+  },
+  {
+   "so": 47,
+   "nhom": "TD",
+   "than": [
+    "Nguyên nhân gây ra dao động tắt dần là do tác dụng của"
+   ],
+   "lc": [
+    "trọng lực.",
+    "lực cản môi trường.",
+    "lực đàn hồi của lò xo.",
+    "lực căng dây."
+   ],
+   "da": "B",
+   "go_lai": false
+  },
+  {
+   "so": 48,
+   "nhom": "TD",
+   "than": [
+    "Các thiết bị đóng cửa tự động hay giảm xóc ô tô, xe máy là những ứng dụng của dao động"
+   ],
+   "lc": [
+    "duy trì.",
+    "cộng hưởng.",
+    "cưỡng bức.",
+    "tắt dần."
+   ],
+   "da": "D",
+   "go_lai": false
+  },
+  {
+   "so": 49,
+   "nhom": "TD",
+   "than": [
+    "Chọn phát biểu đúng khi nói về dao động tắt dần."
+   ],
+   "lc": [
+    "Dao động tắt dần có cơ năng giảm dần theo thời gian.",
+    "Cơ năng của vật dao động tắt dần không đổi theo thời gian.",
+    "Lực cản của môi trường tác dụng lên vật luôn sinh công dương.",
+    "Dao động tắt dần là dao động chỉ chịu tác dụng của nội lực."
+   ],
+   "da": "A",
+   "go_lai": false
+  },
+  {
+   "so": 50,
+   "nhom": "TD",
+   "than": [
+    "Dao động của con lắc đồng hồ là"
+   ],
+   "lc": [
+    "dao động cưỡng bức.",
+    "dao động tắt dần.",
+    "dao động điện từ.",
+    "dao động duy trì."
+   ],
+   "da": "D",
+   "go_lai": false
+  },
+  {
+   "so": 51,
+   "nhom": "TD",
+   "than": [
+    "Dao động của vật dưới tác dụng của ngoại lực điều hòa trong giai đoạn ổn định gọi là"
+   ],
+   "lc": [
+    "dao động tắt dần.",
+    "dao động duy trì.",
+    "dao động cưỡng bức.",
+    "dao động cộng hưởng."
+   ],
+   "da": "C",
+   "go_lai": false
+  },
+  {
+   "so": 52,
+   "nhom": "TD",
+   "than": [
+    "Dao động cưỡng bức giai đoạn ổn định là"
+   ],
+   "lc": [
+    "dao động tuần hoàn.",
+    "dao động điều hòa.",
+    "dao động tự do.",
+    "chuyển động cơ."
+   ],
+   "da": "B",
+   "go_lai": false
+  },
+  {
+   "so": 53,
+   "nhom": "TD",
+   "than": [
+    "Dao động của võng máy tự động sử dụng điện là"
+   ],
+   "lc": [
+    "dao động cưỡng bức.",
+    "dao động tắt dần.",
+    "dao động điện từ.",
+    "dao động duy trì."
+   ],
+   "da": "A",
+   "go_lai": false
+  },
+  {
+   "so": 54,
+   "nhom": "TD",
+   "than": [
+    "Hiện tượng cộng hưởng xảy ra khi"
+   ],
+   "lc": [
+    "tần số góc của lực cưỡng bức bằng tần số góc riêng của hệ.",
+    "tần số góc dao động bằng tần số góc riêng của hệ.",
+    "tần số góc của lực cưỡng bức nhỏ hơn tần số góc riêng của hệ.",
+    "tần số góc của lực cưỡng bức lớn hơn tần số góc riêng của hệ."
+   ],
+   "da": "A",
+   "go_lai": false
+  },
+  {
+   "so": 55,
+   "nhom": "TD",
+   "than": [
+    "Hộp đàn của đàn guitar, viôlon, ... là những ứng dụng của"
+   ],
+   "lc": [
+    "dao động tắt dần.",
+    "hiện tượng cộng hưởng.",
+    "dao động cưỡng bức.",
+    "dao động duy trì."
+   ],
+   "da": "B",
+   "go_lai": false
+  },
+  {
+   "so": 56,
+   "nhom": "TD",
+   "than": [
+    "Cho các thiết bị, dụng cụ sau:",
+    "(1) Thiết bị đóng cửa tự động. (2) Thiết bị giảm xóc xe máy, ô tô.",
+    "(3) Võng máy. (4) Hộp đàn.",
+    "Số thiết bị, dụng cụ ứng dụng của dao động tắt dần là"
+   ],
+   "lc": [
+    "1.",
+    "2.",
+    "3.",
+    "4."
+   ],
+   "da": "B",
+   "go_lai": false
+  },
+  {
+   "so": 57,
+   "nhom": "TD",
+   "than": [
+    "Chọn câu sai khi nói về dao động tắt dần"
+   ],
+   "lc": [
+    "Dao động tắt dần luôn có hại nên người ta phải tìm mọi cách để khắc phục dao động này.",
+    "Lực cản môi trường hay lực ma sát luôn sinh công âm.",
+    "Biên độ và năng lượng dao động giảm dần theo thời gian.",
+    "Dao động tắt dần càng chậm nếu như năng lượng ban đầu truyền cho hệ dao động càng lớn và lực cản môi trường càng nhỏ."
+   ],
+   "da": "A",
+   "go_lai": false
+  },
+  {
+   "so": 58,
+   "nhom": "TD",
+   "than": [
+    "Biên độ dao động cưỡng bức không thay đổi khi thay đổi"
+   ],
+   "lc": [
+    "tần số ngoại lực tuần hoàn.",
+    "pha ban đầu của lực cưỡng bức.",
+    "biên độ lực cưỡng bức.",
+    "lực cản môi trường."
+   ],
+   "da": "B",
+   "go_lai": false
+  },
+  {
+   "so": 59,
+   "nhom": "TD",
+   "than": [
+    "Trong những dao động sau đây, trường hợp nào sự tắt dần nhanh là có lợi?"
+   ],
+   "lc": [
+    "Dao động của quả lắc đồng hồ.",
+    "Khung xe ô tô sau khi chạy qua chỗ đường gập ghềnh.",
+    "Sự đung đưa của chiếc võng.",
+    "Sự dao động của pittông trong xi lanh."
+   ],
+   "da": "B",
+   "go_lai": false
+  },
+  {
+   "so": 60,
+   "nhom": "TD",
+   "than": [
+    "Một hệ dao động cưỡng bức, phát biểu nào sau đây sai?"
+   ],
+   "lc": [
+    "Dao động cưỡng bức có biên độ không đổi.",
+    "Dao động cưỡng bức có biên độ phụ thuộc vào biên độ của lực cưỡng bức.",
+    "Dao động cưỡng bức có tần số luôn bằng tần số dao đông riêng của hệ.",
+    "Dao động cưỡng bức có tần số bằng tần số của lực cưỡng bức."
+   ],
+   "da": "C",
+   "go_lai": false
+  },
+  {
+   "so": 61,
+   "nhom": "TD",
+   "than": [
+    "Phát biểu nào sau đây là không đúng về sự cộng hưởng cơ?"
+   ],
+   "lc": [
+    "tần số góc lực cưỡng bức bằng tần số góc dao động riêng.",
+    "tần số lực cưỡng bức bằng tần số dao động riêng.",
+    "chu kì lực cưỡng bức bằng chu kì dao động riêng.",
+    "biên độ lực cưỡng bức bằng biên độ dao động của vật."
+   ],
+   "da": "D",
+   "go_lai": false
+  },
+  {
+   "so": 62,
+   "nhom": "TD",
+   "than": [
+    "Cho các phát biểu sau:",
+    "(1) Có câu chuyện về một giọng hát ôpêra cao và khỏe có thể làm vỡ một cái cốc thủy tinh để gần. Đó là kết quả của hiện tượng cộng hưởng.",
+    "(2) Những dụng cụ như lò vi sóng, hộp đàn của đàn ghi ta, viôlon... có nguyên tắc hoạt động dựa trên hiện tượng cộng hưởng.",
+    "(3) Khi hành quân qua cầu, các người lính không được bước đều vì có thể gây hiện tượng cộng hưởng làm cầu rung lắc rất mạnh.",
+    "(4) Khi chế tạo máy, phải đảm bảo tần số riêng của các bộ phận trong máy bằng tần số của lực tác dụng lên các bộ phận ấy.",
+    "Trong các phát biểu trên, số phát biểu đúng là"
+   ],
+   "lc": [
+    "1.",
+    "2.",
+    "3.",
+    "4."
+   ],
+   "da": "C",
+   "go_lai": false
+  },
+  {
+   "so": 63,
+   "nhom": "SC",
+   "than": [
+    "Sóng là"
+   ],
+   "lc": [
+    "chuyển động của vật này so với vật khác.",
+    "dao động lan truyền trong không gian theo thời gian.",
+    "sự truyền chuyển động cơ trong chất rắn, lỏng, khí.",
+    "dao động của mọi điểm trong không gian."
+   ],
+   "da": "B",
+   "go_lai": false
+  },
+  {
+   "so": 64,
+   "nhom": "SC",
+   "than": [
+    "Chọn câu đúng."
+   ],
+   "lc": [
+    "Khi sóng cơ truyền đi, các phần tử vật chất vẫn dao động tại chỗ.",
+    "Sóng cơ và sóng điện từ đều lan truyền trong chân không.",
+    "Quá trình truyền sóng cơ là quá trình truyền vật chất.",
+    "Quá trình truyền sóng là quá trình truyền vật chất và truyền cả năng lượng."
+   ],
+   "da": "A",
+   "go_lai": false
+  },
+  {
+   "so": 65,
+   "nhom": "SC",
+   "than": [
+    "Để phân loại sóng dọc và sóng ngang người ta căn cứ vào yếu tố nào sau đây?"
+   ],
+   "lc": [
+    "Vận tốc truyền sóng và bước sóng.",
+    "Phương dao động của các phần tử môi trường với phương truyền sóng.",
+    "Phương dao động của các phần tử môi trường và vận tốc truyền sóng.",
+    "Phương trình sóng và bước sóng."
+   ],
+   "da": "B",
+   "go_lai": false
+  },
+  {
+   "so": 66,
+   "nhom": "SC",
+   "than": [
+    "Sóng dọc là sóng có các phần tử dao động"
+   ],
+   "lc": [
+    "theo phương vuông góc với phương truyền sóng.",
+    "theo phương truyền sóng.",
+    "theo phương ngang.",
+    "theo phương thẳng đứng."
+   ],
+   "da": "B",
+   "go_lai": false
+  },
+  {
+   "so": 67,
+   "nhom": "SC",
+   "than": [
+    "Sóng ngang là sóng có các phần tử dao động"
+   ],
+   "lc": [
+    "theo phương vuông góc với phương truyền sóng.",
+    "theo phương truyền sóng.",
+    "theo phương ngang.",
+    "theo phương thẳng đứng."
+   ],
+   "da": "A",
+   "go_lai": false
+  },
+  {
+   "so": 68,
+   "nhom": "SC",
+   "than": [
+    "Sóng cơ truyền được trong các môi trường"
+   ],
+   "lc": [
+    "rắn, lỏng và khí.",
+    "lỏng, khí và chân không.",
+    "chân không, rắn và lỏng.",
+    "khí, chân không và rắn."
+   ],
+   "da": "A",
+   "go_lai": false
+  },
+  {
+   "so": 69,
+   "nhom": "SC",
+   "than": [
+    "Hình bên mô tả quá trình truyền sóng của trận động đất chứng tỏ",
+    "[[IMG image10055.png 3.9]]"
+   ],
+   "lc": [
+    "quá trình truyền sóng là quá trình truyền năng lượng.",
+    "quá trình truyền sóng là quá trình truyền vật chất.",
+    "sóng luôn luôn là sóng ngang.",
+    "sóng luôn luôn là sóng dọc."
+   ],
+   "da": "A",
+   "go_lai": false
+  },
+  {
+   "so": 70,
+   "nhom": "SC",
+   "than": [
+    "Sóng cơ không truyền được trong"
+   ],
+   "lc": [
+    "chất rắn.",
+    "chất khí.",
+    "chất lỏng.",
+    "chân không."
+   ],
+   "da": "D",
+   "go_lai": false
+  },
+  {
+   "so": 71,
+   "nhom": "SC",
+   "than": [
+    "Hiện tượng nào không phải là hiện tượng đặc trưng của sóng"
+   ],
+   "lc": [
+    "khúc xạ.",
+    "phản xạ.",
+    "nhiễu xạ.",
+    "truyền thẳng."
+   ],
+   "da": "D",
+   "go_lai": false
+  },
+  {
+   "so": 72,
+   "nhom": "SC",
+   "than": [
+    "Chọn phát biểu sai. Quá trình lan truyền sóng là quá trình"
+   ],
+   "lc": [
+    "truyền pha dao động.",
+    "truyền dao động trong môi trường vật chất theo thời gian.",
+    "truyền năng lượng.",
+    "lan truyền các phần tử vật chất trong không gian theo thời gian."
+   ],
+   "da": "D",
+   "go_lai": false
+  },
+  {
+   "so": 73,
+   "nhom": "SC",
+   "than": [
+    "Khi nói về sóng, phát biểu nào dưới đây là sai?"
+   ],
+   "lc": [
+    "Khi sóng truyền, các phần tử vật chất nơi sóng truyền qua cùng truyền đi theo sóng.",
+    "Sóng cơ không truyền được trong chân không.",
+    "Sóng ngang có phương dao động của các phần tử vật chất vuông góc với phương truyền sóng.",
+    "Sóng dọc có phương dao động của các phần tử vật chất trùng với phương truyền sóng."
+   ],
+   "da": "A",
+   "go_lai": false
+  },
+  {
+   "so": 74,
+   "nhom": "SC",
+   "than": [
+    "Khi mở hé cánh cửa để ánh sáng đi qua khe hẹp như hình, ta quan sát thấy ánh sáng loang ra một khoảng lớn hơn khe hẹp. Đó là hiện tượng",
+    "[[IMG image10058.png 2.6]]"
+   ],
+   "lc": [
+    "giao thoa ánh sáng.",
+    "khúc xạ ánh sáng.",
+    "nhiễu xạ ánh sáng.",
+    "phản xạ ánh sáng."
+   ],
+   "da": "C",
+   "go_lai": false
+  },
+  {
+   "so": 75,
+   "nhom": "SC",
+   "than": [
+    "Một sóng được mô tả như hình bên là",
+    "[[IMG image10061.png 2.5]]"
+   ],
+   "lc": [
+    "sóng ngang.",
+    "sóng dọc.",
+    "sóng điện từ.",
+    "sóng ánh sáng."
+   ],
+   "da": "A",
+   "go_lai": false
+  },
+  {
+   "so": 76,
+   "nhom": "SC",
+   "than": [
+    "Sóng âm truyền trong không khí là"
+   ],
+   "lc": [
+    "sóng ngang.",
+    "sóng dọc.",
+    "sóng điện từ.",
+    "sóng ánh sáng."
+   ],
+   "da": "B",
+   "go_lai": false
+  },
+  {
+   "so": 77,
+   "nhom": "SC",
+   "than": [
+    "Hình nào dưới đây mô tả hiện tượng phản xạ của sóng",
+    "[[IMG image10064.png 12.0]]"
+   ],
+   "lc": [
+    "Hình 4.",
+    "Hình 2.",
+    "Hình 1.",
+    "Hình 3."
+   ],
+   "da": "C",
+   "go_lai": false
+  },
+  {
+   "so": 78,
+   "nhom": "SC",
+   "than": [
+    "Khi đi biển, các thuỷ thủ trên thuyền có thể sử dụng kĩ thuật sonar ( kĩ thuật phát ra sóng siêu âm) dùng để định vị hay điều hướng thuyền nhằm tránh các tảng đá ngầm hoặc phát hiện đàn cá như hình bên. Kĩ thuật sonar sử dụng tính chất nào của sóng",
+    "[[IMG image10067.png 2.0]]"
+   ],
+   "lc": [
+    "tính chất phản xạ.",
+    "tính chất khúc xạ.",
+    "tính chất nhiễu xạ.",
+    "tính chất truyền thẳng."
+   ],
+   "da": "A",
+   "go_lai": false
+  },
+  {
+   "so": 79,
+   "nhom": "SC",
+   "than": [
+    "Một sóng cơ hình sin truyền theo trục Ox. Công thức liên hệ giữa tốc độ truyền sóng v, bước sóng λ và tần số f của sóng là"
+   ],
+   "lc": [
+    "λ = 2πfv.",
+    "$\\lambda=\\dfrac{v}{f}$.",
+    "λ = vf.",
+    "$\\lambda=\\dfrac{f}{v}$."
+   ],
+   "da": "B",
+   "go_lai": true
+  },
+  {
+   "so": 80,
+   "nhom": "SC",
+   "than": [
+    "Một sóng cơ hình sin truyền theo trục Ox với chu kì T. Khoảng thời gian để sóng truyền được quãng đường bằng một bước sóng là"
+   ],
+   "lc": [
+    "4T.",
+    "0,5T.",
+    "T.",
+    "2T."
+   ],
+   "da": "C",
+   "go_lai": false
+  },
+  {
+   "so": 81,
+   "nhom": "SC",
+   "than": [
+    "Năng lượng sóng truyền qua một đơn vị diện tích vuông góc với phương truyền sóng trong một đơn vị thời gian gọi là"
+   ],
+   "lc": [
+    "cường độ sóng.",
+    "tốc độ sóng.",
+    "bước sóng.",
+    "công suất sóng."
+   ],
+   "da": "A",
+   "go_lai": false
+  },
+  {
+   "so": 82,
+   "nhom": "SC",
+   "than": [
+    "Trong một khoảng thời gian Δt một sóng hình sin truyền đi được một quãng đường s. Tốc độ truyền sóng v được xác định bằng"
+   ],
+   "lc": [
+    "$v=s\\,\\Delta t$.",
+    "$v=\\dfrac{\\Delta t}{s}$.",
+    "$v=\\dfrac{2s}{\\Delta t}$.",
+    "$v=\\dfrac{s}{\\Delta t}$."
+   ],
+   "da": "D",
+   "go_lai": true
+  },
+  {
+   "so": 84,
+   "nhom": "SC",
+   "than": [
+    "Bước sóng là"
+   ],
+   "lc": [
+    "quãng đường sóng truyền đi được trong một chu kì.",
+    "quãng đường sóng truyền đi được trong nửa chu kì.",
+    "thời gian sóng truyền đi được trong một chu kì.",
+    "tốc độ sóng truyền đi được trong một chu kì."
+   ],
+   "da": "A",
+   "go_lai": false
+  },
+  {
+   "so": 85,
+   "nhom": "SC",
+   "than": [
+    "Biên độ sóng tại một điểm là"
+   ],
+   "lc": [
+    "biên độ dao động của các phần tử môi trường tại điểm đó.",
+    "tổng biên độ của các phần tử của sóng.",
+    "tốc độ truyền năng lượng trong 1 giây.",
+    "thời gian sóng truyền đi được nửa bước sóng."
+   ],
+   "da": "A",
+   "go_lai": false
+  },
+  {
+   "so": 86,
+   "nhom": "SC",
+   "than": [
+    "Tốc độ truyền sóng cơ học phụ thuộc vào"
+   ],
+   "lc": [
+    "bản chất của môi trường và năng lượng sóng.",
+    "bản chất của môi trường và chu kì sóng.",
+    "bản chất của môi trường và cường độ sóng.",
+    "mật độ vật chất, độ đàn hồi và nhiệt độ của môi trường."
+   ],
+   "da": "D",
+   "go_lai": false
+  },
+  {
+   "so": 87,
+   "nhom": "SC",
+   "than": [
+    "Một sóng hình sin truyền từ không khí vào nước thì đại lượng nào sau đây không đổi?"
+   ],
+   "lc": [
+    "Tần số sóng.",
+    "Tốc độ truyền sóng.",
+    "Biên độ của sóng.",
+    "Bước sóng."
+   ],
+   "da": "A",
+   "go_lai": false
+  },
+  {
+   "so": 88,
+   "nhom": "SC",
+   "than": [
+    "Sóng cơ là"
+   ],
+   "lc": [
+    "chuyển động của vật này so với vật khác.",
+    "dao động lan truyền trong một môi trường.",
+    "sự truyền chuyển động cơ trong không khí.",
+    "dao động của mọi điểm trong môi trường."
+   ],
+   "da": "B",
+   "go_lai": false
+  },
+  {
+   "so": 89,
+   "nhom": "SC",
+   "than": [
+    "Sóng cơ truyền được trong các môi trường"
+   ],
+   "lc": [
+    "Rắn, lỏng và khí.",
+    "Lỏng, khí và chân không.",
+    "Chân không, rắn và lỏng.",
+    "Khí, chân không và rắn."
+   ],
+   "da": "A",
+   "go_lai": false
+  },
+  {
+   "so": 90,
+   "nhom": "SC",
+   "than": [
+    "Trong sóng cơ, sóng dọc truyền được trong các môi trường"
+   ],
+   "lc": [
+    "lỏng, khí.",
+    "rắn, lỏng, khí.",
+    "rắn, lỏng và chân không.",
+    "rắn, khí và chân không."
+   ],
+   "da": "B",
+   "go_lai": false
+  },
+  {
+   "so": 91,
+   "nhom": "SC",
+   "than": [
+    "Sóng ngang truyền được trong"
+   ],
+   "lc": [
+    "rắn và khí.",
+    "rắn và bề mặt chất lỏng.",
+    "lỏng và khí.",
+    "rắn, lỏng, khí."
+   ],
+   "da": "B",
+   "go_lai": false
+  },
+  {
+   "so": 93,
+   "nhom": "SC",
+   "than": [
+    "Sóng dọc là sóng"
+   ],
+   "lc": [
+    "có phương dao động vuông góc với phương truyền sóng",
+    "có phương dao động trùng với phương truyền sóng",
+    "là sóng truyền dọc theo sợi dây",
+    "là sóng truyền theo phương ngang"
+   ],
+   "da": "B",
+   "go_lai": false
+  },
+  {
+   "so": 94,
+   "nhom": "SC",
+   "than": [
+    "Sóng ngang là sóng"
+   ],
+   "lc": [
+    "lan truyền theo phương nằm ngang.",
+    "trong đó các phần tử sóng dao động theo phương nằm ngang.",
+    "trong đó các phần tử sóng dao động theo phương vuông góc với phương truyền sóng.",
+    "trong đó các phần tử sóng dao động theo cùng một phương với phương truyền sóng."
+   ],
+   "da": "C",
+   "go_lai": false
+  },
+  {
+   "so": 95,
+   "nhom": "SC",
+   "than": [
+    "Khi một sóng cơ truyền từ không khí vào nước thì đại lượng nào sau đây không đổi?"
+   ],
+   "lc": [
+    "Tần số sóng.",
+    "Tốc độ truyền sóng.",
+    "Biên độ của sóng.",
+    "Bước sóng."
+   ],
+   "da": "A",
+   "go_lai": false
+  },
+  {
+   "so": 98,
+   "nhom": "SC",
+   "than": [
+    "Một sóng âm có chu kì T. Tần số f của sóng được tính bằng công thức nào sau đây?"
+   ],
+   "lc": [
+    "$f=\\dfrac{2\\pi}{T}$.",
+    "$f=\\dfrac{T}{2}$.",
+    "$f=\\dfrac{1}{T}$.",
+    "$f=\\dfrac{T}{\\pi}$"
+   ],
+   "da": "C",
+   "go_lai": false
+  },
+  {
+   "so": 99,
+   "nhom": "SC",
+   "than": [
+    "Đại lượng nào sau đây của sóng luôn có giá trị bằng quãng đường mà sóng truyền được trong một chu kì?"
+   ],
+   "lc": [
+    "Bước sóng.",
+    "Tần số của sóng.",
+    "Biên độ của sóng.",
+    "Tốc độ truyền sóng."
+   ],
+   "da": "A",
+   "go_lai": false
+  },
+  {
+   "so": 100,
+   "nhom": "SC",
+   "than": [
+    "Một sóng cơ hình sin truyền theo trục Ox với chu kì T. Khoảng cách giữa hai điểm trên phương truyền sóng gần nhau nhất và dao động cùng pha với nhau gọi là"
+   ],
+   "lc": [
+    "chu kì sóng.",
+    "bước sóng.",
+    "tốc độ truyền sóng.",
+    "độ lệch pha."
+   ],
+   "da": "B",
+   "go_lai": false
+  },
+  {
+   "so": 101,
+   "nhom": "SC",
+   "than": [
+    "Một sóng cơ hình sin truyền trong một môi trường với bước sóng λ. Trên cùng một hướng truyền sóng, khoảng cách giữa hai điểm gần nhau nhất mà phần tử của môi trường tại đó dao động ngược pha nhau là"
+   ],
+   "lc": [
+    "λ/2.",
+    "λ /4.",
+    "2λ.",
+    "λ."
+   ],
+   "da": "A",
+   "go_lai": false
+  },
+  {
+   "so": 102,
+   "nhom": "SC",
+   "than": [
+    "Một sóng cơ hình sin truyền trong một môi trường với bước sóng λ. Trên cùng một hướng truyền sóng, khoảng cách giữa hai điểm gần nhau nhất mà phần tử của môi trường tại đó dao động vuông pha nhau là"
+   ],
+   "lc": [
+    "λ/2.",
+    "λ /4.",
+    "2λ.",
+    "λ."
+   ],
+   "da": "B",
+   "go_lai": false
+  },
+  {
+   "so": 103,
+   "nhom": "SC",
+   "than": [
+    "Một sóng cơ hình sin lan truyền dọc theo trục Ox với phương trình $u=4\\cos \\left(2\\pi t-\\dfrac{2\\pi x}{5}\\right)(cm)$. Biên độ của sóng là"
+   ],
+   "lc": [
+    "4 (cm).",
+    "0,5 (cm).",
+    "2 (cm).",
+    "2,5 (cm)."
+   ],
+   "da": "A",
+   "go_lai": false
+  },
+  {
+   "so": 104,
+   "nhom": "SC",
+   "than": [
+    "Khoảng cách giữa hai điểm trên phương truyền sóng gần nhau nhất và dao động cùng pha với nhau gọi là"
+   ],
+   "lc": [
+    "chu kì sóng.",
+    "bước sóng.",
+    "tốc độ truyền sóng.",
+    "độ lệch pha."
+   ],
+   "da": "B",
+   "go_lai": false
+  },
+  {
+   "so": 106,
+   "nhom": "SC",
+   "than": [
+    "Khi nói về sóng cơ, phát biểu nào dưới đây là sai?"
+   ],
+   "lc": [
+    "Khi sóng truyền, các phần tử vật chất nơi sóng truyền qua cùng truyền đi theo sóng.",
+    "Sóng cơ không truyền được trong chân không.",
+    "Sóng ngang có phương dao động của các phần tử vật chất vuông góc với phương truyền sóng.",
+    "Sóng dọc có phương dao động của các phần tử vật chất trùng với phương truyền sóng."
+   ],
+   "da": "A",
+   "go_lai": false
+  },
+  {
+   "so": 107,
+   "nhom": "SC",
+   "than": [
+    "Để phân loại sóng dọc, sóng ngang người ta căn cứ vào yếu tố nào sau đây?"
+   ],
+   "lc": [
+    "Vận tốc truyền sóng và bước sóng.",
+    "Phương dao động của các phần tử môi trường với phương truyền sóng.",
+    "Phương dao động của các phần tử môi trường và vận tốc truyền sóng.",
+    "Phương trình sóng và bước sóng."
+   ],
+   "da": "B",
+   "go_lai": false
+  },
+  {
+   "so": 108,
+   "nhom": "SC",
+   "than": [
+    "Chọn phát biểu sai. Quá trình lan truyền của sóng cơ học là quá trình"
+   ],
+   "lc": [
+    "truyền pha dao động.",
+    "truyền dao động trong môi trường vật chất theo thời gian.",
+    "truyền năng lượng.",
+    "lan truyền các phần tử vật chất trong không gian theo thời gian."
+   ],
+   "da": "D",
+   "go_lai": false
+  },
+  {
+   "so": 109,
+   "nhom": "SC",
+   "than": [
+    "Một sóng hình sin truyền theo chiều dương của trục Ox với phương trình dao động của nguồn sóng đặt tại O là $u_{O}$ = 4cos100πt (cm). Ở điểm M cách O một phần tư bước sóng, phần tử môi trường dao động với phương trình là"
+   ],
+   "lc": [
+    "$u_{M}$ = 4cos(100πt + π) (cm).",
+    "$u_{M}$ = 4cos(100πt) (cm).",
+    "$u_{M}$ = 4cos(100πt – 0,5π) (cm).",
+    "$u_{M}$ = 4cos(100πt + 0,5π) (cm)."
+   ],
+   "da": "C",
+   "go_lai": false
+  },
+  {
+   "so": 110,
+   "nhom": "SC",
+   "than": [
+    "Một dao động lan truyền trong môi trường từ điểm M đến điểm N cách M một đoạn 0,9 m với tốc độ 1,2 m/s. Biết phương trình sóng tại N là $u_{N}$ = 0,02cos2πt (m). Biểu thức sóng tại M là"
+   ],
+   "lc": [
+    "$u_{M}$ = 0,02cos2πt(m).",
+    "$u_{M}=0{,}02\\cos \\left(2\\pi t+\\dfrac{3\\pi}{2}\\right)$(m).",
+    "$u_{M}=0{,}02\\cos \\left(2\\pi t-\\dfrac{3\\pi}{2}\\right)$(m).",
+    "$u_{M}=0{,}02\\cos \\left(2\\pi t+\\dfrac{\\pi}{2}\\right)$(m)."
+   ],
+   "da": "B",
+   "go_lai": false
+  },
+  {
+   "so": 111,
+   "nhom": "DT",
+   "than": [
+    "Chọn câu đúng về sóng điện từ."
+   ],
+   "lc": [
+    "Sóng điện từ là sóng dọc.",
+    "Sóng điện từ lan truyền được trong điện môi nhưng không lan truyền được trong chân không.",
+    "Sóng điện từ là sự lan truyền trong không gian của điện từ trường biến thiên.",
+    "Sóng điện từ có vectơ cường độ điện trường và vectơ cảm ứng từ luôn cùng phương với nhau."
+   ],
+   "da": "C",
+   "go_lai": false
+  },
+  {
+   "so": 112,
+   "nhom": "DT",
+   "than": [
+    "Trong quá trình lan truyền của điện từ trường, các vectơ cường độ điện trường và vectơ cảm ứng từ luôn"
+   ],
+   "lc": [
+    "cùng phương, ngược chiều.",
+    "cùng phương, cùng chiều.",
+    "có phương vuông góc với nhau.",
+    "có phương lệch nhau góc 45°."
+   ],
+   "da": "C",
+   "go_lai": false
+  },
+  {
+   "so": 113,
+   "nhom": "DT",
+   "than": [
+    "Em hãy sắp xếp các bức xạ có bước sóng tăng dần theo thứ tự đúng"
+   ],
+   "lc": [
+    "tia gamma; tia X; tia tử ngoại; ánh sáng nhìn thấy; tia hồng ngoại; sóng vô tuyến.",
+    "ánh sáng nhìn thấy; tia tử ngoại; tia X; tia gamma; sóng vô tuyến; tia hồng ngoại.",
+    "tia hồng ngoại; ánh sáng nhìn thấy; tia tử ngoại; tia X; tia gamma; sóng vô tuyến.",
+    "sóng vô tuyến; tia hồng ngoại; ánh sáng nhìn thấy; tia tử ngoại; tia X; tia gamma."
+   ],
+   "da": "A",
+   "go_lai": false
+  },
+  {
+   "so": 114,
+   "nhom": "DT",
+   "than": [
+    "Em hãy sắp xếp các bức xạ có năng lượng tăng dần theo thứ tự đúng"
+   ],
+   "lc": [
+    "tia gamma; tia X; tia tử ngoại; ánh sáng nhìn thấy; tia hồng ngoại; sóng vô tuyến.",
+    "ánh sáng nhìn thấy; tia tử ngoại; tia X; tia gamma; sóng vô tuyến; tia hồng ngoại.",
+    "tia hồng ngoại; ánh sáng nhìn thấy; tia tử ngoại; tia X; tia gamma và sóng vô tuyến.",
+    "sóng vô tuyến; tia hồng ngoại; ánh sáng nhìn thấy; tia tử ngoại; tia X và tia gamma."
+   ],
+   "da": "D",
+   "go_lai": false
+  },
+  {
+   "so": 115,
+   "nhom": "DT",
+   "than": [
+    "Phát biểu nào sai khi nói về sóng điện từ?"
+   ],
+   "lc": [
+    "Sóng điện từ là sự lan truyền trong không gian của điện từ trường biến thiên theo thời gian.",
+    "Trong sóng điện từ, điện trường và từ trường luôn dao động lệch pha nhau π/2.",
+    "Trong sóng điện từ, điện trường và từ trường biến thiên theo thời gian với cùng chu kì.",
+    "Sóng điện từ dùng trong thông tin vô tuyến gọi là sóng vô tuyến."
+   ],
+   "da": "B",
+   "go_lai": false
+  },
+  {
+   "so": 116,
+   "nhom": "DT",
+   "than": [
+    "Đặc điểm nào trong số các đặc điểm dưới đây không phải là đặc điểm chung của sóng sơ và sóng điện từ?"
+   ],
+   "lc": [
+    "Bị nhiễu xạ khi gặp vật cản.",
+    "Mang năng lượng.",
+    "Truyền được trong chân không.",
+    "Là sóng ngang."
+   ],
+   "da": "C",
+   "go_lai": false
+  },
+  {
+   "so": 117,
+   "nhom": "DT",
+   "than": [
+    "Chọn câu sai khi nói về sóng điện từ."
+   ],
+   "lc": [
+    "Trong chân không, tất cả các sóng điện từ đều truyền với cùng tốc độ là c = 3.10⁸ m/s.",
+    "Các sóng điện từ có bước sóng càng nhỏ mang năng lượng càng nhỏ.",
+    "Khi truyền qua các môi trường khác nhau, tần số và chu kì của sóng điện từ không đổi.",
+    "Một số hiện tượng đặc trưng của sóng điện từ là phản xạ, khúc xạ, nhiễu xạ…."
+   ],
+   "da": "B",
+   "go_lai": false
+  },
+  {
+   "so": 118,
+   "nhom": "DT",
+   "than": [
+    "Chọn câu sai khi nói về sóng điện từ."
+   ],
+   "lc": [
+    "Khi sóng điện từ gặp mặt phân cách giữa hai môi trường thì nó có thể bị phản xạ, khúc xạ.",
+    "Trong các môi trường vật chất, tốc độ truyền của sóng điện từ đều nhỏ hơn c.",
+    "Sóng điện từ là sóng ngang nên nó chỉ truyền được trong chất rắn.",
+    "Trong sóng điện từ thì dao động của điện trường và của từ trường tại một điểm luôn đồng pha nhau."
+   ],
+   "da": "C",
+   "go_lai": false
+  },
+  {
+   "so": 119,
+   "nhom": "DT",
+   "than": [
+    "Những sóng nào sau đây không phải là sóng điện từ?"
+   ],
+   "lc": [
+    "Sóng phát ra từ vệ tinh Vinasat 1.",
+    "Sóng của đài phát thanh (sóng radio).",
+    "Sóng của đài truyền hình (sóng tivi).",
+    "Sóng phát ra từ đàn tranh."
+   ],
+   "da": "D",
+   "go_lai": false
+  },
+  {
+   "so": 120,
+   "nhom": "GT",
+   "than": [
+    "Giao thoa sóng cơ là hiện tượng"
+   ],
+   "lc": [
+    "hai sóng cùng phương, cùng biên độ gặp nhau, tăng cường nhau hoặc làm suy yếu nhau tại một số vị trí trong môi trường.",
+    "hai sóng cùng phương, cùng tần số gặp nhau, tăng cường nhau hoặc làm suy yếu nhau tại một số vị trí trong môi trường.",
+    "hai sóng sóng kết hợp gặp nhau, tăng cường nhau tại mọi vị trí trong môi trường.",
+    "hai sóng kết hợp gặp nhau, tăng cường nhau hoặc làm suy yếu nhau tại một số vị trí trong môi trường."
+   ],
+   "da": "D",
+   "go_lai": false
+  },
+  {
+   "so": 121,
+   "nhom": "GT",
+   "than": [
+    "Điều kiện để hai sóng cơ khi gặp nhau, giao thoa được với nhau là hai sóng phải xuất phát từ hai nguồn dao động"
+   ],
+   "lc": [
+    "cùng biên độ và có hiệu số pha không đổi theo thời gian.",
+    "cùng tần số, cùng phương.",
+    "có cùng pha ban đầu và cùng biên độ.",
+    "cùng tần số, cùng phương và có độ lệch pha không đổi theo thời gian."
+   ],
+   "da": "D",
+   "go_lai": false
+  },
+  {
+   "so": 122,
+   "nhom": "GT",
+   "than": [
+    "Chọn câu sai."
+   ],
+   "lc": [
+    "Khi xảy ra hiện tượng giao thoa sóng trên mặt chất lỏng, tồn tại các điểm dao động với biên độ cực đại.",
+    "Khi xảy ra hiện tượng giao thoa sóng trên mặt chất lỏng, tồn tại các điểm không dao động.",
+    "Khi xảy ra hiện tượng giao thoa sóng trên mặt chất lỏng, các điểm không dao động tạo thành các vân cực tiểu.",
+    "Khi xảy ra hiện tượng giao thoa sóng trên mặt chất lỏng, các điểm dao động mạnh tạo thành các đường thẳng cực đại."
+   ],
+   "da": "D",
+   "go_lai": false
+  },
+  {
+   "so": 123,
+   "nhom": "GT",
+   "than": [
+    "Trong hiện tượng giao thoa sóng 2 sóng kết hợp trên mặt nước, khoảng cách giữa hai cực đại liên tiếp nằm trên đường nối hai tâm sóng"
+   ],
+   "lc": [
+    "bằng hai lần bước sóng.",
+    "bằng một bước sóng.",
+    "bằng một nửa bước sóng.",
+    "bằng một phần tư bước sóng."
+   ],
+   "da": "C",
+   "go_lai": false
+  },
+  {
+   "so": 124,
+   "nhom": "GT",
+   "than": [
+    "Trong hiện tượng giao thoa sóng 2 sóng kết hợp trên mặt nước, khoảng cách giữa hai cực đại liên tiếp nằm trên đường nối hai tâm sóng"
+   ],
+   "lc": [
+    "$\\dfrac{\\lambda}{4}$.",
+    "$\\dfrac{\\lambda}{2}$.",
+    "$2\\lambda$.",
+    "λ."
+   ],
+   "da": "B",
+   "go_lai": true
+  },
+  {
+   "so": 125,
+   "nhom": "GT",
+   "than": [
+    "Trong hiện tượng giao thoa sóng 2 sóng kết hợp trên mặt nước, khoảng cách giữa hai cực tiểu liên tiếp nằm trên đường nối hai tâm sóng"
+   ],
+   "lc": [
+    "$\\dfrac{\\lambda}{2}$.",
+    "$\\dfrac{\\lambda}{4}$.",
+    "λ.",
+    "$2\\lambda$."
+   ],
+   "da": "A",
+   "go_lai": true
+  },
+  {
+   "so": 126,
+   "nhom": "GT",
+   "than": [
+    "Trong thí nghiệm giao thoa sóng nước, không kể vân trung tâm, tập hợp các điểm còn lại dao động với biên độ cực tiểu tạo thành các đường"
+   ],
+   "lc": [
+    "hypebol.",
+    "parabol.",
+    "đường thẳng.",
+    "elip."
+   ],
+   "da": "A",
+   "go_lai": false
+  },
+  {
+   "so": 127,
+   "nhom": "GT",
+   "than": [
+    "Trong quá trình giao thoa của hai sóng kết hợp. Gọi Δϕ là độ lệch pha của hai sóng thành phần gửi đến điểm M trong vùng giao thoa. Với k ∈ Z; biên độ dao động tổng hợp tại M đạt giá trị lớn nhất khi"
+   ],
+   "lc": [
+    "Δϕ = (2k + 1)π",
+    "Δϕ = (2k + 1) $\\dfrac{\\pi}{2}$",
+    "(2k + 1) π/3",
+    "Δϕ = 2k.π"
+   ],
+   "da": "D",
+   "go_lai": false
+  },
+  {
+   "so": 128,
+   "nhom": "GT",
+   "than": [
+    "Trong hiện tượng giao thoa sóng cơ với hai nguồn kết hợp cùng pha, những điểm có khoảng cách đến hai nguồn lần lượt là $d_{1}$, $d_{2}$ trong môi trường truyền sóng sẽ dao động với biên độ cực tiểu khi"
+   ],
+   "lc": [
+    "$d_{2}$ – $d_{1}$ = k$\\dfrac{\\lambda}{2}$.",
+    "$d_{2}$ – $d_{1}$ = (k +$\\dfrac{1}{2}$)λ.",
+    "$d_{2}$ – $d_{1}$ = kλ.",
+    "$d_{2}$ – $d_{1}$ = (k+ 1)$\\dfrac{\\lambda}{2}$."
+   ],
+   "da": "B",
+   "go_lai": true
+  },
+  {
+   "so": 129,
+   "nhom": "GT",
+   "than": [
+    "Trong hiện tượng giao thoa sóng cơ với hai nguồn kết hợp cùng pha, những điểm có khoảng cách đến hai nguồn lần lượt là $d_{1}$, $d_{2}$ trong môi trường truyền sóng sẽ dao động với biên độ cực đại khi"
+   ],
+   "lc": [
+    "$d_{2}$ – $d_{1}$ = k$\\dfrac{\\lambda}{2}$.",
+    "$d_{2}$ – $d_{1}$ = (2k+ 1)$\\dfrac{\\lambda}{2}$.",
+    "$d_{2}$ – $d_{1}$ = kλ.",
+    "$d_{2}$ – $d_{1}$ = (k+ 1)$\\dfrac{\\lambda}{2}$."
+   ],
+   "da": "C",
+   "go_lai": false
+  },
+  {
+   "so": 130,
+   "nhom": "GT",
+   "than": [
+    "Giao thoa ánh sáng là hiện tượng"
+   ],
+   "lc": [
+    "xuất hiện các vạch sáng xen kẽ với các vạch tối khi hai sóng ánh sáng kết hợp gặp nhau.",
+    "xuất hiện các vạch sáng xen kẽ với các vạch tối khi hai sóng ánh sáng gặp nhau.",
+    "chỉ xảy ra với ánh sáng đỏ.",
+    "xuất hiện các vạch sáng trắng xen kẽ với các vạch tối khi hai sóng ánh sáng kết hợp gặp nhau."
+   ],
+   "da": "A",
+   "go_lai": false
+  },
+  {
+   "so": 131,
+   "nhom": "GT",
+   "than": [
+    "Chọn câu sai khi nói về giao thoa ánh sáng."
+   ],
+   "lc": [
+    "Hiện tượng giao thoa ánh sáng chỉ giải thích được bằng sự giao thoa của hai sóng kết hợp.",
+    "Hiện tượng giao thoa ánh sáng khẳng định ánh sáng có tính chất sóng.",
+    "Trong miền giao thoa, những vạch sáng ứng với những chỗ hai sóng gặp nhau tăng cường lẫn nhau.",
+    "Trong miền giao thoa, những vạch tối ứng với những chỗ hai sóng không gặp được nhau."
+   ],
+   "da": "D",
+   "go_lai": false
+  },
+  {
+   "so": 132,
+   "nhom": "GT",
+   "than": [
+    "Trong thí nghiệm Young về giao thoa ánh sáng, khoảng cách giữa hai khe là a, khoảng cách từ mặt phẳng chứa hai khe đến màn quan sát là D, bước sóng ánh sáng chiếu vào hai khe là λ. Với k ∈ Z. Vị trí vân sáng được xác định bằng công thức"
+   ],
+   "lc": [
+    "$x=\\dfrac{k\\lambda a}{D}$.",
+    "$x=\\dfrac{kaD}{\\lambda}$.",
+    "$x=\\dfrac{k\\lambda D}{a}$.",
+    "$x=\\left(k+\\dfrac{1}{2}\\right)\\dfrac{\\lambda D}{a}$."
+   ],
+   "da": "C",
+   "go_lai": true
+  },
+  {
+   "so": 133,
+   "nhom": "GT",
+   "than": [
+    "Trong thí nghiệm Young về giao thoa ánh sáng, khoảng cách giữa hai khe là a, khoảng cách từ mặt phẳng chứa hai khe đến màn quan sát là D, bước sóng ánh sáng chiếu vào hai khe là λ. Với k ∈ Z. Vị trí vân tối được xác định bằng công thức"
+   ],
+   "lc": [
+    "$x=\\dfrac{k\\lambda D}{a}$.",
+    "$x=\\dfrac{k\\lambda a}{D}$.",
+    "$x=\\left(k+1\\right)\\dfrac{\\lambda D}{a}$.",
+    "$x=\\left(k+\\dfrac{1}{2}\\right)\\dfrac{\\lambda D}{a}$."
+   ],
+   "da": "D",
+   "go_lai": true
+  },
+  {
+   "so": 134,
+   "nhom": "GT",
+   "than": [
+    "Trong thí nghiệm Young về giao thoa ánh sáng đơn sắc, gọi i là khoảng vân. Khoảng cách giữa hai vân sáng hoặc hai vân tối liên tiếp bằng"
+   ],
+   "lc": [
+    "2i.",
+    "i.",
+    "i/2.",
+    "4i."
+   ],
+   "da": "B",
+   "go_lai": false
+  },
+  {
+   "so": 135,
+   "nhom": "GT",
+   "than": [
+    "Thực hiện thí nghiệm Young về giao thoa với ánh sáng đơn sắc màu đỏ ta quan sát được hệ vân giao thoa trên màn. Nếu thay ánh sáng đơn sắc màu đỏ bằng ánh sáng đơn sắc màu tím và các điều kiện khác của thí nghiệm được giữ nguyên thì"
+   ],
+   "lc": [
+    "khoảng vân tăng lên.",
+    "khoảng vân giảm xuống.",
+    "vị trí vân trung tâm thay đổi.",
+    "khoảng vân không thay đổi."
+   ],
+   "da": "B",
+   "go_lai": false
+  },
+  {
+   "so": 136,
+   "nhom": "GT",
+   "than": [
+    "Trong thí nghiệm Young về giao thoa ánh sáng, người ta sử dụng nguồn sáng gồm các ánh sáng đơn sắc đỏ, vàng, chàm và lam. Vân sáng gần vân trung tâm nhất là vân sáng của ánh sáng màu"
+   ],
+   "lc": [
+    "vàng.",
+    "lam.",
+    "đỏ.",
+    "chàm."
+   ],
+   "da": "D",
+   "go_lai": false
+  },
+  {
+   "so": 137,
+   "nhom": "GT",
+   "than": [
+    "Trong thí nghiệm Young về giao thoa ánh sáng, người ta sử dụng nguồn sáng gồm các ánh sáng đơn sắc đỏ, vàng, chàm và lam. Vân sáng xa vân trung tâm nhất là vân sáng của ánh sáng màu"
+   ],
+   "lc": [
+    "vàng.",
+    "lam.",
+    "đỏ.",
+    "chàm."
+   ],
+   "da": "C",
+   "go_lai": false
+  },
+  {
+   "so": 138,
+   "nhom": "GT",
+   "than": [
+    "Hai nguồn kết hợp là hai nguồn dao động"
+   ],
+   "lc": [
+    "cùng biên độ nhưng khác tần số dao động.",
+    "cùng tần số nhưng khác phương dao động.",
+    "cùng phương, cùng biên độ nhưng có hiệu số pha thay đổi theo thời gian.",
+    "cùng phương, cùng tần số và có hiệu số pha không đổi theo thời gian."
+   ],
+   "da": "D",
+   "go_lai": false
+  },
+  {
+   "so": 139,
+   "nhom": "GT",
+   "than": [
+    "Điều kiện để hai sóng cơ khi gặp nhau, giao thoa được với nhau là hai sóng phải xuất phát từ hai nguồn dao động"
+   ],
+   "lc": [
+    "cùng biên độ và có hiệu số pha không đổi theo thời gian.",
+    "cùng tần số, cùng phương.",
+    "có cùng pha ban đầu và cùng biên độ.",
+    "cùng tần số, cùng phương và có hiệu số pha không đổi theo thời gian."
+   ],
+   "da": "D",
+   "go_lai": false
+  },
+  {
+   "so": 140,
+   "nhom": "GT",
+   "than": [
+    "Trong quá trình giao thoa của hai sóng kết hợp. Gọi Δϕ là độ lệch pha của hai sóng thành phần gửi đến điểm M trong vùng giao thoa. Với n ∈ Z; biên độ dao động tổng hợp tại M đạt giá trị lớn nhất khi"
+   ],
+   "lc": [
+    "Δϕ = (2n + 1)π.",
+    "Δϕ = (2n + 1)$\\dfrac{\\pi}{2}$.",
+    "(2n + 1) π/3.",
+    "Δϕ = 2nπ."
+   ],
+   "da": "D",
+   "go_lai": true
+  },
+  {
+   "so": 141,
+   "nhom": "GT",
+   "than": [
+    "Trong quá trình giao thoa của hai sóng kết hợp. Gọi Δϕ là độ lệch pha của hai sóng thành phần gửi đến điểm M trong vùng giao thoa. Với n ∈ Z; biên độ dao động tổng hợp tại M đạt giá nhỏ nhất khi"
+   ],
+   "lc": [
+    "Δϕ = (2n + 1)π.",
+    "Δϕ = (2n + 1)$\\dfrac{\\pi}{2}$.",
+    "(2n + 1) π/3.",
+    "Δϕ = 2nπ."
+   ],
+   "da": "A",
+   "go_lai": true
+  },
+  {
+   "so": 142,
+   "nhom": "GT",
+   "than": [
+    "Trong hiện tượng giao thoa sóng với hai nguồn kết hợp cùng pha, những điểm trong môi trường truyền sóng là cực tiểu giao thoa khi hiệu đường đi của sóng từ hai nguồn kết hợp tới là"
+   ],
+   "lc": [
+    "$d_{2}$ – $d_{1}$ = k$\\dfrac{\\lambda}{2}$.",
+    "$d_{2}$ – $d_{1}$ = (k +$\\dfrac{1}{2}$)λ.",
+    "$d_{2}$ – $d_{1}$ = kλ.",
+    "$d_{2}$ – $d_{1}$ = (k+ 1)$\\dfrac{\\lambda}{2}$."
+   ],
+   "da": "B",
+   "go_lai": true
+  },
+  {
+   "so": 143,
+   "nhom": "GT",
+   "than": [
+    "Trong hiện tượng giao thoa sóng với hai nguồn kết hợp cùng pha, những điểm trong môi trường truyền sóng là cực đại giao thoa khi hiệu đường đi của sóng từ hai nguồn kết hợp tới là"
+   ],
+   "lc": [
+    "$d_{2}$ – $d_{1}$ = k$\\dfrac{\\lambda}{2}$.",
+    "$d_{2}$ – $d_{1}$ = (2k+ 1)$\\dfrac{\\lambda}{2}$.",
+    "$d_{2}$ – $d_{1}$ = kλ.",
+    "$d_{2}$ – $d_{1}$ = (k+ 1)$\\dfrac{\\lambda}{2}$."
+   ],
+   "da": "C",
+   "go_lai": false
+  },
+  {
+   "so": 145,
+   "nhom": "GT",
+   "than": [
+    "Trong hiện tượng giao thoa sóng trên mặt nước, khoảng cách giữa hai cực đại liên tiếp nằm trên đường nối hai tâm sóng"
+   ],
+   "lc": [
+    "bằng hai lần bước sóng.",
+    "bằng một bước sóng.",
+    "bằng một nửa bước sóng.",
+    "bằng một phần tư bước sóng."
+   ],
+   "da": "C",
+   "go_lai": false
+  },
+  {
+   "so": 146,
+   "nhom": "SD",
+   "than": [
+    "Xét sóng truyền trên sợi dây có một đầu buộc vào điểm cố định như hình 1, sóng tới và sóng phản xạ có",
+    "[[IMG image10108.png 2.9]]"
+   ],
+   "lc": [
+    "cùng chu kì, cùng biên độ và ngược pha tại điểm phản xạ.",
+    "cùng tốc độ và cùng pha.",
+    "cùng tần số, cùng biên độ và cùng pha.",
+    "cùng tần số, cùng bước sóng và khác pha."
+   ],
+   "da": "A",
+   "go_lai": false
+  },
+  {
+   "so": 147,
+   "nhom": "SD",
+   "than": [
+    "Ta quan sát thấy hiện tượng gì khi trên sợi dây có sóng dừng ổn định?"
+   ],
+   "lc": [
+    "Trên dây tất cả điểm đều đứng yên (đều là nút sóng).",
+    "Trên dây tất cả điểm đều dao động với biên độ cực đại (đều là bụng sóng).",
+    "Trên dây có những bụng sóng và nút sóng xen kẽ và cách đều nhau.",
+    "Trên dây chỉ có sóng phản xạ, còn sóng tới thì dừng lại."
+   ],
+   "da": "C",
+   "go_lai": false
+  },
+  {
+   "so": 148,
+   "nhom": "SD",
+   "than": [
+    "Ở hình 2, kể cả hai đầu dây A và F, số nút sóng và bụng sóng lần lượt là",
+    "[[IMG image10111.png 12.0]]"
+   ],
+   "lc": [
+    "6 và 5.",
+    "5 và 5.",
+    "6 và 6.",
+    "5 và 6."
+   ],
+   "da": "A",
+   "go_lai": false
+  },
+  {
+   "so": 149,
+   "nhom": "SD",
+   "than": [
+    "Ở hình 2, trong khoảng từ A và D, số nút sóng và bụng sóng lần lượt là",
+    "[[IMG image10114.png 12.0]]"
+   ],
+   "lc": [
+    "3 và 2.",
+    "5 và 5.",
+    "6 và 6.",
+    "5 và 6."
+   ],
+   "da": "A",
+   "go_lai": false
+  },
+  {
+   "so": 150,
+   "nhom": "SD",
+   "than": [
+    "Ở hình 2, trong khoảng từ D và F, số nút sóng và bụng sóng lần lượt là",
+    "[[IMG image10117.png 12.0]]"
+   ],
+   "lc": [
+    "4 và 3.",
+    "5 và 5.",
+    "6 và 6.",
+    "5 và 6."
+   ],
+   "da": "A",
+   "go_lai": false
+  },
+  {
+   "so": 151,
+   "nhom": "SD",
+   "than": [
+    "Ở hình 2, kể cả hai đầu dây A và F, bụng sóng và số nút sóng lần lượt là",
+    "[[IMG image10120.png 12.0]]"
+   ],
+   "lc": [
+    "6 và 5.",
+    "5 và 5.",
+    "6 và 6.",
+    "5 và 6."
+   ],
+   "da": "D",
+   "go_lai": false
+  },
+  {
+   "so": 152,
+   "nhom": "SD",
+   "than": [
+    "Sóng dừng trên sợi dây (hình 2) có bước sóng λ thì khoảng cách giữa hai điểm nút (hoặc hai điểm bụng) liên tiếp nhau là"
+   ],
+   "lc": [
+    "2λ.",
+    "λ.",
+    "$\\dfrac{\\lambda}{2}$.",
+    "$\\dfrac{\\lambda}{4}$."
+   ],
+   "da": "C",
+   "go_lai": true
+  },
+  {
+   "so": 153,
+   "nhom": "SD",
+   "than": [
+    "Sợi dây dùng trong thí nghiệm ở hình 2 có chiều dài từ A tới F bằng",
+    "[[IMG image10123.png 12.0]]"
+   ],
+   "lc": [
+    "$\\dfrac{5\\lambda}{2}$.",
+    "3λ.",
+    "5λ.",
+    "$\\dfrac{3\\lambda}{2}$."
+   ],
+   "da": "A",
+   "go_lai": true
+  },
+  {
+   "so": 154,
+   "nhom": "SD",
+   "than": [
+    "Sợi dây dùng trong thí nghiệm ở hình 2 có chiều dài từ A tới D bằng",
+    "[[IMG image10126.png 12.0]]"
+   ],
+   "lc": [
+    "$\\lambda$.",
+    "3λ.",
+    "5λ.",
+    "$\\dfrac{3\\lambda}{2}$."
+   ],
+   "da": "A",
+   "go_lai": true
+  },
+  {
+   "so": 155,
+   "nhom": "SD",
+   "than": [
+    "Sợi dây dùng trong thí nghiệm ở hình 2 có chiều dài từ D tới F bằng",
+    "[[IMG image10129.png 12.0]]"
+   ],
+   "lc": [
+    "$\\dfrac{3\\lambda}{2}$.",
+    "3λ.",
+    "5λ.",
+    "$\\dfrac{5\\lambda}{2}$."
+   ],
+   "da": "A",
+   "go_lai": true
+  },
+  {
+   "so": 156,
+   "nhom": "SD",
+   "than": [
+    "Trên dây AF, sóng tới và sóng phản xạ ngược pha nhau tại các điểm",
+    "[[IMG image10132.png 12.0]]"
+   ],
+   "lc": [
+    "A và B",
+    "B và C",
+    "C và D",
+    "B và E"
+   ],
+   "da": "C",
+   "go_lai": false
+  },
+  {
+   "so": 157,
+   "nhom": "SD",
+   "than": [
+    "Trên dây AF, sóng tới và sóng phản xạ ngược pha nhau tại các điểm",
+    "[[IMG image10135.png 12.0]]"
+   ],
+   "lc": [
+    "A và B",
+    "B và C",
+    "A và C",
+    "B và E"
+   ],
+   "da": "C",
+   "go_lai": false
+  },
+  {
+   "so": 158,
+   "nhom": "SD",
+   "than": [
+    "Trên dây AF, sóng tới và sóng phản xạ cùng pha nhau tại các điểm",
+    "[[IMG image10138.png 12.0]]"
+   ],
+   "lc": [
+    "A và B",
+    "D và C",
+    "A và D",
+    "B và E"
+   ],
+   "da": "D",
+   "go_lai": false
+  },
+  {
+   "so": 159,
+   "nhom": "SD",
+   "than": [
+    "Độ lệch pha của sóng tới và sóng phản xạ tại E là",
+    "[[IMG image10141.png 12.0]]"
+   ],
+   "lc": [
+    "π (rad).",
+    "π/2 (rad).",
+    "2π (rad).",
+    "3π (rad)."
+   ],
+   "da": "C",
+   "go_lai": false
+  },
+  {
+   "so": 160,
+   "nhom": "SD",
+   "than": [
+    "Thí nghiệm tạo sóng dừng trên sợi dây đàn hồi có một đầu cố định, một đầu tự do thì đầu tự do"
+   ],
+   "lc": [
+    "là nút sóng.",
+    "là bụng sóng.",
+    "có thể là bụng sóng hoặc nút sóng.",
+    "không dao động."
+   ],
+   "da": "B",
+   "go_lai": false
+  },
+  {
+   "so": 161,
+   "nhom": "SD",
+   "than": [
+    "Điều kiện để có sóng dừng trên sợi dây đàn hồi có một đầu cố định, một đầu tự do với bước sóng λ thì chiều dài $\\ell$ của sợi dây thỏa mãn"
+   ],
+   "lc": [
+    "$\\ell=m\\dfrac{\\lambda}{2}$ (với m = 1,3,5,...)",
+    "$\\ell=m\\dfrac{\\lambda}{4}$ (với m = 1,2,3,...)",
+    "$\\ell=m\\dfrac{\\lambda}{4}$ (với m = 1,3,5,...)",
+    "$\\ell=m\\dfrac{\\lambda}{2}$ (với m = 1,2,3,...)"
+   ],
+   "da": "C",
+   "go_lai": true
+  },
+  {
+   "so": 162,
+   "nhom": "SD",
+   "than": [
+    "Điều kiện để có sóng dừng trên sợi dây đàn hồi có hai đầu cố định với bước sóng λ thì chiều dài $\\ell$ của sợi dây thỏa mãn"
+   ],
+   "lc": [
+    "$\\ell=m\\dfrac{\\lambda}{2}$ (với m = 1,2,3,...)",
+    "$\\ell=m\\dfrac{\\lambda}{4}$ (với m = 1,2,3,...)",
+    "$\\ell=(2m+1)\\dfrac{\\lambda}{4}$ (với m = 1,2,3,...)",
+    "$\\ell=(2m+1)\\dfrac{\\lambda}{2}$ (với m = 1,2,3,...)"
+   ],
+   "da": "A",
+   "go_lai": true
+  },
+  {
+   "so": 163,
+   "nhom": "SD",
+   "than": [
+    "Kết quả tạo nên sóng dừng là do"
+   ],
+   "lc": [
+    "sự giao thoa của hai sóng cùng biên độ, truyền theo hai hướng ngược nhau.",
+    "sự giao thoa của hai sóng kết hợp truyền ngược chiều nhau trên cùng một phương.",
+    "sự giao thoa của hai sóng cùng tần số, truyền theo hai hướng ngược nhau.",
+    "sự giao thoa của hai sóng kết hợp truyền cùng chiều nhau trên cùng một phương."
+   ],
+   "da": "B",
+   "go_lai": false
+  },
+  {
+   "so": 164,
+   "nhom": "SD",
+   "than": [
+    "Có sóng dừng trên dây đàn hồi với bước sóng λ. Gọi d là khoảng cách từ một điểm trên dây đến một đầu cố định của dây. Vị trí các nút sóng được xác định bằng biểu thức"
+   ],
+   "lc": [
+    "$d=\\left(k+\\dfrac{1}{2}\\right)\\dfrac{\\lambda}{2}$. ( k = 0,1,2…)",
+    "$d=k\\dfrac{\\lambda}{2}$. ( k = 0,1,2…)",
+    "$d=\\left(k+1\\right)\\dfrac{\\lambda}{4}$. ( k = 0,1,2…)",
+    "$d=\\left(k+\\dfrac{1}{2}\\right)\\lambda$. ( k = 0,1,2…)"
+   ],
+   "da": "B",
+   "go_lai": true
+  },
+  {
+   "so": 165,
+   "nhom": "SD",
+   "than": [
+    "Ứng dụng hiện tượng sóng dừng để xác định"
+   ],
+   "lc": [
+    "tần số sóng.",
+    "tốc độ truyền sóng.",
+    "năng lượng sóng.",
+    "cường độ sóng."
+   ],
+   "da": "B",
+   "go_lai": false
+  },
+  {
+   "so": 166,
+   "nhom": "SD",
+   "than": [
+    "Trong sự phản xạ của sóng cơ thì"
+   ],
+   "lc": [
+    "tần số của sóng phản xạ luôn lớn hơn tần số của sóng tới.",
+    "sóng phản xạ luôn ngược pha với sóng tới.",
+    "tốc độ sóng phản xạ nhỏ hơn tốc độ của sóng tới.",
+    "sóng phản xạ và sóng tới có cùng bước sóng."
+   ],
+   "da": "D",
+   "go_lai": false
+  },
+  {
+   "so": 167,
+   "nhom": "SD",
+   "than": [
+    "Tại điểm phản xạ thì sóng phản xạ"
+   ],
+   "lc": [
+    "cùng pha với sóng tới nếu là vật cản cố định.",
+    "ngược pha với sóng tới nếu là vật cản tự do.",
+    "luôn cùng pha với sóng tới.",
+    "ngược pha với sóng tới nếu là vật cản cố định."
+   ],
+   "da": "D",
+   "go_lai": false
+  },
+  {
+   "so": 168,
+   "nhom": "SD",
+   "than": [
+    "Sóng dừng được hình thành bởi"
+   ],
+   "lc": [
+    "sự giao thoa của hai sóng do hai nguồn kết hợp tạo ra.",
+    "sự tổng hợp trong không gian của hai hay nhiều sóng kết hợp.",
+    "sự giao thoa của một sóng tới và sóng phản xạ của nó cùng truyền theo một phương.",
+    "sự tổng hợp của hai sóng tới và sóng phản xạ truyền khác phương."
+   ],
+   "da": "C",
+   "go_lai": false
+  },
+  {
+   "so": 169,
+   "nhom": "SD",
+   "than": [
+    "Khi có sóng dừng trên sợi dây đàn hồi thì"
+   ],
+   "lc": [
+    "tất cả các điểm của dây đều dừng dao động.",
+    "tất cả các điểm trên dây đều chuyển động với cùng tốc độ.",
+    "trên dây có những điểm dao động với biên độ cực đại xen kẽ với những điểm đứng yên.",
+    "trên dây chỉ còn sóng phản xạ, còn sóng tới thì dừng lại."
+   ],
+   "da": "C",
+   "go_lai": false
+  },
+  {
+   "so": 170,
+   "nhom": "SD",
+   "than": [
+    "Trên một sợi dây đang có sóng dừng, sóng truyền trên dây có bước sóng λ. Khoảng cách giữa một nút sóng và một bụng sóng liên tiếp là"
+   ],
+   "lc": [
+    "λ/4.",
+    "2λ.",
+    "λ.",
+    "λ/2."
+   ],
+   "da": "A",
+   "go_lai": false
+  },
+  {
+   "so": 171,
+   "nhom": "SD",
+   "than": [
+    "Một sợi dây căng ngang đang có sóng dừng. Sóng truyền trên dây có bước sóng λ. Khoảng cách giữa hai nút liên tiếp là"
+   ],
+   "lc": [
+    "λ/4.",
+    "2λ.",
+    "λ.",
+    "λ/2."
+   ],
+   "da": "D",
+   "go_lai": false
+  },
+  {
+   "so": 172,
+   "nhom": "SD",
+   "than": [
+    "Khi có sóng dừng trên một đoạn dây đàn hồi với hai điểm A, B trên dây là các nút sóng thì chiều dài AB"
+   ],
+   "lc": [
+    "bằng một phần tư bước sóng.",
+    "bằng một bước sóng.",
+    "bằng một số nguyên lẻ của phần tư bước sóng",
+    "bằng số nguyên lần nửa bước sóng."
+   ],
+   "da": "D",
+   "go_lai": false
+  },
+  {
+   "so": 173,
+   "nhom": "SD",
+   "than": [
+    "Trong quá trình truyền sóng, khi gặp vật cản thì sóng bị phản xạ. Tại điểm phản xạ thì sóng tới và sóng phản xạ sẽ"
+   ],
+   "lc": [
+    "Luôn cùng pha.",
+    "Không cùng loại.",
+    "Luôn ngược pha.",
+    "Cùng tần số."
+   ],
+   "da": "D",
+   "go_lai": false
+  },
+  {
+   "so": 174,
+   "nhom": "SD",
+   "than": [
+    "Trong hiện tượng sóng dừng"
+   ],
+   "lc": [
+    "Biên độ dao động tại mỗi điểm đều thay đổi theo thời gian.",
+    "Chu kì dao động của các điểm dao động đều như nhau.",
+    "Vận tốc dao động của mọi điểm đều như nhau.",
+    "Pha dao động của mọi điểm đều như nhau."
+   ],
+   "da": "B",
+   "go_lai": false
+  },
+  {
+   "so": 175,
+   "nhom": "SD",
+   "than": [
+    "Điều kiện để có sóng dừng trên dây đàn hồi có chiều dài $\\ell$, bước sóng $\\lambda$ khi một đầu dây cố định và đầu còn lại tự do là"
+   ],
+   "lc": [
+    "$\\ell =k\\lambda$ với k = 0, 1, 2,…",
+    "$\\ell =\\left(2k+1\\right)\\dfrac{\\lambda}{2}$ với k = 0, 1, 2,…",
+    "$\\ell =\\dfrac{k\\lambda}{2}$ với k = 0, 1, 2,…",
+    "$\\ell =\\left(2k+1\\right)\\dfrac{\\lambda}{4}$. với k = 0, 1, 2,…"
+   ],
+   "da": "D",
+   "go_lai": false
+  },
+  {
+   "so": 176,
+   "nhom": "SD",
+   "than": [
+    "Khi lấy k = 0, 1,2,… Biết vận tốc truyền sóng trên dây là v không đổi. Điều kiện để có sóng dừng trên dây đàn hồi có chiều dài $\\ell$ khi cả hai đầu dây đều cố định là"
+   ],
+   "lc": [
+    "$\\ell =\\dfrac{kv}{f}$.",
+    "$\\ell =\\dfrac{kv}{2f}$",
+    "$\\ell =\\left(2k+1\\right)\\dfrac{v}{2f}$",
+    "$\\ell =\\left(2k+1\\right)\\dfrac{v}{4f}$."
+   ],
+   "da": "B",
+   "go_lai": false
+  },
+  {
+   "so": 177,
+   "nhom": "SD",
+   "than": [
+    "Trên một sợi dây đàn hồi đang có sóng dừng, bụng sóng là các điểm trên dây mà phần tử ở đó luôn dao động với biên độ"
+   ],
+   "lc": [
+    "lớn nhất.",
+    "bằng nửa bước sóng.",
+    "bằng một bước sóng.",
+    "nhỏ nhất."
+   ],
+   "da": "A",
+   "go_lai": false
+  },
+  {
+   "so": 178,
+   "nhom": "SD",
+   "than": [
+    "Trên một sợi dây đang có sóng dừng với bề rộng của một bụng sóng là 3 cm. Biên độ dao động của điểm bụng là"
+   ],
+   "lc": [
+    "6 cm.",
+    "4 cm.",
+    "3 cm.",
+    "1,5 cm."
+   ],
+   "da": "D",
+   "go_lai": false
+  },
+  {
+   "so": 179,
+   "nhom": "SD",
+   "than": [
+    "Chọn câu sai khi nói về sóng dừng xảy ra trên sợi dây."
+   ],
+   "lc": [
+    "Hai điểm đối xứng nhau qua điểm nút luôn dao động ngược pha.",
+    "Hai điểm đối xứng nhau qua điểm nút luôn dao động cùng pha.",
+    "Khoảng cách giữa điểm nút và điểm bụng liền kề là một phần tư bước sóng.",
+    "Khoảng thời gian giữa hai lần liên tiếp dây duỗi thẳng là nửa chu kì."
+   ],
+   "da": "B",
+   "go_lai": false
+  },
+  {
+   "so": 180,
+   "nhom": "SD",
+   "than": [
+    "Trên một sợi dây đàn hồi đang có sóng dừng. Biết khoảng cách ngắn nhất giữa một nút sóng và vị trí cân bằng của một bụng sóng là 0,25 m. Sóng truyền trên dây với bước sóng là"
+   ],
+   "lc": [
+    "2,0 m.",
+    "1,0 m.",
+    "0,5 m.",
+    "1,5 m."
+   ],
+   "da": "B",
+   "go_lai": false
+  },
+  {
+   "so": 181,
+   "nhom": "SD",
+   "than": [
+    "Một dây đàn hồi có chiều dài l, hai đầu cố định. Khi có sóng dừng trên dây thì bước sóng dài nhất là"
+   ],
+   "lc": [
+    "l/2.",
+    "l.",
+    "2l.",
+    "4l."
+   ],
+   "da": "C",
+   "go_lai": false
+  },
+  {
+   "so": 182,
+   "nhom": "SA",
+   "than": [
+    "Tai con người có thể nghe được những âm có tần số nằm trong khoảng"
+   ],
+   "lc": [
+    "từ 16 kHz đến 20000 Hz.",
+    "từ 16 Hz đến 20000 kHz.",
+    "từ 16 kHz đến 20000 kHz.",
+    "từ 16 Hz đến 20000 Hz."
+   ],
+   "da": "D",
+   "go_lai": false
+  },
+  {
+   "so": 183,
+   "nhom": "SA",
+   "than": [
+    "Âm có tần số lớn hơn 20.000 Hz được gọi là"
+   ],
+   "lc": [
+    "hạ âm và tai con người không nghe được.",
+    "siêu âm và tai con người không nghe được.",
+    "hạ âm và tai con người nghe được.",
+    "âm nghe được ( âm thanh)."
+   ],
+   "da": "B",
+   "go_lai": false
+  },
+  {
+   "so": 184,
+   "nhom": "SA",
+   "than": [
+    "Âm có tần số nào sau đây là siêu âm?"
+   ],
+   "lc": [
+    "5 000 (Hz).",
+    "30 000 (Hz).",
+    "5 (Hz).",
+    "10 (Hz)."
+   ],
+   "da": "B",
+   "go_lai": false
+  },
+  {
+   "so": 185,
+   "nhom": "SA",
+   "than": [
+    "Độ cao của âm là một đặc trưng sinh lí của âm liên quan đến"
+   ],
+   "lc": [
+    "vận tốc truyền âm.",
+    "biên độ âm.",
+    "tần số âm.",
+    "năng lượng âm."
+   ],
+   "da": "C",
+   "go_lai": false
+  },
+  {
+   "so": 186,
+   "nhom": "SA",
+   "than": [
+    "Tai ta cảm nhận được âm thanh khác biệt của các nốt nhạc Đô, Rê, Mi, Fa, Sol, La, Si khi chúng phát ra từ một nhạc cụ nhất định là do các âm thanh này có"
+   ],
+   "lc": [
+    "cường độ âm khác nhau.",
+    "âm sắc khác nhau.",
+    "biên độ âm khác nhau.",
+    "tần số âm khác nhau."
+   ],
+   "da": "D",
+   "go_lai": false
+  },
+  {
+   "so": 187,
+   "nhom": "SA",
+   "than": [
+    "Tại một điểm, đại lượng đo bằng lượng năng lượng mà sóng âm truyền qua một đơn vị diện tích đặt vuông góc với phương truyền sóng trong một đơn vị thời gian là"
+   ],
+   "lc": [
+    "độ cao của âm.",
+    "cường độ âm.",
+    "mức cường độ âm.",
+    "độ to của âm."
+   ],
+   "da": "B",
+   "go_lai": false
+  },
+  {
+   "so": 188,
+   "nhom": "SA",
+   "than": [
+    "Đơn vị đo cường độ âm là"
+   ],
+   "lc": [
+    "(W/m).",
+    "Ben (B).",
+    "N/m².",
+    "W/m²."
+   ],
+   "da": "D",
+   "go_lai": false
+  },
+  {
+   "so": 189,
+   "nhom": "SA",
+   "than": [
+    "Cường độ âm của một âm có cường độ âm là I được xác định bởi công thức"
+   ],
+   "lc": [
+    "$\\dfrac{P}{4\\pi R^{2}}$.",
+    "$\\dfrac{P}{\\pi R^{2}}$.",
+    "$\\dfrac{P}{2\\pi R^{2}}$.",
+    "$\\dfrac{4\\pi R^{2}}{P}$."
+   ],
+   "da": "A",
+   "go_lai": true
+  },
+  {
+   "so": 190,
+   "nhom": "SA",
+   "than": [
+    "Tốc độ truyền âm có giá trị nhỏ nhất trong môi trường nào sau đây?"
+   ],
+   "lc": [
+    "Không khí.",
+    "Nước biển.",
+    "Nhôm.",
+    "Sắt."
+   ],
+   "da": "A",
+   "go_lai": false
+  },
+  {
+   "so": 191,
+   "nhom": "SA",
+   "than": [
+    "Khi nói về sóng âm, phát biểu nào sau đây sai?"
+   ],
+   "lc": [
+    "Siêu âm có tần số lớn hơn 20000 Hz.",
+    "Đơn vị của mức cường độ âm là W/m².",
+    "Sóng âm không truyền được trong chân không.",
+    "Hạ âm có tần số nhỏ hơn 16 Hz."
+   ],
+   "da": "B",
+   "go_lai": false
+  },
+  {
+   "so": 192,
+   "nhom": "SA",
+   "than": [
+    "Để đo tốc độ truyền âm trong không khí ta tiến hành thực nghiệm tạo sóng dừng"
+   ],
+   "lc": [
+    "trên sợi dây có một đầu cố định, một đầu tự do.",
+    "trên sợi dây có hai đầu cố định.",
+    "trong cột không khí chiều dài thay đổi.",
+    "trong cột không khí chiều dài không đổi."
+   ],
+   "da": "C",
+   "go_lai": false
+  },
+  {
+   "so": 193,
+   "nhom": "SA",
+   "than": [
+    "Đo tốc độ truyền âm trong không khí bằng ống cộng hưởng. Khi di chuyển chậm pittông để thay đổi chiều dài cột không khí thì"
+   ],
+   "lc": [
+    "âm nghe được có độ to như nhau.",
+    "âm lúc nghe to, lúc không nghe.",
+    "âm nghe rất nhỏ.",
+    "không nghe được âm."
+   ],
+   "da": "B",
+   "go_lai": false
+  },
+  {
+   "so": 194,
+   "nhom": "SA",
+   "than": [
+    "Đo tốc độ truyền âm trong không khí bằng ống cộng hưởng. Khoảng cách giữa hai vị trí liên tiếp của pittông mà âm nghe to nhất cho biết khoảng cách giữa"
+   ],
+   "lc": [
+    "hai bụng liên tiếp.",
+    "hai nút liên tiếp.",
+    "bụng và nút liên tiếp.",
+    "ba nút liên tiếp."
+   ],
+   "da": "A",
+   "go_lai": false
+  },
+  {
+   "so": 195,
+   "nhom": "SA",
+   "than": [
+    "Trong thí nghiệm đo tốc độ truyền âm bằng ống cộng hưởng, gọi chiều cao của cột không khí trong ống là $l_{1}$ và $l_{2}$ khi ta nghe liên tiếp hai lần âm to nhất. Liên hệ giữa bước sóng λ và $l_{1}$, $l_{2}$ là"
+   ],
+   "lc": [
+    "$l_{2}$ - $l_{1}$ = $\\dfrac{\\lambda}{2}$.",
+    "$l_{2}$ - $l_{1}$ = $\\dfrac{\\lambda}{4}$.",
+    "$l_{2}$ - $l_{1}$ = $\\dfrac{3\\lambda}{4}$.",
+    "$l_{2}$ - $l_{1}$ = $2\\lambda$."
+   ],
+   "da": "A",
+   "go_lai": true
+  },
+  {
+   "so": 196,
+   "nhom": "SA",
+   "than": [
+    "Trong thí nghiệm đo tốc độ truyền âm bằng ống cộng hưởng, gọi chiều cao của cột không khí tương ứng $l_{1}$ và $l_{2}$ khi hai lần liên tiếp tai không nghe âm. Liên hệ giữa bước sóng λ và $l_{1}$, $l_{2}$ là"
+   ],
+   "lc": [
+    "$l_{2}$ - $l_{1}$ = $\\dfrac{\\lambda}{2}$.",
+    "$l_{2}$ - $l_{1}$ = $\\dfrac{\\lambda}{4}$.",
+    "$l_{2}$ - $l_{1}$ = $\\dfrac{3\\lambda}{4}$.",
+    "$l_{2}$ - $l_{1}$ = $2\\lambda$."
+   ],
+   "da": "A",
+   "go_lai": true
+  },
+  {
+   "so": 197,
+   "nhom": "SA",
+   "than": [
+    "Chọn câu sai. Nguyên nhân gây ra sai số trong thí nghiệm đo tốc độ truyền âm là"
+   ],
+   "lc": [
+    "do các dụng cụ thí nghiệm.",
+    "yếu tố ngoại cảnh.",
+    "thao tác của người làm thí nghiệm.",
+    "do tốc độ truyền âm quá lớn."
+   ],
+   "da": "D",
+   "go_lai": false
+  },
+  {
+   "so": 198,
+   "nhom": "SA",
+   "than": [
+    "Chọn câu sai. Cách khắc phục sai số trong thí nghiệm đo tốc độ truyền âm là",
+    ""
+   ],
+   "lc": [
+    "kiểm tra dụng cụ trước khi đo.",
+    "điều chỉnh pittông chậm, nhẹ nhàng.",
+    "hạn chế âm thanh nhiễu trong quá trình đo.",
+    "điều chỉnh pittông nhanh để giảm ma sát."
+   ],
+   "da": "D",
+   "go_lai": false
+  }
+ ]
+}
