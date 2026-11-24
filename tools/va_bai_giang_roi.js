@@ -79,7 +79,7 @@ function themTruoc(neo, tep, maxh, step) {
 
 module.exports = function (ma) {
   const va = { css: CSS_CHUNG, js: '', sua: [] };
-  if (ma === 'B13' || ma === 'B14' || ma === 'B15' || ma === 'B16') { va.js = JS_NHAN + JS_AN_DAP_AN; va.css += CSS_DAP_AN; }
+  if (ma === 'B13' || ma === 'B14' || ma === 'B15' || ma === 'B16' || ma === 'B17') { va.js = JS_NHAN + JS_AN_DAP_AN; va.css += CSS_DAP_AN; }
   if (ma === 'B14') va.js += require('./va_k10_b14_xe.js');
   if (ma === 'B13') va.sua = [
     thayAnh('s13_tau', 'b13-tau-keo', 'Hai tàu kéo một tàu chở hàng', 300),

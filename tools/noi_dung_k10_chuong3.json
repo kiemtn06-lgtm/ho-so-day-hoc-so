@@ -166,6 +166,51 @@
         { "mat_truoc": "Hai lực cân bằng khác cặp lực – phản lực ở điểm nào?", "mat_sau": "Hai lực cân bằng đặt vào cùng một vật; lực và phản lực đặt vào hai vật khác nhau." },
         { "mat_truoc": "Vì sao ô tô tiến về phía trước khi bánh xe quay?", "mat_sau": "Bánh xe đẩy mặt đường về phía sau; theo định luật 3 Newton, mặt đường đẩy bánh xe (ô tô) về phía trước." }
       ]
+    },
+    {
+      "ma": "B17",
+      "ten": "Bài 17. Trọng lực và lực căng",
+      "trang_sgk": "69–71",
+      "nguon": "C:/Users/kieml/OneDrive/Fujitsu/Tài liệu 10/04_Chương III - Động lực học/bai-17-trong-luc-va-luc-cang.html",
+      "moDau": ["Các tình huống ở hình (thả diều, kéo hộp đồ chơi bằng dây, chèo thuyền, đánh cầu lông) liên quan đến những loại lực nào? Tại sao khi được buông ra, các vật quanh ta đều rơi xuống đất?", "69"],
+      "kien_thuc": [
+        {"y": "Trọng lực là lực hấp dẫn do Trái Đất tác dụng lên vật, gây ra cho vật gia tốc rơi tự do; kí hiệu là vectơ $\\vec{P}$.", "dau": ""},
+        {"y": "Ở gần Trái Đất, trọng lực có phương thẳng đứng, chiều từ trên xuống (hướng về tâm Trái Đất), điểm đặt tại trọng tâm của vật.", "dau": ""},
+        {"y": "Độ lớn của trọng lực tác dụng lên một vật gọi là trọng lượng của vật: $P = mg$. Trọng lượng đo được bằng lực kế hoặc cân lò xo; khi vật đứng yên trên Trái Đất, trọng lượng bằng độ lớn của trọng lực.", "dau": ""},
+        {"y": "Phân biệt: trọng lượng của vật thay đổi khi đem đến nơi khác có gia tốc rơi tự do $g$ khác; khối lượng là số đo lượng chất của vật nên không thay đổi khi chuyển vật từ nơi này đến nơi khác.", "dau": ""},
+        {"y": "Trọng tâm của các vật phẳng, mỏng, có dạng hình học đối xứng nằm ở tâm đối xứng của vật (xác định bằng cách treo vật ở nhiều điểm rồi vẽ các đường thẳng đứng đi qua điểm treo, giao điểm của chúng là trọng tâm).", "dau": ""},
+        {"y": "Lực căng $\\vec{T}$ do sợi dây tác dụng vào vật, có phương trùng với phương của sợi dây, chiều ngược với chiều của lực do vật kéo dãn dây; điểm đặt tại chỗ vật nối với dây.", "dau": ""},
+        {"y": "Mỗi sợi dây chỉ chịu được một lực căng giới hạn; khi lực tác dụng lên dây vượt quá giá trị này thì dây đứt. Nếu khối lượng của ròng rọc và dây rất nhỏ (bỏ qua) thì lực căng tại mọi điểm trên dây có độ lớn bằng nhau.", "dau": ""}
+      ],
+      "cong_thuc": [
+        {"latex": "\\vec{P} = m\\vec{g}", "dieu_kien": "Trọng lực tác dụng lên vật khối lượng $m$ ở gần Trái Đất; $\\vec{g}$ là gia tốc rơi tự do, hướng thẳng đứng xuống dưới.", "vi_du_so": "Vật $m = 2\\ \\mathrm{kg}$ chịu trọng lực hướng xuống, độ lớn $19{,}6\\ \\mathrm{N}$ (lấy $g = 9{,}8\\ \\mathrm{m/s^2}$).", "dau": ""},
+        {"latex": "P = mg", "dieu_kien": "Trọng lượng (độ lớn trọng lực) của vật khối lượng $m$ tại nơi có gia tốc rơi tự do $g$.", "vi_du_so": "Lực kế chỉ $1\\ \\mathrm{N}$: $m = \\dfrac{P}{g} = \\dfrac{1}{9{,}8} \\approx 0{,}102\\ \\mathrm{kg}$.", "dau": ""},
+        {"latex": "T = P = mg", "dieu_kien": "Vật treo bằng dây nhẹ, đứng yên (cân bằng): lực căng cân bằng với trọng lực. Chỉ dùng khi dây thẳng đứng và vật cân bằng.", "vi_du_so": "Bóng đèn $0{,}5\\ \\mathrm{kg}$ treo thẳng đứng: $T = 0{,}5 \\times 9{,}8 = 4{,}9\\ \\mathrm{N}$.", "dau": ""}
+      ],
+      "dang_bai": [
+        {"dang": "Nhận biết đặc điểm của trọng lực, trọng tâm", "nhan_biet": "Đề hỏi phương, chiều, điểm đặt của trọng lực, hoặc vị trí trọng tâm của vật đối xứng.", "cach_lam": "Nhớ: phương thẳng đứng, chiều hướng về tâm Trái Đất, điểm đặt tại trọng tâm; trọng tâm của vật phẳng, mỏng, đối xứng ở tâm đối xứng.", "vi_du": "B17-TN1", "dau": ""},
+        {"dang": "Tính trọng lượng và khối lượng", "nhan_biet": "Đề cho khối lượng (hoặc số chỉ lực kế) và $g$, hỏi trọng lượng (hoặc khối lượng).", "cach_lam": "Dùng $P = mg$, đổi khối lượng sang kg trước khi tính. Chú ý nơi khác thì $g$ khác.", "vi_du": "B17-TLN4", "dau": ""},
+        {"dang": "Phân biệt khối lượng và trọng lượng khi đổi nơi", "nhan_biet": "Đề đem vật tới nơi có $g$ khác (Mặt Trăng, vĩ độ khác), hỏi đại lượng nào thay đổi.", "cach_lam": "Khối lượng không đổi; trọng lượng đổi theo $g$: $P' = mg'$.", "vi_du": "B17-TN7", "dau": ""},
+        {"dang": "Lực căng của dây treo vật cân bằng", "nhan_biet": "Đề cho vật treo thẳng đứng bằng dây nhẹ, hỏi độ lớn lực căng.", "cach_lam": "Vẽ các lực tác dụng lên vật (trọng lực xuống, lực căng lên theo dây); vật cân bằng nên $T = P = mg$.", "vi_du": "B17-TL1", "dau": ""},
+        {"dang": "Dây có bị đứt không", "nhan_biet": "Đề cho lực căng giới hạn của dây và khối lượng vật treo.", "cach_lam": "Tính lực căng $T$ rồi so sánh với giới hạn: $T$ lớn hơn giới hạn thì dây đứt, nhỏ hơn thì dây không đứt.", "vi_du": "B17-TLN3", "dau": ""},
+        {"dang": "So sánh lực căng hai đoạn dây (vật treo ở giữa dây)", "nhan_biet": "Vật (con khỉ) treo ở giữa sợi dây căng nghiêng hai bên với các góc khác nhau.", "cach_lam": "Theo phương ngang hai thành phần phải cân bằng: $T_1\\cos\\alpha_1 = T_2\\cos\\alpha_2$. Góc với phương ngang lớn hơn thì $\\cos$ nhỏ hơn nên lực căng lớn hơn.", "vi_du": "B17-TL10", "dau": ""}
+      ],
+      "loi_hay_mac": [
+        {"y": "Nhầm khối lượng với trọng lượng: khối lượng ($\\mathrm{kg}$) không đổi theo nơi, trọng lượng ($\\mathrm{N}$) đổi theo $g$.", "dau": ""},
+        {"y": "Quên đổi khối lượng từ gam sang kilôgam trước khi tính $P = mg$ (ví dụ $500\\ \\mathrm{g} = 0{,}5\\ \\mathrm{kg}$).", "dau": ""},
+        {"y": "Vẽ trọng lực không thẳng đứng hoặc không đặt tại trọng tâm; vẽ lực căng hướng ra xa vật (đúng là hướng dọc theo dây, từ vật vào phía dây).", "dau": ""},
+        {"y": "Cho rằng dây luôn chịu lực căng bằng trọng lượng vật: chỉ đúng khi vật đứng yên và dây thẳng đứng; dây nghiêng thì lực căng khác.", "dau": ""}
+      ],
+      "the": [
+        {"mat_truoc": "Trọng lực là gì? Kí hiệu?", "mat_sau": "Lực hấp dẫn do Trái Đất tác dụng lên vật, gây ra gia tốc rơi tự do; kí hiệu $\\vec{P}$."},
+        {"mat_truoc": "Nêu phương, chiều, điểm đặt của trọng lực.", "mat_sau": "Phương thẳng đứng, chiều từ trên xuống (về tâm Trái Đất), điểm đặt tại trọng tâm của vật."},
+        {"mat_truoc": "Công thức của trọng lực và trọng lượng?", "mat_sau": "$\\vec{P} = m\\vec{g}$; độ lớn (trọng lượng) $P = mg$."},
+        {"mat_truoc": "Khối lượng và trọng lượng, đại lượng nào thay đổi khi đổi nơi?", "mat_sau": "Trọng lượng thay đổi (vì $g$ thay đổi); khối lượng (số đo lượng chất) không đổi."},
+        {"mat_truoc": "Trọng tâm của vật phẳng, mỏng, đối xứng nằm ở đâu?", "mat_sau": "Ở tâm đối xứng của vật."},
+        {"mat_truoc": "Nêu đặc điểm của lực căng.", "mat_sau": "Do sợi dây tác dụng vào vật; phương trùng phương sợi dây; chiều ngược chiều lực do vật kéo dãn dây."},
+        {"mat_truoc": "Khi nào dây bị đứt?", "mat_sau": "Khi lực tác dụng lên dây vượt quá lực căng giới hạn của dây."},
+        {"mat_truoc": "Ròng rọc và dây rất nhẹ thì lực căng ở các điểm trên dây thế nào?", "mat_sau": "Có độ lớn bằng nhau: $T_1 = T_1' = T_2 = T_2'$."}
+      ]
     }
   ]
 }
