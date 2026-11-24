@@ -640,7 +640,7 @@ var MA="B13",TTB="k10-B13-tuong-tac.html",DAY=[{"t": "Bài 13: Tổng hợp và 
   function tiep(){if(!ttBuoc())go(cur+1)}
   function ttBuoc(){          /* trang tương tác cũ hiện từng bước (.step): bấm tiếp thì hiện bước kế trước khi sang slide sau */
     if(ttF.hidden||slides[cur].tt<0)return false;
-    try{var w=ttF.contentWindow,h=[].slice.call(w.slides[w.cur].querySelectorAll(".step")).filter(function(e){return !e.classList.contains("show")})[0];if(h){h.classList.add("show");return true}}catch(e){}
+    try{var w=ttF.contentWindow,h=w.eval('[].slice.call(slides[cur].querySelectorAll(".step")).filter(function(e){return !e.classList.contains("show")})[0]||null');if(h){h.classList.add("show");return true}}catch(e){}
     return false;
   }
   function ttNap(){           /* trang con tải xong: ẩn thanh điều khiển riêng, chuyển phím ← → về trang này */

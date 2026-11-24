@@ -124,6 +124,48 @@
         { "mat_truoc": "Khối lượng tăng 2 lần, lực không đổi thì gia tốc thay đổi thế nào?", "mat_sau": "Giảm 2 lần ($a$ tỉ lệ nghịch với $m$)." },
         { "mat_truoc": "Vật chịu nhiều lực thì $\\vec{F}$ trong $\\vec{F} = m\\vec{a}$ là lực nào?", "mat_sau": "Hợp lực của tất cả các lực tác dụng lên vật." }
       ]
+    },
+    {
+      "ma": "B16",
+      "ten": "Bài 16. Định luật 3 Newton",
+      "trang_sgk": "67–68",
+      "nguon": "C:/Users/kieml/OneDrive/Fujitsu/Tài liệu 10/04_Chương III - Động lực học/bai-16-dinh-luat-3-newton.html",
+      "moDau": ["Móc hai lực kế vào nhau rồi kéo một trong hai lực kế. Số chỉ của hai lực kế có bằng nhau không? Nếu thay đổi cách kéo thì kết quả có thay đổi không?", "67"],
+      "kien_thuc": [
+        {"y": "Tương tác giữa hai vật luôn là tác dụng qua lại: khi vật A tác dụng lên vật B một lực thì vật B cũng tác dụng trở lại vật A một lực (ví dụ: nam châm hút thanh sắt thì thanh sắt cũng hút nam châm).", "dau": ""},
+        {"y": "Định luật 3 Newton: trong mọi trường hợp, khi vật A tác dụng lên vật B một lực thì vật B cũng tác dụng lại vật A một lực. Hai lực này có cùng độ lớn, cùng giá nhưng ngược chiều: $\\vec{F}_{AB} = -\\vec{F}_{BA}$.", "dau": ""},
+        {"y": "Hai lực cùng giá, cùng độ lớn, ngược chiều gọi là hai lực trực đối.", "dau": ""},
+        {"y": "Trong tương tác giữa hai vật, một lực gọi là lực tác dụng thì lực kia gọi là phản lực. Tên gọi có tính tương đối: gọi lực nào là lực tác dụng cũng được.", "dau": ""},
+        {"y": "Đặc điểm của cặp lực và phản lực: (1) xuất hiện và mất đi đồng thời; (2) là hai lực trực đối; (3) đặt vào hai vật khác nhau nên không cân bằng, không triệt tiêu nhau; (4) cùng bản chất (cùng loại lực).", "dau": ""},
+        {"y": "Phân biệt: hai lực cân bằng đặt vào cùng một vật (hợp lực bằng 0); lực và phản lực đặt vào hai vật khác nhau. Quyển sách nằm yên vì trọng lực $\\vec{P}$ và phản lực của bàn $\\vec{N}$ đặt lên sách cân bằng nhau, không phải vì $\\vec{N}$ là phản lực của $\\vec{P}$.", "dau": ""},
+        {"y": "Ứng dụng: ô tô tiến lên nhờ mặt đường đẩy bánh xe về phía trước (phản lực của lực bánh xe đẩy mặt đường về phía sau); vận động viên đẩy vào vách hồ để quay đầu; tên lửa đẩy khí ra sau, khí đẩy tên lửa tiến lên.", "dau": ""}
+      ],
+      "cong_thuc": [
+        {"latex": "\\vec{F}_{AB} = -\\vec{F}_{BA}", "dieu_kien": "$\\vec{F}_{AB}$ là lực vật A tác dụng lên vật B; $\\vec{F}_{BA}$ là lực vật B tác dụng lên vật A. Hai lực đặt vào hai vật khác nhau.", "vi_du_so": "Vật A đẩy vật B một lực $40\\ \\mathrm{N}$ thì vật B đẩy trở lại vật A một lực $40\\ \\mathrm{N}$, ngược chiều.", "dau": ""},
+        {"latex": "F_{AB} = F_{BA}", "dieu_kien": "Độ lớn của lực và phản lực luôn bằng nhau, dù hai vật chuyển động hay đứng yên, dù khối lượng của chúng khác nhau.", "vi_du_so": "Người đẩy tường bằng lực $100\\ \\mathrm{N}$ thì tường đẩy người một lực $100\\ \\mathrm{N}$.", "dau": ""},
+        {"latex": "m_1a_1 = m_2a_2\\ \\Rightarrow\\ \\dfrac{a_1}{a_2} = \\dfrac{m_2}{m_1}", "dieu_kien": "Hai vật tương tác với nhau (và không chịu lực nào khác theo phương đang xét): cùng độ lớn lực $F$, theo định luật 2 Newton $a = \\dfrac{F}{m}$, nên vật có khối lượng nhỏ hơn thì gia tốc lớn hơn.", "vi_du_so": "Hai xe lăn $m_1 = 2\\ \\mathrm{kg}$, $m_2 = 3\\ \\mathrm{kg}$ đẩy nhau bằng lực $6\\ \\mathrm{N}$: $a_1 = \\dfrac{6}{2} = 3\\ \\mathrm{m/s^2}$, $a_2 = \\dfrac{6}{3} = 2\\ \\mathrm{m/s^2}$.", "dau": ""}
+      ],
+      "dang_bai": [
+        {"dang": "Nhận biết lực và phản lực, hai lực trực đối", "nhan_biet": "Đề hỏi đặc điểm của cặp lực – phản lực, phát biểu định luật 3 Newton, hoặc yêu cầu chỉ ra phản lực của một lực cho trước.", "cach_lam": "Nhớ bốn đặc điểm: đồng thời, trực đối (cùng giá, cùng độ lớn, ngược chiều), đặt vào hai vật khác nhau, cùng bản chất. Phản lực của lực vật A tác dụng lên B là lực vật B tác dụng lên A.", "vi_du": "B16-TN8", "dau": ""},
+        {"dang": "Tính độ lớn của phản lực", "nhan_biet": "Đề cho độ lớn của một lực trong tương tác giữa hai vật, hỏi lực còn lại.", "cach_lam": "Áp dụng $F_{AB} = F_{BA}$: độ lớn bằng nhau, chiều ngược nhau. Không cần quan tâm khối lượng hay chuyển động của hai vật.", "vi_du": "B16-TLN2", "dau": ""},
+        {"dang": "Phân biệt cặp lực – phản lực với hai lực cân bằng", "nhan_biet": "Đề cho vật nằm yên (sách trên bàn, vật treo) và hỏi cặp lực nào là lực – phản lực, cặp nào là hai lực cân bằng.", "cach_lam": "Xét điểm đặt: hai lực đặt vào cùng một vật thì là hai lực cân bằng (hợp lực bằng 0); hai lực đặt vào hai vật khác nhau thì là lực và phản lực. Ngoài ra cặp lực – phản lực luôn cùng loại.", "vi_du": "B16-TN30", "dau": ""},
+        {"dang": "Gia tốc của hai vật tương tác với nhau", "nhan_biet": "Đề cho hai vật (xe lăn, người trượt patanh) đẩy nhau, cho khối lượng và lực (hoặc gia tốc), hỏi gia tốc (hoặc lực).", "cach_lam": "Lực tương tác có cùng độ lớn $F$ lên cả hai vật. Với mỗi vật áp dụng $a = \\dfrac{F}{m}$; vật nhẹ hơn có gia tốc lớn hơn.", "vi_du": "B16-TLN6", "dau": ""},
+        {"dang": "Giải thích hiện tượng thực tế bằng định luật 3 Newton", "nhan_biet": "Đề hỏi vì sao ô tô tiến lên, người bơi lao đi, tên lửa bay lên, súng giật lùi khi bắn.", "cach_lam": "Bước 1: chỉ ra lực vật A tác dụng lên vật B. Bước 2: nêu phản lực vật B tác dụng lên vật A. Bước 3: phản lực đó là lực làm vật A (ô tô, người bơi, tên lửa…) chuyển động.", "vi_du": "B16-TN12", "dau": ""}
+      ],
+      "loi_hay_mac": [
+        {"y": "Cho rằng lực và phản lực triệt tiêu nhau. Thực tế chúng đặt vào hai vật khác nhau nên không thể cân bằng hay cộng thành hợp lực bằng 0.", "dau": ""},
+        {"y": "Cho rằng vật mạnh hơn (hoặc nặng hơn) tác dụng lực lớn hơn lên vật yếu hơn. Thực tế hai lực luôn bằng nhau về độ lớn; vật nhẹ hơn chỉ có gia tốc lớn hơn.", "dau": ""},
+        {"y": "Cho rằng lực tác dụng xuất hiện trước, phản lực xuất hiện sau. Thực tế hai lực xuất hiện và mất đi đồng thời.", "dau": ""},
+        {"y": "Nhầm trọng lực $\\vec{P}$ và phản lực $\\vec{N}$ của mặt bàn là cặp lực – phản lực. Hai lực này đặt vào cùng một vật (cân bằng); phản lực của $\\vec{N}$ là lực ép của vật lên mặt bàn.", "dau": ""}
+      ],
+      "the": [
+        { "mat_truoc": "Phát biểu định luật 3 Newton.", "mat_sau": "Khi vật A tác dụng lên vật B một lực thì vật B cũng tác dụng lại vật A một lực; hai lực này cùng độ lớn, cùng giá, ngược chiều: $\\vec{F}_{AB} = -\\vec{F}_{BA}$." },
+        { "mat_truoc": "Hai lực trực đối là gì?", "mat_sau": "Hai lực cùng giá, cùng độ lớn, ngược chiều." },
+        { "mat_truoc": "Lực và phản lực có xuất hiện lần lượt không?", "mat_sau": "Không, chúng xuất hiện và mất đi đồng thời." },
+        { "mat_truoc": "Lực và phản lực đặt vào mấy vật? Có cân bằng nhau không?", "mat_sau": "Đặt vào hai vật khác nhau nên không cân bằng, không triệt tiêu nhau." },
+        { "mat_truoc": "Hai lực cân bằng khác cặp lực – phản lực ở điểm nào?", "mat_sau": "Hai lực cân bằng đặt vào cùng một vật; lực và phản lực đặt vào hai vật khác nhau." },
+        { "mat_truoc": "Vì sao ô tô tiến về phía trước khi bánh xe quay?", "mat_sau": "Bánh xe đẩy mặt đường về phía sau; theo định luật 3 Newton, mặt đường đẩy bánh xe (ô tô) về phía trước." }
+      ]
     }
   ]
 }

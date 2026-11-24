@@ -58,6 +58,42 @@ BAI = {
         ('t', 19, 'Vận dụng: Bài tập vận dụng'),
         ('a', 17, 'Phụ lục 1: Phiếu học tập số 1'),
         ('a', 18, 'Phụ lục 2: Đáp án chi tiết luyện tập')]),
+    # Bài 16 (24/11/2026): pptx NotebookLM "Bản tổng hợp" (19 slide ảnh) + hoạt động tương tác của trang cũ k10-B16-tuong-tac.html (dựng từ
+    # OneDrive/.../bai-16-dinh-luat-3-newton.html, chỉ số slide 0..19). Không đưa (đã có bản ảnh tương đương): Tình huống mở đầu, Lực tương tác giữa hai vật,
+    # Định luật 3 Newton, Đặc điểm lực và phản lực, Sách trên bàn, Búa đóng đinh, Ô tô trên mặt đường.
+    'B16': dict(file='Bài 16 Định luật 3 Newton - Bản tổng hợp.pptx', ten='Bài 16. Định luật 3 Newton',
+                tuong_tac='k10-B16-tuong-tac.html', day=[
+        ('a', 0, 'Bài 16: Định luật 3 Newton'),
+        ('a', 1, 'Hành trình khám phá: sự đối xứng của vũ trụ'),
+        ('t', 1, 'Khởi động: chọn ô số, trả lời nhanh'),
+        ('a', 2, 'Khởi động: kéo co bằng lực kế'),
+        ('a', 3, 'Thí nghiệm khởi động: nghịch lí của chiếc lực kế'),
+        ('t', 3, 'Mô phỏng: hai lực kế móc vào nhau'),
+        ('a', 4, 'I.1. Lực tương tác giữa hai vật (Hình 16.1)'),
+        ('a', 5, 'Lực không tồn tại riêng lẻ'),
+        ('t', 5, 'Mô phỏng: hai xe lăn đẩy nhau bằng lò xo'),
+        ('a', 6, 'I.2. Giải mã định luật 3 Newton'),
+        ('a', 7, 'Hai lực trực đối là gì?'),
+        ('t', 7, 'Củng cố 1: Định luật 3 Newton'),
+        ('a', 8, 'II. Các đặc điểm của lực và phản lực'),
+        ('a', 9, 'Đặc điểm 1, 2: đồng thời, trực đối'),
+        ('a', 10, 'Đặc điểm 3, 4: hai vật khác nhau, cùng bản chất'),
+        ('a', 11, 'Ma trận chẩn đoán: đừng nhầm lẫn'),
+        ('t', 9, 'Hoạt động: cặp lực – phản lực hay hai lực cân bằng?'),
+        ('a', 12, 'Nhận diện lực trong thực tế: sách trên bàn, búa đóng đinh'),
+        ('a', 13, 'Vận dụng: tại sao ô tô tiến về phía trước?'),
+        ('a', 14, 'Góc thắc mắc: vì sao hai lực không khử nhau?'),
+        ('t', 13, 'Củng cố 2: Đặc điểm lực và phản lực'),
+        ('a', 15, 'Góc vận dụng: quay đầu trên đường đua xanh'),
+        ('a', 16, 'Có thể bạn chưa biết: lực đẩy trong chân không'),
+        ('t', 14, 'Ứng dụng: lực và phản lực trong đời sống'),
+        ('t', 15, 'Củng cố 3: Ứng dụng định luật 3'),
+        ('a', 17, 'Tóm lược cốt lõi'),
+        ('t', 17, 'Tổng kết: hệ thống kiến thức'),
+        ('t', 16, 'Luyện tập: Bài tập tổng hợp'),
+        ('t', 18, 'Em có thể'),
+        ('t', 19, 'Vận dụng: Bài tập vận dụng'),
+        ('a', 18, 'Em đã học (tổng kết) và mã QR bài tập')]),
 }
 
 # Chỉnh trên ảnh slide (cách ghi như tools/k11_bai_giang/dung.py). Tọa độ theo ảnh gốc 1376x768.
@@ -103,7 +139,7 @@ TT_JS = r"""
   function tiep(){if(!ttBuoc())go(cur+1)}
   function ttBuoc(){          /* trang tương tác cũ hiện từng bước (.step): bấm tiếp thì hiện bước kế trước khi sang slide sau */
     if(ttF.hidden||slides[cur].tt<0)return false;
-    try{var w=ttF.contentWindow,h=[].slice.call(w.slides[w.cur].querySelectorAll(".step")).filter(function(e){return !e.classList.contains("show")})[0];if(h){h.classList.add("show");return true}}catch(e){}
+    try{var w=ttF.contentWindow,h=w.eval('[].slice.call(slides[cur].querySelectorAll(".step")).filter(function(e){return !e.classList.contains("show")})[0]||null');if(h){h.classList.add("show");return true}}catch(e){}
     return false;
   }
   function ttNap(){           /* trang con tải xong: ẩn thanh điều khiển riêng, chuyển phím ← → về trang này */
@@ -126,15 +162,17 @@ TT_JS = r"""
     if(s.tt<0){ttF.hidden=true;san.classList.remove("tt");anh.style.display="";anh.src=s.src;anh.alt="Slide "+(cur+1)+": "+s.ten;return}
     anh.style.display="none";ttF.hidden=false;san.classList.add("tt");
     if(ttF.dataset.ok){try{ttF.contentWindow.go(s.tt,atras);ttF.focus();return}catch(e){}}
-    if(!ttF.getAttribute("src"))ttF.src=TTB+"#B13@"+s.tt;
-    else if(!ttF.dataset.ok)ttF.src=TTB+"?k="+Date.now()+"#B13@"+s.tt;
+    if(!ttF.getAttribute("src"))ttF.src=TTB+"#"+MA+"@"+s.tt;
+    else if(!ttF.dataset.ok)ttF.src=TTB+"?k="+Date.now()+"#"+MA+"@"+s.tt;
   }
 """
 TRANG = thay(TRANG, 'btK=$("btK");', 'btK=$("btK");' + TT_JS)
 
 
 def main():
+    chon = sys.argv[1:]      # ví dụ: dung.py B16  chỉ dựng Bài 16 (không đụng Bài 13)
     for ma, B in BAI.items():
+        if chon and ma not in chon: continue
         f = os.path.join(NGUON, B['file'])
         if not os.path.exists(f):
             print('Bỏ qua', ma, ': không thấy', f); continue
