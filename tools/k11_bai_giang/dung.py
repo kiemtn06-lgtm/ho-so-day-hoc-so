@@ -10,7 +10,7 @@ Trang mở đúng slide theo địa chỉ  k11-B8.html#B8@5  và báo vị trí 
 Mô phỏng: file mo_phong/<MA>.js (dùng khung mo_phong/khung.js) đăng kí mô phỏng cho từng slide; slide có mô phỏng hiện nút "Mô phỏng" (phím M).
 File .pptx gốc không bị sửa. Thêm bài mới: thêm một mục vào BAI (tên slide dùng cho trang tổng quan và người dùng trình đọc màn hình).
 """
-import os, re, io, json, zipfile, subprocess
+import os, sys, re, io, json, zipfile, subprocess
 from PIL import Image, ImageFilter, ImageDraw, ImageFont
 
 DIR = os.path.dirname(os.path.abspath(__file__))
@@ -42,6 +42,8 @@ BAI = {
         'Bài 13: Sóng dừng', 'Mục tiêu bài học', 'Thí nghiệm tạo sóng dừng', 'Bản chất của sóng dừng', 'Đặc điểm hình học: nút và bụng', 'Khoảng cách quan trọng cần nhớ',
         'Điều kiện sóng dừng: hai đầu cố định', 'Điều kiện sóng dừng: một đầu cố định, một đầu tự do', 'Ví dụ minh họa (thực hành)', 'Sóng dừng trong thế giới nhạc cụ',
         'Kiểm tra nhanh - Câu 1', 'Kiểm tra nhanh - Câu 2', 'Thử thách suy luận - Câu 3', 'Lưu ý quan trọng để không mất điểm', 'Tổng kết: ma trận sóng dừng']),
+    # Bài 13 bản mới (24/11/2026): pptx NotebookLM do Niu tạo từ SGK tr. 52-54 (19 slide), thêm cạnh bản cũ B13 (không thay). Bài tập cuối bài vẫn là #B13.
+    'B13b': dict(file='VL11_Bai13_Song_dung_NotebookLM_24-11.pptx', ten='Bài 13. Sóng dừng (bản mới)', slide=["Bài 13: Sóng dừng", "Yêu cầu cần đạt", "Tình huống mở đầu: đàn K'lông pút", "I. Thí nghiệm tạo sóng dừng", "Hiện tượng sóng dừng", "II.1 Đặc điểm của sóng dừng", "Nút và bụng sóng", "Thực hành nhận diện nút, bụng", "II.2 Điều kiện: dây hai đầu cố định", "Khoảng cách quan trọng", "II.2 Điều kiện: một đầu cố định, một đầu tự do", "III.1 Nhạc cụ dây", "III.2 Nhạc cụ khí", "Luyện tập câu 1", "Luyện tập câu 2", "Luyện tập câu 3", "Giải mã bí ẩn K'lông pút", "Tổng kết: em đã học", "Kiểm tra nhanh: đúng hay sai"]),
 }
 
 
@@ -246,7 +248,9 @@ var MA=__MA__,TEN=__SLIDE__,THU="k11-"+MA+"/",slides=TEN.map(function(t,i){retur
 
 
 def main():
+    chon = sys.argv[1:]      # ví dụ: dung.py B13b  chỉ dựng bản đó (không đụng các bài khác)
     for ma, B in BAI.items():
+        if chon and ma not in chon: continue
         f = os.path.join(NGUON, B['file'])
         if not os.path.exists(f):
             print('Bỏ qua', ma, ': không thấy', f); continue
@@ -264,6 +268,7 @@ def main():
                      for g in (os.path.join(DIR, 'mo_phong', 'khung.js'), mp)) if os.path.exists(mp) else ''
         h = (TRANG.replace('__TEN__', B['ten']).replace('__MA__', json.dumps(ma)).replace('__SLIDE__', json.dumps(B['slide'], ensure_ascii=False))
              .replace('__MP__', mp).replace('__CSS__', cc['css']).replace('__JS__', cc['js'].replace('</script', '<\\/script')))
+        if ma == 'B13b': h = h.replace('f.src="k11-bai-tap.html#"+MA', 'f.src="k11-bai-tap.html#B13"')   # bài tập cuối bài của bản mới = bài tập Bài 13
         dich = os.path.join(REPO, 'bai-giang', 'k11-%s.html' % ma)
         open(dich, 'w', encoding='utf8').write(h)
         subprocess.run(['node', os.path.join(REPO, 'tools', 'gan_nut_sua.js'), dich], check=True, stdout=subprocess.DEVNULL)   # nút ✎ Sửa

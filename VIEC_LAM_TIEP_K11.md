@@ -2,6 +2,11 @@
 
 Cập nhật: 16/11/2026. Ghi chú này để lần sau làm tiếp không phải dò lại từ đầu.
 
+## Bài 13 Sóng dừng, bản mới NotebookLM (24/11/2026)
+- Trang `bai-giang/k11-B13b.html` (19 slide ảnh) thêm CẠNH bản cũ `k11-B13.html` (15 slide), không thay bản cũ. Nguồn: `K11/VL11_Bai13_Song_dung_NotebookLM_24-11.pptx` (Niu làm bằng NotebookLM từ chữ SGK tr. 52–54 dán vào sổ "Vật Lí 11: Hiện Tượng Sóng Dừng", kiểu "Trang trình bày"). Khai báo `BAI['B13b']` trong `tools/k11_bai_giang/dung.py`; dựng: `python -I -X utf8 tools/k11_bai_giang/dung.py B13b` (tham số mã bài: chỉ dựng bài đó). Nút "Bài tập cuối bài" mở bài tập Bài 13 (#B13). Mục menu: chương Sóng, ngay dưới bài giảng Bài 13 cũ.
+- Mô phỏng sóng dừng dùng lại của bản cũ, gắn lại theo thứ tự slide mới: `tools/k11_bai_giang/mo_phong/B13b.js` (slide 6–13, 15–17, phím M).
+- **Cần giáo viên duyệt / chọn:** (1) giữ bản cũ hay dùng bản mới (hoặc cả hai); (2) slide 4 (thí nghiệm) vẽ sơ đồ có nhãn tiếng Anh (Audio Frequency Generator, Vibrator, String PQ, Pulley, Weight), không phải ảnh SGK; (3) slide 8 "Thực hành nhận diện" dùng hình 4 bụng, 5 nút (kể cả hai đầu), khác Hình 13.3 SGK (3 bụng, 4 nút); (4) slide 17 "Giải mã bí ẩn K'lông pút" nêu ống một đầu kín, một đầu hở (suy ra từ mô hình, SGK chưa nói rõ); (5) slide 19 câu hỏi nhanh đúng/sai do NotebookLM nghĩ ra (kiến thức đúng, không có trong SGK). Bài tập thêm của cô: chưa có.
+
 ## Nguồn (thư mục `K11/` của hồ sơ, không đưa lên GitHub)
 - `Bài 8 Mô_Tả_Sóng.pptx` (14 slide, thay bằng bản "Chuẩn lớp học" ngày 16/11/2026), `Bài 9 - Sóng_Ngang_và_Sóng_Dọc.pptx` (15 slide): mỗi slide là một ảnh (làm bằng NotebookLM).
 - `L11_ BÀI TẬP VẬT LÍ 11 _ HKI 2026_GV.pdf`: tên đuôi .pdf nhưng thực chất là file Word (bản giáo viên, đáp án gạch chân). Bản giống hệt: `OneDrive\Fujitsu\4- 2026- 2027\K11\L11_ BÀI TẬP VẬT LÍ 11 _ HKI 2026_GV -In.docx`.
