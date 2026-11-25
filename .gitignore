@@ -11,3 +11,7 @@ K11/*.pdf
 
 # Sổ chủ nhiệm: nguồn Apps Script, sao lưu dữ liệu lớp, Word/Excel. KHÔNG đưa lên kho công khai (trang đã dựng nằm ở so-chu-nhiem/)
 SoChuNhiem/
+
+# Sổ điểm: tệp Excel bảng điểm có tên, mã học sinh, KHÔNG đưa lên kho
+so_diem*.xls
+so_diem*.xlsx

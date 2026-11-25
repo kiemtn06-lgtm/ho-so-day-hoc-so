@@ -74,6 +74,22 @@ textarea{width:100%;resize:vertical}
 #llQrBox button:disabled{opacity:.5}
 #llQrBox .qbar{height:8px;background:#2b4560;border-radius:4px;overflow:hidden}
 #llQrBox .qbar i{display:block;height:100%;background:#3fb950}
+/* Sổ điểm (lib/so_diem.js) */
+.sdw{overflow-x:auto;border:1px solid var(--bd);border-radius:var(--rad);background:var(--card)}
+table.sdt{border-collapse:collapse;width:100%;font-size:14px}
+table.sdt th,table.sdt td{border:1px solid var(--bd);padding:0;text-align:center}
+table.sdt th{font-weight:500;font-size:12px;color:var(--mu);padding:4px 6px;background:var(--bg)}
+table.sdt td.c{padding:4px 6px}
+table.sdt td.dtb{font-weight:600;color:var(--ac)}
+table.sdt input{border:0;border-radius:0;padding:5px 4px;width:100%;min-width:0;background:transparent;text-align:center}
+table.sdt input:focus{outline:2px solid var(--ac);outline-offset:-2px;background:var(--acbg)}
+table.sdt input.ma{width:86px}table.sdt input.ho{width:134px;text-align:left}table.sdt input.tn{width:58px;text-align:left}table.sdt input.ns{width:80px}
+table.sdt input.dd{width:36px}table.sdt input.nx{width:84px;text-align:left}
+table.sdt input.sai{background:var(--wabg);color:var(--wa)}
+table.sdt button.xoa{border:0;color:var(--mu);font-size:18px;padding:0 8px;background:transparent}
+table.sdt button.xoa:hover{color:#c0392b}
+table.sdt tbody tr:hover{background:var(--bg)}
+.sdtk{margin-top:10px}
 @media print{.ed{border:0;padding:0;min-height:0}.ed:empty{display:none}}
 .chip{border-radius:20px;padding:4px 14px;color:var(--mu)}
 .chip.on{background:var(--acbg);color:var(--ac);border-color:var(--ac)}

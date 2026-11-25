@@ -1,6 +1,6 @@
 (function () {
   var CFG = window.HO_SO, DATA = window.HSDH_DATA || {}, KEY = "hsdh_v2";
-  var S = { st: {}, notes: {}, links: {}, lop: {}, pos: {}, lastLop: "", prog: {}, gc: {}, khbd: {}, pv: [], cm: [], srv: { url: "", pass: "" } };
+  var S = { st: {}, notes: {}, links: {}, lop: {}, pos: {}, lastLop: "", prog: {}, gc: {}, khbd: {}, pv: [], cm: [], sd: { lops: [], chon: "" }, srv: { url: "", pass: "" } };
   var HOAT = [["ga", "Giáo án"], ["sl", "Slide"], ["bt", "Bài tập"], ["on", "Ôn tập"], ["de", "Đề"]];
   var V = { khoi: CFG.khoiMacDinh, page: "tq", ch: 0, bai: 0, tab: 0, fd: "", fm: "", ans: false, quiz: null, qkey: false, edit: "" };
   var TABS = ["Trình chiếu", "SGK", "KHBD", "Bài tập", "Ôn tập", "Kiểm tra", "Ghi chú sau tiết"];
@@ -53,6 +53,7 @@
     h += '<hr><button data-a="page" data-p="ph" class="' + (V.page === "ph" ? "on" : "") + '">Làm bài trực tuyến</button>';
     h += '<button data-a="page" data-p="hd" class="' + (V.page === "hd" ? "on" : "") + '">Hỏi đáp</button>';
     h += '<button data-a="page" data-p="lop" class="' + (V.page === "lop" ? "on" : "") + '">Lớp học</button>';
+    if (window.SoDiem) h += '<button data-a="page" data-p="sd" class="' + (V.page === "sd" ? "on" : "") + '">Sổ điểm</button>';
     if (CFG.soChuNhiem) h += '<button data-a="page" data-p="scn" class="' + (V.page === "scn" ? "on" : "") + '">' + esc(CFG.soChuNhiem.ten) + "</button>";
     h += '<button data-a="page" data-p="cc" class="' + (V.page === "cc" ? "on" : "") + '">Sao lưu dữ liệu</button>';
     $("tree").innerHTML = h;
@@ -434,6 +435,7 @@
     if (V.page === "lop") { w.innerHTML = pageLop(); return; }
     if (V.page === "cc") { w.innerHTML = pageCC(); return; }
     if (V.page === "scn") { w.innerHTML = pageSCN(); return; }
+    if (V.page === "sd") { w.innerHTML = window.SoDiem ? SoDiem.html() : ""; return; }
     if (V.page === "tq") { w.innerHTML = pageTQ(); return; }
     if (V.page === "lt") { w.innerHTML = pageLT(); return; }
     if (V.page === "ph") { w.innerHTML = pageLB(); return; }
@@ -448,7 +450,7 @@
   /* vị trí đang xem, ghi vào phiếu của nút Sửa (lib/nut_sua.js), kèm mã dữ liệu để biết tệp cần sửa */
   window.HSDH_VITRI = function () {
     var p = ["Hồ sơ", CFG.khoi[V.khoi].ten], ch = chs()[V.ch], b = V.page === "bai" ? curBai() : null;
-    var TEN = { tq: "Tổng quan khối", ph: "Làm bài trực tuyến", hd: "Hỏi đáp", lop: "Lớp học", cc: "Sao lưu dữ liệu", scn: "Sổ chủ nhiệm số" };
+    var TEN = { tq: "Tổng quan khối", ph: "Làm bài trực tuyến", hd: "Hỏi đáp", lop: "Lớp học", cc: "Sao lưu dữ liệu", scn: "Sổ chủ nhiệm số", sd: "Sổ điểm" };
     if (b) p.push("Chương " + (V.ch + 1) + ". " + ch.ten, "Bài: " + b.ten, "Tab: " + TABS[V.tab], "(dữ liệu nguon/data/k" + ch.duLieu + ".js, mã bài " + b.ma + ")");
     else if (V.page === "lt" && ch && ch.luyenTap && ch.luyenTap[V.lt]) p.push("Chương " + (V.ch + 1) + ". " + ch.ten, "Luyện tập: " + ch.luyenTap[V.lt].ten);
     else p.push(TEN[V.page] || V.page);
@@ -766,5 +768,6 @@
   window.addEventListener("focus", nhanVaVe);
   window.addEventListener("storage", function (e) { if (e.key === "hsdh_bg") nhanVaVe(); });
 
+  if (window.SoDiem) SoDiem.init({ S: S, save: save, ve: function () { renderWork(); } });
   load(); nhanTuBaiGiang(); if (!CFG.khoi[V.khoi]) V.khoi = Object.keys(CFG.khoi)[0]; firstData(); render();
 })();
