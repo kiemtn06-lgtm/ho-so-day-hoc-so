@@ -393,12 +393,15 @@ table.key{border-collapse:collapse}table.key td{border:1px solid var(--bd);paddi
 /* ===== Ứng dụng di động (PWA) ===== */
 #nutMenu,#manMenu{display:none}
 .top{padding-top:calc(12px + env(safe-area-inset-top));padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
+#topNut:empty{display:none}
 #nutCai{display:inline-block;background:var(--ac);color:#fff;border-color:var(--ac);font-weight:500}
 @media (max-width:760px){
   body{font-size:16px;-webkit-text-size-adjust:100%;overflow-wrap:anywhere}
   .top{position:sticky;top:0;z-index:30;gap:6px 8px;padding-top:calc(8px + env(safe-area-inset-top));padding-bottom:8px;flex-wrap:wrap;justify-content:flex-start}
   #nutMenu{display:inline-flex;gap:6px;align-items:center;flex:none;min-height:44px;background:var(--acbg);color:var(--ac);border-color:var(--ac);font-weight:500}
   .top .seg{flex:1;order:2;min-width:0}
+  .top>.sp{display:none}
+  #topNut{order:4}
   .top .seg button{flex:1;padding-left:4px;padding-right:4px}
   .top h1{order:3;flex:1 0 100%;font-size:13px;font-weight:400;color:var(--mu);line-height:1.3;margin:0}
   .seg button{padding:10px 12px;min-height:44px}
@@ -435,6 +438,7 @@ table.key{border-collapse:collapse}table.key td{border:1px solid var(--bd);paddi
 <body>
 <header class="top">
   <h1 id="tieuDe">Hồ sơ dạy học số</h1>
+  <span class="sp"></span><span id="topNut" class="noprint"></span>
   <nav class="seg" id="chonKhoi" aria-label="Chọn khối"></nav>
 </header>
 <div class="layout">
@@ -3144,7 +3148,7 @@ window.HO_SO = {
   /* ---------- Sổ chủ nhiệm số: trang so-chu-nhiem/ (giao diện sổ Apps Script + cau_noi.js), dữ liệu ở Google Sheet ---------- */
   function pageSCN() {
     var x = CFG.soChuNhiem;
-    return '<div class="head"><h2>' + esc(x.ten) + (x.lop ? " · lớp " + esc(x.lop) : "") + '</h2><span class="sp"></span><a class="btn noprint" target="_blank" rel="noopener" href="' + esc(x.trang) + '">Mở toàn trang</a></div>' +
+    return '<div class="head"><h2>' + esc(x.ten) + (x.lop ? " · lớp " + esc(x.lop) : "") + '</h2><span class="sp"></span><a class="btn noprint toan" target="_blank" rel="noopener" href="' + esc(x.trang) + '">Mở toàn trang</a></div>' +
       '<p class="muted noprint">Sổ theo dõi nề nếp dùng chung với ban cán sự: dữ liệu nằm ở Google Sheet của giáo viên, vào sổ bằng mã như khi mở từ đường dẫn Apps Script. Hồ sơ chỉ chứa giao diện, không chứa danh sách lớp hay mã nào.</p>' +
       '<iframe class="otf" title="' + esc(x.ten) + '" src="' + esc(x.trang) + '"></iframe>';
   }
@@ -3153,7 +3157,7 @@ window.HO_SO = {
   function pageLT() {
     var ch = curCh(), lt = (ch && ch.luyenTap) || [], x = lt[V.lt || 0];
     if (!x) return '<p class="muted">Chưa có bài luyện.</p>';
-    return '<div class="head"><h2>' + esc(ch.ten) + " · " + esc(x.ten) + '</h2><span class="sp"></span><a class="btn noprint" target="_blank" rel="noopener" href="' + esc(x.trang) + '">Mở toàn trang</a></div>' +
+    return '<div class="head"><h2>' + esc(ch.ten) + " · " + esc(x.ten) + '</h2><span class="sp"></span><a class="btn noprint toan" target="_blank" rel="noopener" href="' + esc(x.trang) + '">Mở toàn trang</a></div>' +
       '<div class="row noprint">' + lt.map(function (y, j) { return '<button data-a="lt" data-ch="' + V.ch + '" data-i="' + j + '" class="chip' + (j === (V.lt || 0) ? " on" : "") + '">' + esc(y.ten) + "</button>"; }).join("") + "</div>" +
       (x.ghiChu ? '<p class="muted noprint">' + esc(x.ghiChu) + "</p>" : "") +
       '<iframe class="otf" title="' + esc(x.ten) + '" src="' + esc(x.trang) + '"></iframe>';
@@ -3300,7 +3304,13 @@ window.HO_SO = {
     return h;
   }
 
+  /* nút "Mở toàn trang" đưa lên thanh trên cùng, cạnh nút chọn khối */
   function renderWork() {
+    renderWork0();
+    var o = $("topNut"); if (!o) return; o.innerHTML = "";
+    Array.prototype.forEach.call($("work").querySelectorAll("a.toan"), function (a) { o.appendChild(a); });
+  }
+  function renderWork0() {
     var w = $("work"), b = curBai();
     if (V.page === "lop") { w.innerHTML = pageLop(); return; }
     if (V.page === "cc") { w.innerHTML = pageCC(); return; }

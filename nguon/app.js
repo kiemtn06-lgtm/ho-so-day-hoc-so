@@ -267,7 +267,7 @@
   /* ---------- Sổ chủ nhiệm số: trang so-chu-nhiem/ (giao diện sổ Apps Script + cau_noi.js), dữ liệu ở Google Sheet ---------- */
   function pageSCN() {
     var x = CFG.soChuNhiem;
-    return '<div class="head"><h2>' + esc(x.ten) + (x.lop ? " · lớp " + esc(x.lop) : "") + '</h2><span class="sp"></span><a class="btn noprint" target="_blank" rel="noopener" href="' + esc(x.trang) + '">Mở toàn trang</a></div>' +
+    return '<div class="head"><h2>' + esc(x.ten) + (x.lop ? " · lớp " + esc(x.lop) : "") + '</h2><span class="sp"></span><a class="btn noprint toan" target="_blank" rel="noopener" href="' + esc(x.trang) + '">Mở toàn trang</a></div>' +
       '<p class="muted noprint">Sổ theo dõi nề nếp dùng chung với ban cán sự: dữ liệu nằm ở Google Sheet của giáo viên, vào sổ bằng mã như khi mở từ đường dẫn Apps Script. Hồ sơ chỉ chứa giao diện, không chứa danh sách lớp hay mã nào.</p>' +
       '<iframe class="otf" title="' + esc(x.ten) + '" src="' + esc(x.trang) + '"></iframe>';
   }
@@ -276,7 +276,7 @@
   function pageLT() {
     var ch = curCh(), lt = (ch && ch.luyenTap) || [], x = lt[V.lt || 0];
     if (!x) return '<p class="muted">Chưa có bài luyện.</p>';
-    return '<div class="head"><h2>' + esc(ch.ten) + " · " + esc(x.ten) + '</h2><span class="sp"></span><a class="btn noprint" target="_blank" rel="noopener" href="' + esc(x.trang) + '">Mở toàn trang</a></div>' +
+    return '<div class="head"><h2>' + esc(ch.ten) + " · " + esc(x.ten) + '</h2><span class="sp"></span><a class="btn noprint toan" target="_blank" rel="noopener" href="' + esc(x.trang) + '">Mở toàn trang</a></div>' +
       '<div class="row noprint">' + lt.map(function (y, j) { return '<button data-a="lt" data-ch="' + V.ch + '" data-i="' + j + '" class="chip' + (j === (V.lt || 0) ? " on" : "") + '">' + esc(y.ten) + "</button>"; }).join("") + "</div>" +
       (x.ghiChu ? '<p class="muted noprint">' + esc(x.ghiChu) + "</p>" : "") +
       '<iframe class="otf" title="' + esc(x.ten) + '" src="' + esc(x.trang) + '"></iframe>';
@@ -423,7 +423,13 @@
     return h;
   }
 
+  /* nút "Mở toàn trang" đưa lên thanh trên cùng, cạnh nút chọn khối */
   function renderWork() {
+    renderWork0();
+    var o = $("topNut"); if (!o) return; o.innerHTML = "";
+    Array.prototype.forEach.call($("work").querySelectorAll("a.toan"), function (a) { o.appendChild(a); });
+  }
+  function renderWork0() {
     var w = $("work"), b = curBai();
     if (V.page === "lop") { w.innerHTML = pageLop(); return; }
     if (V.page === "cc") { w.innerHTML = pageCC(); return; }
