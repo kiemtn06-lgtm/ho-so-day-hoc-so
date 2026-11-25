@@ -79,6 +79,9 @@ SUA_ANH = {
                 ('xoa', (800, 404, 944, 468)), ('chu', (872, 428), '1 mm', 27, 'thuong', (28, 38, 80), 'ms'), ('chu', (872, 461), '3·10¹¹ Hz', 27, 'thuong', (28, 38, 80), 'ms'),
                 ('xoa', (990, 404, 1134, 468)), ('chu', (1062, 428), '1 m', 27, 'thuong', (28, 38, 80), 'ms'), ('chu', (1062, 461), '3·10⁸ Hz', 27, 'thuong', (28, 38, 80), 'ms'),
                 ('xoa', (1181, 404, 1325, 468)), ('chu', (1253, 428), '1 km', 27, 'thuong', (28, 38, 80), 'ms'), ('chu', (1253, 461), '3·10⁵ Hz', 27, 'thuong', (28, 38, 80), 'ms')],
+    # B12 slide 5 (I.1. Kết quả quan sát): hình hệ vân của NotebookLM vẽ sai (đường liền chạm/cắt nhau, nét đứt cắt nét liền, giữa hai cực đại có 2-3 cực tiểu).
+    # Vẽ lại đúng: hypebol tiêu điểm S₁, S₂; S₁S₂ = 2,8λ nên có 5 cực đại (k = 0, ±1, ±2) xen kẽ 6 cực tiểu.
+    ('B12', 5): [('hypebol', (707, 131, 1310, 483), dict(S1=(945, 307), S2=(1070, 307), lam=125 / 2.8, luoi=(863, 1152)))],
     ('B12', 8): [('to', (180, 470, 340, 508)), ('chu', (258, 498), 'Nguồn sáng', 27, 'dam', (24, 36, 90), 'ms'),
                  ('to', (600, 470, 770, 508)), ('chu', (685, 498), 'Màn chắn', 27, 'dam', (24, 36, 90), 'ms'),
                  ('to', (1030, 470, 1205, 508)), ('chu', (1117, 498), 'Màn quan sát', 27, 'dam', (24, 36, 90), 'ms'),
@@ -89,9 +92,58 @@ SUA_ANH = {
 PHONG = {'toan': (r'C:\Windows\Fonts\cambria.ttc', 1), 'thuong': (r'C:\Windows\Fonts\segoeui.ttf', 0), 'dam': (r'C:\Windows\Fonts\segoeuib.ttf', 0)}
 
 
+def ve_hypebol(im, hop, o):
+    """Vẽ lại hình hệ vân giao thoa hai nguồn trong vùng hop (gồm cả viền khung 2 px): nền, lưới, cực đại (nét liền) |d₂ − d₁| = kλ, cực tiểu (nét đứt) = (k + 0,5)λ, S₁, S₂.
+    o: S1, S2 (tọa độ ảnh, cùng hàng), lam (px), luoi (các cột lưới dọc). Vẽ to gấp 4 rồi thu nhỏ cho nét mịn."""
+    import math
+    x0, y0, x1, y1 = hop
+    Z, W, H = 4, x1 - x0, y1 - y0
+    NEN, LUOI, LIEN, DUT, CHAM = (242, 241, 239), (218, 217, 215), (24, 34, 78), (86, 196, 212), (14, 46, 122)
+    g = Image.new('RGB', (W * Z, H * Z), NEN); d = ImageDraw.Draw(g)
+    cx, cy = (o['S1'][0] + o['S2'][0]) / 2 - x0, o['S1'][1] - y0
+    for x in o['luoi']: d.line(((x - x0) * Z, 0, (x - x0) * Z, H * Z), fill=LUOI, width=Z)
+    d.line((0, cy * Z, W * Z, cy * Z), fill=LUOI, width=Z)
+    c, lam = (o['S2'][0] - o['S1'][0]) / 2, o['lam']
+
+    def nhanh(dl, dau):   # một nhánh hypebol |d₁ − d₂| = dl, dau = +1 nhánh phải (gần S₂), −1 nhánh trái
+        a = dl / 2; b = math.sqrt(c * c - a * a); T = math.asinh(2 * max(W, H) / b)
+        if a < 1e-9: return [(cx * Z, -Z), (cx * Z, (H + 1) * Z)]
+        return [((cx + dau * a * math.cosh(t)) * Z, (cy + b * math.sinh(t)) * Z) for t in (T * (i / 400 - 1) for i in range(801))]
+
+    def net_dut(ds, dai=10 * Z, ho=7 * Z, w=2 * Z):
+        con, ve, tr = 0.0, True, ds[0]
+        for p in ds[1:]:
+            L = math.dist(tr, p); s = 0.0
+            while L - s > 1e-9:
+                buoc = min(L - s, (dai if ve else ho) - con)
+                a = (tr[0] + (p[0] - tr[0]) * s / L, tr[1] + (p[1] - tr[1]) * s / L); s += buoc; con += buoc
+                b = (tr[0] + (p[0] - tr[0]) * s / L, tr[1] + (p[1] - tr[1]) * s / L)
+                if ve: d.line((a, b), fill=DUT, width=w)
+                if con >= (dai if ve else ho) - 1e-9: ve, con = not ve, 0.0
+            tr = p
+
+    m = 0
+    while m * lam / 2 < 2 * c - 1e-6:   # m chẵn: cực đại, m lẻ: cực tiểu
+        for dau in ((1,) if m == 0 else (1, -1)):
+            ds = nhanh(m * lam / 2, dau)
+            if m % 2: net_dut(ds)
+            else: d.line(ds, fill=LIEN, width=3 * Z, joint='curve')
+        m += 1
+    for S in (o['S1'], o['S2']):
+        X, Y = (S[0] - x0) * Z, (S[1] - y0) * Z; d.ellipse((X - 6 * Z, Y - 6 * Z, X + 6 * Z, Y + 6 * Z), fill=CHAM)
+    d.rectangle((0, 0, W * Z - 1, H * Z - 1), outline=(204, 204, 204), width=2 * Z)   # viền khung
+    g = g.resize((W, H), Image.LANCZOS); im.paste(g, (x0, y0))
+    dv = ImageDraw.Draw(im)
+    for i, S in enumerate((o['S1'], o['S2'])):   # nhãn S₁ (trên trái chấm), S₂ (trên phải chấm), chữ đậm, chỉ số nhỏ
+        f1, f2 = ImageFont.truetype(PHONG['dam'][0], 30), ImageFont.truetype(PHONG['dam'][0], 20)
+        x = S[0] - 37 if i == 0 else S[0] + 9
+        dv.text((x, S[1] - 9), 'S', font=f1, fill=LIEN, anchor='ls'); dv.text((x + 18, S[1] - 2), str(i + 1), font=f2, fill=LIEN, anchor='ls')
+
+
 def sua_anh(im, viec):
     px = im.load()
     for v in viec:
+        if v[0] == 'hypebol': ve_hypebol(im, v[1], v[2]); px = im.load(); continue
         if v[0] == 'chu':
             f, k = PHONG[v[4]]; ImageDraw.Draw(im).text(v[1], v[2], font=ImageFont.truetype(f, v[3], index=k), fill=v[5], anchor=v[6] if len(v) > 6 else 'ls'); continue
         x0, y0, x1, y1 = v[1]

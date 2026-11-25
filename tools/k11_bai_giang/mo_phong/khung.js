@@ -19,6 +19,7 @@ window.MP = (function () {
       "#mpK button,#mpK select{font:600 14px 'Segoe UI',sans-serif;color:#e5e7eb;background:#1c2742;border:1px solid #33415f;border-radius:999px;padding:6px 13px;cursor:pointer;min-height:34px}" +
       "#mpK button:hover{border-color:#60a5fa}#mpK :focus-visible{outline:3px solid #60a5fa;outline-offset:2px}" +
       "#mpK label{display:inline-flex;align-items:center;gap:7px;white-space:nowrap}#mpK input[type=range]{width:130px;accent-color:#38bdf8}" +
+      "#mpK input[type=number]{width:4.6em;font:700 15px 'Segoe UI',sans-serif;color:#7dd3fc;background:#1c2742;border:1px solid #33415f;border-radius:8px;padding:5px 8px;min-height:34px}" +
       "#mpK input[type=checkbox]{width:17px;height:17px;accent-color:#38bdf8}#mpK output{font-weight:700;color:#7dd3fc;font-variant-numeric:tabular-nums;min-width:3.2em;display:inline-block}" +
       "@media (max-width:720px){#mpK .mp-gc{display:none}#mpK input[type=range]{width:100px}}";
     document.head.appendChild(st);
@@ -53,7 +54,21 @@ window.MP = (function () {
         var l = them("label", nhan + " "), r = document.createElement("input"), o = document.createElement("output");
         r.type = "range"; r.min = a; r.max = b; r.step = buoc; r.value = gt; r.setAttribute("aria-label", nhan);
         var hien = function () { o.textContent = String(+r.value).replace(".", ",") + (dv ? " " + dv : "") };
-        r.oninput = function () { hien(); fn(+r.value) }; hien(); l.appendChild(r); l.appendChild(o); return r;
+        r.oninput = function () { hien(); fn(+r.value) }; hien(); l.appendChild(r); l.appendChild(o);
+        r.hien = hien;   // đặt r.value từ mô phỏng rồi gọi r.hien(): chỉ cập nhật số hiện, không gọi fn
+        return r;
+      },
+      so: function (nhan, gt, fn) {   // ô gõ số (ví dụ "k ="): gõ xong là gọi fn(số); số âm gõ dấu − hoặc -
+        var l = them("label", nhan + " "), o = document.createElement("input");
+        o.type = "number"; o.step = 1; o.value = gt; o.setAttribute("aria-label", nhan);
+        o.oninput = function () { var v = parseFloat(String(o.value).replace(",", ".")); if (isFinite(v)) fn(v) };
+        o.onkeydown = function (e) { if (e.key === "Enter") o.oninput() };
+        l.appendChild(o); return o;
+      },
+      ds: function (nhan, ds, gt, fn) {   // ô chọn: ds = [[giá trị, chữ], …]
+        var l = them("label", nhan + " "), s = document.createElement("select");
+        ds.forEach(function (x) { var op = document.createElement("option"); op.value = x[0]; op.textContent = x[1]; s.appendChild(op) });
+        s.value = gt; s.onchange = function () { fn(s.value) }; l.appendChild(s); return s;
       },
       chon: function (nhan, gt, fn) {
         var l = them("label", ""), c = document.createElement("input"); c.type = "checkbox"; c.checked = gt;
@@ -101,7 +116,7 @@ window.MPve = {
     var h = lh * dong.length + 14; if (o.phai) x -= w + 20;
     ctx.fillStyle = o.nen || "rgba(15,23,42,.82)"; ctx.strokeStyle = "rgba(148,163,184,.35)"; ctx.lineWidth = 1;
     ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(x, y, w + 20, h, 8); else ctx.rect(x, y, w + 20, h); ctx.fill(); ctx.stroke();
-    ctx.textBaseline = "middle";
+    ctx.textBaseline = "middle"; ctx.textAlign = "left";
     dong.forEach(function (d, i) {   // *chữ* : tô màu nhấn
       var cx = x + 10, cy = y + 7 + lh * (i + .5), ph = d.split("*");
       ph.forEach(function (p, j) { ctx.fillStyle = j % 2 ? (o.nhan || "#fde047") : (o.chu || "#e2e8f0"); ctx.fillText(p, cx, cy); cx += ctx.measureText(p).width });

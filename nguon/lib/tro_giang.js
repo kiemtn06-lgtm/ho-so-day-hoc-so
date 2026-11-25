@@ -12,6 +12,14 @@
            Dữ liệu: nguon/lib/tro_giang_du_lieu.js, TỰ TẠO từ nguon/data bằng tools/tao_tra_cuu.js (dong_goi.js tự gọi); chỉ tải khi cô hỏi lần đầu.
    - Nút 🎤 chỉ hiện trên máy đã bật nút Sửa (mở trang một lần với ?sua), học sinh không thấy. Bấm 🎤 bắt đầu / dừng nghe; kéo được.
    - Nhận giọng nói bằng Web Speech API của trình duyệt (Chrome, Edge; cần mạng). Nhật kí lệnh (tgNhatKi) chỉ ghi câu giống lệnh, chỉ trên máy này.
+   - LỚP ỒN (xem mục "micro" và "tách đoạn" phía dưới):
+       · Chrome 139+ nhận giọng từ luồng micro đã LỌC ỒN, KHỬ TIẾNG VỌNG loa, tự chỉnh độ nhạy (getUserMedia → start(track)); vạch vàng dưới nút 🎤 là độ to
+         micro nghe được. Trình duyệt cũ hoặc cô chọn "Micro thường" (tgLoc = 0) thì dùng micro của trình duyệt như trước.
+       · Lớp ồn, trình duyệt không nhận ra cô đã ngừng nói nên lệnh dính vào lời giảng thành câu dài: robot ghi lúc từng chữ hiện ra,
+         đoạn sau chỗ ngừng (≥ NGUNG ms) được xét như câu riêng ("… xong phần một | chuyển slide").
+       · Tiếng gọi “Niu ơi” (không bắt buộc): lệnh ngay sau tiếng gọi được làm dù trước, sau có lời giảng, tiếng ồn ("… chú ý Niu ơi chuyển slide, ồn ào …").
+       · Các từ trình duyệt hay nghe sai ("đáp ăn", "mô phòng", "típ theo"…) và tiếng ngập ngừng ("ờ", "ừm") đã có trong từ điển.
+       · Mất mạng thì tự nghe lại (chờ lâu dần); trình duyệt im quá 25 giây thì khởi động lại phiên nghe.
    - Không sửa trang nào: chỉ bấm hộ nút và phím có sẵn (→ ← Esc, G, công cụ 👥 Lớp), nên dùng được cho mọi kiểu trang.
    - Gắn vào trang bằng tools/gan_nut_sua.js (cùng nút Sửa). Kiểm tra cách hiểu lệnh: node tools/kiem_tro_giang.js */
 (function () {
@@ -87,32 +95,34 @@
   var Y = {
     _: "trợ giảng|trợ lý|trợ lí|robot|rô bốt|rô bô|niu|ơi|em ơi|bạn ơi|chúng ta|chúng mình|bọn mình|mình|ta|các em|các bạn|cả lớp|lớp mình|lớp|cô|thầy|" +
        "bây giờ|giờ thì|giờ|rồi|sẽ|hãy|cùng|cùng nhau|nhé|nhá|nha|nhen|nào|đi|ạ|à|nhỉ|luôn|giúp cô|cho cô|giúp mình|cho mình|giúp tôi|cho tôi|tôi|" +
-       "ok|okay|oke|ô kê|được rồi|vậy|vậy thì|thì|nhanh|ngay|với|cái|này|đó|kia|của|để|thôi|làm ơn|xin|vui lòng|nữa|thành|ra|cho|tiếp đây|của bài|của bài học|trong bài|bài học|của bài này",
+       "ok|okay|oke|ô kê|được rồi|vậy|vậy thì|thì|nhanh|ngay|với|cái|này|đó|kia|của|để|thôi|làm ơn|xin|vui lòng|nữa|thành|ra|cho|tiếp đây|của bài|của bài học|trong bài|bài học|của bài này|" +
+       "ờ|ờm|ừm|ơ|hừm|um|uhm|ấy|đấy|ha|níu|nìu",   // tiếng ngập ngừng; "níu", "nìu": trình duyệt nghe sai "Niu"
     NOI: "chuyển động|chuyển hóa|chuyển hoá|chuyển đổi|chuyển dời|chuyển thể|dịch chuyển|di chuyển|động năng|tiếp tuyến|tiếp xúc|tiếp điểm|nối tiếp|" +
        "trực tiếp|gián tiếp|tắt dần|gọi là|được gọi|mở rộng|đóng góp|đóng vai|đóng mạch|đóng khóa|đóng khoá|đóng công tắc|mở công tắc|ngắt mạch|" +
        "đi qua|đi sang|truyền qua|xuyên qua|sang trái|sang phải|qua trái|qua phải|phía trước|phía sau|đằng trước|đằng sau|trước tiên|trước đó|trước khi|" +
        "sau đó|sau khi|ban đầu|lúc đầu|điểm đầu|điểm cuối|vị trí đầu|hai đầu|một đầu|đầu dây|đầu mút|chú ý|về nhà|bài về nhà|giờ học|số liệu|số đo|" +
        "sai số|lần đo|thời gian|đồng hồ bấm giây|đồng hồ đo|lùi xe|xe lùi|kết quả đo|quay đều|quay tròn|bật đèn|tắt đèn",
-    TIEP: "tiếp|tiếp theo|tiếp tục|kế|kế tiếp|kế tiếp theo|next|sau|chuyển tiếp|tiếp nữa|sau nữa",
-    CHUYEN: "chuyển|sang|qua|chuyển sang|chuyển qua|lật|lật sang|lật qua|lướt|lướt qua",
+    /* sau mỗi dòng: các cách trình duyệt hay NGHE SAI (lớp ồn, nói nhanh); câu vẫn phải chỉ gồm chữ của lệnh mới làm */
+    TIEP: "tiếp|tiếp theo|tiếp tục|kế|kế tiếp|kế tiếp theo|next|sau|chuyển tiếp|tiếp nữa|sau nữa|" + "típ|típ theo|tiệp theo|tiết theo|néc|nếch",
+    CHUYEN: "chuyển|sang|qua|chuyển sang|chuyển qua|lật|lật sang|lật qua|lướt|lướt qua|" + "chuyền|chuyễn|chuyền sang|chuyền qua",
     DEN: "đến|tới|về|đi đến|đi tới|nhảy|nhảy đến|nhảy tới|nhảy sang|nhảy về",
     LUI: "lùi|lui|quay lại|trở lại|quay về|trở về|lùi lại|back|trước|lúc nãy|vừa rồi|vừa nãy|ban nãy",
     LAI: "lại",
-    SLIDE: "slide|slides|slai|xlai|sờ lai|sờ lai đờ|trang|trang chiếu|trang trình chiếu|màn hình|bản chiếu",
+    SLIDE: "slide|slides|slai|xlai|sờ lai|sờ lai đờ|trang|trang chiếu|trang trình chiếu|màn hình|bản chiếu|" + "sờ lái|sờ lay|slay|slice",
     PHAN: "bước|phần|mục|ý|câu|câu hỏi|nội dung|hình",
     THU: "thứ|số",
     DAU: "đầu|đầu tiên|mở đầu",
     CUOI: "cuối|cuối cùng",
-    DAPAN: "đáp án|lời giải|kết quả|đáp số|giải đáp|cách giải|bài giải|đáp án đúng",
+    DAPAN: "đáp án|lời giải|kết quả|đáp số|giải đáp|cách giải|bài giải|đáp án đúng|" + "đáp ăn|đáp an|đắp án|đạp án|đáp áng|đáp ám|đáp ánh",
     HIEN: "hiện|hiện ra|xem|mở|mở ra|cho xem|coi|hiển thị|bật|bật lên|chiếu|công bố|show|nhìn",
     AN: "ẩn|giấu|che|ẩn đi|giấu đi|cất",
     TAT: "tắt",
     DONG: "đóng|đóng lại|thoát|thoát ra|kết thúc|dẹp",
     OBJ: "cửa sổ|khung|bảng|phiếu|hộp|thẻ",
-    MP: "mô phỏng|thí nghiệm ảo|thí nghiệm|mô hình|thí nghiệm mô phỏng",
+    MP: "mô phỏng|thí nghiệm ảo|thí nghiệm|mô hình|thí nghiệm mô phỏng|" + "mô phòng|mô phong|mô phổng|mô phõng",
     CHAY: "chạy|bắt đầu|thả|phát|play|chạy thử|cho chạy|chạy tiếp",
     DUNG: "dừng|tạm dừng|ngừng|dừng lại|pause|tạm ngừng",
-    DATLAI: "đặt lại|làm lại|reset|bắt đầu lại|chạy lại|chơi lại|khởi động lại",
+    DATLAI: "đặt lại|làm lại|reset|bắt đầu lại|chạy lại|chơi lại|khởi động lại|" + "đặc lại|đặt lai",
     GOI: "gọi|gọi tên|gọi ngẫu nhiên|bốc thăm|quay số|chọn ngẫu nhiên",
     TEN: "tên|bạn|học sinh|em|ngẫu nhiên|ai|người|một bạn|bạn nào|em nào|một em|bạn khác|em khác|người khác",
     LEN: "lên bảng|lên|trả lời|phát biểu|bất kì|bất kỳ",
@@ -204,7 +214,7 @@
 
   /* ---------- hiểu câu nói ---------- */
   var HOC = docLS("tgHoc", {}), BO = docLS("tgBo", {});   // câu cô đã dạy: khóa → lệnh; câu cô bảo "không phải lệnh"
-  var RE_SUA = /^\s*((trợ giảng|trợ lý|trợ lí|robot|niu)(\s*ơi)?[\s,]*)?(cần sửa|ghi sửa|phiếu sửa|sửa)(?=\s|:|,|$)\s*[:,]?\s*/i;
+  var RE_SUA = /^\s*((trợ giảng|trợ lý|trợ lí|robot|niu|níu)(\s*ơi)?[\s,]*)?(cần sửa|ghi sửa|phiếu sửa|sửa)(?=\s|:|,|$)\s*[:,]?\s*/i;
   /* TRA CỨU (giai đoạn 4): câu MỞ ĐẦU bằng từ khóa tra cứu → ["tra", loại, chủ đề]. Loại: ct công thức, kt kiến thức, db dạng bài, loi lỗi hay mắc, hn câu hỏi nhanh.
      Chỉ nhận câu ngắn; câu có "là", "bằng", "thì"... là lời giảng ("Công thức này là F bằng m a"), bỏ qua. "Các em nhắc lại…" là cô giao cho học sinh, bỏ qua. */
   var RE_GOI_TRA = /^((trợ giảng|trợ lý|trợ lí|robot|rô bốt|niu)( ơi)? )?((cô|chúng ta|mình|ta|bây giờ|giờ|cả lớp|lớp mình|cùng|hãy|cho cô|cho cả lớp|cho lớp|giúp cô) )*((xem|mở|hiện|tra|tìm|đọc|cho xem) )?((lại|các|những|toàn bộ|tất cả) )?/;
@@ -235,8 +245,30 @@
   }
   /* trả về { lenh } (làm ngay), { hoi, khoa } (gần giống lệnh: hỏi lại), { khoa } (có ý lệnh nhưng không rõ), hoặc null (lời giảng) */
   var QUA_NGHE_SAI = { "quà": 1, "quả": 1, "quá": 1, "quạ": 1, "wa": 1, "goa": 1, "qua à": 1, "qua ạ": 1 };   // chỉ khi cả câu chỉ có tiếng đó
+  /* TIẾNG GỌI “Niu ơi” (không bắt buộc, dùng khi lớp ồn): lấy phần sau tiếng gọi CUỐI CÙNG trong câu, lệnh ở đầu phần đó được làm,
+     chữ thừa phía sau (tiếng ồn, lời giảng tiếp) bỏ qua. "Niu tơn" không có "ơi" nên không phải tiếng gọi. */
+  var RE_GOI = /(?:^|[\s,.!?;:])(?:niu|níu|nìu|new|nhiu|miu|robot|rô bốt|trợ giảng|trợ lý|trợ lí)[\s,]*ơi(?=$|[\s,.!?;:])[\s,.!?;:]*/gi;
+  function sauGoi(goc) {
+    var m, cuoi = -1; RE_GOI.lastIndex = 0;
+    while ((m = RE_GOI.exec(goc))) cuoi = RE_GOI.lastIndex;
+    return cuoi < 0 ? null : goc.slice(cuoi);
+  }
   function phanTich(cau) {
-    var goc = String(cau || "").normalize("NFC").trim(), s = chuan(goc);
+    var goc = String(cau || "").normalize("NFC").trim(), p = phanTich1(goc);
+    if (p && p.lenh) return p;
+    var r = sauGoi(goc);
+    if (r === null || !r.trim()) return p;
+    var q = phanTich1(r);
+    if (q && q.lenh) { q.goi = true; return q; }
+    var w = chuan(r).split(" ");   // lệnh ở đầu, chữ thừa phía sau: thử từ dài đến ngắn
+    for (var n = Math.min(w.length - 1, 8); n >= 1; n--) {
+      var d = phanTich1(w.slice(0, n).join(" "));
+      if (d && d.lenh && d.lenh[0] !== "sua") { d.goi = true; return d; }
+    }
+    return p || q;
+  }
+  function phanTich1(goc) {
+    var s = chuan(goc);
     if (!s) return null;
     if (RE_SUA.test(goc)) return { lenh: ["sua", goc.replace(RE_SUA, "")], khoa: "sửa" };
     var tr = phanTra(s);
@@ -528,6 +560,7 @@
     "#tgNut{position:fixed;left:10px;bottom:64px;z-index:2147483000;font:600 14px system-ui,sans-serif;padding:7px 12px;border-radius:20px;border:1px solid #1d4ed8;background:#eff6ff;color:#1e3a8a;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.2);opacity:.8;user-select:none;touch-action:none;max-width:280px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}" +
     "#tgNut:hover{opacity:1}#tgNut.on{background:#dc2626;border-color:#dc2626;color:#fff;opacity:1;animation:tgTho 1.6s infinite}" +
     "@keyframes tgTho{0%,100%{box-shadow:0 0 0 0 rgba(220,38,38,.55)}50%{box-shadow:0 0 0 9px rgba(220,38,38,0)}}" +
+    "#tgNut.on.muc{background-image:linear-gradient(#facc15,#facc15);background-repeat:no-repeat;background-position:left bottom;background-size:calc(var(--tgMuc,0) * 100%) 4px}" +
     "#tgChat{position:fixed;z-index:2147483002;width:min(420px,calc(100vw - 20px));display:flex;flex-direction:column;gap:6px;font:14px/1.4 system-ui,sans-serif;pointer-events:none}" +
     "#tgChat .m{background:#fff;color:#1f2937;border:1px solid #d1d5db;border-radius:12px 12px 12px 3px;padding:7px 11px;box-shadow:0 3px 12px rgba(0,0,0,.2);transition:opacity .4s;pointer-events:auto}" +
     "#tgChat .m.ok{background:#ecfdf5;border-color:#86efac;color:#14532d;padding:4px 10px;font-weight:600;font-size:13px;align-self:flex-start}" +
@@ -774,7 +807,8 @@
        ["Đóng", "“Đóng”, “Tắt”, “Kết thúc”: đóng mô phỏng, khung gọi tên, phiếu…"],
        ["Tra cứu", "“Công thức định luật 2 Newton”, “Nhắc lại bài 13”, “Dạng bài đẳng áp”, “Lỗi hay mắc”, “Câu hỏi nhanh” rồi “Đáp án”: trả lời ở ô chat, bấm ⤢ Mở lớn (hoặc nói “Phóng to”) để chiếu cho lớp. Tra bài đang giảng trước, rồi cả chương, cả hồ sơ"],
        ["Sửa …", "“Sửa đáp án câu 3 là B”: mở phiếu ✎ Sửa đã điền sẵn, cô đọc lại rồi bấm Gửi"],
-       ["Tắt micro", "“Tắt micro”, “Ngừng nghe”"], ["Trợ giúp", "hiện bảng này"]]
+       ["Tắt micro", "“Tắt micro”, “Ngừng nghe”"], ["Trợ giúp", "hiện bảng này"],
+       ["Lớp ồn", "Gọi “Niu ơi” trước lệnh: “Niu ơi chuyển slide”. Có tiếng gọi, robot làm lệnh ngay sau đó dù trước, sau có lời giảng hay tiếng ồn. Không gọi vẫn dùng được như thường; ngừng một chút trước lệnh thì robot dễ nhận hơn"]]
         .map(function (r) { return "<tr><td>" + r[0] + "</td><td>" + r[1] + "</td></tr>"; }).join("") + "</table>" +
       (nk.length ? "<h4>Câu robot nghe gần đây</h4><div class='gc'>Câu nào robot hiểu sai hoặc chưa làm, cô chọn lệnh đúng để dạy robot.</div><table>" +
         nk.map(function (x, i) {
@@ -786,11 +820,21 @@
         }).join("") + "</table>" : "") +
       '<h4>Tốc độ phản hồi</h4><select data-x="cham"><option value="0"' + (cham ? "" : " selected") + '>⚡ Nhanh: làm ngay khi nghe ra lệnh</option><option value="1"' + (cham ? " selected" : "") + '>Chắc chắn: chờ cô nói hết câu (chậm hơn 1-2 giây)</option></select>' +
       '<div class="gc">Nếu robot hay làm nhầm khi cô ngập ngừng giữa câu (ví dụ “Tiếp theo… là gia tốc”), chọn Chắc chắn.</div>' +
+      '<h4>Micro</h4><select data-x="loc"><option value="1"' + (loc ? " selected" : "") + '>🔇 Lọc ồn, khử tiếng vọng loa (nên dùng)</option><option value="0"' + (loc ? "" : " selected") + '>Micro thường của trình duyệt</option></select>' +
+      '<div class="gc">' + (!coLuong ? "Trình duyệt này chưa lọc ồn cho nhận giọng nói được (cần Chrome hoặc Edge bản mới), robot dùng micro thường."
+        : ray ? "Đang lọc ồn. Vạch vàng dưới nút 🎤 là độ to micro nghe được: cô nói mà vạch không nhích thì kiểm tra micro."
+        : "Bật 🎤 thì robot nghe qua micro lọc ồn, vạch vàng dưới nút 🎤 là độ to micro nghe được.") + " Nếu robot nghe kém hơn khi lọc ồn, chọn Micro thường.</div>" +
       '<div class="gc" style="margin-top:8px">Cần Chrome hoặc Edge và có mạng. Giọng nói được trình duyệt chuyển thành chữ, robot không nói, chỉ trả lời trong ô chat. Nhật kí chỉ lưu câu giống lệnh, trên máy này. Không đọc tên, điểm học sinh vào micro.</div>';
     hop.querySelector(".dong").onclick = dongHop;
     hop.addEventListener("change", function (e) {
       var sc = e.target.closest("select[data-x=cham]");
       if (sc) { cham = sc.value === "1"; ghiLS("tgCham", cham ? 1 : 0); huyTam(); nhan(cham ? "Robot chờ cô nói hết câu" : "⚡ Robot làm ngay khi nghe ra lệnh", "", "ok"); return; }
+      var sl = e.target.closest("select[data-x=loc]");
+      if (sl) {
+        loc = sl.value === "1"; ghiLS("tgLoc", loc ? 1 : 0);
+        if (dangNghe) { dongMic(); ngheLai(); }
+        nhan(loc ? (coLuong ? "🔇 Robot nghe qua micro lọc ồn" : "Trình duyệt này chưa lọc ồn được, robot vẫn dùng micro thường") : "Robot nghe qua micro thường", "", "ok"); return;
+      }
       var s = e.target.closest("select[data-khoa]"); if (!s || !s.value) return;
       var k = s.getAttribute("data-khoa"), v = s.value.split(":");
       if (v[0] === "-") { BO[k] = 1; delete HOC[k]; } else { HOC[k] = v[1] ? [v[0], v[1]] : [v[0]]; delete BO[k]; }
@@ -840,7 +884,7 @@
   function lam(cau, p) {
     if (choLenh) { var f = choLenh; choLenh = null; f(cau); return; }
     if (hoi) {   // đang hỏi lại: nghe “Đúng” / “Không”
-      var s = chuan(cau).replace(/^(trợ giảng|trợ lý|robot|niu)( ơi)?\s*/, "").replace(/^(cô|cô nói)\s+/, "");
+      var s = boGoi(cau);
       if (RE_CO.test(s)) { traLoi(true); return; }
       if (RE_KHONG.test(s)) { traLoi(false); return; }
     }
@@ -852,79 +896,194 @@
   }
   /* PHẢN HỒI NHANH: trình duyệt gửi chữ nghe được ngay khi cô đang nói (kết quả tạm). Chữ tạm đã là một lệnh rõ (Chuyển, Lùi, Đáp án, Đóng…)
      và đứng yên một chút (cô ngừng nói) thì làm luôn, không chờ trình duyệt chốt câu (chậm 1-2 giây). Lệnh tra cứu, Sửa, câu cần hỏi lại vẫn chờ chốt câu.
-     Câu đã làm theo chữ tạm thì khi chốt không làm lại. Bảng Trợ giúp có chỗ chọn "Chắc chắn" (chờ chốt câu như cũ): localStorage tgCham = 1. */
+     Câu đã làm theo chữ tạm thì khi chốt không làm lại. Bảng Trợ giúp có chỗ chọn "Chắc chắn" (chờ chốt câu như cũ): localStorage tgCham = 1.
+     TÁCH ĐOẠN (lớp ồn): trình duyệt không nhận ra chỗ cô ngừng nên chữ tạm cứ dài ra, lệnh dính sau lời giảng ("… xong phần một chuyển slide").
+     Robot ghi lúc từng chữ hiện ra: hai chữ cách nhau ≥ NGUNG ms là chỗ cô ngừng, đoạn sau chỗ ngừng cuối được xét như một câu.
+     Đoạn đứng sau lời giảng phải là lệnh "chắc" (Tiếp/Lùi phải có chữ slide, chuyển, lùi…: "… tiếp theo … là gia tốc" không tính) và đứng yên lâu hơn (CHO_DOAN).
+     Khi chốt câu, nếu cả câu không phải lệnh thì cũng xét đoạn sau chỗ ngừng cuối (cả khi chọn "Chắc chắn"). */
   var NHANH_OK = { tiep: 1, lui: 1, den: 1, dapAn: 1, anDapAn: 1, dong: 1, mp: 1, moPhong: 1, goiTen: 1, nhom: 1, gio: 1, moLon: 1, tatMic: 1, giup: 1 };
-  var CHO_TAM = 350, CHO_TAM_SO = 650;   // ms chữ tạm phải đứng yên; lệnh có số chờ lâu hơn ("slide mười" … "mười hai")
-  var cham = docLS("tgCham", 0) === 1, phien = 0, daLam = {}, tam = null;
+  var CHO_TAM = 350, CHO_TAM_SO = 650, CHO_DOAN = 600, NGUNG = 800;   // ms: chữ tạm đứng yên; lệnh có số; đoạn sau lời giảng; chỗ ngừng giữa hai chữ
+  var RE_MANH = /(^| )(slide|slides|slai|xlai|sờ lai|sờ lái|trang chiếu|màn hình|chuyển|chuyền|lật|lùi|lui|next|back)( |$)/;
+  var cham = docLS("tgCham", 0) === 1, phien = 0, tam = null, DOAN = {};   // DOAN: khóa kết quả → { ws: chữ, tg: lúc hiện, den: số chữ đã làm lệnh, lam }
   function huyTam() { if (tam) { clearTimeout(tam.tm); tam = null; } }
-  function lenhNhanh(t) {   // chữ tạm → { p, cho } nếu làm ngay được
+  function boGoi(t) { return chuan(t).replace(/^(trợ giảng|trợ lý|robot|niu|níu)( ơi)?\s*/, "").replace(/^(cô|cô nói)\s+/, ""); }
+  function manh(p) { return (p.lenh[0] !== "tiep" && p.lenh[0] !== "lui") || !!p.goi || RE_MANH.test(p.khoa || ""); }
+  function lenhNhanh(t, giua) {   // chữ tạm → { p, cho } nếu làm ngay được; giua: đoạn đứng sau lời giảng
     if (cham || choLenh || !t) return null;
-    if (hoi) { var s = chuan(t).replace(/^(trợ giảng|trợ lý|robot|niu)( ơi)?\s*/, "").replace(/^(cô|cô nói)\s+/, ""); return RE_CO.test(s) || RE_KHONG.test(s) ? { cho: CHO_TAM } : null; }
-    var p = phanTich(t);
-    if (!p || !p.lenh || !NHANH_OK[p.lenh[0]]) return null;
+    if (hoi) { var s = boGoi(t); return RE_CO.test(s) || RE_KHONG.test(s) ? { cho: CHO_TAM } : null; }
+    var p = phanTich(t), k = p && p.khoa || "";
+    if (!p || !p.lenh || !NHANH_OK[p.lenh[0]] || (giua && !manh(p))) return null;
     // "Sang phần…", "Qua mục…" chưa có chữ Tiếp: chờ chốt câu, vì có thể là "Sang phần hai" (lời giảng)
-    if (p.lenh[0] === "tiep" && /(^| )(phần|mục|nội dung|bước|câu|ý|hình)( |$)/.test(p.khoa || "") && !/(tiếp|kế|sau|next)/.test(p.khoa || "")) return null;
-    // một tiếng "Qua"/"Sang" chờ lâu hơn: có thể là đầu câu giảng "Qua thí nghiệm này…"
-    return { p: p, cho: typeof p.lenh[1] === "number" || p.lenh[0] === "den" || /^(qua|sang|quà|quả|quá)$/.test(p.khoa || "") ? CHO_TAM_SO : CHO_TAM };
+    if (p.lenh[0] === "tiep" && /(^| )(phần|mục|nội dung|bước|câu|ý|hình)( |$)/.test(k) && !/(tiếp|kế|sau|next)/.test(k)) return null;
+    // "Chuyển đến slide…", "Đáp án câu…": cô sắp nói số, chờ chốt câu
+    if (p.lenh[0] === "tiep" && /(^| )(đến|tới|về|nhảy|số|thứ)( |$)/.test(k)) return null;
+    if (p.lenh[0] === "dapAn" && !p.lenh[1] && /(^| )(câu|câu hỏi|bài|ý|phần|số|thứ)$/.test(k)) return null;
+    // một tiếng "Qua"/"Sang" và lệnh có số chờ lâu hơn: có thể là đầu câu giảng "Qua thí nghiệm này…", hoặc "slide mười" … "mười hai"
+    var lau = typeof p.lenh[1] === "number" || p.lenh[0] === "den" || /^(qua|sang|quà|quả|quá)$/.test(k);
+    return { p: p, cho: (lau ? CHO_TAM_SO : CHO_TAM) + (giua ? CHO_DOAN - CHO_TAM : 0) };
   }
   function nghe(t) {   // hiện chữ đang nghe trên nút 🎤 để cô biết robot đã nghe
     if (!dangNghe) return;
     nut.textContent = t ? "🎤 " + (t.length > 26 ? "…" + t.slice(-25) : t) : "🎤 Đang nghe";
   }
+  function ghiDoan(k, t) {   // ghi lúc từng chữ của chữ tạm hiện ra (theo vị trí; trình duyệt sửa chữ cũ thì giữ lúc cũ)
+    var d = DOAN[k] || (DOAN[k] = { ws: [], tg: [], den: 0, lam: false }), ws = chuan(t).split(" ").filter(Boolean), bay = Date.now();
+    d.tg = ws.map(function (w, j) { return j < d.tg.length ? d.tg[j] : bay; });
+    d.ws = ws; if (d.den > ws.length) d.den = ws.length;
+    return d;
+  }
+  function dauDoan(d) {   // chữ đầu đoạn cuối: sau chỗ ngừng cuối cùng, không lùi vào phần đã làm lệnh (d.den)
+    for (var j = d.ws.length - 1; j > d.den; j--) if (d.tg[j] - d.tg[j - 1] >= NGUNG) return j;
+    return d.den;
+  }
   function chuTam(k, t) {
     nghe(t);
-    if (daLam[k]) return;
-    var n = lenhNhanh(t);
+    var d = ghiDoan(k, t), n = null, id = "0", s;
+    if (!d.den) n = lenhNhanh(t, false);   // cả câu (có tiếng gọi “Niu ơi” thì lấy phần sau tiếng gọi)
+    if (!n && (s = dauDoan(d)) > 0) {   // đoạn sau chỗ ngừng
+      var td = d.ws.slice(s).join(" ");
+      n = lenhNhanh(td, true);
+      if (n) { id = String(s); t = td; }
+    }
     if (!n) { huyTam(); return; }
-    if (tam && tam.k === k && tam.t === t) return;
+    // cùng lệnh thì không chờ lại: trình duyệt chỉ sửa chữ phía trước; sau tiếng gọi “Niu ơi” chữ ồn hiện thêm phía sau cũng không tính
+    var khop = n.p && n.p.goi ? "gọi " + JSON.stringify(n.p.lenh) : t;
+    if (tam && tam.k === k && tam.id === id && tam.khop === khop) return;
     huyTam();
-    tam = { k: k, t: t, tm: setTimeout(function () { tam = null; daLam[k] = 1; lam(t, n.p); }, n.cho) };
+    tam = { k: k, id: id, khop: khop, tm: setTimeout(function () { tam = null; d.den = Math.max(d.den, d.ws.length); d.lam = true; lam(t, n.p); }, n.cho) };
   }
+  function doanChot(d, cau) {   // đoạn sau chỗ ngừng cuối của câu đã chốt (chỗ ngừng ghi được ở chữ tạm), chỉ khi đoạn đó vừa nói
+    var s = dauDoan(d);
+    if (s <= 0 || Date.now() - d.tg[s] > 6000) return "";
+    var ws = chuan(cau).split(" ").filter(Boolean);
+    return (Math.abs(ws.length - d.ws.length) <= 1 ? ws : d.ws).slice(s).join(" ");
+  }
+  function chot(k, kq) {   // trình duyệt chốt câu
+    var d = DOAN[k]; delete DOAN[k];
+    if (tam && tam.k === k) huyTam();
+    nghe("");
+    if (d && d.lam) return;   // đã làm theo chữ tạm
+    var cau = kq[0].transcript.trim(), p = null;
+    if (!choLenh && !hoi) {   // chọn cách nghe hợp lệnh nhất trong các phương án của trình duyệt
+      var ds = [];
+      for (var j = 0; j < kq.length; j++) { var c = kq[j].transcript.trim(); if (c) ds.push({ c: c, p: phanTich(c) }); }
+      var tot = ds.filter(function (x) { return x.p && x.p.lenh; })[0] || ds.filter(function (x) { return x.p && x.p.hoi; })[0] || ds[0];
+      if (tot) { cau = tot.c; p = tot.p; }
+    }
+    var td = d && !choLenh && !(p && (p.lenh || p.hoi)) ? doanChot(d, cau) : "";
+    if (td && hoi) { var b = boGoi(td); if (RE_CO.test(b) || RE_KHONG.test(b)) { cau = td; p = null; } }
+    else if (td) { var pd = phanTich(td); if (pd && pd.lenh && manh(pd)) { cau = td; p = pd; } }
+    if (cau) lam(cau, p);
+  }
+
+  /* ---------- micro LỌC ỒN: Chrome 139+ (có processLocally) nhận giọng từ luồng micro do trang mở (start(track)), nên bật được
+     lọc ồn, khử tiếng vọng loa (video, chuông trên trang), tự chỉnh độ nhạy. Trình duyệt cũ: start(track) bỏ qua track, dùng micro thường. ---------- */
+  var NAV = window.navigator || {};
+  var coLuong = !!(SR && NAV.mediaDevices && NAV.mediaDevices.getUserMedia && SR.prototype && ("processLocally" in SR.prototype || typeof SR.available === "function"));
+  var loc = docLS("tgLoc", 1) !== 0, luong = null, ray = null, choMic = null, doTo = null;
+  function moMic(cb) {   // cb(track đã lọc ồn) hoặc cb(null): dùng micro thường của trình duyệt
+    if (!coLuong || !loc) return cb(null);
+    if (ray && ray.readyState === "live") return cb(ray);
+    if (choMic) { choMic.push(cb); return; }
+    dongMic(); choMic = [cb];
+    function xong(tr) { var ds = choMic; choMic = null; ds.forEach(function (f) { f(tr); }); }
+    NAV.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true, channelCount: 1 } }).then(function (s) {
+      if (!dangNghe) { s.getTracks().forEach(function (t) { t.stop(); }); return xong(null); }
+      luong = s; ray = s.getAudioTracks()[0] || null; doMuc(s); xong(ray);
+    }, function () { xong(null); });
+  }
+  function dongMic() {
+    if (doTo) { clearInterval(doTo.tm); try { doTo.A.close(); } catch (e) {} doTo = null; }
+    nut.classList.remove("muc");
+    if (luong) luong.getTracks().forEach(function (t) { t.stop(); });
+    luong = ray = null;
+  }
+  function doMuc(s) {   // vạch vàng dưới nút 🎤: độ to micro nghe được (cô nói mà vạch không nhích là micro không bắt được tiếng)
+    try {
+      var A = new (window.AudioContext || window.webkitAudioContext)(), an = A.createAnalyser(), buf;
+      an.fftSize = 1024; A.createMediaStreamSource(s).connect(an); buf = new Float32Array(an.fftSize);
+      doTo = { A: A, tm: setInterval(function () {
+        an.getFloatTimeDomainData(buf);
+        for (var i = 0, t = 0; i < buf.length; i++) t += buf[i] * buf[i];
+        var db = 10 * Math.log10(t / buf.length + 1e-10);   // im lặng khoảng −90 dB, nói to gần 0 dB
+        nut.style.setProperty("--tgMuc", Math.max(0, Math.min(1, (db + 65) / 50)).toFixed(2));
+      }, 120) };
+      nut.classList.add("muc");
+    } catch (e) {}
+  }
+
+  /* ---------- phiên nghe: tự nghe lại khi trình duyệt dừng, mất mạng (chờ 1, 2, 4… giây), hoặc đứng im quá 25 giây ---------- */
+  var dangChay = false, lanSK = 0, doiLai = 0, canh = null, hongTr = 0;
   function taoMic() {
     var r = new SR();
     r.lang = "vi-VN"; r.continuous = true; r.interimResults = true; r.maxAlternatives = 3;
-    r.onstart = function () { phien++; daLam = {}; huyTam(); };
+    function cu() { return r !== mic; }   // phiên cũ đã bị thay
+    r.onstart = function () { if (cu()) return; dangChay = true; hongTr = 0; lanSK = Date.now(); phien++; DOAN = {}; huyTam(); };
+    r.onaudiostart = r.onsoundstart = r.onspeechstart = function () { if (!cu()) lanSK = Date.now(); };
     r.onresult = function (e) {
+      if (cu()) return;
+      lanSK = Date.now(); doiLai = 0;
       for (var i = e.resultIndex; i < e.results.length; i++) {
         var k = phien + ":" + i;
-        if (!e.results[i].isFinal) { chuTam(k, e.results[i][0].transcript.trim()); continue; }
-        if (tam && tam.k === k) huyTam();
-        nghe("");
-        if (daLam[k]) { delete daLam[k]; continue; }   // đã làm theo chữ tạm
-        var kq = e.results[i], cau = kq[0].transcript.trim(), p = null;
-        if (!choLenh && !hoi) {   // chọn cách nghe hợp lệnh nhất trong các phương án của trình duyệt
-          var ds = [];
-          for (var j = 0; j < kq.length; j++) { var c = kq[j].transcript.trim(); if (c) ds.push({ c: c, p: phanTich(c) }); }
-          var tot = ds.filter(function (x) { return x.p && x.p.lenh; })[0] || ds.filter(function (x) { return x.p && x.p.hoi; })[0] || ds[0];
-          if (tot) { cau = tot.c; p = tot.p; }
-        }
-        if (cau) lam(cau, p);
+        if (!e.results[i].isFinal) chuTam(k, e.results[i][0].transcript.trim());
+        else chot(k, e.results[i]);
       }
     };
     r.onerror = function (e) {
+      if (cu()) return;
+      lanSK = Date.now();
       if (e.error === "no-speech" || e.error === "aborted") return;
+      if (e.error === "network") {   // mất mạng: báo một lần, nghe lại sau 1, 2, 4… giây (tối đa 10)
+        if (!doiLai) thongBao("Mất mạng: robot sẽ tự nghe lại khi có mạng", "Nhận giọng nói cần có mạng", true);
+        doiLai = Math.min(doiLai ? doiLai * 2 : 1000, 10000); return;
+      }
+      if (e.error === "audio-capture" && ray) {   // luồng micro lọc ồn không dùng được trên máy này: về micro thường
+        coLuong = false; dongMic(); thongBao("Robot chuyển sang micro thường", "Micro lọc ồn không chạy trên máy này", true); return;
+      }
       var lydo = { "not-allowed": "Trình duyệt chưa cho dùng micro: bấm biểu tượng ổ khóa trên thanh địa chỉ, cho phép Micro",
-        "service-not-allowed": "Trình duyệt chưa cho dùng micro", "audio-capture": "Không thấy micro trên máy này",
-        "network": "Mất mạng: nhận giọng nói cần có mạng" }[e.error] || ("Lỗi micro: " + e.error);
+        "service-not-allowed": "Trình duyệt chưa cho dùng micro", "audio-capture": "Không thấy micro trên máy này" }[e.error] || ("Lỗi micro: " + e.error);
       thongBao(lydo, "", true);
-      if (e.error !== "network") tat();
+      tat();
     };
-    r.onend = function () { if (dangNghe) { try { r.start(); } catch (x) { setTimeout(function () { if (dangNghe) try { r.start(); } catch (y) {} }, 400); } } };
+    r.onend = function () { if (cu()) return; dangChay = false; lanSK = Date.now(); if (dangNghe) setTimeout(khoiDong, doiLai); };
     return r;
+  }
+  function khoiDong() {   // bắt đầu (lại) một phiên nghe
+    if (!dangNghe || dangChay) return;
+    moMic(function (tr) {
+      if (!dangNghe || dangChay) return;
+      try { if (tr) mic.start(tr); else mic.start(); }
+      catch (e) {
+        if (tr && e && e.name !== "InvalidStateError" && ++hongTr >= 2) { coLuong = false; dongMic(); }   // trình duyệt không nhận luồng lọc ồn: về micro thường
+        setTimeout(function () { if (dangNghe && !dangChay) khoiDong(); }, 400);
+      }
+    });
+  }
+  function ngheLai() {   // bỏ phiên đang có (đứng im, đổi micro), mở phiên mới
+    var cuMic = mic; mic = taoMic(); dangChay = false;
+    try { if (cuMic) cuMic.abort(); } catch (e) {}
+    khoiDong();
+  }
+  function trongCanh() { if (dangNghe && Date.now() - lanSK > 25000) { lanSK = Date.now(); ngheLai(); } }
+  function batDau() {   // bật nghe: nút 🎤, đọc chính tả cho phiếu Sửa
+    mic = mic || taoMic(); dangNghe = true; doiLai = 0; lanSK = Date.now();
+    khoiDong();
+    nut.classList.add("on"); nut.textContent = "🎤 Đang nghe";
+    if (!canh) canh = setInterval(trongCanh, 5000);
   }
   function bat() {
     if (!SR) { thongBao("Trình duyệt này không nghe được giọng nói", "Mở trang bằng Chrome hoặc Edge", true); return; }
     if (location.protocol === "file:") thongBao("Mở trang trên mạng (github.io) để dùng micro", "Trang mở từ tệp trên máy có thể không nghe được", true);
-    mic = mic || taoMic(); dangNghe = true;
-    try { mic.start(); } catch (e) {}
-    nut.classList.add("on"); nut.textContent = "🎤 Đang nghe";
+    batDau();
     setTimeout(function () { if (dangNghe) napDL(function () {}); }, 2500);   // tải sẵn dữ liệu tra cứu để lần hỏi đầu trả lời ngay
     var daXem = false; try { daXem = localStorage.getItem("tgDaXem") === "1"; localStorage.setItem("tgDaXem", "1"); } catch (e) {}
-    if (!daXem) moHop(); else nhan("🎤 Robot đang nghe lệnh", "Cô cứ giảng bình thường, robot chỉ làm khi nghe lệnh", "ok");
+    if (!daXem) moHop(); else nhan("🎤 Robot đang nghe lệnh", "Cô cứ giảng bình thường, robot chỉ làm khi nghe lệnh. Lớp ồn: gọi “Niu ơi” trước lệnh", "ok");
   }
   function tat() {
-    dangNghe = false; choLenh = null; dongHoi(); huyTam();
+    dangNghe = false; dangChay = false; choLenh = null; dongHoi(); huyTam();
+    if (canh) { clearInterval(canh); canh = null; }
     try { mic && mic.stop(); } catch (e) {}
+    dongMic();
     nut.classList.remove("on"); nut.textContent = "🎤";
     nhan("Đã tắt micro", "", "ok");
   }
@@ -935,11 +1094,13 @@
     phanTich: phanTich,
     tim: tim,
     lam: lam,
+    bat: function () { if (!dangNghe) bat(); },
+    tat: function () { if (dangNghe) tat(); },
     docMotCau: function (cb) {
       if (!SR) { thongBao("Trình duyệt này không nghe được giọng nói", "Mở trang bằng Chrome hoặc Edge", true); return false; }
       var tuTat = !dangNghe;
       choLenh = function (cau) { cb(cau); if (tuTat) tat(); };
-      if (!dangNghe) { mic = mic || taoMic(); dangNghe = true; try { mic.start(); } catch (e) {} nut.classList.add("on"); nut.textContent = "🎤 Đang nghe"; }
+      if (!dangNghe) batDau();
       nhan("🎤 Cô nói nội dung cần sửa…", "", "", false);
       return true;
     }
