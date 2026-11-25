@@ -18,7 +18,7 @@ window.HO_SO = {
   tuongTac: "https://phong-tuong-tac.onrender.com",
   /* Phòng làm bài có máy chủ bổ sung theo chương (ngoài phòng chính của khối ở mục "ph" phía trên) */
   phongPhu: { 10: [{ ten: "Chương II · Động học · Mở rộng cuối bài", moTa: "280 câu: Chương II Bài 8-12 (7 nhóm), Bài 9-12 từ tài liệu GV (4 nhóm), Chương III. Động lực học Bài 13-15 (3 nhóm cuối)", url: "https://phong-k10-chuong2-mo-rong.onrender.com" }],
-    11: [{ ten: "Chương II · Sóng", moTa: "273 câu: 6 nhóm theo bài (Bài 8, 9, 11, 12, 13, 15, 92 câu) và 7 nhóm Mở rộng ôn tập HK I (Dao động, Sóng; 181 câu)", url: "https://phong-tuong-tac-k11-chuong-2.onrender.com" }],
+    11: [{ ten: "Chương II · Sóng", moTa: "273 câu: 6 nhóm theo bài (Bài 8, 9, 11, 12, 13, 15, 92 câu) và 7 nhóm Mở rộng ôn tập HK I (Dao động, Sóng; 181 câu); kèm thí nghiệm ảo Bài 10. Đo tần số của sóng âm", url: "https://phong-tuong-tac-k11-chuong-2.onrender.com" }],
     12: [{ ten: "Chương 2 · Chất khí", moTa: "708 câu: 26 buổi luyện tập (521 câu), Mở rộng ôn tập Bài 8-12, Đề tổng hợp Bài 8-13", url: "https://phong-chuong-2-chat-khi.onrender.com" }] },
   congCu: [
     { id: "on", ten: "Ôn tập", moTa: "Lịch ôn, thẻ ghi nhớ, đề tổng hợp (trang cho học sinh)", khoi: {} },
@@ -61,6 +61,7 @@ window.HO_SO = {
         { ten: "Bài giảng Bài 9. Sóng ngang. Sóng dọc. Sự truyền năng lượng của sóng cơ", trang: "bai-giang/k11-B9.html", ghiChu: BG11_GC },
         { ten: "Bài tập · Bài 8. Mô tả sóng", trang: "bai-giang/k11-bai-tap.html#B8", ghiChu: BT11_GC },
         { ten: "Bài tập · Bài 9. Sóng ngang. Sóng dọc", trang: "bai-giang/k11-bai-tap.html#B9", ghiChu: BT11_GC },
+        { ten: "Thực hành · Bài 10. Đo tần số của sóng âm (thí nghiệm ảo)", trang: "bai-giang/k11-B10-thi-nghiem.html", ghiChu: "Thí nghiệm ảo để giáo viên biểu diễn trên lớp: nối dây loa/micro với máy hiện sóng, chọn nguồn âm (10 nguồn + âm thoa 440 Hz), đọc số ô và TIME/DIV để tính chu kì T và tần số f, ghi Bảng 10.1, câu hỏi trang 42 và luyện đọc màn hình như Hình 10.2 SGK. Chế độ giáo viên (cuối trang, mật khẩu gv): sửa tần số thật, tần số ngẫu nhiên, xuất CSV, in báo cáo. Học sinh làm cùng thí nghiệm này trong phòng làm bài K11 Chương II Sóng." },
         { ten: "Bài giảng Bài 11. Sóng điện từ", trang: "bai-giang/k11-B11.html", ghiChu: BG11_GC },
         { ten: "Bài tập · Bài 11. Sóng điện từ", trang: "bai-giang/k11-bai-tap.html#B11", ghiChu: BT11_GC },
         { ten: "Bài giảng Bài 12. Giao thoa sóng", trang: "bai-giang/k11-B12.html", ghiChu: BG11_GC },

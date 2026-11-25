@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Thí nghiệm ảo – Đo tần số của sóng âm (Vật lí 11 KNTT – Bài 10)</title>
+<style>
+:root{--blue:#1f4e9c;--blue2:#2c5a9e;--bg:#eef2f7;--card:#fff;--line:#d5dde8;--txt:#1f2937;--muted:#6b7280;--ok:#16a34a;--bad:#dc2626;--hl:#fff7e0}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--txt);font-size:15px}
+header.top{background:linear-gradient(90deg,#1f4e9c,#2f6fd1);color:#fff;padding:10px 18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px}
+header.top h1{margin:0;font-size:19px}
+header.top small{opacity:.9}
+.wrap{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:14px;padding:14px;max-width:1500px;margin:auto}
+.wrap.noctrl{grid-template-columns:minmax(0,1fr)}
+.wrap.noctrl .ctrl{display:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;box-shadow:0 2px 6px rgba(20,40,80,.06)}
+.cardhead{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.cardhead h2{margin:0;color:var(--blue);font-size:18px;letter-spacing:.3px}
+.btn{border:1px solid #b8c4d6;background:#f5f8fc;border-radius:8px;padding:6px 11px;cursor:pointer;font:inherit;font-size:14px}
+.btn:hover{background:#e7eef8}
+.btn.pri{background:var(--blue);color:#fff;border-color:var(--blue)}
+.btn.pri:hover{background:#173f80}
+.btn.red{border-color:#e7a3a3;color:#b91c1c;background:#fff}
+.chk{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:8px;padding:5px 9px;background:#fff;cursor:pointer;font-weight:600}
+.stage{position:relative;width:100%;aspect-ratio:1000/620;background:linear-gradient(#f7f9fc,#e9eef5);border:1px solid var(--line);border-radius:10px;overflow:hidden;touch-action:none}
+.stage svg{position:absolute;inset:0;width:100%;height:100%;user-select:none}
+#scr{position:absolute;left:45%;top:12.903%;width:45%;height:58.065%;cursor:crosshair;border-radius:3px}
+.measure{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin-top:10px;padding:8px 10px;border:1px dashed #b8c4d6;border-radius:10px;background:#fafcff}
+.measure b{color:var(--blue)}
+.measure input[type=text],.measure input[type=number]{width:72px;padding:5px;border:1px solid #b8c4d6;border-radius:6px;font:inherit}
+.ro{font-family:Consolas,monospace;background:#eef3fa;border-radius:6px;padding:2px 7px}
+.ctrl h3{color:var(--blue);margin:14px 0 6px;font-size:16px}
+#hint{border:1px solid var(--line);border-radius:10px;padding:10px;min-height:76px;background:#fbfcfe;line-height:1.45}
+#hint.flash{background:#fff1f1;border-color:#f3b0b0;color:#a11}
+ol.steps{padding-left:20px;margin:0;line-height:1.4;font-size:14px}
+ol.steps li{margin:5px 0;padding:3px 5px;border-radius:6px}
+ol.steps li.cur{background:var(--hl);outline:1px solid #f1d58a}
+ol.steps li .ok{color:var(--ok);font-weight:700;display:none}
+ol.steps li.done .ok{display:inline}
+ol.steps b{color:#1f3d6e}
+.info{font-size:14px;color:#334;background:#f3f6fa;border-radius:8px;padding:7px 9px;margin-top:8px}
+.full{grid-column:1/-1}
+table.dt{border-collapse:collapse;width:100%;font-size:14px;margin:6px 0}
+table.dt th,table.dt td{border:1px solid #c9d3e1;padding:4px 6px;text-align:center}
+table.dt th{background:#e8eef7;color:#1f3d6e}
+table.dt input{width:78px;padding:3px;border:1px solid #b8c4d6;border-radius:5px;text-align:center;font:inherit}
+.good{color:var(--ok);font-weight:700}.badx{color:var(--bad);font-weight:700}
+.grp{border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin:10px 0;background:#fcfdff}
+.grp h4{margin:2px 0 6px;color:var(--blue)}
+.sum{background:#f4f8ff;border-radius:8px;padding:6px 10px;font-size:15px}
+.sum math{font-size:17px}
+.formula{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:6px 14px;background:#f7f9fc;border:1px solid var(--line);border-radius:10px;padding:8px;margin:8px 0}
+.formula math{font-size:18px}
+.muted{color:var(--muted)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.row input[type=text]{padding:5px;border:1px solid #b8c4d6;border-radius:6px;font:inherit}
+details{border:1px solid var(--line);border-radius:8px;padding:6px 10px;margin:6px 0;background:#fff}
+details summary{cursor:pointer;font-weight:600}
+#pc{width:100%;max-width:420px;aspect-ratio:10/8;border-radius:6px;background:#06140c;display:block}
+.gvgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:6px}
+.gvgrid label{font-size:13px}.gvgrid input{width:80px}
+svg .lbl{font:700 15px "Segoe UI",Arial;text-anchor:middle}
+svg .ktitle{font:700 11px "Segoe UI",Arial;text-anchor:middle;fill:#1f2937}
+svg .klab{font:600 10px "Segoe UI",Arial;text-anchor:middle;fill:#222}
+svg .ktick{stroke:#555;stroke-width:1.2}
+svg .knob{cursor:ns-resize;outline:none}
+svg .knob:focus circle.body{stroke:#2f6fd1;stroke-width:3}
+svg .clk{cursor:pointer}
+svg .plug{cursor:grab}
+svg #mic{cursor:ew-resize}
+#waves path{fill:none;stroke:#3b5bc5;stroke-width:4;stroke-linecap:round;opacity:0}
+#waves.on path{animation:wv 1s infinite}
+#waves.on path:nth-child(2){animation-delay:.2s}#waves.on path:nth-child(3){animation-delay:.4s}
+@keyframes wv{0%{opacity:0}40%{opacity:.85}100%{opacity:0}}
+#fork.ring .prong{animation:vib .06s infinite alternate}
+@keyframes vib{from{transform:translateX(-.8px)}to{transform:translateX(.8px)}}
+.explainTxt rect{fill:#fff8d6;stroke:#d4a72c}
+.explainTxt text{font:600 12px "Segoe UI",Arial;fill:#5b4200}
+@media (max-width:1050px){.wrap{grid-template-columns:1fr}}
+.printonly{display:none}
+@media print{
+ body{background:#fff}
+ header.top,.wrap,.noprint,#qbox,#practice,#gvsec{display:none!important}
+ .printonly{display:block}
+ .card{box-shadow:none;border:none}
+ table.dt input{border:none}
+ @page{size:A4;margin:14mm}
+}
+</style>
+</head>
+<body>
+<header class="top">
+ <h1>THÍ NGHIỆM ẢO · ĐO TẦN SỐ CỦA SÓNG ÂM</h1>
+ <small>Vật lí 11 – Kết nối tri thức với cuộc sống · Bài 10 (SGK trang 41–43)</small>
+</header>
+
+<main class="wrap" id="wrap">
+ <section class="card bench">
+  <div class="cardhead">
+   <h2>BỘ THÍ NGHIỆM</h2>
+   <div class="row">
+    <label class="chk"><input type="checkbox" id="chkExplain"> Hiện giải thích</label>
+    <button class="btn pri" id="btnToggleCtrl">⇥ Ẩn khung điều khiển</button>
+   </div>
+  </div>
+  <div class="stage" id="stage">
+   <svg id="svg" viewBox="0 0 1000 620" aria-label="Bộ thí nghiệm đo tần số sóng âm">
+    <defs>
+     <linearGradient id="gWood" x1="0" x2="1"><stop offset="0" stop-color="#8a5a2b"/><stop offset=".5" stop-color="#a8723d"/><stop offset="1" stop-color="#7a4d22"/></linearGradient>
+     <radialGradient id="gKnob" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#8b95a1"/><stop offset=".6" stop-color="#3b4450"/><stop offset="1" stop-color="#1c2128"/></radialGradient>
+     <linearGradient id="gPanel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9edf2"/><stop offset="1" stop-color="#c9d1db"/></linearGradient>
+     <linearGradient id="gBox" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a3f46"/><stop offset="1" stop-color="#23272c"/></linearGradient>
+     <filter id="sh" x="-10%" y="-10%" width="130%" height="130%"><feDropShadow dx="2" dy="4" stdDeviation="4" flood-opacity=".25"/></filter>
+    </defs>
+    <!-- bàn -->
+    <rect x="0" y="600" width="1000" height="20" fill="#cfd6df"/>
+    <!-- LOA -->
+    <g id="loa" filter="url(#sh)">
+     <title>Loa điện động</title>
+     <rect x="40" y="40" width="110" height="200" rx="10" fill="url(#gWood)" stroke="#5a3a1a" stroke-width="3"/>
+     <rect x="50" y="50" width="90" height="180" rx="6" fill="#2b2b2b"/>
+     <circle cx="95" cy="88" r="16" fill="#444" stroke="#111" stroke-width="3"/><circle cx="95" cy="88" r="6" fill="#1a1a1a"/>
+     <text x="95" y="132" class="lbl" fill="#ddd">LOA</text>
+     <circle cx="95" cy="185" r="36" fill="#333" stroke="#111" stroke-width="4"/><circle cx="95" cy="185" r="22" fill="#555"/><circle cx="95" cy="185" r="9" fill="#222"/>
+     <circle cx="95" cy="228" r="3" fill="#111"/>
+    </g>
+    <g id="waves"><path d="M160 160 Q172 185 160 210"/><path d="M174 146 Q192 185 174 224"/><path d="M188 132 Q212 185 188 238"/></g>
+    <!-- ÂM THOA -->
+    <g id="fork" style="display:none" transform="translate(178,70)">
+     <title>Âm thoa 440 Hz trên hộp cộng hưởng</title>
+     <rect x="-6" y="118" width="52" height="22" rx="3" fill="#b07a3e" stroke="#6b4520"/>
+     <g class="prong"><rect x="6" y="20" width="6" height="80" fill="#9aa3ad" stroke="#555"/><rect x="28" y="20" width="6" height="80" fill="#9aa3ad" stroke="#555"/></g>
+     <path d="M6 100 Q20 116 34 100" fill="none" stroke="#9aa3ad" stroke-width="6"/>
+     <rect x="17" y="106" width="6" height="14" fill="#9aa3ad" stroke="#555"/>
+     <text x="20" y="14" class="ktitle">440 Hz</text>
+    </g>
+    <!-- HỘP NGUỒN ÂM -->
+    <g id="box">
+     <rect x="20" y="330" width="310" height="262" rx="10" fill="url(#gBox)" stroke="#111" filter="url(#sh)"/>
+     <text x="320" y="364" text-anchor="end" style="font:700 15px Segoe UI,Arial" fill="#fff">HỘP NGUỒN ÂM</text>
+     <circle cx="52" cy="360" r="10" fill="#111" stroke="#d33" stroke-width="3"/>
+     <text x="68" y="365" style="font:700 11px Segoe UI,Arial" fill="#ddd">RA LOA</text>
+     <text x="32" y="396" style="font:700 10px Segoe UI,Arial" fill="#bbb">CHỌN NGUỒN ÂM</text>
+     <line x1="258" y1="380" x2="258" y2="580" stroke="#555"/>
+     <g id="srcBtns"></g>
+     <rect x="32" y="540" width="218" height="34" rx="5" fill="#120909" stroke="#444"/>
+     <text id="ledTxt" x="141" y="563" text-anchor="middle" style="font:700 14px Consolas,monospace" fill="#ff4a2a">NGUỒN ĐANG CHỌN: —</text>
+     <g id="boxPow" class="clk">
+      <title>Công tắc nguồn hộp nguồn âm</title>
+      <rect x="272" y="458" width="40" height="38" rx="5" fill="#222" stroke="#000"/>
+      <rect id="boxPowR" x="277" y="463" width="30" height="28" rx="3" fill="#b91c1c"/>
+      <text x="292" y="476" text-anchor="middle" style="font:700 11px Arial" fill="#fff">I</text>
+      <circle cx="292" cy="485" r="3.5" fill="none" stroke="#fff" stroke-width="1.5"/>
+     </g>
+     <circle id="boxLed" cx="321" cy="477" r="5" fill="#3a1010"/>
+     <text x="292" y="512" class="ktitle" style="fill:#ddd">NGUỒN</text>
+    </g>
+    <!-- MÁY HIỆN SÓNG -->
+    <g id="scope">
+     <rect x="360" y="18" width="630" height="580" rx="14" fill="url(#gPanel)" stroke="#8a96a3" filter="url(#sh)"/>
+     <path d="M360 52 V32 a14 14 0 0 1 14 -14 H976 a14 14 0 0 1 14 14 V52 Z" fill="#2c5a9e"/>
+     <text x="675" y="41" text-anchor="middle" style="font:700 14px Segoe UI,Arial" fill="#fff">MÁY HIỆN SÓNG (DAO ĐỘNG KÍ ĐIỆN TỬ) – 1 KÊNH</text>
+     <rect x="432" y="64" width="486" height="394" rx="10" fill="#1a1d21" stroke="#555"/>
+     <g id="scPow" class="clk">
+      <title>Công tắc nguồn máy hiện sóng</title>
+      <rect x="378" y="543" width="40" height="38" rx="5" fill="#222" stroke="#000"/>
+      <rect id="scPowR" x="383" y="548" width="30" height="28" rx="3" fill="#b91c1c"/>
+      <text x="398" y="561" text-anchor="middle" style="font:700 11px Arial" fill="#fff">I</text>
+      <circle cx="398" cy="570" r="3.5" fill="none" stroke="#fff" stroke-width="1.5"/>
+     </g>
+     <circle id="scLed" cx="430" cy="562" r="5" fill="#3a1010"/>
+     <text x="398" y="595" class="ktitle">NGUỒN</text>
+     <circle cx="398" cy="505" r="11" fill="#c0c6cd" stroke="#555" stroke-width="2"/><circle cx="398" cy="505" r="4" fill="#222"/>
+     <text x="398" y="530" class="ktitle">CH1</text>
+     <g id="hbtn"></g>
+    </g>
+    <!-- MICRO -->
+    <g id="mic">
+     <title>Micro – kéo ngang để thay đổi khoảng cách tới nguồn âm</title>
+     <ellipse cx="0" cy="270" rx="32" ry="6" fill="#333"/>
+     <rect x="-3" y="186" width="6" height="84" fill="#8f979f"/>
+     <rect x="-40" y="168" width="80" height="22" rx="11" fill="#4b5158" stroke="#222"/>
+     <rect x="-40" y="168" width="22" height="22" rx="11" fill="#2a2e33"/>
+     <line x1="-34" y1="172" x2="-34" y2="186" stroke="#666"/><line x1="-29" y1="170" x2="-29" y2="188" stroke="#666"/><line x1="-24" y1="172" x2="-24" y2="186" stroke="#666"/>
+     <text id="dLbl" x="0" y="292" class="ktitle">d = 15 cm</text>
+    </g>
+    <!-- dây và chốt -->
+    <path id="wireL" pointer-events="none" fill="none" stroke="#222" stroke-width="4"/>
+    <path id="wireM" pointer-events="none" fill="none" stroke="#222" stroke-width="4"/>
+    <g id="plugL" class="plug"><title>Chốt L (đỏ) của loa – cắm vào RA LOA</title><rect x="-7" y="-32" width="14" height="24" rx="3" fill="#d32020" stroke="#7a0d0d"/><rect x="-3" y="-9" width="6" height="10" fill="#cfcfcf"/><text x="0" y="-16" text-anchor="middle" style="font:700 10px Arial" fill="#fff">L</text></g>
+    <g id="plugM" class="plug"><title>Chốt M (đen) của micro – cắm vào CH1</title><rect x="-7" y="-32" width="14" height="24" rx="3" fill="#1b1b1b" stroke="#000"/><rect x="-3" y="-9" width="6" height="10" fill="#cfcfcf"/><text x="0" y="-16" text-anchor="middle" style="font:700 10px Arial" fill="#fff">M</text></g>
+    <!-- giải thích -->
+    <g id="explainG" class="explainTxt" style="display:none">
+     <rect x="20" y="4" width="250" height="26" rx="6"/><text x="30" y="22">① Loa: dao động điện → sóng âm</text>
+     <rect x="196" y="112" width="160" height="44" rx="6"/><text x="204" y="130">② Micro: sóng âm →</text><text x="204" y="148">tín hiệu điện cùng tần số</text>
+         </g>
+   </svg>
+   <canvas id="scr" aria-label="Màn hình dao động kí"></canvas>
+  </div>
+  <div class="measure noprint">
+   <span>🎯 <b>Con trỏ đo:</b> bấm lên màn hình để đặt A, B (kéo để dời)</span>
+   <span class="ro" id="roCur">A = – · B = – · Δx = – ô · Δt = – ms</span>
+   <button class="btn" id="btnClrCur">Xoá con trỏ</button>
+   <label class="chk" style="font-weight:500"><input type="checkbox" id="chkNoSync"> Tắt đồng bộ</label>
+   <span style="flex-basis:100%;height:0"></span>
+   <label>Δx (ô) <input type="text" id="inDx" inputmode="decimal"></label>
+   <label>Số chu kì n <input type="number" id="inN" min="1" step="1" value="1"></label>
+   <button class="btn pri" id="btnRec">＋ Ghi vào bảng</button>
+   <span class="muted" id="recMsg"></span>
+  </div>
+ </section>
+
+ <aside class="card ctrl" id="ctrl">
+  <div class="cardhead"><h2>ĐIỀU KHIỂN</h2></div>
+  <label class="chk"><input type="checkbox" id="chkSound"> Nghe âm thanh thật trên loa máy tính</label>
+  <div id="hint" style="margin-top:10px"></div>
+  <h3>Hướng dẫn thao tác</h3>
+  <ol class="steps" id="steps">
+   <li id="s1"><b>Cắm chốt:</b> bấm (hoặc kéo) chốt L (đỏ) của loa cắm vào RA LOA, chốt M (đen) của micro cắm vào CH1 của máy hiện sóng. <span class="ok">✓</span></li>
+   <li id="s2"><b>Bật nguồn:</b> bật công tắc NGUỒN của máy hiện sóng và của hộp nguồn âm. <span class="ok">✓</span></li>
+   <li id="s3"><b>Phát âm:</b> chọn một nguồn N1 – N10 (hoặc ÂM THOA rồi bấm GÕ BÚA). <span class="ok">✓</span></li>
+   <li id="s4"><b>Chỉnh hình:</b> xoay núm TIME/DIV, VOLT/DIV (kéo chuột, lăn chuột hoặc phím mũi tên) để thấy rõ 2 – 3 chu kì, biên độ chiếm vài ô. <span class="ok">✓</span></li>
+   <li id="s5"><b>Đo:</b> dùng DỊCH NGANG, DỊCH DỌC đưa đỉnh sóng trùng vạch chia; đặt con trỏ A, B; đếm số ô Δx ứng với n chu kì, ghi vào bảng. <span class="ok">✓</span></li>
+   <li id="s6"><b>Lặp lại:</b> đo ít nhất 3 lần cho mỗi nguồn và với ít nhất 2 nguồn âm, rồi xử lí kết quả. <span class="ok">✓</span></li>
+  </ol>
+  <div class="info" id="info">Nguồn đang đo: — · d = 15 cm</div>
+  <div style="margin-top:12px;text-align:center"><button class="btn red" id="btnReset">↺ Làm lại từ đầu</button></div>
+ </aside>
+
+ <section class="card full" id="tableSec">
+  <div class="cardhead"><h2>BẢNG SỐ LIỆU – Bảng 10.1</h2>
+   <div class="row noprint">
+    <label class="chk" style="font-weight:500"><input type="checkbox" id="chkSelf" checked> Học sinh tự tính T, f</label>
+    <label>Làm tròn đến
+     <select id="selDec"><option value="1">hàng phần mười</option><option value="2" selected>hàng phần trăm</option></select></label>
+   </div>
+  </div>
+  <div class="row" style="margin-bottom:6px">
+   <label>Họ tên: <input type="text" id="hsTen" size="24"></label>
+   <label>Lớp: <input type="text" id="hsLop" size="6"></label>
+   <label>Nhóm: <input type="text" id="hsNhom" size="4"></label>
+  </div>
+  <div class="formula" id="formulas"></div>
+  <div id="tables"></div>
+ </section>
+
+ <section class="card full noprint" id="qbox" style="display:none">
+  <div class="cardhead"><h2>GIẢI THÍCH &amp; CÂU HỎI (Hoạt động trang 42)</h2></div>
+  <p>③ <b>Dao động kí</b> vẽ đồ thị điện áp u theo thời gian t. Trục ngang: mỗi ô ứng với giá trị TIME/DIV; trục dọc: mỗi ô ứng với VOLT/DIV. Đếm số ô Δx ứng với n chu kì sẽ suy ra chu kì T và tần số f của sóng âm.</p>
+  <details><summary>1. Sóng âm truyền tới dao động kí như thế nào?</summary><p>Sóng âm từ nguồn truyền qua không khí tới màng micro, làm màng dao động. Micro biến dao động âm thành tín hiệu điện, đưa vào kênh CH1 của dao động kí và hiện thành đồ thị trên màn hình.</p></details>
+  <details><summary>2. Tại sao tần số của tín hiệu đưa vào dao động kí bằng tần số của nguồn âm?</summary><p>Màng micro dao động cưỡng bức dưới tác dụng của sóng âm nên dao động với đúng tần số của nguồn. Tín hiệu điện do micro tạo ra vì vậy có cùng tần số đó.</p></details>
+  <details><summary>3. Thiết kế phương án đo tần số sóng âm với các dụng cụ trên.</summary><p>Đặt micro gần nguồn âm, nối micro với CH1. Bật nguồn và chỉnh TIME/DIV, VOLT/DIV để thấy rõ 2 – 3 chu kì. Đếm số ô Δx ứng với n chu kì, tính T = Δx·TIME/DIV/n và f = 1/T. Lặp lại ít nhất 3 lần cho mỗi nguồn âm.</p></details>
+  <details><summary>4. Làm thế nào để giảm ảnh hưởng của tiếng ồn bên ngoài?</summary><p>Làm thí nghiệm ở nơi yên tĩnh, đặt micro gần và hướng thẳng vào nguồn âm, chỉnh âm lượng nguồn đủ lớn so với tiếng ồn. Cũng có thể dùng âm thoa gắn trên hộp cộng hưởng.</p></details>
+ </section>
+
+ <section class="card full noprint" id="practice">
+  <div class="cardhead"><h2>LUYỆN ĐỌC MÀN HÌNH (giống Hình 10.2 SGK)</h2><button class="btn" id="btnNewP">⟳ Hình khác</button></div>
+  <div class="row" style="align-items:flex-start">
+   <canvas id="pc"></canvas>
+   <div style="min-width:240px">
+    <p id="pInfo"></p>
+    <p><label>T = <input type="text" id="pT" size="7" inputmode="decimal"> ms</label></p>
+    <p><label>f = <input type="text" id="pF" size="7" inputmode="decimal"> Hz</label></p>
+    <button class="btn pri" id="btnChkP">Kiểm tra</button>
+    <p id="pRes"></p>
+   </div>
+  </div>
+ </section>
+
+ <section class="card full noprint" id="gvsec">
+  <div class="cardhead"><h2>CHẾ ĐỘ GIÁO VIÊN</h2>
+   <div class="row"><input type="password" id="gvPw" placeholder="Mật khẩu" size="10"><button class="btn" id="btnGv">Mở</button></div></div>
+  <div id="gvPanel" style="display:none">
+   <p class="muted">Tần số thật của các nguồn (Hz) – có thể sửa trực tiếp:</p>
+   <div class="gvgrid" id="gvFreqs"></div>
+   <div class="row" style="margin-top:8px">
+    <label class="chk" style="font-weight:500"><input type="checkbox" id="chkShowTrue"> Hiện tần số trên nút nguồn</label>
+    <label class="chk" style="font-weight:500"><input type="checkbox" id="chkNoise" checked> Có nhiễu tín hiệu</label>
+    <button class="btn" id="btnRand">🎲 Tần số ngẫu nhiên mới</button>
+    <button class="btn" id="btnCsv">⬇ Xuất CSV</button>
+    <button class="btn" id="btnPrint">🖨 In báo cáo</button>
+   </div>
+  </div>
+ </section>
+</main>
+
+<script>
+"use strict";
+/* ================== HẰNG SỐ & TRẠNG THÁI ================== */
+const TD=[0.1,0.2,0.5,1,2,5,10];            // ms/ô
+const VD=[2,5,10,20,50,100,200];            // mV/ô
+const TDL=['0,1','0,2','0,5','1','2','5','10'];
+const VDL=['2','5','10','20','50','100','200'];
+const LS='dotanso_vl11_kntt_v1';
+const SOCK={L:{x:52,y:360},M:{x:398,y:505}};
+const REST={L:{x:132,y:308},M:{x:345,y:322}};
+const S={plugL:false,plugM:false,scopeOn:false,boxOn:false,src:null,freqs:[],forkF:440,strike:-99,
+ vol:0.5,micX:240,ti:4,vi:5,hpos:0,vpos:0,sync:true,noise:true,curA:null,curB:null,records:[],
+ selfCalc:true,dec:2,sound:false,showTrue:false,done4:{},pos:{L:null,M:null},gv:false};
+const $=id=>document.getElementById(id);
+const svg=$('svg'),NS='http://www.w3.org/2000/svg';
+const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+const fmt=(x,d)=>(+x).toFixed(d===undefined?S.dec:d).replace('.',',');
+const num=s=>parseFloat(String(s).trim().replace(',','.'));
+const srcName=i=>i===10?'Âm thoa':'N'+(i+1);
+const dist=()=>5+(S.micX-200)/140*45;   // cm
+function el(tag,a,p){const e=document.createElementNS(NS,tag);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e;}
+function svgPt(e){const p=svg.createSVGPoint();p.x=e.clientX;p.y=e.clientY;return p.matrixTransform(svg.getScreenCTM().inverse());}
+function genFreqs(){const a=[];while(a.length<10){const f=100+Math.round(Math.random()*1900);if(a.every(x=>Math.abs(x-f)>40))a.push(f);}return a;}
+
+/* ================== LƯU TRỮ ================== */
+function save(){try{localStorage.setItem(LS,JSON.stringify({freqs:S.freqs,records:S.records,dec:S.dec,selfCalc:S.selfCalc,
+ ten:$('hsTen').value,lop:$('hsLop').value,nhom:$('hsNhom').value}));}catch(e){}}
+function load(){try{const d=JSON.parse(localStorage.getItem(LS)||'null');if(d){if(Array.isArray(d.freqs)&&d.freqs.length===10)S.freqs=d.freqs;
+ if(Array.isArray(d.records))S.records=d.records;if(d.dec)S.dec=d.dec;if(typeof d.selfCalc==='boolean')S.selfCalc=d.selfCalc;
+ $('hsTen').value=d.ten||'';$('hsLop').value=d.lop||'';$('hsNhom').value=d.nhom||'';}}catch(e){}
+ if(S.freqs.length!==10)S.freqs=genFreqs();}
+
+/* ================== NÚM XOAY ================== */
+const knobs=[];
+function makeKnob(o){
+ const g=el('g',{class:'knob',tabindex:0},o.parent||svg);
+ el('title',{},g).textContent=o.tip||o.title||'';
+ if(o.title)el('text',{x:o.cx,y:o.cy-o.r-(o.labels?24:9),class:'ktitle'},g).textContent=o.title;
+ const ang=i=>-135+270*i/(o.labels.length-1);
+ if(o.labels)o.labels.forEach((L,i)=>{const a=ang(i)*Math.PI/180;
+  el('text',{x:o.cx+o.lr*Math.sin(a),y:o.cy-o.lr*Math.cos(a)+4,class:'klab'},g).textContent=L;
+  el('line',{x1:o.cx+(o.r+3)*Math.sin(a),y1:o.cy-(o.r+3)*Math.cos(a),x2:o.cx+(o.r+8)*Math.sin(a),y2:o.cy-(o.r+8)*Math.cos(a),class:'ktick'},g);});
+ el('circle',{cx:o.cx,cy:o.cy+3,r:o.r+2,fill:'rgba(0,0,0,.25)'},g);
+ el('circle',{cx:o.cx,cy:o.cy,r:o.r,fill:'url(#gKnob)',stroke:'#1b1f24','stroke-width':2,class:'body'},g);
+ const p=el('line',{x1:o.cx,y1:o.cy,x2:o.cx,y2:o.cy-o.r+4,stroke:'#ff4d2e','stroke-width':Math.max(3,o.r/7),'stroke-linecap':'round'},g);
+ o.refresh=()=>{const a=o.labels?ang(o.get()):-135+270*(o.get()-o.min)/(o.max-o.min);p.setAttribute('transform',`rotate(${a} ${o.cx} ${o.cy})`);};
+ o.bump=s=>{if(o.labels)o.set(clamp(o.get()+s,0,o.labels.length-1));else o.set(clamp(+(o.get()+s*o.step).toFixed(3),o.min,o.max));o.refresh();changed();};
+ g.addEventListener('pointerdown',e=>{e.preventDefault();g.focus();g.setPointerCapture(e.pointerId);
+  const sx=e.clientX,sy=e.clientY,v0=o.get();
+  const mv=ev=>{const d=(sy-ev.clientY)+(ev.clientX-sx);
+   if(o.labels)o.set(clamp(v0+Math.round(d/22),0,o.labels.length-1));else o.set(clamp(v0+d/160*(o.max-o.min),o.min,o.max));o.refresh();changed();};
+  const up=()=>{g.removeEventListener('pointermove',mv);g.removeEventListener('pointerup',up);g.removeEventListener('pointercancel',up);};
+  g.addEventListener('pointermove',mv);g.addEventListener('pointerup',up);g.addEventListener('pointercancel',up);});
+ g.addEventListener('wheel',e=>{e.preventDefault();o.bump(e.deltaY<0?1:-1);},{passive:false});
+ g.addEventListener('keydown',e=>{if(e.key==='ArrowUp'||e.key==='ArrowRight'){o.bump(1);e.preventDefault();}
+  else if(e.key==='ArrowDown'||e.key==='ArrowLeft'){o.bump(-1);e.preventDefault();}});
+ o.refresh();knobs.push(o);return o;
+}
+function smallBtn(x,y,txt,tip,fn){const g=el('g',{class:'clk'},$('hbtn'));el('title',{},g).textContent=tip;
+ el('rect',{x,y,width:20,height:18,rx:3,fill:'#1f4e9c'},g);el('text',{x:x+10,y:y+13,'text-anchor':'middle',style:'font:700 10px Arial',fill:'#fff'},g).textContent=txt;
+ g.addEventListener('click',fn);}
+
+/* ================== XÂY DỰNG THIẾT BỊ ================== */
+function buildBox(){
+ const P=$('srcBtns');P.innerHTML='';
+ for(let i=0;i<10;i++){const c=i%5,r=Math.floor(i/5),x=32+c*44,y=404+r*46;
+  const g=el('g',{class:'clk',id:'sb'+i},P);el('title',{},g).textContent='Chọn nguồn '+srcName(i);
+  el('rect',{x,y,width:38,height:38,rx:4,fill:'#f2f4f7',stroke:'#999',class:'face'},g);
+  el('circle',{cx:x+7,cy:y+7,r:3,fill:'#8a1a1a',class:'dot'},g);
+  el('text',{x:x+19,y:y+24,'text-anchor':'middle',style:'font:700 13px Segoe UI,Arial',fill:'#222'},g).textContent='N'+(i+1);
+  el('text',{x:x+19,y:y+35,'text-anchor':'middle',style:'font:600 8px Arial',fill:'#555',class:'tf'},g);
+  g.addEventListener('click',()=>pickSrc(i));}
+ const mk=(id,x,w,label,tip,fn)=>{const g=el('g',{class:'clk',id},P);el('title',{},g).textContent=tip;
+  el('rect',{x,y:500,width:w,height:30,rx:4,fill:'#f2f4f7',stroke:'#999',class:'face'},g);
+  el('text',{x:x+w/2,y:520,'text-anchor':'middle',style:'font:700 12px Segoe UI,Arial',fill:'#222'},g).textContent=label;g.addEventListener('click',fn);};
+ mk('sb10',32,100,'ÂM THOA','Chọn nguồn âm là âm thoa 440 Hz',()=>pickSrc(10));
+ mk('sbHit',140,110,'🔨 GÕ BÚA','Gõ búa cao su vào âm thoa',()=>{if(S.src!==10){flash('Hãy chọn nguồn ÂM THOA trước khi gõ búa.');return;}S.strike=performance.now()/1000;});
+}
+function buildKnobs(){
+ makeKnob({cx:292,cy:420,r:17,title:'ÂM LƯỢNG',min:0,max:1,step:.05,tip:'Âm lượng hộp nguồn âm',get:()=>S.vol,set:v=>S.vol=v});
+ knobs[0].refresh();
+ // chữ ÂM LƯỢNG nằm trên hộp tối -> đổi màu
+ makeKnob({cx:520,cy:548,r:26,lr:42,labels:TDL,title:'TIME/DIV (ms/ô)',tip:'Núm TIME/DIV – thời gian ứng với 1 ô ngang',get:()=>S.ti,set:v=>S.ti=v});
+ makeKnob({cx:655,cy:548,r:26,lr:42,labels:VDL,title:'VOLT/DIV (mV/ô)',tip:'Núm VOLT/DIV – điện áp ứng với 1 ô dọc',get:()=>S.vi,set:v=>S.vi=v});
+ makeKnob({cx:780,cy:528,r:17,title:'DỊCH NGANG',min:-5,max:5,step:.1,tip:'Dịch đồ thị theo phương ngang',get:()=>S.hpos,set:v=>S.hpos=v});
+ makeKnob({cx:890,cy:528,r:17,title:'DỊCH DỌC',min:-4,max:4,step:.1,tip:'Dịch đồ thị theo phương dọc',get:()=>S.vpos,set:v=>S.vpos=v});
+ smallBtn(757,556,'◀','Dịch trái 0,1 ô',()=>knobs[3].bump(-1));smallBtn(783,556,'▶','Dịch phải 0,1 ô',()=>knobs[3].bump(1));
+ smallBtn(867,556,'▼','Dịch xuống 0,1 ô',()=>knobs[4].bump(-1));smallBtn(893,556,'▲','Dịch lên 0,1 ô',()=>knobs[4].bump(1));
+ svg.querySelectorAll('.knob')[0].querySelector('.ktitle').style.fill='#ddd';
+}
+
+/* ================== HIỂN THỊ THIẾT BỊ ================== */
+const wire=(x1,y1,x2,y2)=>`M${x1} ${y1} C ${x1} ${y1+60}, ${x2} ${y2-60}, ${x2} ${y2}`;
+function plugPos(k){return S['plug'+k]?SOCK[k]:(S.pos[k]||REST[k]);}
+function renderPlugs(){
+ const L=plugPos('L'),M=plugPos('M');
+ $('plugL').setAttribute('transform',`translate(${L.x} ${L.y})`);$('plugM').setAttribute('transform',`translate(${M.x} ${M.y})`);
+ $('wireL').setAttribute('d',wire(95,240,L.x,L.y-32));$('wireL').setAttribute('stroke','#7a1010');
+ $('wireM').setAttribute('d',`M${S.micX+30} 270 C ${S.micX+90} 270, ${M.x} ${Math.min(M.y-150,300)}, ${M.x} ${M.y-32}`);
+}
+function renderMic(){$('mic').setAttribute('transform',`translate(${S.micX} 0)`);$('dLbl').textContent='d = '+Math.round(dist())+' cm';renderPlugs();}
+function renderBox(){
+ for(let i=0;i<=10;i++){const g=$('sb'+i);const sel=S.src===i;g.querySelector('.face').setAttribute('fill',sel?'#f6b73c':'#f2f4f7');
+  const d=g.querySelector('.dot');if(d)d.setAttribute('fill',sel&&S.boxOn?'#ff2a2a':'#8a1a1a');
+  const tf=g.querySelector('.tf');if(tf)tf.textContent=S.showTrue&&i<10?S.freqs[i]+' Hz':'';}
+ $('ledTxt').textContent=S.boxOn?('NGUỒN ĐANG CHỌN: '+(S.src===null?'—':srcName(S.src).toUpperCase())):'';
+ $('boxLed').setAttribute('fill',S.boxOn?'#ff2a2a':'#3a1010');$('boxPowR').setAttribute('fill',S.boxOn?'#16a34a':'#b91c1c');
+ $('scLed').setAttribute('fill',S.scopeOn?'#ff2a2a':'#3a1010');$('scPowR').setAttribute('fill',S.scopeOn?'#16a34a':'#b91c1c');
+ $('fork').style.display=S.src===10?'':'none';
+ $('info').textContent='Nguồn đang đo: '+(S.src===null?'—':srcName(S.src))+' · d = '+Math.round(dist())+' cm · Âm lượng '+Math.round(S.vol*100)+'%';
+}
+function pickSrc(i){if(!S.boxOn){flash('Hộp nguồn âm chưa bật nguồn – hãy bật công tắc NGUỒN của hộp nguồn âm.');return;}
+ S.src=i;if(i===10)S.strike=-99;renderBox();changed();}
+
+/* ================== KÉO THẢ CHỐT & MICRO ================== */
+function setupPlug(k){
+ const g=$('plug'+k),other=k==='L'?'M':'L';
+ g.addEventListener('pointerdown',e=>{e.preventDefault();g.setPointerCapture(e.pointerId);const p0=svgPt(e);let moved=false;
+  const mv=ev=>{const p=svgPt(ev);if(Math.hypot(p.x-p0.x,p.y-p0.y)>4)moved=true;if(moved){S['plug'+k]=false;S.pos[k]={x:p.x,y:p.y+16};renderPlugs();}};
+  const up=()=>{g.removeEventListener('pointermove',mv);g.removeEventListener('pointerup',up);
+   if(!moved){S['plug'+k]=!S['plug'+k];}
+   else{const p=S.pos[k];if(Math.hypot(p.x-SOCK[k].x,p.y-SOCK[k].y)<32)S['plug'+k]=true;
+    else if(Math.hypot(p.x-SOCK[other].x,p.y-SOCK[other].y)<32)flash(k==='L'?'Sai chốt! Chốt L của loa phải cắm vào RA LOA của hộp nguồn âm.':'Sai chốt! Chốt M của micro phải cắm vào CH1 của máy hiện sóng.');}
+   S.pos[k]=null;renderPlugs();changed();};
+  g.addEventListener('pointermove',mv);g.addEventListener('pointerup',up);});
+}
+function setupMic(){const g=$('mic');
+ g.addEventListener('pointerdown',e=>{e.preventDefault();g.setPointerCapture(e.pointerId);const x0=svgPt(e).x,m0=S.micX;
+  const mv=ev=>{S.micX=clamp(m0+svgPt(ev).x-x0,200,340);renderMic();renderBox();};
+  const up=()=>{g.removeEventListener('pointermove',mv);g.removeEventListener('pointerup',up);changed();};
+  g.addEventListener('pointermove',mv);g.addEventListener('pointerup',up);});}
+
+/* ================== MÔ HÌNH VẬT LÍ ================== */
+function signal(t){
+ const r={on:S.scopeOn&&S.plugM,f:0,U0:0};
+ if(!r.on||S.src===null)return r;
+ const d=dist();
+ if(S.src<10){if(S.boxOn&&S.plugL){r.f=S.freqs[S.src];r.U0=400*S.vol*(10/d);}}
+ else{const dt=t-S.strike;if(dt>=0&&dt<14){r.f=S.forkF;r.U0=520*(10/d)*Math.exp(-dt/2.5);}}
+ return r;
+}
+
+/* ================== ÂM THANH (Web Audio) ================== */
+let AC=null,OSC=null,GN=null;
+function initAudio(){if(AC){AC.resume();return;}try{AC=new (window.AudioContext||window.webkitAudioContext)();OSC=AC.createOscillator();GN=AC.createGain();
+ GN.gain.value=0;OSC.type='sine';OSC.connect(GN).connect(AC.destination);OSC.start();}catch(e){AC=null;}}
+function audio(t){if(!AC)return;let f=0,g=0;
+ if(S.sound&&S.src!==null){if(S.src<10){if(S.boxOn&&S.plugL){f=S.freqs[S.src];g=0.18*S.vol;}}
+  else{const dt=t-S.strike;if(dt>=0&&dt<14){f=S.forkF;g=0.25*Math.exp(-dt/2.5);}}}
+ if(f)OSC.frequency.setTargetAtTime(f,AC.currentTime,0.01);GN.gain.setTargetAtTime(g,AC.currentTime,0.03);}
+
+/* ================== VẼ MÀN HÌNH DAO ĐỘNG KÍ ================== */
+const scr=$('scr'),ctx=scr.getContext('2d');
+function fitCanvas(c){const r=c.getBoundingClientRect(),d=window.devicePixelRatio||1;const w=Math.round(r.width*d),h=Math.round(r.height*d);
+ if(c.width!==w||c.height!==h){c.width=w;c.height=h;}}
+function drawGrid(c,W,H,on){const cw=W/10,ch=H/8,d=window.devicePixelRatio||1;
+ c.strokeStyle=on?'rgba(110,190,140,.28)':'rgba(90,120,100,.12)';c.lineWidth=1*d;c.beginPath();
+ for(let i=0;i<=10;i++){c.moveTo(i*cw,0);c.lineTo(i*cw,H);}for(let j=0;j<=8;j++){c.moveTo(0,j*ch);c.lineTo(W,j*ch);}c.stroke();
+ c.strokeStyle=on?'rgba(140,220,170,.55)':'rgba(90,120,100,.2)';c.beginPath();c.moveTo(W/2,0);c.lineTo(W/2,H);c.moveTo(0,H/2);c.lineTo(W,H/2);
+ for(let i=0;i<=50;i++){const x=i*cw/5;c.moveTo(x,H/2-4*d);c.lineTo(x,H/2+4*d);}
+ for(let j=0;j<=40;j++){const y=j*ch/5;c.moveTo(W/2-4*d,y);c.lineTo(W/2+4*d,y);}c.stroke();}
+function drawTrace(c,W,H,fn,N){const d=window.devicePixelRatio||1;c.save();c.strokeStyle='#9dffbf';c.lineWidth=2*d;c.shadowColor='#36ff7a';c.shadowBlur=8*d;
+ c.beginPath();for(let i=0;i<N;i++){const xd=i/(N-1)*10;const yd=clamp(fn(xd),-4.15,4.15);const x=xd/10*W,y=H/2-yd*H/8;i?c.lineTo(x,y):c.moveTo(x,y);}c.stroke();c.restore();}
+let lastClip=false,lastSig={f:0,U0:0,on:false};
+function draw(sig,t){
+ fitCanvas(scr);const W=scr.width,H=scr.height,d=window.devicePixelRatio||1;
+ ctx.fillStyle=S.scopeOn?'#06140c':'#040605';ctx.fillRect(0,0,W,H);
+ drawGrid(ctx,W,H,S.scopeOn);if(!S.scopeOn){lastClip=false;return;}
+ const td=TD[S.ti],vd=VD[S.vi];
+ const phi=S.sync?0:2*Math.PI*0.6*t;
+ const cyc=sig.f*10*td/1000;const N=Math.min(24000,Math.max(W,Math.ceil(cyc*48)));
+ const nz=S.noise?0.02*sig.U0+0.6:0;
+ drawTrace(ctx,W,H,xd=>{const tt=(xd-S.hpos)*td/1000;const u=sig.U0*Math.sin(2*Math.PI*sig.f*tt+phi)+nz*(Math.random()*2-1);return u/vd+S.vpos;},N);
+ lastClip=sig.U0>0&&(sig.U0/vd+Math.abs(S.vpos))>4.05;
+ // con trỏ
+ ctx.save();ctx.setLineDash([6*d,4*d]);ctx.lineWidth=1.5*d;ctx.font=`700 ${12*d}px Segoe UI,Arial`;
+ [['curA','A','#ffd24a'],['curB','B','#4ad8ff']].forEach(([k,lb,col])=>{if(S[k]===null)return;const x=S[k]/10*W;ctx.strokeStyle=col;ctx.fillStyle=col;
+  ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();ctx.fillText(lb,x+4*d,14*d);});ctx.restore();
+ ctx.font=`700 ${12*d}px Segoe UI,Arial`;ctx.fillStyle='#9dffbf';
+ ctx.fillText('CH1 '+VDL[S.vi]+' mV/ô',8*d,H-8*d);const tx='TIME '+TDL[S.ti]+' ms/ô';ctx.fillText(tx,W-ctx.measureText(tx).width-8*d,H-8*d);
+ if(lastClip){ctx.fillStyle='#ffb347';const m='⚠ Tín hiệu bị cắt đỉnh – tăng VOLT/DIV hoặc giảm âm lượng';ctx.fillText(m,(W-ctx.measureText(m).width)/2,18*d);}
+}
+
+/* ================== CON TRỎ ĐO ================== */
+const snap=x=>clamp(Math.round(x*5)/5,0,10);
+function toDiv(e){const r=scr.getBoundingClientRect();return (e.clientX-r.left)/r.width*10;}
+scr.addEventListener('pointerdown',e=>{if(!S.scopeOn){flash('Máy hiện sóng chưa bật nguồn.');return;}e.preventDefault();scr.setPointerCapture(e.pointerId);
+ const xd=toDiv(e);let k;
+ if(S.curA!==null&&Math.abs(xd-S.curA)<0.35)k='curA';else if(S.curB!==null&&Math.abs(xd-S.curB)<0.35)k='curB';
+ else if(S.curA===null)k='curA';else if(S.curB===null)k='curB';else k=Math.abs(xd-S.curA)<Math.abs(xd-S.curB)?'curA':'curB';
+ S[k]=snap(xd);updCur();
+ const mv=ev=>{S[k]=snap(toDiv(ev));updCur();};const up=()=>{scr.removeEventListener('pointermove',mv);scr.removeEventListener('pointerup',up);};
+ scr.addEventListener('pointermove',mv);scr.addEventListener('pointerup',up);});
+function updCur(){const a=S.curA,b=S.curB,td=TD[S.ti];
+ if(a!==null&&b!==null){const dx=Math.abs(b-a);$('roCur').textContent=`A = ${fmt(a,1)} · B = ${fmt(b,1)} · Δx = ${fmt(dx,1)} ô · Δt = ${fmt(dx*td,2)} ms`;$('inDx').value=fmt(dx,1);}
+ else $('roCur').textContent=`A = ${a===null?'–':fmt(a,1)} · B = ${b===null?'–':fmt(b,1)} · Δx = – ô · Δt = – ms`;}
+$('btnClrCur').onclick=()=>{S.curA=S.curB=null;updCur();};
+
+/* ================== CÁC BƯỚC & GỢI Ý ================== */
+let flashUntil=0,flashMsg='',lastStepKey='';
+function flash(m){flashMsg=m;flashUntil=performance.now()+3500;$('hint').textContent=m;$('hint').classList.add('flash');}
+function shapeState(sig){const td=TD[S.ti],vd=VD[S.vi];const P=10*td*sig.f/1000,pp=2*sig.U0/vd;
+ let tip='',ok=false;
+ if(sig.U0<=0)tip='Chưa có tín hiệu.';
+ else if(P>4.5)tip=`Màn hình đang hiện khoảng ${fmt(P,1)} chu kì – hãy GIẢM TIME/DIV.`;
+ else if(P<1.5)tip=`Màn hình chỉ hiện khoảng ${fmt(P,1)} chu kì – hãy TĂNG TIME/DIV.`;
+ else if(lastClip||pp>7)tip='Biên độ quá lớn – hãy TĂNG VOLT/DIV (hoặc giảm âm lượng).';
+ else if(pp<2)tip='Biên độ quá nhỏ – hãy GIẢM VOLT/DIV (hoặc tăng âm lượng, đưa micro lại gần).';
+ else{ok=true;tip=`Hình đã rõ: khoảng ${fmt(P,1)} chu kì, biên độ chiếm ${fmt(pp/2,1)} ô.`;}
+ return{ok,tip};}
+function updSteps(sig,now){
+ const st=[];st[1]=S.plugL&&S.plugM;st[2]=S.scopeOn&&S.boxOn;
+ const struckOK=S.src===10?(now-S.strike<14):true;st[3]=S.src!==null&&struckOK&&sig.U0>0;
+ const sh=shapeState(sig);if(st[1]&&st[2]&&st[3]&&sh.ok)S.done4[S.src]=true;st[4]=S.src!==null&&!!S.done4[S.src];
+ st[5]=S.src!==null&&S.records.some(r=>r.src===S.src);
+ const cnt={};S.records.forEach(r=>cnt[r.src]=(cnt[r.src]||0)+1);const full=Object.values(cnt).filter(v=>v>=3).length;st[6]=full>=2;
+ let cur=0;for(let i=1;i<=6;i++)if(!st[i]){cur=i;break;}
+ let msg;
+ if(cur===1)msg='Bước 1: Cắm chốt L (đỏ) của loa vào RA LOA và chốt M (đen) của micro vào CH1. Có thể kéo thả hoặc bấm thẳng vào chốt.';
+ else if(cur===2)msg='Bước 2: Bật công tắc NGUỒN của máy hiện sóng và của hộp nguồn âm.';
+ else if(cur===3)msg=S.src===10?'Bấm 🔨 GÕ BÚA để âm thoa phát âm.':'Bước 3: Chọn một nguồn âm N1 – N10 (hoặc ÂM THOA rồi bấm GÕ BÚA).';
+ else if(cur===4)msg='Bước 4 – Chỉnh hình: '+sh.tip;
+ else if(cur===5)msg='Bước 5: Bấm lên màn hình đặt con trỏ A, B tại hai đỉnh (hoặc hai điểm cắt trục cùng chiều). Đếm số chu kì n giữa chúng, kiểm tra Δx rồi bấm „Ghi vào bảng“. '+(S.src!==null?sh.tip:'');
+ else if(cur===6){const c=cnt[S.src]||0;msg=c<3?`Đã đo ${c}/3 lần cho ${srcName(S.src)}. Dời con trỏ, đo tiếp cho đủ 3 lần.`:'Đã đủ 3 lần cho nguồn này. Chọn nguồn âm khác và lặp lại (cần ít nhất 2 nguồn).';}
+ else msg='🎉 Hoàn thành phần đo! Hãy xử lí số liệu ở Bảng 10.1. Có thể đo thêm nguồn khác.';
+ const key=st.join()+cur+msg;
+ if(key!==lastStepKey){lastStepKey=key;for(let i=1;i<=6;i++){const li=$('s'+i);li.classList.toggle('done',!!st[i]);li.classList.toggle('cur',i===cur);}
+  if(now*1000>flashUntil){$('hint').textContent=msg;$('hint').classList.remove('flash');}}
+ if(now*1000>flashUntil&&$('hint').classList.contains('flash')){$('hint').classList.remove('flash');$('hint').textContent=msg;}
+}
+
+/* ================== GHI SỐ LIỆU ================== */
+$('btnRec').onclick=()=>{
+ const sig=lastSig;
+ if(S.src===null||!sig.on||sig.U0<=0){flash('Chưa có tín hiệu trên màn hình để đo.');return;}
+ const dx=num($('inDx').value),n=parseInt($('inN').value,10);
+ if(!(dx>0)||dx>10){flash('Nhập Δx (số ô) hợp lệ, từ 0 đến 10 ô.');return;}
+ if(!(n>=1)){flash('Nhập số chu kì n là số nguyên ≥ 1.');return;}
+ S.records.push({src:S.src,dx:+dx.toFixed(2),n,td:TD[S.ti],Tin:'',fin:''});
+ $('recMsg').textContent=`Đã ghi lần ${S.records.filter(r=>r.src===S.src).length} cho ${srcName(S.src)}.`;
+ save();renderTable();changed();};
+
+/* ================== BẢNG 10.1 & XỬ LÍ ================== */
+const calcT=r=>r.dx*r.td/r.n, calcF=r=>1000/calcT(r);
+const near=(a,b)=>isFinite(a)&&Math.abs(a-b)/b<=0.03;
+const mm=s=>`<math display="block">${s}</math>`;
+const bar=x=>`<mover accent="true"><mi>${x}</mi><mo>‾</mo></mover>`;
+const mnum=x=>`<mn>${fmt(x)}</mn>`;
+function renderFormulas(){
+ $('formulas').innerHTML=[
+  mm(`<mi>T</mi><mo>=</mo><mfrac><mrow><mi>Δx</mi><mo>·</mo><mtext>TIME/DIV</mtext></mrow><mi>n</mi></mfrac>`),
+  mm(`<mi>f</mi><mo>=</mo><mfrac><mn>1</mn><mi>T</mi></mfrac>`),
+  mm(`${bar('T')}<mo>=</mo><mfrac><mrow><msub><mi>T</mi><mn>1</mn></msub><mo>+</mo><msub><mi>T</mi><mn>2</mn></msub><mo>+</mo><mo>…</mo><mo>+</mo><msub><mi>T</mi><mi>N</mi></msub></mrow><mi>N</mi></mfrac>`),
+  mm(`<msub><mi>ΔT</mi><mi>i</mi></msub><mo>=</mo><mrow><mo>|</mo>${bar('T')}<mo>−</mo><msub><mi>T</mi><mi>i</mi></msub><mo>|</mo></mrow><mo>;</mo><mi>ΔT</mi><mo>=</mo><mfrac><mrow><mo>∑</mo><msub><mi>ΔT</mi><mi>i</mi></msub></mrow><mi>N</mi></mfrac>`),
+  mm(`${bar('f')}<mo>=</mo><mfrac><mn>1</mn>${bar('T')}</mfrac><mo>;</mo><mi>Δf</mi><mo>=</mo>${bar('f')}<mo>·</mo><mfrac><mi>ΔT</mi>${bar('T')}</mfrac>`),
+  mm(`<mi>f</mi><mo>=</mo>${bar('f')}<mo>±</mo><mi>Δf</mi>`)].map(x=>`<div>${x}</div>`).join('');
+ $('formulas').insertAdjacentHTML('beforeend','<div class="muted" style="grid-column:1/-1;font-size:13px">Coi sai số dụng cụ của dao động kí không đáng kể. Với T tính bằng ms thì f = 1000/T (Hz).</div>');
+}
+function renderTable(){
+ const box=$('tables');const groups=[...new Set(S.records.map(r=>r.src))].sort((a,b)=>a-b);
+ if(!groups.length){box.innerHTML='<p class="muted">Chưa có lần đo nào. Hãy đo trên màn hình rồi bấm „Ghi vào bảng“.</p>';return;}
+ box.innerHTML=groups.map(src=>{
+  const rows=S.records.map((r,i)=>({r,i})).filter(o=>o.r.src===src);
+  return `<div class="grp"><h4>Nguồn âm: ${srcName(src)}</h4><table class="dt"><thead><tr><th>Lần đo</th><th>Δx (ô)</th><th>n</th><th>TIME/DIV (ms/ô)</th><th>T (ms)</th><th>f (Hz)</th><th>ΔT<sub>i</sub> (ms)</th><th class="noprint">Kiểm tra</th><th class="noprint"></th></tr></thead><tbody>`+
+  rows.map((o,k)=>`<tr data-i="${o.i}"><td>${k+1}</td><td>${fmt(o.r.dx,1)}</td><td>${o.r.n}</td><td>${fmt(o.r.td,1).replace(/,0$/,'')}</td>
+   <td>${S.selfCalc?`<input data-k="Tin" value="${o.r.Tin}" inputmode="decimal">`:fmt(calcT(o.r))}</td>
+   <td>${S.selfCalc?`<input data-k="fin" value="${o.r.fin}" inputmode="decimal">`:fmt(calcF(o.r))}</td>
+   <td class="dTi">–</td><td class="ck noprint"></td><td class="noprint"><button class="btn" data-del="${o.i}" title="Xoá lần đo">✕</button></td></tr>`).join('')+
+  `</tbody></table><div class="sum" id="sum${src}"></div></div>`;}).join('');
+ box.querySelectorAll('input[data-k]').forEach(inp=>inp.addEventListener('input',()=>{const i=+inp.closest('tr').dataset.i;S.records[i][inp.dataset.k]=inp.value;save();updGroups();}));
+ box.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{S.records.splice(+b.dataset.del,1);save();renderTable();changed();});
+ updGroups();
+}
+function updGroups(){
+ const groups=[...new Set(S.records.map(r=>r.src))];
+ groups.forEach(src=>{
+  const trs=[...$('tables').querySelectorAll('tr[data-i]')].filter(tr=>S.records[+tr.dataset.i].src===src);
+  const rs=trs.map(tr=>S.records[+tr.dataset.i]);let allOk=true;
+  trs.forEach((tr,k)=>{const r=rs[k];if(!S.selfCalc){tr.querySelector('.ck').innerHTML='';return;}
+   const okT=near(num(r.Tin),calcT(r)),okF=near(num(r.fin),calcF(r));if(!(okT&&okF))allOk=false;
+   tr.querySelector('.ck').innerHTML=(r.Tin===''&&r.fin==='')?'<span class="muted">nhập T, f</span>':
+    `T <span class="${okT?'good':'badx'}">${okT?'✓':'✗'}</span> · f <span class="${okF?'good':'badx'}">${okF?'✓':'✗'}</span>`;});
+  const sum=$('sum'+src);const N=rs.length;const unlocked=!S.selfCalc||allOk;
+  const Ts=rs.map(calcT);const Tb=Ts.reduce((a,b)=>a+b,0)/N;const dTs=Ts.map(x=>Math.abs(Tb-x));const dT=dTs.reduce((a,b)=>a+b,0)/N;
+  trs.forEach((tr,k)=>tr.querySelector('.dTi').textContent=unlocked&&N>=3?fmt(dTs[k]):'–');
+  if(N<3){sum.innerHTML=`<span class="muted">Cần đo ít nhất 3 lần cho nguồn này (đã có ${N}).</span>`;return;}
+  if(!unlocked){sum.innerHTML='<span class="muted">Tính đúng T và f ở tất cả các lần đo (sai lệch ≤ 3%) để mở phần xử lí kết quả.</span>';return;}
+  const fb=1000/Tb,df=fb*dT/Tb;
+  sum.innerHTML=
+   mm(`${bar('T')}<mo>=</mo><mfrac><mrow>${Ts.map(mnum).join('<mo>+</mo>')}</mrow><mn>${N}</mn></mfrac><mo>=</mo>${mnum(Tb)}<mspace width="0.3em"/><mtext>ms</mtext>`)+
+   mm(`<mi>ΔT</mi><mo>=</mo><mfrac><mrow>${dTs.map(mnum).join('<mo>+</mo>')}</mrow><mn>${N}</mn></mfrac><mo>=</mo>${mnum(dT)}<mspace width="0.3em"/><mtext>ms</mtext>`)+
+   mm(`${bar('f')}<mo>=</mo><mfrac><mn>1</mn>${bar('T')}</mfrac><mo>=</mo>${mnum(fb)}<mspace width="0.3em"/><mtext>Hz</mtext><mo>;</mo><mi>Δf</mi><mo>=</mo>${bar('f')}<mo>·</mo><mfrac><mi>ΔT</mi>${bar('T')}</mfrac><mo>=</mo>${mnum(df)}<mspace width="0.3em"/><mtext>Hz</mtext>`)+
+   `<p style="margin:6px 0 2px"><b>Kết quả:</b></p>`+
+   mm(`<mi>T</mi><mo>=</mo><mo>(</mo>${mnum(Tb)}<mo>±</mo>${mnum(dT)}<mo>)</mo><mspace width="0.3em"/><mtext>ms</mtext><mspace width="2em"/><mi>f</mi><mo>=</mo><mo>(</mo>${mnum(fb)}<mo>±</mo>${mnum(df)}<mo>)</mo><mspace width="0.3em"/><mtext>Hz</mtext>`)+
+   `<p class="muted" style="margin:4px 0">Sai số tỉ đối: δ = ΔT/T̄ ≈ ${fmt(dT/Tb*100,1)}%</p>`+
+   (S.gv?`<p style="margin:4px 0;color:#7c2d12">GV: tần số thật của ${srcName(src)} là ${src===10?S.forkF:S.freqs[src]} Hz.</p>`:'');
+ });
+}
+$('chkSelf').onchange=e=>{S.selfCalc=e.target.checked;save();renderTable();};
+$('selDec').onchange=e=>{S.dec=+e.target.value;save();renderTable();};
+['hsTen','hsLop','hsNhom'].forEach(id=>$(id).addEventListener('input',save));
+
+/* ================== LUYỆN ĐỌC MÀN HÌNH ================== */
+const pc=$('pc'),pctx=pc.getContext('2d');let P={td:1,div:4};
+function newP(){P={td:[0.5,1,2,5][Math.floor(Math.random()*4)],div:[2,2.5,3,4,5][Math.floor(Math.random()*5)]};
+ $('pInfo').innerHTML=`Bộ điều chỉnh thời gian đặt <b>${fmt(P.td,1).replace(/,0$/,'')} ms/ô</b>. Xác định chu kì T và tần số f của tín hiệu.`;
+ $('pT').value='';$('pF').value='';$('pRes').textContent='';drawP();}
+function drawP(){fitCanvas(pc);const W=pc.width,H=pc.height;pctx.fillStyle='#06140c';pctx.fillRect(0,0,W,H);drawGrid(pctx,W,H,true);
+ drawTrace(pctx,W,H,xd=>2.6*Math.sin(2*Math.PI*xd/P.div),800);}
+$('btnNewP').onclick=newP;
+$('btnChkP').onclick=()=>{const T=P.div*P.td,f=1000/T;const t=num($('pT').value),fv=num($('pF').value);
+ const okT=isFinite(t)&&Math.abs(t-T)/T<=0.02,okF=isFinite(fv)&&Math.abs(fv-f)/f<=0.02;
+ $('pRes').innerHTML=`T: <span class="${okT?'good':'badx'}">${okT?'✓ đúng':'✗ chưa đúng'}</span> · f: <span class="${okF?'good':'badx'}">${okF?'✓ đúng':'✗ chưa đúng'}</span>`+
+  (okT&&okF?'':`<br><span class="muted">Gợi ý: 1 chu kì chiếm ${fmt(P.div,1)} ô.</span>`);};
+
+/* ================== GIÁO VIÊN ================== */
+$('btnGv').onclick=()=>{if($('gvPw').value.trim()!=='gv'){$('gvPw').value='';$('gvPw').placeholder='Sai mật khẩu';return;}
+ S.gv=true;$('gvPanel').style.display='';buildGv();updGroups();};
+function buildGv(){$('gvFreqs').innerHTML=S.freqs.map((f,i)=>`<label>N${i+1}: <input type="number" min="20" max="20000" value="${f}" data-gi="${i}"> Hz</label>`).join('')+
+ `<label>Âm thoa: <input type="number" min="20" max="20000" value="${S.forkF}" data-gi="10"> Hz</label>`;
+ $('gvFreqs').querySelectorAll('input').forEach(inp=>inp.onchange=()=>{const v=Math.round(num(inp.value));if(!(v>=20&&v<=20000))return;
+  const i=+inp.dataset.gi;if(i===10)S.forkF=v;else S.freqs[i]=v;save();renderBox();updGroups();});}
+$('chkShowTrue').onchange=e=>{S.showTrue=e.target.checked;renderBox();};
+$('chkNoise').onchange=e=>{S.noise=e.target.checked;};
+$('btnRand').onclick=()=>{S.freqs=genFreqs();save();buildGv();renderBox();updGroups();};
+$('btnCsv').onclick=()=>{const L=[['Nguồn','Lần','Δx (ô)','n','TIME/DIV (ms/ô)','T (ms)','f (Hz)','HS tính T','HS tính f']];const c={};
+ S.records.forEach(r=>{c[r.src]=(c[r.src]||0)+1;L.push([srcName(r.src),c[r.src],r.dx,r.n,r.td,calcT(r).toFixed(3),calcF(r).toFixed(2),r.Tin,r.fin]);});
+ const csv='﻿'+L.map(r=>r.map(x=>`"${String(x).replace(/"/g,'""')}"`).join(',')).join('\r\n');
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download='Bang_10_1_do_tan_so_song_am.csv';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2000);};
+$('btnPrint').onclick=()=>window.print();
+
+/* ================== KHÁC ================== */
+$('boxPow').addEventListener('click',()=>{S.boxOn=!S.boxOn;renderBox();changed();});
+$('scPow').addEventListener('click',()=>{S.scopeOn=!S.scopeOn;renderBox();changed();});
+$('chkSound').onchange=e=>{S.sound=e.target.checked;if(S.sound)initAudio();};
+$('chkNoSync').onchange=e=>{S.sync=!e.target.checked;};
+$('chkExplain').onchange=e=>{$('explainG').style.display=e.target.checked?'':'none';$('qbox').style.display=e.target.checked?'':'none';};
+$('btnToggleCtrl').onclick=()=>{const w=$('wrap');w.classList.toggle('noctrl');$('btnToggleCtrl').textContent=w.classList.contains('noctrl')?'⇤ Hiện khung điều khiển':'⇥ Ẩn khung điều khiển';};
+let resetArm=0;
+$('btnReset').onclick=()=>{const b=$('btnReset');if(Date.now()-resetArm>3000){resetArm=Date.now();b.textContent='Bấm lần nữa để xác nhận';setTimeout(()=>b.textContent='↺ Làm lại từ đầu',3000);return;}
+ Object.assign(S,{plugL:false,plugM:false,scopeOn:false,boxOn:false,src:null,strike:-99,vol:.5,micX:240,ti:4,vi:5,hpos:0,vpos:0,curA:null,curB:null,records:[],done4:{},freqs:genFreqs()});
+ knobs.forEach(k=>k.refresh());renderMic();renderBox();updCur();save();renderTable();if(S.gv)buildGv();b.textContent='↺ Làm lại từ đầu';resetArm=0;changed();};
+function changed(){renderBox();lastStepKey='';}
+
+function frame(ms){const t=ms/1000;const sig=signal(t);lastSig=sig;draw(sig,t);audio(t);updSteps(sig,t);
+ $('waves').classList.toggle('on',S.boxOn&&S.plugL&&S.src!==null&&S.src<10&&S.vol>0);
+ $('fork').classList.toggle('ring',S.src===10&&t-S.strike<6);
+ requestAnimationFrame(frame);}
+
+/* ================== KHỞI ĐỘNG ================== */
+load();buildBox();buildKnobs();setupPlug('L');setupPlug('M');setupMic();
+$('chkSelf').checked=S.selfCalc;$('selDec').value=String(S.dec);
+renderMic();renderBox();renderFormulas();renderTable();updCur();newP();
+window.addEventListener('resize',drawP);
+requestAnimationFrame(frame);
+</script>
+<!--nut-sua--><script src="../nguon/lib/nut_sua.js" defer></script>
+<!--am-thanh--><script src="../nguon/lib/am_thanh.js" defer></script>
+<!--tro-giang--><script src="../nguon/lib/tro_giang.js" defer></script>
+</body>
+</html>
