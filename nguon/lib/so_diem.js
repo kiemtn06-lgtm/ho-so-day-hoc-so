@@ -1,6 +1,8 @@
 /* Sổ điểm (mục "Sổ điểm" ở cột trái của hồ sơ).
-   Dữ liệu (tên, mã học sinh, điểm) CHỈ lưu trong trình duyệt của máy giáo viên, trong S.sd của hồ sơ (localStorage "hsdh_v2"),
-   nên "Sao lưu dữ liệu" của hồ sơ sao lưu luôn sổ điểm. Không gửi đi đâu, không có trong kho GitHub.
+   Dữ liệu (tên, mã học sinh, điểm) lưu trong trình duyệt, trong S.sd của hồ sơ (localStorage "hsdh_v2"),
+   nên "Sao lưu dữ liệu" của hồ sơ sao lưu luôn sổ điểm. Không có trong kho GitHub.
+   Nếu giáo viên bật đồng bộ (mã GVCN của Sổ chủ nhiệm), sổ còn được gửi lên trang tính _SoDiem của Google Sheet Sổ chủ nhiệm
+   để điện thoại và máy tính dùng chung (xem khối DB bên dưới).
    Đọc/ghi Excel bằng SheetJS, tải từ cdnjs lúc cần (lần đầu cần mạng).
    Mẫu Excel: bảng điểm chi tiết của trường (STT, Mã học sinh, Họ và tên [họ đệm | tên], Ngày sinh, TX1-TX5, GK, CK, ĐTB mhk, Nhận xét). */
 (function () {
@@ -13,7 +15,75 @@
   function $(id) { return document.getElementById(id); }
   function sd() { var S = A.S; if (!S.sd || !Array.isArray(S.sd.lops)) S.sd = { lops: [], chon: "" }; return S.sd; }
   function lop() { var d = sd(); return d.lops.filter(function (l) { return l.id === d.chon; })[0] || d.lops[0] || null; }
-  function luu() { A.save(); }
+  function luu() { A.save(); DB.hen(); }
+
+  /* ---------- đồng bộ qua Google Sheet (web app Sổ chủ nhiệm, Code.gs: soDiemTai / soDiemLuu) ----------
+     Mã giáo viên chủ nhiệm chỉ lưu trong trình duyệt (localStorage "hsdh_sd_db"), không có trong kho.
+     Gửi cả danh sách lớp (d.lops); "rev" là số phiên bản trên mạng mà máy này đang giữ, "h" là dấu của bản đã đồng bộ:
+     bản trên máy khác dấu h nghĩa là có thay đổi chưa gửi (kể cả khi khôi phục từ file sao lưu). */
+  var DB = (function () {
+    var API = "https://script.google.com/macros/s/AKfycbxhoRJbCEg22IeDkhSJ6XImhifLZyKGZO2s5BK4oDEs6tXZVayoxA0Xzy2-ZXNAHGDA/exec";
+    var K = "hsdh_sd_db", m = {}, dang = false, lai = false, t = 0, tt = "", lanCuoi = 0;
+    try { m = JSON.parse(localStorage.getItem(K) || "{}") || {}; } catch (e) { m = {}; }
+    function ghi() { try { localStorage.setItem(K, JSON.stringify(m)); } catch (e) {} }
+    function dau(s) { var h = 5381; for (var i = 0; i < s.length; i++) h = (h * 33 + s.charCodeAt(i)) | 0; return s.length + ":" + h; }
+    function banMay() { return JSON.stringify(sd().lops); }
+    function doi() { var s = banMay(); return m.h ? dau(s) !== m.h : sd().lops.length > 0; }
+    function bao2(s) { tt = s; var e = $("sdDB"); if (e) e.textContent = s; }
+    function goi(yc) {
+      yc.ma = m.ma;
+      return fetch(API, { method: "POST", body: JSON.stringify(yc), redirect: "follow", cache: "no-store" })
+        .then(function (r) { if (!r.ok) throw new Error("Máy chủ trả lỗi " + r.status); return r.text(); })
+        .then(function (s) { if (/^\s*</.test(s)) throw new Error("Máy chủ chưa có phần sổ điểm: cần dán Code.gs mới và triển khai bản mới."); return JSON.parse(s); });
+    }
+    function gio() { var d = new Date(); return ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2); }
+    function dangGo() { var a = document.activeElement; return a && a.closest && a.closest("#sd") && a.tagName === "INPUT"; }
+    function nhan(r) {
+      var v = []; try { v = r.json ? JSON.parse(r.json) : []; } catch (e) { v = []; }
+      sd().lops = Array.isArray(v) ? v : []; m.rev = r.rev; m.h = dau(banMay()); ghi(); A.save();
+      bao2("Đã lấy bản mới nhất lúc " + gio() + "."); if (document.getElementById("sd")) A.ve();
+    }
+    function gui(rev) {
+      var s = banMay();
+      return goi({ viec: "soDiemLuu", rev: rev, json: s }).then(function (r) {
+        if (r.ok) { m.rev = r.rev; m.h = dau(s); ghi(); bao2("Đã lưu lên Google Sheet lúc " + gio() + "."); return; }
+        if (r.xungDot) { lai = true; return; }
+        throw new Error(r.loi || "Không lưu được.");
+      });
+    }
+    function chay() {
+      if (!m.ma) return;
+      if (dang) { lai = true; return; }
+      dang = true; lai = false; lanCuoi = Date.now(); bao2("Đang đồng bộ…");
+      goi({ viec: "soDiemTai" }).then(function (r) {
+        if (!r.ok) { if (r.saiMa) { m.ma = ""; ghi(); if (document.getElementById("sd")) A.ve(); } throw new Error(r.loi || "Không tải được."); }
+        var coDoi = doi(), rev = m.rev || 0;
+        if (r.rev === rev) { if (coDoi) return gui(rev); bao2("Đã đồng bộ (" + gio() + ")."); return; }
+        if (!coDoi || !sd().lops.length) { if (dangGo()) { lai = true; return; } return nhan(r); }
+        if (confirm("Sổ điểm trên Google Sheet vừa được sửa ở máy khác, mà máy này cũng có thay đổi chưa gửi.\n\nOK: lấy bản trên Google Sheet (bỏ thay đổi ở máy này).\nHủy: giữ bản ở máy này và ghi đè lên Google Sheet.")) return nhan(r);
+        return gui(r.rev);
+      }).catch(function (e) {
+        bao2("Chưa đồng bộ được: " + (e && /Failed to fetch|NetworkError|Load failed/i.test(e.message) ? "mất mạng, sẽ thử lại." : e.message));
+      }).then(function () { dang = false; if (lai) hen(3000); });
+    }
+    function hen(ms) { if (!m.ma) return; clearTimeout(t); t = setTimeout(chay, ms == null ? 1500 : ms); }
+    function bat() {
+      var ma = (prompt("Nhập MÃ GIÁO VIÊN CHỦ NHIỆM của Sổ chủ nhiệm số.\nSổ điểm sẽ lưu vào trang tính _SoDiem trong Google Sheet của sổ, mọi máy nhập cùng mã đều thấy chung.") || "").trim().toUpperCase();
+      if (!ma) return;
+      m = { ma: ma, rev: 0 }; ghi(); bao2("Đang kiểm tra mã…");
+      goi({ viec: "soDiemTai" }).then(function (r) {
+        if (!r.ok) { m = {}; ghi(); V.msg = "Không bật được đồng bộ: " + (r.loi || "mã không dùng được."); A.ve(); return; }
+        V.msg = "Đã bật đồng bộ. Từ giờ sổ điểm tự lưu lên Google Sheet."; A.ve(); chay();
+      }).catch(function (e) { m = {}; ghi(); V.msg = "Không bật được đồng bộ: " + e.message; A.ve(); });
+    }
+    function tat() { if (!confirm("Tắt đồng bộ trên máy này? Sổ điểm vẫn giữ trên máy và trên Google Sheet, chỉ thôi tự gửi/nhận.")) return; m = {}; ghi(); tt = ""; A.ve(); }
+    function thanh() {
+      if (!m.ma) return '<p class="warn noprint">Sổ điểm đang chỉ lưu trong trình duyệt của máy này: máy khác (điện thoại) sẽ không thấy. <button data-s="dbBat">Bật đồng bộ Google Sheet</button></p>';
+      return '<p class="muted noprint">☁ Đồng bộ Google Sheet (Sổ chủ nhiệm): <span id="sdDB" role="status">' + esc(tt || "…") + '</span> <button class="link" data-s="dbNgay">Đồng bộ ngay</button> <button class="link" data-s="dbTat">Tắt đồng bộ</button></p>';
+    }
+    document.addEventListener("visibilitychange", function () { if (!document.hidden) hen(300); });
+    return { hen: hen, chay: chay, bat: bat, tat: tat, thanh: thanh, moTrang: function () { if (m.ma && Date.now() - lanCuoi > 5000) hen(200); } };
+  })();
   function so(v) { return v === "" || v == null ? "" : String(v).replace(".", ","); }
   function lam1(x) { return Math.round(x * 10 + 1e-9) / 10; }
   function hoTen(h) { return ((h.ho || "") + " " + (h.ten || "")).trim(); }
@@ -47,7 +117,7 @@
   function html() {
     var d = sd(), l = lop(), h = '<div id="sd"><div class="head"><h2>Sổ điểm</h2><span class="sp"></span>' +
       [[1, "Học kì 1"], [2, "Học kì 2"], [0, "Cả năm"]].map(function (x) { return '<button class="chip' + (V.hk === x[0] ? " on" : "") + '" data-s="hk" data-v="' + x[0] + '">' + x[1] + "</button>"; }).join("") + "</div>";
-    h += '<p class="warn">Sổ điểm chỉ lưu trong trình duyệt của máy này, không gửi lên mạng. Mở hồ sơ ở máy khác sẽ không thấy. Nhớ bấm "Xuất Excel" hoặc "Sao lưu dữ liệu" để giữ bản dự phòng.</p>';
+    h += DB.thanh(); DB.moTrang();
     h += '<div class="row noprint">' + d.lops.map(function (x) { return '<button class="chip' + (l && x.id === l.id ? " on" : "") + '" data-s="chon" data-v="' + x.id + '">' + esc(x.ten) + " <small>(" + x.hs.length + ")</small></button>"; }).join("") +
       '<button data-s="lopMoi">+ Lớp mới</button><label class="btn">Nhập từ Excel<input type="file" id="sdFile" accept=".xls,.xlsx,.csv" multiple hidden></label></div>';
     h += '<p id="sdMsg" class="muted" role="status">' + esc(V.msg) + "</p>"; V.msg = "";
@@ -215,6 +285,9 @@
   document.addEventListener("click", function (e) {
     var t = e.target.closest && e.target.closest("#sd [data-s]"); if (!t) return;
     var a = t.getAttribute("data-s"), d = sd(), l = lop();
+    if (a === "dbBat") { DB.bat(); return; }
+    if (a === "dbTat") { DB.tat(); return; }
+    if (a === "dbNgay") { DB.chay(); return; }
     if (a === "hk") { V.hk = +t.getAttribute("data-v"); ve(); }
     else if (a === "chon") { d.chon = t.getAttribute("data-v"); V.dan = false; luu(); ve(); }
     else if (a === "lopMoi") {
@@ -262,5 +335,5 @@
     if (q) { q.focus(); q.select(); } else t.blur();
   });
 
-  window.SoDiem = { init: function (api) { A = api; }, html: html, _dtb: dtb, _docTrang: docTrang, _tachDong: tachDong };
+  window.SoDiem = { init: function (api) { A = api; DB.hen(500); }, html: html, _dtb: dtb, _docTrang: docTrang, _tachDong: tachDong };
 })();
