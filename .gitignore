@@ -15,3 +15,6 @@ SoChuNhiem/
 # Sổ điểm: tệp Excel bảng điểm có tên, mã học sinh, KHÔNG đưa lên kho
 so_diem*.xls
 so_diem*.xlsx
+
+# Chấm điểm tự động: nguồn Apps Script (Code*.gs), đề Word/PDF, web.zip. Chỉ trên máy (trang đưa lên nằm ở cham-diem/)
+Cham tu dong/

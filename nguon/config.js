@@ -14,6 +14,9 @@ window.HO_SO = {
   /* Sổ chủ nhiệm số (sổ theo dõi nề nếp, Apps Script). Trang so-chu-nhiem/ dựng bằng: node tools/dung_so_chu_nhiem.js (nguồn SoChuNhiem/trien_khai chỉ có trên máy).
      Dữ liệu nằm ở Google Sheet, vào sổ phải có mã; địa chỉ web app ghi trong so-chu-nhiem/cau_noi.js. */
   soChuNhiem: { ten: "Sổ chủ nhiệm số", lop: "10A5", trang: "so-chu-nhiem/index.html" },
+  /* Chấm điểm tự động (Apps Script + Google Sheet): trang tĩnh cham-diem/ chép từ "Cham tu dong/web" (chỉ trên máy),
+     gọi web app bằng fetch; địa chỉ /exec ghi trong cham-diem/config.js. Đáp án, kết quả, mật khẩu GV nằm ở Apps Script. */
+  chamDiem: { ten: "Chấm điểm tự động", trang: "cham-diem/index.html" },
   /* Hỏi đáp: để trống api thì tra cứu ngay trên dữ liệu bài (không AI).
      Khi có máy chủ AI riêng, điền địa chỉ vào api: trang sẽ gửi {cau_hoi, ngu_canh} và hiện trường tra_loi nhận về. */
   chatbot: { api: "" },

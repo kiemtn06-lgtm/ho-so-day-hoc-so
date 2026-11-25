@@ -55,6 +55,7 @@
     h += '<button data-a="page" data-p="lop" class="' + (V.page === "lop" ? "on" : "") + '">Lớp học</button>';
     if (window.SoDiem) h += '<button data-a="page" data-p="sd" class="' + (V.page === "sd" ? "on" : "") + '">Sổ điểm</button>';
     if (CFG.soChuNhiem) h += '<button data-a="page" data-p="scn" class="' + (V.page === "scn" ? "on" : "") + '">' + esc(CFG.soChuNhiem.ten) + "</button>";
+    if (CFG.chamDiem) h += '<button data-a="page" data-p="cd" class="' + (V.page === "cd" ? "on" : "") + '">' + esc(CFG.chamDiem.ten) + "</button>";
     h += '<button data-a="page" data-p="cc" class="' + (V.page === "cc" ? "on" : "") + '">Sao lưu dữ liệu</button>';
     $("tree").innerHTML = h;
   }
@@ -273,6 +274,14 @@
       '<iframe class="otf" title="' + esc(x.ten) + '" src="' + esc(x.trang) + '"></iframe>';
   }
 
+  /* ---------- Chấm điểm tự động: trang cham-diem/ (trang tĩnh gọi web app Apps Script), dữ liệu ở Google Sheet ---------- */
+  function pageCD() {
+    var x = CFG.chamDiem;
+    return '<div class="head"><h2>' + esc(x.ten) + '</h2><span class="sp"></span><a class="btn noprint toan" target="_blank" rel="noopener" href="' + esc(x.trang) + '">Mở toàn trang</a></div>' +
+      '<p class="muted noprint">Học sinh chọn bài đang mở, nhập tên và trả lời; giáo viên đăng nhập bằng mật khẩu để mở/đóng bài, đọc phiếu từ ảnh, xem kết quả. Đáp án và kết quả nằm ở Google Sheet qua Apps Script; hồ sơ chỉ chứa giao diện.</p>' +
+      '<iframe class="otf" title="' + esc(x.ten) + '" src="' + esc(x.trang) + '" allow="camera; clipboard-write"></iframe>';
+  }
+
   /* ---------- bài luyện nhúng (trang HTML riêng của từng chương) ---------- */
   function pageLT() {
     var ch = curCh(), lt = (ch && ch.luyenTap) || [], x = lt[V.lt || 0];
@@ -435,6 +444,7 @@
     if (V.page === "lop") { w.innerHTML = pageLop(); return; }
     if (V.page === "cc") { w.innerHTML = pageCC(); return; }
     if (V.page === "scn") { w.innerHTML = pageSCN(); return; }
+    if (V.page === "cd") { w.innerHTML = pageCD(); return; }
     if (V.page === "sd") { w.innerHTML = window.SoDiem ? SoDiem.html() : ""; return; }
     if (V.page === "tq") { w.innerHTML = pageTQ(); return; }
     if (V.page === "lt") { w.innerHTML = pageLT(); return; }
@@ -450,7 +460,7 @@
   /* vị trí đang xem, ghi vào phiếu của nút Sửa (lib/nut_sua.js), kèm mã dữ liệu để biết tệp cần sửa */
   window.HSDH_VITRI = function () {
     var p = ["Hồ sơ", CFG.khoi[V.khoi].ten], ch = chs()[V.ch], b = V.page === "bai" ? curBai() : null;
-    var TEN = { tq: "Tổng quan khối", ph: "Làm bài trực tuyến", hd: "Hỏi đáp", lop: "Lớp học", cc: "Sao lưu dữ liệu", scn: "Sổ chủ nhiệm số", sd: "Sổ điểm" };
+    var TEN = { tq: "Tổng quan khối", ph: "Làm bài trực tuyến", hd: "Hỏi đáp", lop: "Lớp học", cc: "Sao lưu dữ liệu", scn: "Sổ chủ nhiệm số", cd: "Chấm điểm tự động", sd: "Sổ điểm" };
     if (b) p.push("Chương " + (V.ch + 1) + ". " + ch.ten, "Bài: " + b.ten, "Tab: " + TABS[V.tab], "(dữ liệu nguon/data/k" + ch.duLieu + ".js, mã bài " + b.ma + ")");
     else if (V.page === "lt" && ch && ch.luyenTap && ch.luyenTap[V.lt]) p.push("Chương " + (V.ch + 1) + ". " + ch.ten, "Luyện tập: " + ch.luyenTap[V.lt].ten);
     else p.push(TEN[V.page] || V.page);
