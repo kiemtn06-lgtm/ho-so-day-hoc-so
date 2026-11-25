@@ -676,6 +676,7 @@ if(false) module.exports={PW,PH,SC,CORNERS,FULL_SHEETS,MARKERS,buildSheet,analyz
 
 </script>
 <script src="config.js" onerror="void 0"></script>
+<script src="dap_an_nhanh.js"></script>
 <script>
 /* =====================================================================
    CẤU HÌNH — sau khi triển khai Google Apps Script, dán link /exec vào đây
@@ -791,7 +792,7 @@ function viewScan(){
   const done = parts.filter(p=>S.parts[p]).length;
   const picker = (key, st, title, sub, extra, more)=>{
     const fileCam = h('input',{type:'file',accept:'image/*',capture:'environment',hidden:true,onchange:e=>{ pick(key,e.target.files[0]); e.target.value=''; }});
-    const fileGal = h('input',{type:'file',accept:'image/*',hidden:true,onchange:e=>{ pick(key,e.target.files[0]); e.target.value=''; }});
+    const fileGal = h('input',{type:'file',accept:'image/*,application/pdf,.pdf',hidden:true,onchange:e=>{ pick(key,e.target.files[0]); e.target.value=''; }});
     return h('div',{class:'card'}, h('div',{class:'part'},
       h('div',{}, h('h2',{},title), h('div',{class:'st'}, sub, st? ' · ' : '', st? h('span',{class:'badge ok'},'Đã đọc — mã đề '+(st.code||'—')):'' )),
       h('div',{class:'row'},
@@ -850,6 +851,8 @@ function viewScan(){
 
 /* --- đọc ảnh --- */
 async function fileToImageData(file){
+  if(file && file.pdfDoc) return DAN.pdfPageImage(file);                       // một trang của tệp PDF (đã tách)
+  if(window.DAN && DAN.isPdf(file)) return DAN.pdfPageImage((await DAN.expandFiles([file]))[0]);   // PDF: lấy trang 1
   let bmp, url=null;
   try{ bmp = await createImageBitmap(file,{imageOrientation:'from-image'}); }
   catch(e){ url=URL.createObjectURL(file); bmp = await new Promise((ok,no)=>{ const i=new Image(); i.onload=()=>ok(i); i.onerror=no; i.src=url; }); }
@@ -973,7 +976,7 @@ function openReview(part, an, opts){
   freeCanvases();
   const EX = opts.exam || S.exam;                     // GV chấm: bài đầy đủ kèm đáp án; HS: bài đang làm (không có đáp án)
   const gv = !!opts.gv;
-  const codeList = opts.test ? [] : (Array.isArray(EX.codes) ? EX.codes : Object.keys(EX.codes||{}));
+  const codeList = (opts.test||opts.key) ? [] : (Array.isArray(EX.codes) ? EX.codes : Object.keys(EX.codes||{}));
   const sch = FULL_SHEETS[an.type] && FULL_SHEETS[an.type].parts;     // phiếu giấy: mỗi trang chỉ có một số phần
   const examParts = opts.test ? PARTS : PARTS.filter(p=>EX.parts[p]&&EX.parts[p].enabled);
   const plist = part==='full' ? examParts.filter(p=>!sch||sch.includes(p)) : [part];
@@ -990,11 +993,11 @@ function openReview(part, an, opts){
     for(let i=0;i<an.img.data.length;i++){ const v=Math.max(0,Math.min(255,an.img.data[i]*235)); id.data[i*4]=id.data[i*4+1]=id.data[i*4+2]=v; id.data[i*4+3]=255; }
     bctx.putImageData(id,0,0); }
   const cv = newCanvas(an.img.w, an.img.h); const ctx = cv.getContext('2d');
-  const prevCode = gv ? (opts.lastCode||'') : ((PARTS.map(p=>S.parts[p]).find(x=>x&&x.code)||{}).code||'');
+  const prevCode = opts.key ? (opts.defCode||'') : gv ? (opts.lastCode||'') : ((PARTS.map(p=>S.parts[p]).find(x=>x&&x.code)||{}).code||'');
   const info = h('div',{}); const codeIn = h('input',{type:'text',inputmode:'numeric',maxlength:4,style:'width:110px;text-align:center;font-size:20px;letter-spacing:4px',
     value:readCode(an.groups).replace(/\?/g,'') || (opts.test?'':(gv && codeList.length===1 ? codeList[0] : prevCode))});
   const codeLbl = h('div',{});
-  const okBtn = h('button',{}, opts.test?'Đóng': gv?'Lưu vào bảng điểm':'Xác nhận kết quả này');
+  const okBtn = h('button',{}, opts.key?'Dùng làm đáp án': opts.test?'Đóng': gv?'Lưu vào bảng điểm':'Xác nhận kết quả này');
   const zoomBtn = h('button',{class:'ghost sm',onclick:()=>{ box.classList.toggle('zoom'); zoomBtn.textContent=box.classList.contains('zoom')?'Thu nhỏ':'Phóng to để sửa'; }},opts.template?'Thu nhỏ':'Phóng to để sửa');
   const box = h('div',{class:opts.template?'cv zoom':'cv'}, cv);     // tô trên ảnh mẫu: mở sẵn phóng to cho dễ chạm
   /* GV: nhãn học sinh + ghép trang 2 vào dòng của trang 1 */
@@ -1104,6 +1107,16 @@ function openReview(part, an, opts){
     draw();
   });
   okBtn.addEventListener('click',()=>{
+    if(opts.key){                                     // GV tô/đọc phiếu để làm đáp án cho bài đang soạn
+      const code = codeIn.value.trim() || opts.defCode || '';
+      if(!/^\d{3,4}$/.test(code)){ toast('Nhập mã đề 3–4 chữ số (hoặc tô mã đề trên phiếu).'); codeIn.focus(); return; }
+      const res = {}; plist.forEach(p=>res[p]=sm[p].A.slice(0,nOf(p)));
+      const bad = plist.filter(p=>sm[p].blank.length||sm[p].multi.length);
+      if(bad.length && !confirm('Còn câu chưa tô hoặc tô nhiều ô ở phần '+bad.map(p=>PART_SHORT[p]).join(', ')+' (sẽ ghi dấu ? để sửa tay). Vẫn dùng?')) return;
+      const onKey = opts.onKey, onDone = opts.onDone;
+      closeModal(); if(onKey) onKey(code, res); if(onDone) onDone();
+      return;
+    }
     if(opts.test){
       const dump = {mã_đề:codeIn.value}; plist.forEach(p=>dump['đáp_án_'+p]=sm[p].A);
       $('#modalBody').replaceChildren(h('h2',{},'Kết quả đọc thử'), h('pre',{class:'code'},JSON.stringify(dump,null,1)), h('button',{onclick:closeModal},'Đóng'));
@@ -1128,10 +1141,12 @@ function openReview(part, an, opts){
     closeModal(); viewScan();
   });
   const closeBtn = h('button',{class:'ghost',onclick:()=>{ const d=opts.onDone; closeModal(); if(d) d(); }},
-    gv ? (opts.queueLeft ? 'Bỏ qua, ảnh tiếp ('+opts.queueLeft+')' : 'Đóng, không lưu') : opts.template?'Đóng':'Chụp lại');
+    gv||opts.key ? (opts.queueLeft ? 'Bỏ qua, ảnh tiếp ('+opts.queueLeft+')' : 'Đóng, không lưu') : opts.template?'Đóng':'Chụp lại');
   wrap.replaceChildren(
-    h('h2',{},title + (gv && opts.queueLeft ? ' · còn '+opts.queueLeft+' ảnh' : '')),
-    h('p',{class:'small',style:'margin:0 0 8px'}, gv
+    h('h2',{},(opts.key?'Đáp án — ':'')+title + ((gv||opts.key) && opts.queueLeft ? ' · còn '+opts.queueLeft+' ảnh' : '')),
+    h('p',{class:'small',style:'margin:0 0 8px'}, opts.key
+      ? 'Tô đáp án đúng cho mã đề này: chạm vào ô tròn để tô (xanh), chạm lại để bỏ. Nhập mã đề (hoặc tô 3 ô mã đề) rồi bấm “Dùng làm đáp án”. Đáp án được điền vào bài đang soạn, chưa lưu lên máy chủ.'
+      : gv
       ? 'Máy đã đọc và chấm theo đáp án. Ô học sinh tô đúng màu xanh, sai màu đỏ; vòng nét đứt là đáp án đúng. Chạm vào ô để thêm/bỏ chỗ tô máy đọc sót — điểm cập nhật ngay.'
       : opts.template
       ? 'Chạm vào ô tròn để tô (xanh = đã tô), chạm lại để bỏ. Nhập mã đề ở ô bên dưới rồi bấm xác nhận.'
@@ -1430,7 +1445,7 @@ async function gvEdit(id){
       return h('div',{class:'card',style:'margin:8px 0'},
         h('label',{style:'display:flex;gap:8px;align-items:center;margin:0'},h('input',{type:'checkbox',checked:c.enabled,onchange:e=>{c.enabled=e.target.checked;render();}}),PART_NAME[p]),
         c.enabled? h('div',{class:'grid2'},
-          F('Số câu (tối đa '+MAXN[p]+'; 0 = bỏ phần này)',h('input',{type:'number',min:0,max:MAXN[p],value:c.n,oninput:e=>{c.n=num(e.target.value,0,MAXN[p]);}}),
+          F('Số câu (tối đa '+MAXN[p]+'; 0 = bỏ phần này)',h('input',{type:'number',min:0,max:MAXN[p],value:c.n,oninput:e=>{c.n=num(e.target.value,0,MAXN[p]);},onchange:()=>render()}),
             'Trên '+FULL_SHEETS.full.cap[p]+' câu: học sinh phải dùng phiếu A4 40 · 10 · 10.'),
           p==='tf'? F('Điểm khi đúng 0/1/2/3/4 ý',h('input',{type:'text',value:c.scale.join(' '),oninput:e=>{const a=e.target.value.split(/[\s;]+/).map(s=>parseFloat(s.replace(',','.')));if(a.length===5&&a.every(isFinite))c.scale=a;}}),'Mặc định: 0 0,1 0,25 0,5 1')
               : F('Điểm mỗi câu',h('input',{type:'text',value:String(c.pt).replace('.',','),oninput:e=>{const v=parseFloat(e.target.value.replace(',','.'));if(isFinite(v))c.pt=v;}}))):null);
@@ -1455,7 +1470,7 @@ async function gvEdit(id){
       h('div',{class:'card'}, h('div',{class:'grid2'}, F('Tên bài kiểm tra',title), F('Mã bài (a-z, 0-9, gạch ngang)',idIn), F('Số lần nộp tối đa / học sinh',maxA)),
         chk('active','Đang mở cho học sinh nộp'), chk('showSolutions','Hiện đáp án & lời giải sau khi nộp'), chk('normalize','Quy điểm về thang 10')),
       PARTS.map(partBox),
-      h('div',{class:'card'}, h('h2',{},'Mã đề & đáp án'), codeBar, codeEd),
+      h('div',{class:'card'}, h('h2',{},'Mã đề & đáp án'), window.DAN ? DAN.panel({ex, cur:()=>cur, setCur:c=>{cur=c;}, render}) : null, codeBar, codeEd),
       h('div',{class:'row'},h('button',{onclick:save},'Lưu bài'), h('span',{class:'small'},'Học sinh không thấy được đáp án trước khi nộp.')));
   }
   async function save(){
@@ -1567,7 +1582,7 @@ async function gvScan(body){
       h('label',{},'Mẫu phiếu'), selSheet,
       h('div',{class:'row',style:'margin-top:12px'},
         h('button',{onclick:()=>cam.click()},'Chụp phiếu'),
-        h('button',{class:'ghost',onclick:()=>gal.click()},'Chọn ảnh (được chọn nhiều)'), cam, gal),
+        h('button',{class:'ghost',onclick:()=>gal.click()},'Chọn ảnh / PDF (được chọn nhiều)'), cam, gal),
       h('div',{class:'small',style:'margin-top:8px'},'Mỗi ảnh mở ra bảng chấm: xanh = tô đúng, đỏ = tô sai, vòng nét đứt = đáp án đúng. Chạm vào ô để thêm/bỏ chỗ tô, điểm tính lại ngay. Không gửi gì lên máy chủ — bảng điểm chỉ lưu trên máy này.'));
     paintTable();
   }
@@ -1624,13 +1639,14 @@ async function gvScan(body){
     else if(v.startsWith('full:')) pick('full', f, Object.assign(o,{sheet:v.slice(5)}));
     else pick(v.slice(3), f, o);
   }
-  function go(files){
+  async function go(files){
     if(!ex || !files || !files.length) return;
     try{ localStorage.setItem('cp_gv_sheet_'+exId, selSheet.value); }catch(e){}
+    try{ files = await DAN.expandFiles(Array.from(files)); }catch(e){ toast(e.message||'Không mở được tệp PDF.',6000); return; }   // PDF nhiều trang: mỗi trang một phiếu
     GVS.queue = Array.from(files); GVS.total = GVS.queue.length; next();
   }
   const cam = h('input',{type:'file',accept:'image/*',capture:'environment',hidden:true,onchange:e=>{ go(e.target.files); e.target.value=''; }});
-  const gal = h('input',{type:'file',accept:'image/*',multiple:true,hidden:true,onchange:e=>{ go(e.target.files); e.target.value=''; }});
+  const gal = h('input',{type:'file',accept:'image/*,application/pdf,.pdf',multiple:true,hidden:true,onchange:e=>{ go(Array.from(e.target.files)); e.target.value=''; }});
   selEx.addEventListener('change',loadExam);
   body.replaceChildren(
     h('div',{class:'card'}, h('h2',{},'Chấm bằng ảnh (giáo viên)'),
