@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<script src="cau_noi.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nhập phiếu ghi nhận từ ảnh</title>
+<style>
+:root{
+  --bg:#f6f3ec; --card:#fffdf8; --ink:#1f2a24; --mut:#667068; --line:#ded8c8;
+  --pri:#2f6b4f; --pri-ink:#fff; --ok:#2f7d4f; --warn:#b7791f; --bad:#b4372c;
+  --ok-bg:#e8f3ec; --warn-bg:#fbf1dc; --bad-bg:#fbe7e4; --r:10px;
+}
+@media (prefers-color-scheme:dark){
+  :root{ --bg:#161a17; --card:#1e2420; --ink:#e8ece6; --mut:#9aa59d; --line:#33403a;
+    --pri:#5fb38a; --pri-ink:#0f1a14; --ok:#6cc08c; --warn:#e0b25a; --bad:#ef8b80;
+    --ok-bg:#1c2b22; --warn-bg:#2d2616; --bad-bg:#2f1d1a; }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,"Segoe UI",Roboto,sans-serif}
+header{padding:14px 16px;border-bottom:1px solid var(--line);background:var(--card);display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+header h1{font-size:1.1rem;margin:0}
+header .who{color:var(--mut);font-size:.9rem}
+main{max-width:1200px;margin:0 auto;padding:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.narrow{max-width:460px;margin:8vh auto 0}
+h2{font-size:1.05rem;margin:0 0 8px}
+p{margin:.4em 0}
+.mut{color:var(--mut);font-size:.9rem}
+label{display:block;font-size:.85rem;color:var(--mut);margin:0 0 4px}
+input,select,textarea,button{font:inherit;color:inherit}
+input[type=text],input[type=password],input[type=date],input[type=number],select,textarea{
+  width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);min-height:44px}
+textarea{resize:vertical;min-height:44px}
+input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--pri);outline-offset:1px}
+button{cursor:pointer;border:1px solid var(--line);background:var(--card);padding:10px 16px;border-radius:8px;min-height:44px}
+button.pri{background:var(--pri);color:var(--pri-ink);border-color:var(--pri);font-weight:600}
+button:disabled{opacity:.5;cursor:not-allowed}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
+.row > *{flex:1 1 180px}
+.stack{display:grid;gap:12px}
+.err{color:var(--bad);font-size:.92rem;margin-top:8px}
+.hidden{display:none!important}
+
+/* chọn ảnh */
+.pick{border:2px dashed var(--line);border-radius:var(--r);padding:28px 16px;text-align:center}
+.pick input{display:none}
+.pick .nut{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.preview{max-width:100%;max-height:60vh;border-radius:8px;border:1px solid var(--line);display:block;margin:12px auto 0}
+
+/* màn duyệt */
+.duyet{display:grid;gap:16px;grid-template-columns:minmax(0,1fr)}
+.duyet > *, .hang .luoi > *{min-width:0}
+select{max-width:100%;text-overflow:ellipsis}
+@media (min-width:1000px){ .duyet{grid-template-columns:minmax(260px,34%) minmax(0,1fr);align-items:start} .anhcot{position:sticky;top:12px} }
+.anhcot img{width:100%;border-radius:8px;border:1px solid var(--line);cursor:zoom-in}
+.anhcot img.zoom{cursor:zoom-out;position:fixed;inset:0;z-index:50;width:100vw;height:100vh;object-fit:contain;background:#000e;border:0;border-radius:0}
+details.anhm summary{cursor:pointer;padding:8px 0;color:var(--mut)}
+.tomtat{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 0}
+.chip{padding:4px 10px;border-radius:999px;font-size:.85rem;border:1px solid var(--line)}
+.chip.ok{background:var(--ok-bg);color:var(--ok);border-color:transparent}
+.chip.kiem{background:var(--warn-bg);color:var(--warn);border-color:transparent}
+.chip.loi{background:var(--bad-bg);color:var(--bad);border-color:transparent}
+.canhbao{background:var(--warn-bg);color:var(--ink);border-left:4px solid var(--warn);padding:8px 12px;border-radius:6px;margin:8px 0}
+
+.hang{border:1px solid var(--line);border-left-width:6px;border-radius:var(--r);padding:12px;background:var(--card);display:grid;gap:10px;margin-top:10px}
+.hang.ok{border-left-color:var(--ok)} .hang.kiem{border-left-color:var(--warn)} .hang.loi{border-left-color:var(--bad)}
+.hang.off{opacity:.55}
+.hang.sai{outline:2px solid var(--bad)}
+.hang .dau{display:flex;gap:10px;align-items:center;justify-content:space-between}
+.hang .dau label.chk{display:flex;gap:8px;align-items:center;margin:0;color:var(--ink);font-size:.95rem}
+.hang .dau input[type=checkbox]{width:22px;height:22px}
+.hang .luoi{display:grid;gap:10px;grid-template-columns:1fr}
+@media (min-width:640px){ .hang .luoi{grid-template-columns:140px 1fr 1fr} .hang .rong{grid-column:1/-1} .hang .luoi .hs{grid-column:2/4} }
+.hang .doc{font-size:.82rem;color:var(--mut);margin-top:3px}
+.hang .doc b{color:var(--ink);font-weight:600}
+.hang .goiy{font-size:.8rem;color:var(--warn)}
+.wcb{font-size:.88rem;color:var(--warn)}
+.wcb.bad{color:var(--bad)}
+.thanh{position:sticky;bottom:0;background:var(--card);border-top:1px solid var(--line);padding:12px 16px;margin:16px -16px -16px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.thanh .kqmini{font-size:.92rem}
+.spin{display:inline-block;width:18px;height:18px;border:3px solid var(--line);border-top-color:var(--pri);border-radius:50%;animation:q 0.9s linear infinite;vertical-align:-4px;margin-right:8px}
+@keyframes q{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.spin{animation:none}}
+ul.tc{margin:6px 0 0;padding-left:20px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Nhập phiếu ghi nhận từ ảnh</h1>
+  <div class="who"><span id="who"></span> <button id="btnThoat" class="hidden" type="button" style="min-height:34px;padding:4px 10px">Đổi mã</button></div>
+</header>
+<main>
+
+<!-- 0. đăng nhập -->
+<section id="manDangNhap" class="card narrow hidden">
+  <h2>Đăng nhập</h2>
+  <p class="mut">Dùng đúng mã truy cập bạn dùng ở Sổ theo dõi nề nếp.</p>
+  <form id="fDangNhap" class="stack" autocomplete="off">
+    <div><label for="inMa">Mã truy cập</label><input id="inMa" type="password" autocomplete="off" spellcheck="false"></div>
+    <button class="pri" type="submit" id="btnVao">Vào</button>
+    <div class="err" id="errVao" role="alert"></div>
+  </form>
+</section>
+
+<!-- 1. chụp / chọn ảnh -->
+<section id="manChup" class="hidden">
+  <div class="card stack">
+    <div>
+      <h2>1. Chụp hoặc chọn ảnh phiếu</h2>
+      <p class="mut">Chụp thẳng, đủ sáng, thấy trọn cả bảng và hai ô Ngày / Người ghi nhận. Mỗi ảnh một phiếu.</p>
+    </div>
+    <div class="pick">
+      <div class="nut">
+        <button type="button" class="pri" id="btnChon">Chụp / chọn ảnh</button>
+        <button type="button" id="btnMau" title="Tải ảnh phiếu trắng khổ A4 để in ra cho ban cán sự điền">Tải mẫu phiếu (ảnh)</button>
+        <button type="button" id="btnMauWord" title="Tải phiếu trắng dạng Word (.doc) — mở bằng Word để sửa tên lớp, thêm bớt dòng rồi in">Tải mẫu Word</button>
+      </div>
+      <input id="inAnh" type="file" accept="image/*" capture="environment">
+      <div class="mut" style="margin-top:8px">hoặc kéo ảnh vào đây · chưa có phiếu thì tải <b>mẫu ảnh</b> hoặc <b>mẫu Word</b> rồi in ra</div>
+    </div>
+    <div id="boxXem" class="hidden">
+      <img id="imgXem" class="preview" alt="Ảnh phiếu đã chọn">
+      <div class="row" style="margin-top:12px">
+        <button type="button" id="btnXoay">Xoay 90°</button>
+        <button type="button" id="btnDoi">Chọn ảnh khác</button>
+        <button type="button" class="pri" id="btnDoc">Đọc phiếu</button>
+      </div>
+      <div class="mut" id="infoAnh" style="margin-top:6px"></div>
+    </div>
+    <div id="dangDoc" class="hidden"><span class="spin"></span>Đang đọc phiếu… thường mất 10–30 giây.</div>
+    <div class="err" id="errChup" role="alert"></div>
+  </div>
+</section>
+
+<!-- 2. duyệt -->
+<section id="manDuyet" class="hidden">
+  <div class="duyet">
+    <aside class="anhcot">
+      <details class="anhm" id="dtAnh" open>
+        <summary>Ảnh phiếu (bấm vào ảnh để phóng to)</summary>
+        <img id="imgGoc" alt="Ảnh phiếu gốc">
+      </details>
+    </aside>
+    <div class="card">
+      <h2>2. Kiểm tra và sửa</h2>
+      <p class="mut">Máy chỉ đọc giúp. Dòng màu xanh khớp chắc, vàng cần nhìn lại, đỏ phải chọn học sinh. Bản ghi vào sổ ở trạng thái <b>chờ duyệt</b>.</p>
+      <div id="cbChung"></div>
+      <div class="row" style="margin-top:8px">
+        <div><label for="inNgay">Ngày</label><input id="inNgay" type="date"></div>
+        <div><label for="inNguoi">Người ghi nhận (đầu phiếu)</label><input id="inNguoi" type="text" maxlength="60"></div>
+      </div>
+      <div class="tomtat" id="tomtat"></div>
+      <div id="dsHang"></div>
+      <div class="row" style="margin-top:12px"><button type="button" id="btnThemHang">+ Thêm dòng</button></div>
+      <div class="thanh">
+        <div class="kqmini">
+          <span id="demChon"></span>
+          <label class="chk hidden" id="lbDuyet" style="display:inline-flex;gap:6px;align-items:center;color:var(--ink);margin:0 0 0 12px">
+            <input type="checkbox" id="ckDuyet"> Duyệt luôn (có hiệu lực ngay)
+          </label>
+        </div>
+        <div class="row" style="flex:0 0 auto">
+          <button type="button" id="btnHuy">Bỏ phiếu này</button>
+          <button type="button" class="pri" id="btnLuu">Lưu vào sổ</button>
+        </div>
+      </div>
+      <div class="err" id="errLuu" role="alert"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. xong -->
+<section id="manXong" class="card narrow hidden">
+  <h2 id="xongTieuDe">Đã lưu</h2>
+  <div id="xongNoiDung"></div>
+  <div class="row" style="margin-top:16px"><button type="button" class="pri" id="btnTiep">Phiếu tiếp theo</button></div>
+</section>
+
+</main>
+
+<script>
+(function(){
+"use strict";
+var $=function(id){return document.getElementById(id);};
+var CHUNG=!!(window.google&&google.script&&google.script.run);
+var KHOA_MA="phieu_ma";
+var ma="", user=null;
+var S={hs:[],codes:[],anh:null,anhUrl:"",hang:[],xoay:0,goc:null,nguon:null};
+
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+function uid(){return Math.random().toString(36).slice(2,9)+Date.now().toString(36).slice(-4);}
+function todayStr(){var d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
+function luuMa(v){try{ if(v) sessionStorage.setItem(KHOA_MA,v); else sessionStorage.removeItem(KHOA_MA); }catch(e){}}
+function docMa(){try{return sessionStorage.getItem(KHOA_MA)||"";}catch(e){return "";}}
+
+/* Cùng giao thức với DB.goi trong sổ: máy chủ trả chuỗi JSON. */
+function goi(yc){
+  return new Promise(function(ok,that){
+    if(!CHUNG) return that(new Error("Trang này chỉ chạy khi mở từ đường dẫn web app của sổ."));
+    yc.ma=ma;
+    google.script.run
+      .withSuccessHandler(function(s){
+        var o; try{o=JSON.parse(s);}catch(e){return that(new Error("Trả lời hỏng"));}
+        if(o&&o.saiMa) return that(Object.assign(new Error(o.loi||"Mã không đúng"),{saiMa:true}));
+        if(!o||!o.ok) return that(new Error((o&&o.loi)||"Máy chủ từ chối"));
+        ok(o);
+      })
+      .withFailureHandler(function(e){that(new Error((e&&e.message)||"Mất kết nối"));})
+      .goi(yc);
+  });
+}
+
+function man(ten){
+  ["manDangNhap","manChup","manDuyet","manXong"].forEach(function(id){ $(id).classList.toggle("hidden",id!==ten); });
+  window.scrollTo(0,0);
+}
+
+/* ---------------- đăng nhập ---------------- */
+function vao(maThu){
+  ma=String(maThu||"").trim().toUpperCase();
+  return goi({viec:"dangNhap"}).then(function(o){
+    if(o.vai==="xem") throw new Error("Mã “chỉ xem” không nhập phiếu được.");
+    user=o; luuMa(ma);
+    $("who").textContent=(o.hoTen||o.tenVai||"")+(o.tenVai?" · "+o.tenVai:"");
+    $("btnThoat").classList.remove("hidden");
+    $("lbDuyet").classList.toggle("hidden",o.vai!=="gvcn");
+    man("manChup");
+  });
+}
+$("fDangNhap").addEventListener("submit",function(e){
+  e.preventDefault(); $("errVao").textContent="";
+  var v=$("inMa").value; if(!v.trim()){ $("errVao").textContent="Nhập mã truy cập."; return; }
+  $("btnVao").disabled=true;
+  vao(v).catch(function(er){ $("errVao").textContent=er.message; luuMa(""); })
+        .then(function(){ $("btnVao").disabled=false; });
+});
+$("btnThoat").addEventListener("click",function(){ luuMa(""); location.reload(); });
+
+/* ---------------- ảnh ---------------- */
+var MAX_CANH=1800;
+function docAnh(file){
+  return new Promise(function(ok,that){
+    var url=URL.createObjectURL(file), im=new Image();
+    im.onload=function(){URL.revokeObjectURL(url); ok(im);};
+    im.onerror=function(){URL.revokeObjectURL(url); that(new Error("Không mở được ảnh này. Chọn ảnh JPG hoặc PNG."));};
+    im.src=url;
+  });
+}
+function veAnh(im,goc){
+  var w=im.naturalWidth||im.width, h=im.naturalHeight||im.height;
+  var k=Math.min(1,MAX_CANH/Math.max(w,h)); w=Math.round(w*k); h=Math.round(h*k);
+  var q=goc%180!==0, c=document.createElement("canvas");
+  c.width=q?h:w; c.height=q?w:h;
+  var g=c.getContext("2d"); g.fillStyle="#fff"; g.fillRect(0,0,c.width,c.height);
+  g.translate(c.width/2,c.height/2); g.rotate(goc*Math.PI/180); g.drawImage(im,-w/2,-h/2,w,h);
+  return c.toDataURL("image/jpeg",0.85);
+}
+function capNhatAnh(){
+  if(!S.nguon) return;
+  S.anh=veAnh(S.nguon,S.xoay);
+  $("imgXem").src=S.anh;
+  $("infoAnh").textContent="Ảnh gửi đi: "+Math.round(S.anh.length*0.75/1024)+" KB";
+}
+function chonFile(f){
+  $("errChup").textContent="";
+  if(!f) return;
+  if(!/^image\//.test(f.type)){ $("errChup").textContent="Chỉ nhận tệp ảnh."; return; }
+  docAnh(f).then(function(im){
+    S.nguon=im; S.xoay=0; capNhatAnh();
+    $("boxXem").classList.remove("hidden");
+  }).catch(function(e){ $("errChup").textContent=e.message; });
+}
+$("btnChon").addEventListener("click",function(e){ e.preventDefault(); $("inAnh").click(); });
+$("inAnh").addEventListener("change",function(){ chonFile(this.files&&this.files[0]); this.value=""; });
+$("btnDoi").addEventListener("click",function(){ $("inAnh").click(); });
+$("btnXoay").addEventListener("click",function(){ S.xoay=(S.xoay+90)%360; capNhatAnh(); });
+var pick=document.querySelector(".pick");
+["dragover","dragenter"].forEach(function(t){ pick.addEventListener(t,function(e){e.preventDefault();}); });
+pick.addEventListener("drop",function(e){ e.preventDefault(); chonFile(e.dataTransfer&&e.dataTransfer.files&&e.dataTransfer.files[0]); });
+
+/* ---------------- mẫu phiếu trắng ----------------
+   Vẽ lại đúng "Phiếu ghi nhận của ban cán sự" (Mẫu 1) thành ảnh A4 dọc 300 dpi
+   để in ra cho ban cán sự điền. Đổi trường / lớp / năm học ở đây nếu cần. */
+var MAU_PHIEU={
+  so:"SỞ GD&ĐT ĐỒNG THÁP — TRƯỜNG THPT NGUYỄN ĐÌNH CHIỂU",
+  lop:"10A5", nam:"2026 – 2027", hang:12
+};
+function veMauPhieu(){
+  var W=2480,H=3508,M=190,c=document.createElement("canvas"); c.width=W; c.height=H;
+  var g=c.getContext("2d"), FONT='"Times New Roman",Times,"Liberation Serif",serif';
+  g.fillStyle="#fff"; g.fillRect(0,0,W,H); g.fillStyle="#111"; g.strokeStyle="#222";
+  function chu(t,x,y,px,kieu,canh){ g.font=(kieu||"")+" "+px+"px "+FONT; g.textAlign=canh||"left"; g.fillText(t,x,y); }
+  function xuongDong(t,x,y,rong,px,kieu,cao){
+    g.font=(kieu||"")+" "+px+"px "+FONT; g.textAlign="left";
+    var tu=t.split(" "), dong="", yy=y;
+    tu.forEach(function(w){
+      var thu=dong?dong+" "+w:w;
+      if(g.measureText(thu).width>rong&&dong){ g.fillText(dong,x,yy); yy+=cao; dong=w; } else dong=thu;
+    });
+    if(dong) g.fillText(dong,x,yy); return yy;
+  }
+  chu(MAU_PHIEU.so,W/2,250,46,"","center");
+  chu("LỚP "+MAU_PHIEU.lop+" — NĂM HỌC "+MAU_PHIEU.nam,W/2,320,46,"","center");
+  chu("PHIẾU GHI NHẬN CỦA BAN CÁN SỰ",W/2,455,78,"bold","center");
+  chu("Dùng trong ngày, trước khi thư ký nhập vào sổ",W/2,535,46,"italic","center");
+
+  g.lineWidth=3; g.setLineDash([3,7]);
+  chu("Ngày:",M,665,52); g.beginPath(); g.moveTo(M+170,670); g.lineTo(M+900,670); g.stroke();
+  chu("Người ghi nhận:",M,765,52); g.beginPath(); g.moveTo(M+410,770); g.lineTo(M+1500,770); g.stroke();
+  g.setLineDash([]);
+
+  var cot=[0.14,0.25,0.38,0.23], nhan=["Buổi / tiết","Họ tên học sinh","Sự việc xảy ra","Người ghi nhận"];
+  var x0=M, rong=W-2*M, yb=850, caoDau=120, caoDong=172, n=MAU_PHIEU.hang;
+  var xs=[x0]; cot.forEach(function(p){ xs.push(xs[xs.length-1]+Math.round(rong*p)); }); xs[4]=x0+rong;
+  g.fillStyle="#efe9dc"; g.fillRect(x0,yb,rong,caoDau); g.fillStyle="#111";
+  nhan.forEach(function(t,i){ chu(t,xs[i]+28,yb+78,52,"bold"); });
+  g.lineWidth=3;
+  var ykt=yb+caoDau+n*caoDong;
+  g.strokeRect(x0,yb,rong,ykt-yb);
+  for(var i=1;i<4;i++){ g.beginPath(); g.moveTo(xs[i],yb); g.lineTo(xs[i],ykt); g.stroke(); }
+  for(var r=0;r<=n;r++){ var y=yb+caoDau+r*caoDong; g.beginPath(); g.moveTo(x0,y); g.lineTo(x0+rong,y); g.stroke(); }
+
+  g.fillStyle="#111";
+  var yc=xuongDong("Người ghi chỉ mô tả SỰ VIỆC, không tự ghi mã lỗi và không tự kết luận mức độ. Giáo viên chủ nhiệm đối chiếu bảng tra để gán mã.",
+    M,ykt+85,rong,42,"italic",58);
+  var ys=Math.min(H-150,yc+150);
+  chu("Tổ trưởng",W*0.2,ys,50,"bold","center");
+  chu("Lớp trưởng",W*0.5,ys,50,"bold","center");
+  chu("Thư ký lớp",W*0.8,ys,50,"bold","center");
+  return c;
+}
+function taiMau(){
+  var c=veMauPhieu();
+  c.toBlob(function(b){
+    if(!b){ alert("Không tạo được ảnh mẫu. Thử lại hoặc dùng trình duyệt khác."); return; }
+    var a=document.createElement("a"); a.href=URL.createObjectURL(b);
+    a.download="mau_phieu_ghi_nhan_"+MAU_PHIEU.lop+".png";
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); },500);
+  },"image/png");
+}
+$("btnMau").addEventListener("click",taiMau);
+
+/* Bản Word: một tài liệu HTML theo chuẩn Word (đuôi .doc) — Word mở được ngay, sửa tên lớp,
+   thêm bớt dòng, đổi chữ rồi in hoặc "Lưu thành" .docx. Không cần thư viện, chạy offline. */
+function htmlMauWord(){
+  var e=esc, tr="", i, cot=["Buổi / tiết","Họ tên học sinh","Sự việc xảy ra","Người ghi nhận"], rong=[14,25,38,23];
+  var dau=cot.map(function(t,k){return '<td width="'+rong[k]+'%" bgcolor="#EFE9DC" style="border:1px solid #000;padding:4pt 6pt;height:1.0cm"><b>'+e(t)+'</b></td>';}).join("");
+  for(i=0;i<MAU_PHIEU.hang;i++){
+    tr+='<tr style="height:1.35cm">'+rong.map(function(w){return '<td width="'+w+'%" style="border:1px solid #000">&nbsp;</td>';}).join("")+'</tr>';
+  }
+  return '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">'+
+  '<head><meta charset="utf-8"><title>Phiếu ghi nhận của ban cán sự</title>'+
+  '<!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom></w:WordDocument></xml><![endif]-->'+
+  '<style>@page WordSection1{size:21cm 29.7cm;margin:1.5cm 1.5cm 1.2cm 1.5cm}'+
+  'div.WordSection1{page:WordSection1}'+
+  'body{font-family:"Times New Roman",serif;font-size:13pt}'+
+  'p{margin:0;font-family:"Times New Roman",serif;font-size:13pt}'+
+  'table{border-collapse:collapse;width:100%;font-family:"Times New Roman",serif;font-size:13pt}</style></head>'+
+  '<body><div class="WordSection1">'+
+  '<p align="center">'+e(MAU_PHIEU.so)+'</p>'+
+  '<p align="center">LỚP '+e(MAU_PHIEU.lop)+' — NĂM HỌC '+e(MAU_PHIEU.nam)+'</p>'+
+  '<p align="center" style="margin-top:10pt"><b><span style="font-size:18pt">PHIẾU GHI NHẬN CỦA BAN CÁN SỰ</span></b></p>'+
+  '<p align="center"><i>Dùng trong ngày, trước khi thư ký nhập vào sổ</i></p>'+
+  '<p style="margin-top:12pt">Ngày: ………………………………………………</p>'+
+  '<p style="margin-top:6pt;margin-bottom:10pt">Người ghi nhận: ……………………………………………………………………</p>'+
+  '<table border="1" cellspacing="0" cellpadding="4" style="border:1px solid #000"><tr>'+dau+'</tr>'+tr+'</table>'+
+  '<p style="margin-top:8pt;font-size:11pt"><i>Người ghi chỉ mô tả SỰ VIỆC, không tự ghi mã lỗi và không tự kết luận mức độ. Giáo viên chủ nhiệm đối chiếu bảng tra để gán mã.</i></p>'+
+  '<table border="0" cellspacing="0" cellpadding="0" style="margin-top:14pt"><tr>'+
+    '<td width="33%" align="center" style="border:none"><b>Tổ trưởng</b></td>'+
+    '<td width="34%" align="center" style="border:none"><b>Lớp trưởng</b></td>'+
+    '<td width="33%" align="center" style="border:none"><b>Thư ký lớp</b></td></tr></table>'+
+  '</div></body></html>';
+}
+function taiMauWord(){
+  var b=new Blob(["﻿"+htmlMauWord()],{type:"application/msword;charset=utf-8"});
+  var a=document.createElement("a"); a.href=URL.createObjectURL(b);
+  a.download="mau_phieu_ghi_nhan_"+MAU_PHIEU.lop+".doc";
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); },500);
+}
+$("btnMauWord").addEventListener("click",taiMauWord);
+
+$("btnDoc").addEventListener("click",function(){
+  if(!S.anh) return;
+  $("errChup").textContent="";
+  $("btnDoc").disabled=true; $("dangDoc").classList.remove("hidden");
+  goi({viec:"docPhieu",anh:S.anh.split(",")[1],loai:"image/jpeg"})
+    .then(hienKetQua)
+    .catch(function(e){
+      if(e.saiMa){ luuMa(""); location.reload(); return; }
+      $("errChup").textContent=e.message;
+    })
+    .then(function(){ $("btnDoc").disabled=false; $("dangDoc").classList.add("hidden"); });
+});
+
+/* ---------------- duyệt ---------------- */
+function hienKetQua(kq){
+  S.hs=kq.hs||[]; S.codes=kq.ma||[]; S.anhUrl=kq.anhUrl||"";
+  S.hang=(kq.hang||[]).map(function(h){ h=Object.assign({},h); h.key=uid(); h.chon=(h.sid&&h.suViec&&!h.trung); return h; });
+  $("imgGoc").src=S.anh||"";
+  $("inNgay").value=kq.ngay||"";
+  $("inNguoi").value=kq.nguoiGhiPhieu||"";
+  var cb=(kq.canhBaoChung||[]).map(function(t){return '<div class="canhbao">'+esc(t)+'</div>';}).join("");
+  if(kq.luotDaDung) cb+='<div class="mut">Hôm nay đã đọc '+kq.luotDaDung+'/'+kq.gioiHan+' phiếu.</div>';
+  $("cbChung").innerHTML=cb;
+  $("errLuu").textContent="";
+  veHang(); man("manDuyet");
+}
+
+function tenHs(h){return h.name+(h.to?" — tổ "+h.to:"");}
+function optHs(h){
+  var goiY={}, o='<option value="">— chọn học sinh —</option>';
+  if(h.ungVien&&h.ungVien.length){
+    o+='<optgroup label="Gợi ý từ tên đọc được">';
+    h.ungVien.forEach(function(u){ goiY[u.id]=1; o+='<option value="'+esc(u.id)+'"'+(h.sid===u.id?" selected":"")+'>'+esc(u.name)+(u.to?" — tổ "+esc(u.to):"")+'</option>'; });
+    o+='</optgroup>';
+  }
+  o+='<optgroup label="Cả lớp">';
+  S.hs.slice().sort(function(a,b){
+    var x=a.name.split(" ").pop(), y=b.name.split(" ").pop();
+    return x.localeCompare(y,"vi")||a.name.localeCompare(b.name,"vi");
+  }).forEach(function(s){ if(!goiY[s.id]) o+='<option value="'+esc(s.id)+'"'+(h.sid===s.id?" selected":"")+'>'+esc(tenHs(s))+'</option>'; });
+  return o+'</optgroup>';
+}
+function optMa(h){
+  var o='<option value="">— GVCN gán sau —</option>';
+  S.codes.forEach(function(c){
+    if(c.nhom===3) return;
+    o+='<option value="'+esc(c.code)+'"'+(h.maGoiY===c.code?" selected":"")+'>'+esc(c.code+" · "+c.name)+'</option>';
+  });
+  return o;
+}
+function mauHang(h){
+  if(!h.sid) return "loi";
+  return h.doTin==="ok"?"ok":"kiem";
+}
+function veHang(){
+  var html=S.hang.map(function(h,i){
+    var m=mauHang(h);
+    var cb=(h.canhBao||[]).map(function(t){return '<div class="wcb'+(m==="loi"?" bad":"")+'">⚠ '+esc(t)+'</div>';}).join("");
+    var pb=h.loai==="phat_bieu";
+    return '<div class="hang '+m+(h.chon?"":" off")+'" data-k="'+h.key+'">'+
+      '<div class="dau"><label class="chk"><input type="checkbox" data-f="chon"'+(h.chon?" checked":"")+'> Lưu dòng '+(i+1)+'</label>'+
+        '<button type="button" data-xoa="1" style="min-height:34px;padding:2px 10px" aria-label="Xóa dòng '+(i+1)+'">Xóa</button></div>'+
+      '<div class="luoi">'+
+        '<div><label>Buổi / tiết</label><input type="text" data-f="tiet" maxlength="40" value="'+esc(h.tiet)+'"></div>'+
+        '<div class="hs"><label>Học sinh</label><select data-f="sid">'+optHs(h)+'</select>'+
+          (h.tenDoc?'<div class="doc">Phiếu viết: <b>'+esc(h.tenDoc)+'</b></div>':'')+'</div>'+
+        '<div class="rong"><label>Sự việc xảy ra</label><textarea data-f="suViec" rows="2" maxlength="300">'+esc(h.suViec)+'</textarea></div>'+
+        '<div><label>Loại</label><select data-f="loai"><option value="vi_pham"'+(pb?"":" selected")+'>Vi phạm</option><option value="phat_bieu"'+(pb?" selected":"")+'>Phát biểu</option></select></div>'+
+        (pb?'<div><label>Số lượt phát biểu</label><input type="number" data-f="soLuot" min="1" max="20" value="'+h.soLuot+'"></div>'
+           :'<div class="hs"><label>Mã (gợi ý của máy, GVCN quyết định)</label><select data-f="maGoiY">'+optMa(h)+'</select>'+
+             (h.maGoiY?'<div class="goiy">Máy gợi ý mã '+esc(h.maGoiY)+' — hãy xem lại.</div>':'')+'</div>')+
+        '<div><label>Người ghi nhận</label><input type="text" data-f="nguoiGhi" maxlength="60" value="'+esc(h.nguoiGhi)+'"></div>'+
+      '</div>'+cb+'</div>';
+  }).join("");
+  $("dsHang").innerHTML=html||'<p class="mut">Không có dòng nào. Bấm “+ Thêm dòng” nếu máy bỏ sót.</p>';
+  capNhatTomTat();
+}
+function capNhatTomTat(){
+  var d={ok:0,kiem:0,loi:0}; S.hang.forEach(function(h){d[mauHang(h)]++;});
+  $("tomtat").innerHTML='<span class="chip">'+S.hang.length+' dòng</span>'+
+    '<span class="chip ok">'+d.ok+' chắc</span><span class="chip kiem">'+d.kiem+' cần xem</span><span class="chip loi">'+d.loi+' chưa chọn học sinh</span>';
+  var n=S.hang.filter(function(h){return h.chon;}).length;
+  $("demChon").textContent="Sẽ lưu "+n+" / "+S.hang.length+" dòng";
+  $("btnLuu").disabled=!n;
+}
+function hangCua(el){var k=el.closest(".hang"); return k&&S.hang.filter(function(h){return h.key===k.dataset.k;})[0];}
+$("dsHang").addEventListener("input",function(e){
+  var h=hangCua(e.target), f=e.target.dataset.f; if(!h||!f||f==="chon"||f==="sid"||f==="loai") return;
+  h[f]=f==="soLuot"?Math.max(1,Math.min(20,Number(e.target.value)||1)):e.target.value;
+});
+$("dsHang").addEventListener("change",function(e){
+  var h=hangCua(e.target), f=e.target.dataset.f; if(!h||!f) return;
+  if(f==="chon"){ h.chon=e.target.checked; e.target.closest(".hang").classList.toggle("off",!h.chon); capNhatTomTat(); return; }
+  if(f==="sid"){ h.sid=e.target.value; h.doTin=h.sid?"ok":"loi"; h.canhBao=(h.canhBao||[]).filter(function(t){return !/Tên gần giống|Không khớp|Cần kiểm lại tên/.test(t);}); if(h.sid) h.chon=true; veHang(); return; }
+  if(f==="loai"){
+    h.loai=e.target.value;
+    var pb=S.codes.filter(function(c){return c.code==="C01";})[0];
+    if(h.loai==="phat_bieu"){ if(!pb){ alert("Sổ chưa có mã C01 (Phát biểu xây dựng bài) — hãy để GVCN mở sổ đồng bộ rồi thử lại."); h.loai="vi_pham"; } else { h.maGoiY="C01"; } }
+    else if(h.maGoiY==="C01") h.maGoiY="";
+    veHang(); return;
+  }
+  h[f]=e.target.value;
+});
+$("dsHang").addEventListener("click",function(e){
+  if(e.target.id==="imgGoc") return;
+  var b=e.target.closest("[data-xoa]"); if(!b) return;
+  var h=hangCua(b); S.hang=S.hang.filter(function(x){return x!==h;}); veHang();
+});
+$("btnThemHang").addEventListener("click",function(){
+  S.hang.push({key:uid(),stt:S.hang.length+1,tiet:"",tenDoc:"",sid:"",ungVien:[],doTin:"loi",suViec:"",loai:"vi_pham",soLuot:1,maGoiY:"",nguoiGhi:"",khoDoc:false,canhBao:[],trung:false,chon:true});
+  veHang();
+  var l=document.querySelectorAll(".hang"); if(l.length) l[l.length-1].scrollIntoView({block:"center"});
+});
+$("imgGoc").addEventListener("click",function(){ this.classList.toggle("zoom"); });
+$("btnHuy").addEventListener("click",function(){ if(confirm("Bỏ phiếu này? Các chỉnh sửa chưa lưu sẽ mất.")) lamLai(); });
+
+/* ---------------- lưu ---------------- */
+function codeObj(c){return S.codes.filter(function(x){return x.code===c;})[0];}
+function taoBanGhi(h,ngay,nguoiDau,duyetLuon){
+  var pb=h.loai==="phat_bieu", c=pb?codeObj("C01"):null;
+  var sl=pb?Math.max(1,Math.min(20,Number(h.soLuot)||1)):1;
+  var moTa=pb?(c?c.name:"Phát biểu xây dựng bài")+(sl>1?" × "+sl:""):h.suViec.trim();
+  var code=pb?"C01":(h.maGoiY||"");
+  var hl=duyetLuon&&(pb||code);
+  var o={id:uid(),date:ngay,tiet:(h.tiet||"").trim(),sid:h.sid,moTa:moTa,code:code,sl:sl,src:"Lớp",
+         nguoi:(h.nguoiGhi||"").trim()||nguoiDau||"",
+         status:hl?"hl":"cho",lyDo:"",note:"",createdBy:ma,ngayDuyet:hl?todayStr():"",
+         nguon:"anh",phieu:S.anhUrl};
+  var st=S.hs.filter(function(s){return s.id===h.sid;})[0];
+  return {loai:"BanGhi",viec:"luu",ban:{id:o.id,ngay:o.date,tiet:o.tiet,maHS:o.sid,hoTen:st?st.name:"",moTa:o.moTa,
+    maLoi:o.code,boPhan:o.src,nguoiGhi:o.nguoi,trangThai:o.status,lyDo:"",nguoiTao:o.createdBy,ngayDuyet:o.ngayDuyet,
+    mon:"",cotDiemHocTap:"",json:JSON.stringify(o)}};
+}
+$("btnLuu").addEventListener("click",function(){
+  $("errLuu").textContent="";
+  var ngay=$("inNgay").value, nguoiDau=$("inNguoi").value.trim();
+  if(!ngay){ $("errLuu").textContent="Chọn ngày của phiếu."; $("inNgay").focus(); return; }
+  if(ngay>todayStr()){ $("errLuu").textContent="Ngày của phiếu không được ở tương lai."; $("inNgay").focus(); return; }
+  var chon=S.hang.filter(function(h){return h.chon;}), sai=null;
+  document.querySelectorAll(".hang").forEach(function(el){el.classList.remove("sai");});
+  chon.forEach(function(h){
+    var ok=h.sid&&(h.loai==="phat_bieu"||(h.suViec||"").trim());
+    if(!ok){ var el=document.querySelector('.hang[data-k="'+h.key+'"]'); if(el) el.classList.add("sai"); sai=sai||el; }
+  });
+  if(sai){ $("errLuu").textContent="Có dòng chưa chọn học sinh hoặc thiếu sự việc (viền đỏ). Sửa hoặc bỏ tích dòng đó."; sai.scrollIntoView({block:"center"}); return; }
+  var duyetLuon=user&&user.vai==="gvcn"&&$("ckDuyet").checked;
+  var trung=chon.filter(function(h){return h.trung;}).length;
+  if(trung&&!confirm(trung+" dòng có vẻ đã được ghi trong sổ rồi. Vẫn lưu thêm?")) return;
+  var ops=chon.map(function(h){return taoBanGhi(h,ngay,nguoiDau,duyetLuon);});
+  $("btnLuu").disabled=true; $("btnLuu").textContent="Đang lưu…";
+  goi({viec:"day",ops:ops}).then(function(o){
+    var tuChoi=o.tuChoi||[], nhan=(o.nhan||[]).length;
+    var h='<p><b>'+nhan+'</b> bản ghi đã vào sổ'+(duyetLuon?' (có hiệu lực).':' ở trạng thái <b>chờ duyệt</b>.')+'</p>';
+    if(tuChoi.length) h+='<p class="err">'+tuChoi.length+' bản ghi bị từ chối:</p><ul class="tc">'+tuChoi.map(function(t){return '<li>'+esc(t.lyDo||"Bị từ chối")+'</li>';}).join("")+'</ul>';
+    if(S.anhUrl) h+='<p class="mut">Ảnh gốc được lưu trong Drive của chủ sổ.</p>';
+    $("xongTieuDe").textContent=tuChoi.length?"Đã lưu một phần":"Đã lưu";
+    $("xongNoiDung").innerHTML=h; man("manXong");
+  }).catch(function(e){
+    if(e.saiMa){ luuMa(""); location.reload(); return; }
+    $("errLuu").textContent="Chưa lưu được: "+e.message+" — dữ liệu bạn sửa vẫn còn trên màn hình, bấm lưu lại.";
+  }).then(function(){ $("btnLuu").textContent="Lưu vào sổ"; capNhatTomTat(); });
+});
+
+function lamLai(){
+  S.anh=null; S.nguon=null; S.hang=[]; S.anhUrl=""; S.xoay=0;
+  $("boxXem").classList.add("hidden"); $("imgXem").removeAttribute("src"); $("errChup").textContent="";
+  $("ckDuyet").checked=false; $("imgGoc").classList.remove("zoom");
+  man("manChup");
+}
+$("btnTiep").addEventListener("click",lamLai);
+
+/* móc cho kiểm thử giao diện */
+window.__phieu={hienKetQua:hienKetQua,vao:vao,state:S,veMau:veMauPhieu,htmlWord:htmlMauWord};
+
+/* ---------------- khởi động ---------------- */
+var luu=docMa();
+if(!CHUNG){ man("manDangNhap"); $("errVao").textContent="Trang này chỉ chạy khi mở từ đường dẫn web app của sổ (thêm ?p=phieu)."; }
+else if(luu){ vao(luu).catch(function(){ luuMa(""); man("manDangNhap"); }); }
+else man("manDangNhap");
+})();
+</script>
+</body>
+</html>

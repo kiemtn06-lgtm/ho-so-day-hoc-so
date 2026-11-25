@@ -8,3 +8,6 @@ K11/*.pdf
 
 # Phiếu sửa đang xử lý (quy trình .github/workflows/claude-sua.yml)
 .phieu/
+
+# Sổ chủ nhiệm: nguồn Apps Script, sao lưu dữ liệu lớp, Word/Excel. KHÔNG đưa lên kho công khai (trang đã dựng nằm ở so-chu-nhiem/)
+SoChuNhiem/

@@ -2787,6 +2787,9 @@ window.HO_SO = {
   ten: "Hồ sơ dạy học số",
   namHoc: "2026-2027",
   khoiMacDinh: "12",
+  /* Sổ chủ nhiệm số (sổ theo dõi nề nếp, Apps Script). Trang so-chu-nhiem/ dựng bằng: node tools/dung_so_chu_nhiem.js (nguồn SoChuNhiem/trien_khai chỉ có trên máy).
+     Dữ liệu nằm ở Google Sheet, vào sổ phải có mã; địa chỉ web app ghi trong so-chu-nhiem/cau_noi.js. */
+  soChuNhiem: { ten: "Sổ chủ nhiệm số", lop: "10A5", trang: "so-chu-nhiem/index.html" },
   /* Hỏi đáp: để trống api thì tra cứu ngay trên dữ liệu bài (không AI).
      Khi có máy chủ AI riêng, điền địa chỉ vào api: trang sẽ gửi {cau_hoi, ngu_canh} và hiện trường tra_loi nhận về. */
   chatbot: { api: "" },
@@ -2927,6 +2930,7 @@ window.HO_SO = {
     h += '<hr><button data-a="page" data-p="ph" class="' + (V.page === "ph" ? "on" : "") + '">Làm bài trực tuyến</button>';
     h += '<button data-a="page" data-p="hd" class="' + (V.page === "hd" ? "on" : "") + '">Hỏi đáp</button>';
     h += '<button data-a="page" data-p="lop" class="' + (V.page === "lop" ? "on" : "") + '">Lớp học</button>';
+    if (CFG.soChuNhiem) h += '<button data-a="page" data-p="scn" class="' + (V.page === "scn" ? "on" : "") + '">' + esc(CFG.soChuNhiem.ten) + "</button>";
     h += '<button data-a="page" data-p="cc" class="' + (V.page === "cc" ? "on" : "") + '">Sao lưu dữ liệu</button>';
     $("tree").innerHTML = h;
   }
@@ -3137,6 +3141,14 @@ window.HO_SO = {
     return h + '</div><span id="ccMsg" class="muted" role="status"></span>';
   }
 
+  /* ---------- Sổ chủ nhiệm số: trang so-chu-nhiem/ (giao diện sổ Apps Script + cau_noi.js), dữ liệu ở Google Sheet ---------- */
+  function pageSCN() {
+    var x = CFG.soChuNhiem;
+    return '<div class="head"><h2>' + esc(x.ten) + (x.lop ? " · lớp " + esc(x.lop) : "") + '</h2><span class="sp"></span><a class="btn noprint" target="_blank" rel="noopener" href="' + esc(x.trang) + '">Mở toàn trang</a></div>' +
+      '<p class="muted noprint">Sổ theo dõi nề nếp dùng chung với ban cán sự: dữ liệu nằm ở Google Sheet của giáo viên, vào sổ bằng mã như khi mở từ đường dẫn Apps Script. Hồ sơ chỉ chứa giao diện, không chứa danh sách lớp hay mã nào.</p>' +
+      '<iframe class="otf" title="' + esc(x.ten) + '" src="' + esc(x.trang) + '"></iframe>';
+  }
+
   /* ---------- bài luyện nhúng (trang HTML riêng của từng chương) ---------- */
   function pageLT() {
     var ch = curCh(), lt = (ch && ch.luyenTap) || [], x = lt[V.lt || 0];
@@ -3292,6 +3304,7 @@ window.HO_SO = {
     var w = $("work"), b = curBai();
     if (V.page === "lop") { w.innerHTML = pageLop(); return; }
     if (V.page === "cc") { w.innerHTML = pageCC(); return; }
+    if (V.page === "scn") { w.innerHTML = pageSCN(); return; }
     if (V.page === "tq") { w.innerHTML = pageTQ(); return; }
     if (V.page === "lt") { w.innerHTML = pageLT(); return; }
     if (V.page === "ph") { w.innerHTML = pageLB(); return; }
@@ -3306,7 +3319,7 @@ window.HO_SO = {
   /* vị trí đang xem, ghi vào phiếu của nút Sửa (lib/nut_sua.js), kèm mã dữ liệu để biết tệp cần sửa */
   window.HSDH_VITRI = function () {
     var p = ["Hồ sơ", CFG.khoi[V.khoi].ten], ch = chs()[V.ch], b = V.page === "bai" ? curBai() : null;
-    var TEN = { tq: "Tổng quan khối", ph: "Làm bài trực tuyến", hd: "Hỏi đáp", lop: "Lớp học", cc: "Sao lưu dữ liệu" };
+    var TEN = { tq: "Tổng quan khối", ph: "Làm bài trực tuyến", hd: "Hỏi đáp", lop: "Lớp học", cc: "Sao lưu dữ liệu", scn: "Sổ chủ nhiệm số" };
     if (b) p.push("Chương " + (V.ch + 1) + ". " + ch.ten, "Bài: " + b.ten, "Tab: " + TABS[V.tab], "(dữ liệu nguon/data/k" + ch.duLieu + ".js, mã bài " + b.ma + ")");
     else if (V.page === "lt" && ch && ch.luyenTap && ch.luyenTap[V.lt]) p.push("Chương " + (V.ch + 1) + ". " + ch.ten, "Luyện tập: " + ch.luyenTap[V.lt].ten);
     else p.push(TEN[V.page] || V.page);
