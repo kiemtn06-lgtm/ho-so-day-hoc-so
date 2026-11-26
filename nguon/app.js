@@ -1,6 +1,6 @@
 (function () {
   var CFG = window.HO_SO, DATA = window.HSDH_DATA || {}, KEY = "hsdh_v2";
-  var S = { st: {}, notes: {}, links: {}, lop: {}, pos: {}, lastLop: "", prog: {}, gc: {}, khbd: {}, pv: [], cm: [], sd: { lops: [], chon: "" }, srv: { url: "", pass: "" } };
+  var S = { st: {}, notes: {}, links: {}, lop: {}, pos: {}, lastLop: "", prog: {}, gc: {}, khbd: {}, pv: [], cm: [], sd: { lops: [], chon: "" }, kho: [], srv: { url: "", pass: "" } };
   var HOAT = [["ga", "Giáo án"], ["sl", "Slide"], ["bt", "Bài tập"], ["on", "Ôn tập"], ["de", "Đề"]];
   var V = { khoi: CFG.khoiMacDinh, page: "tq", ch: 0, bai: 0, tab: 0, fd: "", fm: "", ans: false, quiz: null, qkey: false, edit: "" };
   var TABS = ["Trình chiếu", "SGK", "KHBD", "Bài tập", "Ôn tập", "Kiểm tra", "Ghi chú sau tiết"];
@@ -8,7 +8,7 @@
   var MUC = { nb: "Nhận biết", th: "Thông hiểu", vd: "Vận dụng", vdc: "Vận dụng cao" };
   var ST = ["Chưa dạy", "Đang dạy", "Đã dạy"];
 
-  function load() { try { var t = localStorage.getItem(KEY); if (t) { var o = JSON.parse(t); for (var k in S) if (o[k] != null) S[k] = o[k]; } } catch (e) {} }
+  function load() { try { var t = localStorage.getItem(KEY); if (t) { var o = JSON.parse(t); for (var k in S) if (o[k] != null) S[k] = o[k]; } } catch (e) {} if (!Array.isArray(S.kho)) S.kho = []; }
   function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} if (window.SoDiem && SoDiem.daLuu) SoDiem.daLuu(); }
   function $(id) { return document.getElementById(id); }
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
@@ -56,6 +56,7 @@
     if (window.SoDiem) h += '<button data-a="page" data-p="sd" class="' + (V.page === "sd" ? "on" : "") + '">Sổ điểm</button>';
     if (CFG.soChuNhiem) h += '<button data-a="page" data-p="scn" class="' + (V.page === "scn" ? "on" : "") + '">' + esc(CFG.soChuNhiem.ten) + "</button>";
     if (CFG.chamDiem) h += '<button data-a="page" data-p="cd" class="' + (V.page === "cd" ? "on" : "") + '">' + esc(CFG.chamDiem.ten) + "</button>";
+    h += '<button data-a="page" data-p="kho" class="' + (V.page === "kho" ? "on" : "") + '">Liên kết lưu trữ</button>';
     h += '<button data-a="page" data-p="cc" class="' + (V.page === "cc" ? "on" : "") + '">Sao lưu dữ liệu</button>';
     $("tree").innerHTML = h;
   }
@@ -276,6 +277,62 @@
     return h + '</div><span id="ccMsg" class="muted" role="status"></span>';
   }
 
+  /* ---------- Liên kết lưu trữ: các tập, mỗi tập nhiều đường link (Drive, OneDrive, YouTube...), lưu ở S.kho
+     [{ ten, links: [{ ten, url, ghi }] }], đi kèm Sao lưu dữ liệu. V.khoF = { k: "them"|"dan"|"sua", i, j } là ô đang mở ---------- */
+  function khoMien(u) { try { return new URL(u).hostname.replace(/^www\./, ""); } catch (e) { return ""; } }
+  function khoChuan(u) { u = String(u || "").trim(); if (u && !/^[a-z]+:/i.test(u) && /^[\w-]+(\.[\w-]+)+(\/|$)/.test(u)) u = "https://" + u; return u; }
+  /* mỗi dòng một link, tên ghi trước hoặc sau: "Giáo án K10 | https://...", "https://... - Đề GK"; dòng không có link thì bỏ qua */
+  function khoTach(tx) {
+    var out = [];
+    String(tx || "").split(/\r?\n/).forEach(function (d) {
+      var m = d.match(/(https?:\/\/|file:\/\/\/)\S+/i); if (!m) return;
+      var u = m[0].replace(/[),.;]+$/, ""), ten = d.replace(m[0], " ").replace(/^\s*\d+[.)]\s+/, "").replace(/^[\s\-–|:•*·]+|[\s\-–|:•*·]+$/g, "").replace(/\s*[|]\s*$/, "").trim();
+      out.push({ ten: ten || khoMien(u) || u, url: u, ghi: "" });
+    });
+    return out;
+  }
+  function khoForm(i, j) {
+    var l = j >= 0 ? S.kho[i].links[j] : { ten: "", url: "", ghi: "" };
+    return '<div class="khoF noprint"><input id="khoT" placeholder="Tên link (VD: Giáo án Bài 13)" value="' + esc(l.ten) + '">' +
+      '<input id="khoU" placeholder="Địa chỉ https://..." value="' + esc(l.url) + '"><input id="khoG" placeholder="Ghi chú (không bắt buộc)" value="' + esc(l.ghi || "") + '">' +
+      '<div class="row" style="margin:0"><button class="go" data-a="khoLuu" data-i="' + i + '" data-j="' + j + '">Lưu</button><button data-a="khoHuy">Hủy</button><span id="khoMsg" class="muted" role="status"></span></div></div>';
+  }
+  function pageKho() {
+    var q = String(V.khoTim || "").toLowerCase().trim(), F = V.khoF || {}, tong = 0, hien = 0;
+    var h = '<div class="head"><h2>Liên kết lưu trữ</h2><span class="sp"></span><button class="go noprint" data-a="khoTao">+ Tạo tập mới</button></div>' +
+      '<p class="muted noprint">Gom các đường link tài liệu (Google Drive, OneDrive, YouTube, trang web...) thành từng tập. Dán được nhiều link một lần, mỗi dòng một link, có thể ghi tên trước: <i>Giáo án K10 | https://...</i>. Dữ liệu lưu trong trình duyệt máy này; muốn mang sang máy khác thì dùng "Sao lưu dữ liệu".</p>';
+    if (!S.kho.length) return h + '<div class="card muted">Chưa có tập nào. Bấm "+ Tạo tập mới" để bắt đầu.</div><span id="khoMsg" class="muted" role="status"></span>';
+    h += '<div class="row noprint"><input id="khoTim" type="search" placeholder="🔍 Tìm link theo tên, ghi chú, địa chỉ" value="' + esc(V.khoTim || "") + '" style="flex:1;min-width:200px"><span id="khoMsg" class="muted" role="status"></span></div>';
+    S.kho.forEach(function (tp, i) {
+      tong += tp.links.length;
+      var ds = tp.links.map(function (l, j) { return { l: l, j: j }; }).filter(function (x) { return !q || (tp.ten + " " + x.l.ten + " " + x.l.url + " " + (x.l.ghi || "")).toLowerCase().indexOf(q) >= 0; });
+      if (q && !ds.length) return;
+      hien += ds.length;
+      h += '<div class="card kho"><div class="row" style="margin:0 0 6px"><b>📁 ' + esc(tp.ten) + '</b><span class="tag m">' + tp.links.length + ' link</span><span class="sp"></span>' +
+        '<span class="noprint"><button data-a="khoThem" data-i="' + i + '">+ Thêm link</button> <button data-a="khoDan" data-i="' + i + '">Dán nhiều link</button> ' +
+        (tp.links.length ? '<button class="link" data-a="khoChep" data-i="' + i + '">Chép cả tập</button> ' : "") +
+        '<button class="link" data-a="khoDoi" data-i="' + i + '">Đổi tên</button> ' + (i ? '<button class="link" data-a="khoLen" data-i="' + i + '" title="Đưa tập lên trên">↑</button> ' : "") +
+        '<button class="link" data-a="khoXoa" data-i="' + i + '" style="color:var(--bad,#c0392b)">Xóa tập</button></span></div>';
+      if (F.k === "them" && F.i === i) h += khoForm(i, -1);
+      if (F.k === "dan" && F.i === i) h += '<div class="khoF noprint"><textarea id="khoDanTx" rows="6" placeholder="Mỗi dòng một link, VD:&#10;Giáo án Bài 13 | https://drive.google.com/...&#10;https://youtu.be/... Video thí nghiệm"></textarea>' +
+        '<div class="row" style="margin:0"><button class="go" data-a="khoDanLuu" data-i="' + i + '">Thêm vào tập</button><button data-a="khoHuy">Hủy</button></div></div>';
+      if (!tp.links.length) h += '<div class="muted">Tập trống.</div>';
+      else h += '<ol class="khoDs">' + ds.map(function (x) {
+        var l = x.l, j = x.j;
+        if (F.k === "sua" && F.i === i && F.j === j) return "<li>" + khoForm(i, j) + "</li>";
+        return '<li><a target="_blank" rel="noopener" href="' + esc(l.url) + '">' + esc(l.ten) + '</a> <span class="muted">' + esc(khoMien(l.url)) + "</span>" +
+          (l.ghi ? '<div class="muted">' + esc(l.ghi) + "</div>" : "") +
+          '<span class="khoNut noprint"><button class="link" data-a="khoSua" data-i="' + i + '" data-j="' + j + '" title="Sửa">✎</button>' +
+          (j ? '<button class="link" data-a="khoLLen" data-i="' + i + '" data-j="' + j + '" title="Đưa lên">↑</button>' : "") +
+          '<button class="link" data-a="khoLXoa" data-i="' + i + '" data-j="' + j + '" title="Xóa">✕</button></span></li>';
+      }).join("") + "</ol>";
+      h += "</div>";
+    });
+    if (q && !hien) h += '<div class="card muted">Không tìm thấy link nào khớp "' + esc(V.khoTim) + '".</div>';
+    return h + '<p class="muted">' + S.kho.length + " tập, " + tong + " link.</p>";
+  }
+  function khoMo(f, sel) { V.khoF = f; renderWork(); var e = sel && $(sel); if (e) e.focus(); }
+
   /* ---------- Sổ chủ nhiệm số: trang so-chu-nhiem/ (giao diện sổ Apps Script + cau_noi.js), dữ liệu ở Google Sheet ---------- */
   function pageSCN() {
     var x = CFG.soChuNhiem;
@@ -453,6 +510,7 @@
     var w = $("work"), b = curBai();
     if (V.page === "lop") { w.innerHTML = pageLop(); return; }
     if (V.page === "cc") { w.innerHTML = pageCC(); return; }
+    if (V.page === "kho") { w.innerHTML = pageKho(); return; }
     if (V.page === "scn") { w.innerHTML = pageSCN(); return; }
     if (V.page === "cd") { w.innerHTML = pageCD(); return; }
     if (V.page === "sd") { w.innerHTML = window.SoDiem ? SoDiem.html() : ""; return; }
@@ -470,7 +528,7 @@
   /* vị trí đang xem, ghi vào phiếu của nút Sửa (lib/nut_sua.js), kèm mã dữ liệu để biết tệp cần sửa */
   window.HSDH_VITRI = function () {
     var p = ["Hồ sơ", CFG.khoi[V.khoi].ten], ch = chs()[V.ch], b = V.page === "bai" ? curBai() : null;
-    var TEN = { tq: "Tổng quan khối", ph: "Làm bài trực tuyến", hd: "Hỏi đáp", lop: "Lớp học", cc: "Sao lưu dữ liệu", scn: "Sổ chủ nhiệm số", cd: "Chấm điểm tự động", sd: "Sổ điểm" };
+    var TEN = { tq: "Tổng quan khối", ph: "Làm bài trực tuyến", hd: "Hỏi đáp", lop: "Lớp học", cc: "Sao lưu dữ liệu", scn: "Sổ chủ nhiệm số", cd: "Chấm điểm tự động", sd: "Sổ điểm", kho: "Liên kết lưu trữ" };
     if (b) p.push("Chương " + (V.ch + 1) + ". " + ch.ten, "Bài: " + b.ten, "Tab: " + TABS[V.tab], "(dữ liệu nguon/data/k" + ch.duLieu + ".js, mã bài " + b.ma + ")");
     else if (V.page === "lt" && ch && ch.luyenTap && ch.luyenTap[V.lt]) p.push("Chương " + (V.ch + 1) + ". " + ch.ten, "Luyện tập: " + ch.luyenTap[V.lt].ten);
     else p.push(TEN[V.page] || V.page);
@@ -737,6 +795,36 @@
       if (u && !okUrl(u)) { msg("ccMsg", "Địa chỉ không hợp lệ."); return; }
       if (u) S.links[V.khoi + "." + tid] = u; else delete S.links[V.khoi + "." + tid]; save(); renderWork(); if (V.page === "tq") renderTree();
     }
+    else if (a.indexOf("kho") === 0) {
+      var ki = +t.getAttribute("data-i"), kj = +t.getAttribute("data-j"), tp = S.kho[ki];
+      if (a === "khoTao") { var tn = prompt("Tên tập mới (VD: Tài liệu K10, Video thí nghiệm, Đề kiểm tra):", ""); if (!tn || !tn.trim()) return; S.kho.push({ ten: tn.trim(), links: [] }); save(); khoMo({ k: "dan", i: S.kho.length - 1 }, "khoDanTx"); return; }
+      if (a === "khoHuy") { khoMo(null); return; }
+      if (!tp) return;
+      if (a === "khoThem") khoMo({ k: "them", i: ki }, "khoT");
+      else if (a === "khoDan") khoMo({ k: "dan", i: ki }, "khoDanTx");
+      else if (a === "khoSua") khoMo({ k: "sua", i: ki, j: kj }, "khoT");
+      else if (a === "khoLuu") {
+        var lt = $("khoT").value.trim(), lu = khoChuan($("khoU").value), lg = $("khoG").value.trim();
+        if (!okUrl(lu)) { msg("khoMsg", "Địa chỉ chưa đúng (phải bắt đầu bằng http, https hoặc file:///)."); $("khoU").focus(); return; }
+        var ln = { ten: lt || khoMien(lu) || lu, url: lu, ghi: lg };
+        if (kj >= 0) tp.links[kj] = ln; else tp.links.push(ln);
+        save(); khoMo(kj >= 0 ? null : { k: "them", i: ki }, "khoT"); msg("khoMsg", kj >= 0 ? "Đã lưu." : "Đã thêm. Nhập tiếp link khác hoặc bấm Hủy.");
+      }
+      else if (a === "khoDanLuu") {
+        var mm = khoTach($("khoDanTx").value);
+        if (!mm.length) { msg("khoMsg", "Không thấy đường link nào (link phải bắt đầu bằng http hoặc https)."); return; }
+        tp.links = tp.links.concat(mm); save(); khoMo(null); msg("khoMsg", "Đã thêm " + mm.length + " link vào tập " + tp.ten + ".");
+      }
+      else if (a === "khoLXoa") { if (!confirm("Xóa link \"" + tp.links[kj].ten + "\"?")) return; tp.links.splice(kj, 1); save(); khoMo(null); }
+      else if (a === "khoLLen") { var x1 = tp.links.splice(kj, 1)[0]; tp.links.splice(kj - 1, 0, x1); save(); khoMo(null); }
+      else if (a === "khoDoi") { var tm = prompt("Đổi tên tập:", tp.ten); if (!tm || !tm.trim()) return; tp.ten = tm.trim(); save(); khoMo(null); }
+      else if (a === "khoLen") { var x2 = S.kho.splice(ki, 1)[0]; S.kho.splice(ki - 1, 0, x2); save(); khoMo(null); }
+      else if (a === "khoXoa") { if (!confirm("Xóa tập \"" + tp.ten + "\" cùng " + tp.links.length + " link trong đó?")) return; S.kho.splice(ki, 1); save(); khoMo(null); }
+      else if (a === "khoChep") {
+        var tx = tp.ten + "\n" + tp.links.map(function (l) { return l.ten + " | " + l.url + (l.ghi ? " (" + l.ghi + ")" : ""); }).join("\n"), okc = function () { msg("khoMsg", "Đã chép " + tp.links.length + " link của tập " + tp.ten + "."); };
+        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(tx).then(okc, function () { msg("khoMsg", "Trình duyệt không cho sao chép."); }); else msg("khoMsg", "Trình duyệt không cho sao chép.");
+      }
+    }
     else if (a === "xuat") {
       var blob = new Blob([JSON.stringify(S, null, 2)], { type: "application/json" }), an = document.createElement("a");
       an.href = URL.createObjectURL(blob); an.download = "ho-so-day-hoc-" + new Date().toISOString().slice(0, 10) + ".json"; an.click(); URL.revokeObjectURL(an.href);
@@ -762,10 +850,14 @@
     renderWork();
   });
 
-  document.addEventListener("keydown", function (e) { if (e.key === "Enter" && e.target.id === "hdQ") { e.preventDefault(); hoi(e.target.value); } });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Enter" && e.target.id === "hdQ") { e.preventDefault(); hoi(e.target.value); }
+    if (e.key === "Enter" && /^kho[TUG]$/.test(e.target.id)) { e.preventDefault(); var bl = document.querySelector('[data-a="khoLuu"]'); if (bl) bl.click(); }
+  });
   document.addEventListener("input", function (e) {
     var t = e.target;
     if (t.id === "gcKhoi") { S.gc[V.khoi] = t.value; save(); }
+    else if (t.id === "khoTim") { V.khoTim = t.value; renderWork(); var ti = $("khoTim"); if (ti) { ti.focus(); ti.setSelectionRange(ti.value.length, ti.value.length); } }
     else if (t.classList && t.classList.contains("ed")) { var k = bKey(curBai()); (S.khbd[k] = S.khbd[k] || {})[t.getAttribute("data-f")] = t.innerText; save(); }
   });
 
