@@ -9,7 +9,7 @@
   var ST = ["Chưa dạy", "Đang dạy", "Đã dạy"];
 
   function load() { try { var t = localStorage.getItem(KEY); if (t) { var o = JSON.parse(t); for (var k in S) if (o[k] != null) S[k] = o[k]; } } catch (e) {} }
-  function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} if (window.SoDiem && SoDiem.daLuu) SoDiem.daLuu(); }
   function $(id) { return document.getElementById(id); }
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
   function km(tex, disp) { try { return window.katex.renderToString(tex, { throwOnError: false, displayMode: !!disp }); } catch (e) { return esc(tex); } }
@@ -200,7 +200,7 @@
 
   /* ---------- trang phụ ---------- */
   function pageLop() {
-    var h = '<div class="head"><h2>Lớp học</h2></div><p class="warn">Danh sách lớp chỉ lưu trong trình duyệt của máy này để dùng cho nút "Gọi tên" khi lên lớp. Chỉ nên nhập tên, không nhập điểm hay thông tin cá nhân khác.</p>';
+    var h = '<div class="head"><h2>Lớp học</h2></div><p class="muted">Danh sách lớp dùng cho nút "Gọi tên" khi lên lớp. Chỉ nên nhập tên, không nhập điểm hay thông tin cá nhân khác.</p>' + (window.SoDiem && SoDiem.thanhDB ? SoDiem.thanhDB() : "");
     lopNames().forEach(function (l) { h += '<div class="card"><div class="row" style="margin:0"><b>' + esc(l) + '</b><span class="muted">' + S.lop[l].length + ' học sinh</span><span class="sp"></span><button class="link" data-a="editLop" data-l="' + esc(l) + '">Sửa</button><button class="link" data-a="delLop" data-l="' + esc(l) + '">Xóa</button></div></div>'; });
     h += pvTongHop();
     h += "<h3>" + (V.edit ? "Sửa lớp " + esc(V.edit) : "Thêm lớp") + '</h3><div class="card"><div class="row"><input id="lTen" placeholder="Tên lớp (ví dụ 12A6)" value="' + esc(V.edit) + '"></div><textarea id="lDs" rows="8" placeholder="Mỗi dòng một học sinh">' + esc(V.edit ? S.lop[V.edit].join("\n") : "") + '</textarea><div class="row" style="margin:8px 0 0"><button data-a="saveLop">Lưu lớp</button><span id="lMsg" class="muted" role="status"></span></div></div>';
@@ -213,6 +213,16 @@
     S.cm.forEach(function (r) { if (r.lop !== l) return; var o = g(r.hs); o.cm++; o.tl += r.tl || 0; o.qn += r.qn || 0; o.dg += r.dg || 0; o.qk += r.qk || 0; });
     S.pv.forEach(function (r) { if (r.lop !== l) return; var o = g(r.hs); o.n++; o.d += r.diem; });
     return m;
+  }
+  /* bảng để xem trên trang "Lớp học" của Google Sheet (lib/so_diem.js gửi lên khi đồng bộ) */
+  function bangLop() {
+    var a = [["Lớp", "STT", "Học sinh", "Buổi có mặt", "Câu trả lời", "Câu đúng", "Lần được gọi", "Tổng điểm phát biểu"]];
+    lopNames().forEach(function (l) {
+      var m = pvTongKet(l), ds = (S.lop[l] || []).slice();
+      Object.keys(m).forEach(function (k) { if (ds.indexOf(k) < 0) ds.push(k); });
+      ds.forEach(function (k, i) { var o = m[k]; a.push([l, i + 1, k, o.cm, o.tl + (o.qn ? "/" + o.qn : ""), o.qk ? o.dg + "/" + o.qk : "", o.n, vn(o.d)]); });
+    });
+    return a;
   }
   function pvTongHop() {
     if (!S.pv.length && !S.cm.length) return '<h3>Phát biểu và có mặt trên lớp</h3><p class="muted">Chưa có ghi nhận. Vào chế độ lên lớp: "Gọi tên" rồi chấm điểm, hoặc mở "Phòng QR" cho học sinh vào.</p>';
@@ -778,6 +788,6 @@
   window.addEventListener("focus", nhanVaVe);
   window.addEventListener("storage", function (e) { if (e.key === "hsdh_bg") nhanVaVe(); });
 
-  if (window.SoDiem) SoDiem.init({ S: S, save: save, ve: function () { renderWork(); } });
+  if (window.SoDiem) SoDiem.init({ S: S, save: save, ve: function () { renderWork(); }, trang: function () { return $("lenLop").hidden ? V.page : ""; }, bangLop: bangLop });
   load(); nhanTuBaiGiang(); if (!CFG.khoi[V.khoi]) V.khoi = Object.keys(CFG.khoi)[0]; firstData(); render();
 })();

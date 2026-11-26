@@ -2901,8 +2901,8 @@ window.HO_SO = {
 /* Sổ điểm (mục "Sổ điểm" ở cột trái của hồ sơ).
    Dữ liệu (tên, mã học sinh, điểm) lưu trong trình duyệt, trong S.sd của hồ sơ (localStorage "hsdh_v2"),
    nên "Sao lưu dữ liệu" của hồ sơ sao lưu luôn sổ điểm. Không có trong kho GitHub.
-   Nếu giáo viên bật đồng bộ (mã GVCN của Sổ chủ nhiệm), sổ còn được gửi lên trang tính _SoDiem của Google Sheet Sổ chủ nhiệm
-   để điện thoại và máy tính dùng chung (xem khối DB bên dưới).
+   Nếu giáo viên bật đồng bộ (mã GVCN của Sổ chủ nhiệm), sổ điểm và mục Lớp học còn được gửi lên Google Sheet của hồ sơ
+   (qua web app Sổ chủ nhiệm) để điện thoại và máy tính dùng chung (xem khối DB bên dưới).
    Đọc/ghi Excel bằng SheetJS, tải từ cdnjs lúc cần (lần đầu cần mạng).
    Mẫu Excel: bảng điểm chi tiết của trường (STT, Mã học sinh, Họ và tên [họ đệm | tên], Ngày sinh, TX1-TX5, GK, CK, ĐTB mhk, Nhận xét). */
 (function () {
@@ -2917,72 +2917,94 @@ window.HO_SO = {
   function lop() { var d = sd(); return d.lops.filter(function (l) { return l.id === d.chon; })[0] || d.lops[0] || null; }
   function luu() { A.save(); DB.hen(); }
 
-  /* ---------- đồng bộ qua Google Sheet (web app Sổ chủ nhiệm, Code.gs: soDiemTai / soDiemLuu) ----------
+  /* ---------- đồng bộ qua Google Sheet (web app Sổ chủ nhiệm, Code.gs: khoTai / khoLuu) ----------
+     Bảng tính riêng của hồ sơ (địa chỉ chỉ nằm trong Code.gs trên máy): trang "Sổ điểm" và "Lớp học" là bảng để xem,
+     dữ liệu thật ở trang ẩn _SoDiem / _LopHoc. Có hai "kho": sd = sổ điểm (d.lops), lop = mục Lớp học (S.lop, S.pv, S.cm).
      Mã giáo viên chủ nhiệm chỉ lưu trong trình duyệt (localStorage "hsdh_sd_db"), không có trong kho.
-     Gửi cả danh sách lớp (d.lops); "rev" là số phiên bản trên mạng mà máy này đang giữ, "h" là dấu của bản đã đồng bộ:
+     Mỗi kho có "rev" = số phiên bản trên mạng mà máy này đang giữ, "h" = dấu của bản đã đồng bộ:
      bản trên máy khác dấu h nghĩa là có thay đổi chưa gửi (kể cả khi khôi phục từ file sao lưu). */
   var DB = (function () {
     var API = "https://script.google.com/macros/s/AKfycbxhoRJbCEg22IeDkhSJ6XImhifLZyKGZO2s5BK4oDEs6tXZVayoxA0Xzy2-ZXNAHGDA/exec";
     var K = "hsdh_sd_db", m = {}, dang = false, lai = false, t = 0, tt = "", lanCuoi = 0;
     try { m = JSON.parse(localStorage.getItem(K) || "{}") || {}; } catch (e) { m = {}; }
+    if (m.ma && !m.k) { m.k = { sd: { rev: m.rev || 0, h: m.h } }; delete m.rev; delete m.h; }
+    var KHO = {
+      sd: { ten: "Sổ điểm", lay: function () { return sd().lops; }, co: function () { return sd().lops.length > 0; },
+        dat: function (v) { sd().lops = Array.isArray(v) ? v : []; }, bang: function () { return bangSD(); },
+        trang: function () { return !!document.getElementById("sd"); }, dangGo: function (a) { return a.closest("#sd") && a.tagName === "INPUT"; } },
+      lop: { ten: "Lớp học", lay: function () { var S = A.S; return { lop: S.lop || {}, pv: S.pv || [], cm: S.cm || [] }; },
+        co: function () { var S = A.S; return Object.keys(S.lop || {}).length > 0 || (S.pv || []).length > 0 || (S.cm || []).length > 0; },
+        dat: function (v) { v = v && typeof v === "object" ? v : {}; A.S.lop = v.lop && typeof v.lop === "object" ? v.lop : {}; A.S.pv = Array.isArray(v.pv) ? v.pv : []; A.S.cm = Array.isArray(v.cm) ? v.cm : []; },
+        bang: function () { return A.bangLop ? A.bangLop() : []; },
+        trang: function () { return A.trang && A.trang() === "lop"; }, dangGo: function (a) { return a.id === "lTen" || a.id === "lDs"; } }
+    };
+    var DS = ["sd", "lop"];
     function ghi() { try { localStorage.setItem(K, JSON.stringify(m)); } catch (e) {} }
     function dau(s) { var h = 5381; for (var i = 0; i < s.length; i++) h = (h * 33 + s.charCodeAt(i)) | 0; return s.length + ":" + h; }
-    function banMay() { return JSON.stringify(sd().lops); }
-    function doi() { var s = banMay(); return m.h ? dau(s) !== m.h : sd().lops.length > 0; }
-    function bao2(s) { tt = s; var e = $("sdDB"); if (e) e.textContent = s; }
+    function st(k) { m.k = m.k || {}; return m.k[k] = m.k[k] || { rev: 0 }; }
+    function banMay(k) { return JSON.stringify(KHO[k].lay()); }
+    function doi(k) { var x = st(k); return x.h ? dau(banMay(k)) !== x.h : KHO[k].co(); }
+    function bao2(s) { tt = s; Array.prototype.forEach.call(document.querySelectorAll(".sdDB"), function (e) { e.textContent = s; }); }
     function goi(yc) {
       yc.ma = m.ma;
       return fetch(API, { method: "POST", body: JSON.stringify(yc), redirect: "follow", cache: "no-store" })
         .then(function (r) { if (!r.ok) throw new Error("Máy chủ trả lỗi " + r.status); return r.text(); })
-        .then(function (s) { if (/^\s*</.test(s)) throw new Error("Máy chủ chưa có phần sổ điểm: cần dán Code.gs mới và triển khai bản mới."); return JSON.parse(s); });
+        .then(function (s) { if (/^\s*</.test(s)) throw new Error("Máy chủ chưa có phần đồng bộ hồ sơ: cần dán Code.gs mới và triển khai bản mới."); return JSON.parse(s); });
     }
     function gio() { var d = new Date(); return ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2); }
-    function dangGo() { var a = document.activeElement; return a && a.closest && a.closest("#sd") && a.tagName === "INPUT"; }
-    function nhan(r) {
-      var v = []; try { v = r.json ? JSON.parse(r.json) : []; } catch (e) { v = []; }
-      sd().lops = Array.isArray(v) ? v : []; m.rev = r.rev; m.h = dau(banMay()); ghi(); A.save();
-      bao2("Đã lấy bản mới nhất lúc " + gio() + "."); if (document.getElementById("sd")) A.ve();
+    function dangGo(k) { var a = document.activeElement; return !!(a && a.closest && KHO[k].dangGo(a)); }
+    function nhan(k, r) {
+      var v = null; try { v = r.json ? JSON.parse(r.json) : null; } catch (e) { v = null; }
+      KHO[k].dat(v); var x = st(k); x.rev = r.rev; x.h = dau(banMay(k)); ghi(); A.save();
+      if (KHO[k].trang()) A.ve();
     }
-    function gui(rev) {
-      var s = banMay();
-      return goi({ viec: "soDiemLuu", rev: rev, json: s }).then(function (r) {
-        if (r.ok) { m.rev = r.rev; m.h = dau(s); ghi(); bao2("Đã lưu lên Google Sheet lúc " + gio() + "."); return; }
+    function gui(k, rev) {
+      var s = banMay(k);
+      return goi({ viec: "khoLuu", kho: k, rev: rev, json: s, bang: KHO[k].bang() }).then(function (r) {
+        if (r.ok) { var x = st(k); x.rev = r.rev; x.h = dau(s); ghi(); return; }
         if (r.xungDot) { lai = true; return; }
         throw new Error(r.loi || "Không lưu được.");
       });
+    }
+    function mot(k, r) {
+      var x = st(k), coDoi = doi(k), rev = x.rev || 0;
+      if (r.rev === rev) return coDoi ? gui(k, rev) : null;
+      if (!coDoi || !KHO[k].co()) { if (dangGo(k)) { lai = true; return; } return nhan(k, r); }
+      if (confirm(KHO[k].ten + " trên Google Sheet vừa được sửa ở máy khác, mà máy này cũng có thay đổi chưa gửi.\n\nOK: lấy bản trên Google Sheet (bỏ thay đổi ở máy này).\nHủy: giữ bản ở máy này và ghi đè lên Google Sheet.")) return nhan(k, r);
+      return gui(k, r.rev);
     }
     function chay() {
       if (!m.ma) return;
       if (dang) { lai = true; return; }
       dang = true; lai = false; lanCuoi = Date.now(); bao2("Đang đồng bộ…");
-      goi({ viec: "soDiemTai" }).then(function (r) {
-        if (!r.ok) { if (r.saiMa) { m.ma = ""; ghi(); if (document.getElementById("sd")) A.ve(); } throw new Error(r.loi || "Không tải được."); }
-        var coDoi = doi(), rev = m.rev || 0;
-        if (r.rev === rev) { if (coDoi) return gui(rev); bao2("Đã đồng bộ (" + gio() + ")."); return; }
-        if (!coDoi || !sd().lops.length) { if (dangGo()) { lai = true; return; } return nhan(r); }
-        if (confirm("Sổ điểm trên Google Sheet vừa được sửa ở máy khác, mà máy này cũng có thay đổi chưa gửi.\n\nOK: lấy bản trên Google Sheet (bỏ thay đổi ở máy này).\nHủy: giữ bản ở máy này và ghi đè lên Google Sheet.")) return nhan(r);
-        return gui(r.rev);
+      goi({ viec: "khoTai", kho: DS }).then(function (r) {
+        if (!r.ok) { if (r.saiMa) { m.ma = ""; ghi(); A.ve(); } throw new Error(r.loi || "Không tải được."); }
+        var p = Promise.resolve();
+        DS.forEach(function (k) { if (r.kho && r.kho[k]) p = p.then(function () { return mot(k, r.kho[k]); }); });
+        return p.then(function () { bao2("Đã đồng bộ lúc " + gio() + "."); });
       }).catch(function (e) {
         bao2("Chưa đồng bộ được: " + (e && /Failed to fetch|NetworkError|Load failed/i.test(e.message) ? "mất mạng, sẽ thử lại." : e.message));
       }).then(function () { dang = false; if (lai) hen(3000); });
     }
     function hen(ms) { if (!m.ma) return; clearTimeout(t); t = setTimeout(chay, ms == null ? 1500 : ms); }
+    /* gọi sau mỗi lần hồ sơ lưu (app.js save): chỉ đồng bộ khi Lớp học hay Sổ điểm thật sự đổi */
+    function henNeuDoi() { if (m.ma && !dang && DS.some(doi)) hen(); }
     function bat() {
-      var ma = (prompt("Nhập MÃ GIÁO VIÊN CHỦ NHIỆM của Sổ chủ nhiệm số.\nSổ điểm sẽ lưu vào trang tính _SoDiem trong Google Sheet của sổ, mọi máy nhập cùng mã đều thấy chung.") || "").trim().toUpperCase();
+      var ma = (prompt("Nhập MÃ GIÁO VIÊN CHỦ NHIỆM của Sổ chủ nhiệm số.\nSổ điểm và Lớp học sẽ lưu vào Google Sheet của hồ sơ, mọi máy (cả điện thoại) nhập cùng mã đều thấy chung.") || "").trim().toUpperCase();
       if (!ma) return;
-      m = { ma: ma, rev: 0 }; ghi(); bao2("Đang kiểm tra mã…");
-      goi({ viec: "soDiemTai" }).then(function (r) {
+      m = { ma: ma, k: {} }; ghi(); bao2("Đang kiểm tra mã…");
+      goi({ viec: "khoTai", kho: DS }).then(function (r) {
         if (!r.ok) { m = {}; ghi(); V.msg = "Không bật được đồng bộ: " + (r.loi || "mã không dùng được."); A.ve(); return; }
-        V.msg = "Đã bật đồng bộ. Từ giờ sổ điểm tự lưu lên Google Sheet."; A.ve(); chay();
+        V.msg = "Đã bật đồng bộ. Từ giờ Sổ điểm và Lớp học tự lưu lên Google Sheet."; bao2(V.msg); A.ve(); chay();
       }).catch(function (e) { m = {}; ghi(); V.msg = "Không bật được đồng bộ: " + e.message; A.ve(); });
     }
-    function tat() { if (!confirm("Tắt đồng bộ trên máy này? Sổ điểm vẫn giữ trên máy và trên Google Sheet, chỉ thôi tự gửi/nhận.")) return; m = {}; ghi(); tt = ""; A.ve(); }
+    function tat() { if (!confirm("Tắt đồng bộ trên máy này? Sổ điểm và Lớp học vẫn giữ trên máy và trên Google Sheet, chỉ thôi tự gửi/nhận.")) return; m = {}; ghi(); tt = ""; A.ve(); }
     function thanh() {
-      if (!m.ma) return '<p class="warn noprint">Sổ điểm đang chỉ lưu trong trình duyệt của máy này: máy khác (điện thoại) sẽ không thấy. <button data-s="dbBat">Bật đồng bộ Google Sheet</button></p>';
-      return '<p class="muted noprint">☁ Đồng bộ Google Sheet (Sổ chủ nhiệm): <span id="sdDB" role="status">' + esc(tt || "…") + '</span> <button class="link" data-s="dbNgay">Đồng bộ ngay</button> <button class="link" data-s="dbTat">Tắt đồng bộ</button></p>';
+      if (!m.ma) return '<p class="warn noprint">Sổ điểm và Lớp học đang chỉ lưu trong trình duyệt của máy này: máy khác (điện thoại) sẽ không thấy. <button data-s="dbBat">Bật đồng bộ Google Sheet</button></p>';
+      return '<p class="muted noprint">☁ Đồng bộ Google Sheet (Sổ điểm + Lớp học): <span class="sdDB" role="status">' + esc(tt || "…") + '</span> <button class="link" data-s="dbNgay">Đồng bộ ngay</button> <button class="link" data-s="dbTat">Tắt đồng bộ</button></p>';
     }
     document.addEventListener("visibilitychange", function () { if (!document.hidden) hen(300); });
-    return { hen: hen, chay: chay, bat: bat, tat: tat, thanh: thanh, moTrang: function () { if (m.ma && Date.now() - lanCuoi > 5000) hen(200); } };
+    return { hen: hen, henNeuDoi: henNeuDoi, chay: chay, bat: bat, tat: tat, thanh: thanh, moTrang: function () { if (m.ma && Date.now() - lanCuoi > 5000) hen(200); } };
   })();
   function so(v) { return v === "" || v == null ? "" : String(v).replace(".", ","); }
   function lam1(x) { return Math.round(x * 10 + 1e-9) / 10; }
@@ -3011,6 +3033,27 @@ window.HO_SO = {
     return '<b>Số học sinh đạt</b> (' + t.co + "/" + t.n + " em đã đủ điểm): " + MUC.map(function (m) {
       var k = m[0], p = t.co ? Math.round(t.c[k] * 100 / t.co) : 0; return k + " <b>" + t.c[k] + "</b> (" + p + "%)";
     }).join(" · ");
+  }
+
+  /* bảng để xem trên trang "Sổ điểm" của Google Sheet (dữ liệu thật ở trang ẩn _SoDiem) */
+  function bangSD() {
+    var dau = ["Lớp", "STT", "Mã học sinh", "Họ đệm", "Tên", "Ngày sinh"];
+    [1, 2].forEach(function (hk) { TX.forEach(function (k) { dau.push(k + " HK" + hk); }); dau.push("GK" + hk, "CK" + hk, "ĐTB HK" + hk, "Nhận xét HK" + hk); });
+    dau.push("ĐTB cả năm", "Mức cả năm");
+    var a = [dau];
+    sd().lops.forEach(function (l) {
+      l.hs.forEach(function (x, i) {
+        var r = [l.ten, i + 1, x.ma || "", x.ho || "", x.ten || "", x.ns || ""];
+        [1, 2].forEach(function (hk) {
+          var d = x["d" + hk] || {}, v = dtb(x, hk);
+          DIEM.forEach(function (k) { r.push(typeof d[k] === "number" ? so(d[k]) : ""); });
+          r.push(v == null ? "" : so(v.toFixed(1)), x["nx" + hk] || "");
+        });
+        var c = dtbCN(x); r.push(c == null ? "" : so(c.toFixed(1)), c == null ? "" : muc(c));
+        a.push(r);
+      });
+    });
+    return a;
   }
 
   /* ---------- giao diện ---------- */
@@ -3183,7 +3226,7 @@ window.HO_SO = {
 
   /* ---------- sự kiện (chỉ trong #sd) ---------- */
   document.addEventListener("click", function (e) {
-    var t = e.target.closest && e.target.closest("#sd [data-s]"); if (!t) return;
+    var t = e.target.closest && e.target.closest("#sd [data-s], .sdDBo [data-s]"); if (!t) return;
     var a = t.getAttribute("data-s"), d = sd(), l = lop();
     if (a === "dbBat") { DB.bat(); return; }
     if (a === "dbTat") { DB.tat(); return; }
@@ -3235,7 +3278,7 @@ window.HO_SO = {
     if (q) { q.focus(); q.select(); } else t.blur();
   });
 
-  window.SoDiem = { init: function (api) { A = api; DB.hen(500); }, html: html, _dtb: dtb, _docTrang: docTrang, _tachDong: tachDong };
+  window.SoDiem = { init: function (api) { A = api; DB.hen(500); }, html: html, thanhDB: function () { var h = DB.thanh(); DB.moTrang(); return '<div class="sdDBo">' + h + "</div>"; }, daLuu: function () { if (A) DB.henNeuDoi(); }, _dtb: dtb, _docTrang: docTrang, _tachDong: tachDong };
 })();
 
 </script>
@@ -3251,7 +3294,7 @@ window.HO_SO = {
   var ST = ["Chưa dạy", "Đang dạy", "Đã dạy"];
 
   function load() { try { var t = localStorage.getItem(KEY); if (t) { var o = JSON.parse(t); for (var k in S) if (o[k] != null) S[k] = o[k]; } } catch (e) {} }
-  function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} if (window.SoDiem && SoDiem.daLuu) SoDiem.daLuu(); }
   function $(id) { return document.getElementById(id); }
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
   function km(tex, disp) { try { return window.katex.renderToString(tex, { throwOnError: false, displayMode: !!disp }); } catch (e) { return esc(tex); } }
@@ -3442,7 +3485,7 @@ window.HO_SO = {
 
   /* ---------- trang phụ ---------- */
   function pageLop() {
-    var h = '<div class="head"><h2>Lớp học</h2></div><p class="warn">Danh sách lớp chỉ lưu trong trình duyệt của máy này để dùng cho nút "Gọi tên" khi lên lớp. Chỉ nên nhập tên, không nhập điểm hay thông tin cá nhân khác.</p>';
+    var h = '<div class="head"><h2>Lớp học</h2></div><p class="muted">Danh sách lớp dùng cho nút "Gọi tên" khi lên lớp. Chỉ nên nhập tên, không nhập điểm hay thông tin cá nhân khác.</p>' + (window.SoDiem && SoDiem.thanhDB ? SoDiem.thanhDB() : "");
     lopNames().forEach(function (l) { h += '<div class="card"><div class="row" style="margin:0"><b>' + esc(l) + '</b><span class="muted">' + S.lop[l].length + ' học sinh</span><span class="sp"></span><button class="link" data-a="editLop" data-l="' + esc(l) + '">Sửa</button><button class="link" data-a="delLop" data-l="' + esc(l) + '">Xóa</button></div></div>'; });
     h += pvTongHop();
     h += "<h3>" + (V.edit ? "Sửa lớp " + esc(V.edit) : "Thêm lớp") + '</h3><div class="card"><div class="row"><input id="lTen" placeholder="Tên lớp (ví dụ 12A6)" value="' + esc(V.edit) + '"></div><textarea id="lDs" rows="8" placeholder="Mỗi dòng một học sinh">' + esc(V.edit ? S.lop[V.edit].join("\n") : "") + '</textarea><div class="row" style="margin:8px 0 0"><button data-a="saveLop">Lưu lớp</button><span id="lMsg" class="muted" role="status"></span></div></div>';
@@ -3455,6 +3498,16 @@ window.HO_SO = {
     S.cm.forEach(function (r) { if (r.lop !== l) return; var o = g(r.hs); o.cm++; o.tl += r.tl || 0; o.qn += r.qn || 0; o.dg += r.dg || 0; o.qk += r.qk || 0; });
     S.pv.forEach(function (r) { if (r.lop !== l) return; var o = g(r.hs); o.n++; o.d += r.diem; });
     return m;
+  }
+  /* bảng để xem trên trang "Lớp học" của Google Sheet (lib/so_diem.js gửi lên khi đồng bộ) */
+  function bangLop() {
+    var a = [["Lớp", "STT", "Học sinh", "Buổi có mặt", "Câu trả lời", "Câu đúng", "Lần được gọi", "Tổng điểm phát biểu"]];
+    lopNames().forEach(function (l) {
+      var m = pvTongKet(l), ds = (S.lop[l] || []).slice();
+      Object.keys(m).forEach(function (k) { if (ds.indexOf(k) < 0) ds.push(k); });
+      ds.forEach(function (k, i) { var o = m[k]; a.push([l, i + 1, k, o.cm, o.tl + (o.qn ? "/" + o.qn : ""), o.qk ? o.dg + "/" + o.qk : "", o.n, vn(o.d)]); });
+    });
+    return a;
   }
   function pvTongHop() {
     if (!S.pv.length && !S.cm.length) return '<h3>Phát biểu và có mặt trên lớp</h3><p class="muted">Chưa có ghi nhận. Vào chế độ lên lớp: "Gọi tên" rồi chấm điểm, hoặc mở "Phòng QR" cho học sinh vào.</p>';
@@ -4020,7 +4073,7 @@ window.HO_SO = {
   window.addEventListener("focus", nhanVaVe);
   window.addEventListener("storage", function (e) { if (e.key === "hsdh_bg") nhanVaVe(); });
 
-  if (window.SoDiem) SoDiem.init({ S: S, save: save, ve: function () { renderWork(); } });
+  if (window.SoDiem) SoDiem.init({ S: S, save: save, ve: function () { renderWork(); }, trang: function () { return $("lenLop").hidden ? V.page : ""; }, bangLop: bangLop });
   load(); nhanTuBaiGiang(); if (!CFG.khoi[V.khoi]) V.khoi = Object.keys(CFG.khoi)[0]; firstData(); render();
 })();
 
