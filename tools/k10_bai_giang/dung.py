@@ -7,6 +7,7 @@ mã dữ liệu '10-3', ảnh vào bai-giang/k10-B13/s01.jpg ..., trang bai-gian
 mở trang bài giảng tương tác cũ bai-giang/k10-B13-tuong-tac.html (câu hỏi củng cố có chấm điểm).
 Mô phỏng: tools/k10_bai_giang/mo_phong/<MA>.js (dùng khung tools/k11_bai_giang/mo_phong/khung.js).
 File .pptx gốc không bị sửa.
+Lỗi KIẾN THỨC của slide NotebookLM (hình vẽ sai, chữ sai) sửa bằng ảnh trong ve_lai.py (đã làm cho Bài 16, 17).
 """
 import os, sys, io, json, subprocess, importlib.util
 
@@ -150,6 +151,15 @@ SUA_ANH = {
     ('B13', 17): [('xoa', (1308, 708, 1348, 738))],
 }
 
+def anh_da_sua(ma, i, im):
+    """ảnh slide i (số slide pptx) sau mọi chỉnh sửa: SUA_ANH rồi tới các sửa lỗi kiến thức trong ve_lai.py"""
+    spec_v = importlib.util.spec_from_file_location('ve_lai_k10', os.path.join(DIR, 've_lai.py'))
+    ve_lai = importlib.util.module_from_spec(spec_v); spec_v.loader.exec_module(ve_lai)
+    if (ma, i) in SUA_ANH: im = d11.sua_anh(im, SUA_ANH[(ma, i)])
+    if (ma, i) in ve_lai.SUA_THEM: im = ve_lai.SUA_THEM[(ma, i)](im)
+    return im
+
+
 def thay(t, a, b, n=1):
     assert t.count(a) == n, 'Khung trang K11 đã đổi, cập nhật dung.py: ' + a[:70]
     return t.replace(a, b)
@@ -222,7 +232,7 @@ def main():
             if loai == 'a':
                 n += 1
                 im = Image.open(io.BytesIO(anh[i])).convert('RGB')
-                if (ma, i + 1) in SUA_ANH: im = d11.sua_anh(im, SUA_ANH[(ma, i + 1)])
+                im = anh_da_sua(ma, i + 1, im)
                 g = os.path.join(thu, 's%02d.jpg' % n); im.save(g, quality=88, optimize=True); tong += os.path.getsize(g)
                 day.append(dict(t=ten, a=n, tt=-1, mp=i))
             else:
