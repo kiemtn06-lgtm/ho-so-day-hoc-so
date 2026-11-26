@@ -7,6 +7,7 @@ Chạy:  python -I -X utf8 tools/k11_bai_giang/dung.py
   bai-giang/k11-B8.html            trang trình chiếu: phím ← → , tổng quan slide, toàn màn hình, nút "Bài tập cuối bài"
                                    (mở bai-giang/k11-bai-tap.html#B8), công cụ lớp (Gọi tên, Bấm giờ, Chia nhóm, Ghi chú)
 Trang mở đúng slide theo địa chỉ  k11-B8.html#B8@5  và báo vị trí slide cho hồ sơ như bài giảng khối 10.
+Lỗi KIẾN THỨC của slide NotebookLM (chữ sai, hình vẽ sai) sửa bằng ảnh trong ve_lai.py (rà từng slide trước khi đưa bài mới vào).
 Mô phỏng: file mo_phong/<MA>.js (dùng khung mo_phong/khung.js) đăng kí mô phỏng cho từng slide; slide có mô phỏng hiện nút "Mô phỏng" (phím M).
 File .pptx gốc không bị sửa. Thêm bài mới: thêm một mục vào BAI (tên slide dùng cho trang tổng quan và người dùng trình đọc màn hình).
 """
@@ -14,6 +15,7 @@ import os, sys, re, io, json, zipfile, subprocess
 from PIL import Image, ImageFilter, ImageDraw, ImageFont
 
 DIR = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, DIR)
 REPO = os.path.abspath(os.path.join(DIR, '..', '..'))
 NGUON = os.path.join(REPO, 'K11')
 KHOA = '11-2'   # khóa dữ liệu của chương (ghi chú, điểm phát biểu trong công cụ lớp)
@@ -165,6 +167,15 @@ def sua_anh(im, viec):
     return im
 
 
+def anh_da_sua(ma, i, du_lieu):
+    """ảnh slide i của bài ma sau mọi chỉnh sửa: SUA_ANH rồi tới các sửa lỗi kiến thức trong ve_lai.py"""
+    import ve_lai
+    im = Image.open(io.BytesIO(du_lieu)).convert('RGB')
+    if (ma, i) in SUA_ANH: im = sua_anh(im, SUA_ANH[(ma, i)])
+    if (ma, i) in ve_lai.SUA_THEM: im = ve_lai.SUA_THEM[(ma, i)](im)
+    return im
+
+
 def anh_slide(pptx):
     """-> danh sách ảnh (bytes) theo đúng thứ tự trình chiếu"""
     z = zipfile.ZipFile(pptx)
@@ -311,8 +322,7 @@ def main():
         thu = os.path.join(REPO, 'bai-giang', 'k11-' + ma); os.makedirs(thu, exist_ok=True)
         tong = 0
         for i, b in enumerate(anh, 1):
-            im = Image.open(io.BytesIO(b)).convert('RGB')
-            if (ma, i) in SUA_ANH: im = sua_anh(im, SUA_ANH[(ma, i)])
+            im = anh_da_sua(ma, i, b)
             g = os.path.join(thu, 's%02d.jpg' % i); im.save(g, quality=88, optimize=True); tong += os.path.getsize(g)
         cc = cong_cu_lop(ma)
         mp = os.path.join(DIR, 'mo_phong', ma + '.js')     # mô phỏng gắn vào slide (nếu bài có)
