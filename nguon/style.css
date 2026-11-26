@@ -98,6 +98,19 @@ table.sdt tbody tr:hover{background:var(--bg)}
 .khoNut{float:right;display:inline-flex;gap:10px;margin-left:8px}
 .khoF{display:flex;flex-direction:column;gap:6px;margin:6px 0 10px;padding:10px;border:1px solid var(--bd);border-radius:10px;background:var(--bg)}
 .khoF input,.khoF textarea{width:100%;box-sizing:border-box}
+/* Tạo đề kiểm tra (lib/tao_de.js) */
+.tdLuoi{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px 16px;margin-bottom:8px}
+.tdLuoi label{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--mu)}
+.tdLuoi input,.tdLuoi select{font-size:14px}
+.tdSo{display:flex;align-items:center;gap:6px;color:var(--mu)}.tdSo input{width:64px}
+.tdThieu{color:#c0392b}
+.tdChk{display:flex;gap:8px;align-items:flex-start;margin:4px 0;font-size:14px}
+.tdCh{margin:8px 0}.tdBai{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0 12px;padding-left:24px}
+.tdCau .opts div{padding:1px 4px;border-radius:6px}
+.tdDung{background:var(--acbg);color:var(--ac);border-radius:6px;padding:1px 4px}
+.tdD{color:#1e8449}.tdS{color:#c0392b}
+.tdPV{border-color:#e67e22}.tag.tdTagPV{background:#fdebd0;color:#a04000}
+.tdBang{overflow-x:auto}.tdBang table{border-collapse:collapse;font-family:monospace;font-size:14px}.tdBang td,.tdBang th{border:1px solid var(--bd);padding:4px 8px;text-align:left}
 @media print{.ed{border:0;padding:0;min-height:0}.ed:empty{display:none}}
 .chip{border-radius:20px;padding:4px 14px;color:var(--mu)}
 .chip.on{background:var(--acbg);color:var(--ac);border-color:var(--ac)}

@@ -55,6 +55,7 @@
     h += '<button data-a="page" data-p="lop" class="' + (V.page === "lop" ? "on" : "") + '">Lớp học</button>';
     if (window.SoDiem) h += '<button data-a="page" data-p="sd" class="' + (V.page === "sd" ? "on" : "") + '">Sổ điểm</button>';
     if (CFG.soChuNhiem) h += '<button data-a="page" data-p="scn" class="' + (V.page === "scn" ? "on" : "") + '">' + esc(CFG.soChuNhiem.ten) + "</button>";
+    if (window.TaoDe) h += '<button data-a="page" data-p="td" class="' + (V.page === "td" ? "on" : "") + '">Tạo đề kiểm tra</button>';
     if (CFG.chamDiem) h += '<button data-a="page" data-p="cd" class="' + (V.page === "cd" ? "on" : "") + '">' + esc(CFG.chamDiem.ten) + "</button>";
     h += '<button data-a="page" data-p="kho" class="' + (V.page === "kho" ? "on" : "") + '">Liên kết lưu trữ</button>';
     h += '<button data-a="page" data-p="cc" class="' + (V.page === "cc" ? "on" : "") + '">Sao lưu dữ liệu</button>';
@@ -517,6 +518,7 @@
     if (V.page === "lop") { w.innerHTML = pageLop(); return; }
     if (V.page === "cc") { w.innerHTML = pageCC(); return; }
     if (V.page === "kho") { w.innerHTML = pageKho(); return; }
+    if (V.page === "td") { w.innerHTML = window.TaoDe ? TaoDe.html() : ""; return; }
     if (V.page === "scn") { w.innerHTML = pageSCN(); return; }
     if (V.page === "cd") { w.innerHTML = pageCD(); return; }
     if (V.page === "sd") { w.innerHTML = window.SoDiem ? SoDiem.html() : ""; return; }
@@ -534,7 +536,7 @@
   /* vị trí đang xem, ghi vào phiếu của nút Sửa (lib/nut_sua.js), kèm mã dữ liệu để biết tệp cần sửa */
   window.HSDH_VITRI = function () {
     var p = ["Hồ sơ", CFG.khoi[V.khoi].ten], ch = chs()[V.ch], b = V.page === "bai" ? curBai() : null;
-    var TEN = { tq: "Tổng quan khối", ph: "Làm bài trực tuyến", hd: "Hỏi đáp", lop: "Lớp học", cc: "Sao lưu dữ liệu", scn: "Sổ chủ nhiệm số", cd: "Chấm điểm tự động", sd: "Sổ điểm", kho: "Liên kết lưu trữ" };
+    var TEN = { tq: "Tổng quan khối", ph: "Làm bài trực tuyến", hd: "Hỏi đáp", lop: "Lớp học", cc: "Sao lưu dữ liệu", scn: "Sổ chủ nhiệm số", cd: "Chấm điểm tự động", sd: "Sổ điểm", kho: "Liên kết lưu trữ", td: "Tạo đề kiểm tra" };
     if (b) p.push("Chương " + (V.ch + 1) + ". " + ch.ten, "Bài: " + b.ten, "Tab: " + TABS[V.tab], "(dữ liệu nguon/data/k" + ch.duLieu + ".js, mã bài " + b.ma + ")");
     else if (V.page === "lt" && ch && ch.luyenTap && ch.luyenTap[V.lt]) p.push("Chương " + (V.ch + 1) + ". " + ch.ten, "Luyện tập: " + ch.luyenTap[V.lt].ten);
     else p.push(TEN[V.page] || V.page);
@@ -886,6 +888,7 @@
   window.addEventListener("focus", nhanVaVe);
   window.addEventListener("storage", function (e) { if (e.key === "hsdh_bg") nhanVaVe(); });
 
+  if (window.TaoDe) TaoDe.init({ cfg: CFG, data: DATA, ve: function () { var y = window.scrollY; renderWork(); window.scrollTo(0, y); } });
   if (window.SoDiem) SoDiem.init({ S: S, save: save, ve: function () { renderWork(); }, trang: function () { return $("lenLop").hidden ? V.page : ""; }, bangLop: bangLop, bangLK: bangLK });
   load(); nhanTuBaiGiang(); if (!CFG.khoi[V.khoi]) V.khoi = Object.keys(CFG.khoi)[0]; firstData(); render();
 })();
