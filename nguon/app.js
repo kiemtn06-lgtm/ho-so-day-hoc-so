@@ -300,7 +300,7 @@
   function pageKho() {
     var q = String(V.khoTim || "").toLowerCase().trim(), F = V.khoF || {}, tong = 0, hien = 0;
     var h = '<div class="head"><h2>Liên kết lưu trữ</h2><span class="sp"></span><button class="go noprint" data-a="khoTao">+ Tạo tập mới</button></div>' +
-      '<p class="muted noprint">Gom các đường link tài liệu (Google Drive, OneDrive, YouTube, trang web...) thành từng tập. Dán được nhiều link một lần, mỗi dòng một link, có thể ghi tên trước: <i>Giáo án K10 | https://...</i>. Dữ liệu lưu trong trình duyệt máy này; muốn mang sang máy khác thì dùng "Sao lưu dữ liệu".</p>';
+      '<p class="muted noprint">Gom các đường link tài liệu (Google Drive, OneDrive, YouTube, trang web...) thành từng tập. Dán được nhiều link một lần, mỗi dòng một link, có thể ghi tên trước: <i>Giáo án K10 | https://...</i>. Bật đồng bộ Google Sheet thì mọi máy (cả điện thoại) nhập cùng mã đều thấy chung; không bật thì chỉ lưu trên máy này.</p>' + (window.SoDiem && SoDiem.thanhDB ? SoDiem.thanhDB() : "");
     if (!S.kho.length) return h + '<div class="card muted">Chưa có tập nào. Bấm "+ Tạo tập mới" để bắt đầu.</div><span id="khoMsg" class="muted" role="status"></span>';
     h += '<div class="row noprint"><input id="khoTim" type="search" placeholder="🔍 Tìm link theo tên, ghi chú, địa chỉ" value="' + esc(V.khoTim || "") + '" style="flex:1;min-width:200px"><span id="khoMsg" class="muted" role="status"></span></div>';
     S.kho.forEach(function (tp, i) {
@@ -330,6 +330,12 @@
     });
     if (q && !hien) h += '<div class="card muted">Không tìm thấy link nào khớp "' + esc(V.khoTim) + '".</div>';
     return h + '<p class="muted">' + S.kho.length + " tập, " + tong + " link.</p>";
+  }
+  /* bảng để xem trên trang "Liên kết" của Google Sheet (dữ liệu thật ở trang ẩn _LienKet, lib/so_diem.js gửi lên) */
+  function bangLK() {
+    var a = [["Tập", "STT", "Tên link", "Địa chỉ", "Ghi chú"]];
+    S.kho.forEach(function (tp) { tp.links.forEach(function (l, j) { a.push([tp.ten, j + 1, l.ten, l.url, l.ghi || ""]); }); });
+    return a;
   }
   function khoMo(f, sel) { V.khoF = f; renderWork(); var e = sel && $(sel); if (e) e.focus(); }
 
@@ -880,6 +886,6 @@
   window.addEventListener("focus", nhanVaVe);
   window.addEventListener("storage", function (e) { if (e.key === "hsdh_bg") nhanVaVe(); });
 
-  if (window.SoDiem) SoDiem.init({ S: S, save: save, ve: function () { renderWork(); }, trang: function () { return $("lenLop").hidden ? V.page : ""; }, bangLop: bangLop });
+  if (window.SoDiem) SoDiem.init({ S: S, save: save, ve: function () { renderWork(); }, trang: function () { return $("lenLop").hidden ? V.page : ""; }, bangLop: bangLop, bangLK: bangLK });
   load(); nhanTuBaiGiang(); if (!CFG.khoi[V.khoi]) V.khoi = Object.keys(CFG.khoi)[0]; firstData(); render();
 })();

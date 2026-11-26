@@ -36,9 +36,13 @@
         co: function () { var S = A.S; return Object.keys(S.lop || {}).length > 0 || (S.pv || []).length > 0 || (S.cm || []).length > 0; },
         dat: function (v) { v = v && typeof v === "object" ? v : {}; A.S.lop = v.lop && typeof v.lop === "object" ? v.lop : {}; A.S.pv = Array.isArray(v.pv) ? v.pv : []; A.S.cm = Array.isArray(v.cm) ? v.cm : []; },
         bang: function () { return A.bangLop ? A.bangLop() : []; },
-        trang: function () { return A.trang && A.trang() === "lop"; }, dangGo: function (a) { return a.id === "lTen" || a.id === "lDs"; } }
+        trang: function () { return A.trang && A.trang() === "lop"; }, dangGo: function (a) { return a.id === "lTen" || a.id === "lDs"; } },
+      /* Liên kết lưu trữ (S.kho, app.js pageKho). Code.gs cũ chưa có kho lk thì khoTai bỏ qua, các kho khác vẫn chạy */
+      lk: { ten: "Liên kết lưu trữ", lay: function () { return A.S.kho || []; }, co: function () { return (A.S.kho || []).length > 0; },
+        dat: function (v) { A.S.kho = Array.isArray(v) ? v : []; }, bang: function () { return A.bangLK ? A.bangLK() : []; },
+        trang: function () { return A.trang && A.trang() === "kho"; }, dangGo: function (a) { return /^kho(T|U|G|DanTx)$/.test(a.id); } }
     };
-    var DS = ["sd", "lop"];
+    var DS = ["sd", "lop", "lk"];
     function ghi() { try { localStorage.setItem(K, JSON.stringify(m)); } catch (e) {} }
     function dau(s) { var h = 5381; for (var i = 0; i < s.length; i++) h = (h * 33 + s.charCodeAt(i)) | 0; return s.length + ":" + h; }
     function st(k) { m.k = m.k || {}; return m.k[k] = m.k[k] || { rev: 0 }; }
@@ -90,18 +94,18 @@
     /* gọi sau mỗi lần hồ sơ lưu (app.js save): chỉ đồng bộ khi Lớp học hay Sổ điểm thật sự đổi */
     function henNeuDoi() { if (m.ma && !dang && DS.some(doi)) hen(); }
     function bat() {
-      var ma = (prompt("Nhập MÃ GIÁO VIÊN CHỦ NHIỆM của Sổ chủ nhiệm số.\nSổ điểm và Lớp học sẽ lưu vào Google Sheet của hồ sơ, mọi máy (cả điện thoại) nhập cùng mã đều thấy chung.") || "").trim().toUpperCase();
+      var ma = (prompt("Nhập MÃ GIÁO VIÊN CHỦ NHIỆM của Sổ chủ nhiệm số.\nSổ điểm, Lớp học và Liên kết lưu trữ sẽ lưu vào Google Sheet của hồ sơ, mọi máy (cả điện thoại) nhập cùng mã đều thấy chung.") || "").trim().toUpperCase();
       if (!ma) return;
       m = { ma: ma, k: {} }; ghi(); bao2("Đang kiểm tra mã…");
       goi({ viec: "khoTai", kho: DS }).then(function (r) {
         if (!r.ok) { m = {}; ghi(); V.msg = "Không bật được đồng bộ: " + (r.loi || "mã không dùng được."); A.ve(); return; }
-        V.msg = "Đã bật đồng bộ. Từ giờ Sổ điểm và Lớp học tự lưu lên Google Sheet."; bao2(V.msg); A.ve(); chay();
+        V.msg = "Đã bật đồng bộ. Từ giờ Sổ điểm, Lớp học và Liên kết lưu trữ tự lưu lên Google Sheet."; bao2(V.msg); A.ve(); chay();
       }).catch(function (e) { m = {}; ghi(); V.msg = "Không bật được đồng bộ: " + e.message; A.ve(); });
     }
-    function tat() { if (!confirm("Tắt đồng bộ trên máy này? Sổ điểm và Lớp học vẫn giữ trên máy và trên Google Sheet, chỉ thôi tự gửi/nhận.")) return; m = {}; ghi(); tt = ""; A.ve(); }
+    function tat() { if (!confirm("Tắt đồng bộ trên máy này? Sổ điểm, Lớp học và Liên kết lưu trữ vẫn giữ trên máy và trên Google Sheet, chỉ thôi tự gửi/nhận.")) return; m = {}; ghi(); tt = ""; A.ve(); }
     function thanh() {
-      if (!m.ma) return '<p class="warn noprint">Sổ điểm và Lớp học đang chỉ lưu trong trình duyệt của máy này: máy khác (điện thoại) sẽ không thấy. <button data-s="dbBat">Bật đồng bộ Google Sheet</button></p>';
-      return '<p class="muted noprint">☁ Đồng bộ Google Sheet (Sổ điểm + Lớp học): <span class="sdDB" role="status">' + esc(tt || "…") + '</span> <button class="link" data-s="dbNgay">Đồng bộ ngay</button> <button class="link" data-s="dbTat">Tắt đồng bộ</button></p>';
+      if (!m.ma) return '<p class="warn noprint">Sổ điểm, Lớp học và Liên kết lưu trữ đang chỉ lưu trong trình duyệt của máy này: máy khác (điện thoại) sẽ không thấy. <button data-s="dbBat">Bật đồng bộ Google Sheet</button></p>';
+      return '<p class="muted noprint">☁ Đồng bộ Google Sheet (Sổ điểm + Lớp học + Liên kết): <span class="sdDB" role="status">' + esc(tt || "…") + '</span> <button class="link" data-s="dbNgay">Đồng bộ ngay</button> <button class="link" data-s="dbTat">Tắt đồng bộ</button></p>';
     }
     document.addEventListener("visibilitychange", function () { if (!document.hidden) hen(300); });
     return { hen: hen, henNeuDoi: henNeuDoi, chay: chay, bat: bat, tat: tat, thanh: thanh, moTrang: function () { if (m.ma && Date.now() - lanCuoi > 5000) hen(200); } };
