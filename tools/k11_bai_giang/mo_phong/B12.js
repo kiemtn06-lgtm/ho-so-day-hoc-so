@@ -27,6 +27,13 @@
 
   /* ---------- Dùng chung: nhãn k, đường cực đại / cực tiểu ---------- */
   function soN(k) { return k < 0 ? "−" + (-k) : String(k === 0 ? 0 : k) }
+  /* Cực tiểu, vân tối gọi theo thứ tự "thứ 1, 2, 3…" từ giữa ra mỗi bên (không gọi k = 0).
+     Đổi từ k trong công thức (k + 0,5): k ≥ 0 là thứ k + 1, k < 0 là thứ −k. */
+  function thuCT(k) { return k < 0 ? -k : k + 1 }
+  function nhanO(o, laK) {   // đổi chữ trước ô gõ số: "k =" (cực đại, vân sáng) hay "thứ" (cực tiểu, vân tối, gõ từ 1)
+    o.parentNode.firstChild.nodeValue = laK ? "k = " : "thứ "; o.setAttribute("aria-label", laK ? "k =" : "thứ");
+    if (!laK && !(+o.value >= 1)) o.value = 1;
+  }
   function nhanK(ctx, x, y, t, vien, chu, hop, trai) {   // nhãn hộp tròn tâm (x, y) (trai: x là mép trái); hop: các nhãn đã vẽ, chồng lên thì bỏ
     ctx.save(); ctx.font = "bold 13px 'Segoe UI',sans-serif";
     var w = ctx.measureText(t).width + 12; if (trai) x += w / 2;
@@ -46,7 +53,7 @@
   function giayThat(st) { var b = performance.now(), d = st.lan ? Math.min(.1, (b - st.lan) / 1000) : 0; st.lan = b; return d }
 
   /* Đường cực đại (nét liền) d₂ − d₁ = kλ, cực tiểu (nét đứt) d₂ − d₁ = (k + 0,5)λ, như slide "I.2. Giải thích hiện tượng".
-     S₁ bên trái, S₂ bên phải: phía S₁ thì d₂ > d₁ nên k > 0, phía S₂ thì k < 0. Ghi k ở chỗ đường ra mép dưới (hoặc mép bên);
+     S₁ bên trái, S₂ bên phải: phía S₁ thì d₂ > d₁ nên k > 0, phía S₂ thì k < 0. Tên đường (cực đại: k; cực tiểu: thứ mấy) ghi ở chỗ đường ra mép dưới (hoặc mép bên);
      cực đại hàng dưới, cực tiểu hàng trên; nhãn chồng nhau thì bỏ đường xa tâm. */
   var MAU_CD = "rgba(254,202,202,.95)", MAU_CT = "rgba(147,222,253,.95)";
   function duongGT(ctx, o) {   // o: cx, cy (px), s (px/cm), d, lam (cm), W, H (vùng vẽ), cd, ct (hiện cực đại / cực tiểu), nhan (ghi k), chon: {cd, k} đường tô nổi
@@ -78,7 +85,7 @@
         y = o.cy + L.b * Math.sqrt(ax * ax / (aa * aa) - 1) * o.s; x = X;
         if (y > o.H - 15 || y < 12) return;
       }
-      nhanK(ctx, x, y, "k=" + soN(L.k), L.noi ? "#fff" : L.cuc ? MAU_CD : MAU_CT, L.noi ? "#fff" : L.cuc ? "#fecaca" : "#bae6fd", hop);
+      nhanK(ctx, x, y, L.cuc ? "k=" + soN(L.k) : "thứ " + thuCT(L.k), L.noi ? "#fff" : L.cuc ? MAU_CD : MAU_CT, L.noi ? "#fff" : L.cuc ? "#fecaca" : "#bae6fd", hop);
     });
   }
 
@@ -88,7 +95,7 @@
     return {
       ten: dkien ? "Điều kiện giao thoa: hai nguồn kết hợp" : "Giao thoa sóng mặt nước: hai nguồn kết hợp S₁, S₂",
       goiY: dkien ? "Giữ f₂ = f₁ và Δφ không đổi thì có vân ổn định. Đổi f₂ hoặc bật \"pha nhảy lung tung\" thì hệ vân mất."
-        : "Nét liền: cực đại (Δd = kλ). Nét đứt: cực tiểu (Δd = (k + 0,5)λ). Số k ghi ở chân mỗi đường. Đổi f, v và khoảng cách S₁S₂.",
+        : "Nét liền: cực đại (Δd = kλ). Nét đứt: cực tiểu (Δd = (k + 0,5)λ). Chân đường cực đại ghi k, chân đường cực tiểu ghi thứ 1, 2, 3… Đổi f, v và khoảng cách S₁S₂.",
       tao: function (ui) {
         var f = 4, v = 20, d = 6, cd = true, ct = true, RONG = 24, f2 = 4, dphi = 0, nhay = false, buf = taoBuf();   // cm, Hz
         ui.truot("Tần số f₁", 2, 8, 0.5, f, "Hz", function (x) { f = x; if (!dkien) f2 = x });
@@ -114,7 +121,7 @@
             if (dkien) V.hop(ctx, 12, 12, [kethop ? "*Hai nguồn kết hợp*: cùng phương, cùng tần số, Δφ không đổi" : "*Không kết hợp*: " + (nhay ? "Δφ thay đổi liên tục" : "f₂ ≠ f₁"),
               kethop ? "→ Hệ vân (cực đại, cực tiểu) đứng yên, ổn định" : "→ Vị trí cực đại, cực tiểu cứ xê dịch, không có hệ vân ổn định"]);
             else V.hop(ctx, 12, 12, ["Bước sóng *λ = v/f = " + so(lam, 2) + " cm*", "Hai cực đại liền kề trên S₁S₂ cách nhau *λ/2 = " + so(lam / 2, 2) + " cm*",
-              "Cực đại: *d₂ − d₁ = kλ* · Cực tiểu: *d₂ − d₁ = (k + 0,5)λ*", "k > 0 ở phía S₁, k < 0 ở phía S₂"]);
+              "Cực đại: *d₂ − d₁ = kλ* · Cực tiểu: *d₂ − d₁ = (k + 0,5)λ*", "Cực đại: k > 0 phía S₁, k < 0 phía S₂", "Cực tiểu: thứ 1, 2, 3… tính từ giữa ra mỗi bên"]);
           }
         };
       }
@@ -124,10 +131,10 @@
   MP.dangKy("B12", 4, nuoc("co-ban"));
   MP.dangKy("B12", 6, nuoc("dieu-kien"));
 
-  /* ---------- Slide 5: điểm M, d₁, d₂, Δd; gõ k để đưa M tới đường cực đại / cực tiểu bậc k ---------- */
+  /* ---------- Slide 5: điểm M, d₁, d₂, Δd; gõ số để đưa M tới cực đại bậc k / cực tiểu thứ mấy ---------- */
   MP.dangKy("B12", 5, {
     ten: "Điểm M: d₁, d₂ và hiệu đường đi Δd = d₂ − d₁",
-    goiY: "Bấm lên mặt nước (hoặc kéo thanh trượt) để đặt M, hoặc gõ k để M chạy tới đường cực đại / cực tiểu bậc k (giữ khoảng cách tới S₁S₂).",
+    goiY: "Bấm lên mặt nước (hoặc kéo thanh trượt) để đặt M, hoặc chọn đường rồi gõ số (cực đại: k; cực tiểu: thứ mấy) để M chạy tới (giữ khoảng cách tới S₁S₂).",
     tao: function (ui) {
       var lam = 2, d = 6, RONG = 24, hx, hy, cd = false, ct = false, chon = null, ghi = "", st = { x: 3, y: 7, tx: null, ty: null, lan: 0 };   // cm; tx, ty: chỗ M đang chạy tới
       ui.truot("Bước sóng λ", 1, 4, 0.1, lam, "cm", function (x) { lam = x; if (chon) denDuong(false) });
@@ -135,16 +142,21 @@
       hy = ui.truot("M: khoảng cách tới S₁S₂", 1, 8, 0.1, st.y, "cm", function (x) { st.y = x; boChon() });
       ui.chon("Hiện đường cực đại", cd, function (x) { cd = x });
       ui.chon("Hiện đường cực tiểu", ct, function (x) { ct = x });
-      var oL = ui.ds("Đưa M tới đường", [["cd", "cực đại"], ["ct", "cực tiểu"]], "cd", function () { denDuong(true) });
+      var oL = ui.ds("Đưa M tới đường", [["cd", "cực đại"], ["ct1", "cực tiểu phía S₁"], ["ct2", "cực tiểu phía S₂"]], "cd", function () { nhanO(oK, oL.value === "cd"); denDuong(true) });
       var oK = ui.so("k =", 1, function () { denDuong(true) });
       function boChon() { chon = null; st.tx = st.ty = null; ghi = "" }
       function capNhat() { hx.value = st.x; hy.value = st.y; hx.hien(); hy.hien() }
       function denDuong(chay) {   // chay: M chạy tới; không chạy (đổi λ): M nhảy theo đường luôn
         var k = Math.round(+String(oK.value).replace(",", ".")); if (!isFinite(k)) return;
-        var cuc = oL.value === "cd", dl = (cuc ? k : k + 0.5) * lam, c = d / 2, a = Math.abs(dl) / 2;
+        var cuc = oL.value === "cd", ten = cuc ? "cực đại k = " + soN(k) : "cực tiểu thứ " + k + (oL.value === "ct1" ? " phía S₁" : " phía S₂");
+        if (!cuc) {
+          if (k < 1) { chon = null; st.tx = st.ty = null; ghi = "Cực tiểu đếm từ thứ 1"; return }
+          k = oL.value === "ct1" ? k - 1 : -k;   // giá trị k thay vào (k + 0,5)λ
+        }
+        var dl = (cuc ? k : k + 0.5) * lam, c = d / 2, a = Math.abs(dl) / 2;
         if (Math.abs(dl) >= d - 1e-9) {
           chon = null; st.tx = st.ty = null;
-          ghi = "Không có đường " + (cuc ? "cực đại" : "cực tiểu") + " k = " + soN(k) + " vì cần |Δd| < S₁S₂ = " + so(d, 0) + " cm"; return;
+          ghi = "Không có đường " + ten + " vì cần |Δd| < S₁S₂ = " + so(d, 0) + " cm"; return;
         }
         var b = Math.sqrt(c * c - a * a), X = function (y) { return a ? -Math.sign(dl) * a * Math.sqrt(1 + y * y / (b * b)) : 0 }, y = st.y;
         if (Math.abs(X(y)) > 10) y = Math.max(1, Math.min(8, b * Math.sqrt(100 / (a * a) - 1)));
@@ -190,7 +202,7 @@
             for (var i = 0; i <= gw; i += 2) { var tt = t - T + T * i / gw, y = yc - o[2](tt) * (gh / 2 - 4) * .5; if (i === 0) ctx.moveTo(gx + i, y); else ctx.lineTo(gx + i, y) } ctx.stroke();
           });
           var gan = Math.abs(q - Math.round(q)) < 0.04, gan2 = Math.abs(q - Math.round(q - .5) - .5) < 0.04;
-          var kq = gan ? "CỰC ĐẠI k = " + soN(Math.round(q)) + " (cùng pha, tăng cường)" : gan2 ? "CỰC TIỂU k = " + soN(Math.round(q - .5)) + " (ngược pha, triệt tiêu)" : "chưa phải cực đại hay cực tiểu";
+          var kq = gan ? "CỰC ĐẠI k = " + soN(Math.round(q)) + " (cùng pha, tăng cường)" : gan2 ? "CỰC TIỂU thứ " + thuCT(Math.round(q - .5)) + (q > 0 ? " phía S₁" : " phía S₂") + " (ngược pha, triệt tiêu)" : "chưa phải cực đại hay cực tiểu";
           var dong = ["d₁ = " + so(d1, 2) + " cm · d₂ = " + so(d2, 2) + " cm → *Δd = " + so(dd, 2) + " cm*", "Δd/λ = *" + so(q, 2) + "* → " + kq];
           if (ghi) dong.push("*" + ghi + "*");
           V.hop(ctx, 12, H - (ghi ? 150 : 128), dong, { co: 15 });
@@ -256,7 +268,7 @@
 
   /* ---------- Y-âng (nhìn ngang): nguồn sáng → khe F → hai khe S₁, S₂ → màn E đặt dọc. i = λD/a ----------
      Màn vẽ đúng tỉ lệ theo mm (vùng ±6 mm); khoảng cách a, D chỉ vẽ phỏng (a, D thật rất khác cỡ nhau) nhưng kéo thì khe, màn dịch theo.
-     Vân sáng x = k·i, vân tối x = (k + 0,5)i (x tính từ vân trung tâm, chiều dương lên trên). */
+     Vân sáng x = k·i, vân tối x = (k + 0,5)i (x tính từ vân trung tâm, chiều dương lên trên); vân tối thứ n cách vân trung tâm (n − 0,5)i. */
   function rgbLam(l) {
     var r = 0, g = 0, b = 0;
     if (l < 440) { r = (440 - l) / 60; b = 1 } else if (l < 490) { g = (l - 440) / 50; b = 1 } else if (l < 510) { g = 1; b = (510 - l) / 20 }
@@ -278,24 +290,27 @@
     return {
       ten: p.trang ? "Giao thoa Y-âng với ánh sáng trắng" : "Giao thoa Y-âng: khoảng vân i = λD/a",
       goiY: p.trang ? "Vân trung tâm màu trắng, hai bên là các dải màu (tím gần vân trung tâm, đỏ xa). Đổi a, D để xem dải màu rộng ra hay hẹp lại."
-        : "Kéo a, D và λ (tím → đỏ) để xem khoảng vân i. Gõ k để đưa điểm M trên màn tới vân sáng / vân tối bậc k.",
+        : "Kéo a, D và λ (tím → đỏ) để xem khoảng vân i. Chọn vân rồi gõ số (vân sáng: k; vân tối: thứ mấy) để đưa điểm M trên màn tới đó.",
       tao: function (ui) {
         var lam = p.lam, a = p.a, D = p.D, RONG = 12, hienK = true, hienI = true, st = { y: null, dich: null, lan: 0 }, kM = null, ghi = "", oL = null, oK = null;   // λ (nm), a (mm), D (m), vùng màn (mm)
         if (!p.trang) ui.truot("Bước sóng λ (tím → đỏ)", 380, 760, 10, lam, "nm", function (x) { lam = x; theo() });
         ui.truot("Khoảng cách hai khe a", 0.1, 2, 0.05, a, "mm", function (x) { a = x; theo() });
         ui.truot("Khoảng cách hai khe – màn D", 0.5, 3, 0.1, D, "m", function (x) { D = x; theo() });
-        ui.chon("Hiện k = 0; ±1; ±2…", hienK, function (x) { hienK = x });
+        ui.chon("Hiện k vân sáng (0; ±1; ±2…)", hienK, function (x) { hienK = x });
         ui.chon("Hiện khoảng vân i", hienI, function (x) { hienI = x });
         if (!p.trang) {
-          oL = ui.ds("Điểm M tại", [["s", "vân sáng"], ["t", "vân tối"]], "s", function () { datM(true) });
+          oL = ui.ds("Điểm M tại", [["s", "vân sáng"], ["tt", "vân tối phía trên"], ["td", "vân tối phía dưới"]], "s", function () { nhanO(oK, oL.value === "s"); datM(true) });
           oK = ui.so("k =", 1, function () { datM(true) });
         }
         function iMM(l) { return (l || (p.trang ? 550 : lam)) * 1e-3 * D / a }
         function datM(chay) {   // chay: M chạy tới; không chạy (đổi λ, a, D): M theo vân luôn
           var k = Math.round(+String(oK.value).replace(",", ".")); if (!isFinite(k)) return;
-          var sang = oL.value === "s", x = (sang ? k : k + 0.5) * iMM();
-          kM = { k: k, sang: sang };
-          if (Math.abs(x) > RONG / 2) { ghi = "Vân " + (sang ? "sáng" : "tối") + " k = " + soN(k) + " ở x = " + so(x, 2) + " mm, ngoài vùng màn đang vẽ (±" + RONG / 2 + " mm)"; st.dich = null; st.y = null; return }
+          var sang = oL.value === "s", tren = oL.value === "tt";
+          if (!sang && k < 1) { kM = null; ghi = "Vân tối đếm từ thứ 1"; st.dich = null; st.y = null; return }
+          var he = sang ? k : (tren ? 1 : -1) * (k - 0.5), x = he * iMM();   // x = he·i
+          var ten = sang ? "sáng k = " + soN(k) : "tối thứ " + k + (tren ? " phía trên" : " phía dưới");
+          kM = { ten: ten, he: he, ct: sang ? "k·i" : (tren ? "" : "−") + "(" + k + " − 0,5)i" };
+          if (Math.abs(x) > RONG / 2) { ghi = "Vân " + ten + " ở x = " + so(x, 2) + " mm, ngoài vùng màn đang vẽ (±" + RONG / 2 + " mm)"; st.dich = null; st.y = null; return }
           ghi = "";
           if (chay && st.y !== null) st.dich = x; else { st.y = x; st.dich = null }
         }
@@ -387,7 +402,7 @@
             var dong = p.trang ? ["Vân trung tâm (k = 0): *mọi màu cùng sáng → trắng*", "Vân bậc 1: tím (λ nhỏ, i nhỏ) gần tâm, đỏ (λ lớn, i lớn) xa tâm", "Nhãn k và i tính cho λ = 550 nm (lục)"]
               : ["*i = λD/a = " + so(lam * 1e-3, 2) + " μm × " + so(D, 1) + " m / " + so(a, 2) + " mm = " + so(i, 3) + " mm*",
                  "λ = " + lam + " nm: ánh sáng " + tenMau(lam) + " · vân thưa ra khi tăng λ, tăng D hoặc giảm a"];
-            if (kM && !ghi) dong.push("M: vân " + (kM.sang ? "sáng" : "tối") + " k = " + soN(kM.k) + " → *x = " + (kM.sang ? "k·i" : "(k + 0,5)i") + " = " + so((kM.sang ? kM.k : kM.k + .5) * i, 3) + " mm*");
+            if (kM && !ghi) dong.push("M: vân " + kM.ten + " → *x = " + kM.ct + " = " + so(kM.he * i, 3) + " mm*");
             if (ghi) dong.push("*" + ghi + "*");
             if (p.chuoi) dong.push("N vân sáng liên tiếp có (N − 1) khoảng vân");
             V.hop(ctx, 12, H - dong.length * 14 * 1.45 - 22, dong, { co: 14 });
