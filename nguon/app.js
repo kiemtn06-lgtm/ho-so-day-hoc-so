@@ -15,6 +15,8 @@
   function km(tex, disp) { try { return window.katex.renderToString(tex, { throwOnError: false, displayMode: !!disp }); } catch (e) { return esc(tex); } }
   function T(s) { return String(s == null ? "" : s).split(/(\$[^$]+\$)/).map(function (p) { return p.length > 2 && p[0] === "$" && p[p.length - 1] === "$" ? km(p.slice(1, -1)) : esc(p); }).join(""); }
   function vn(x) { return String(x).replace(".", ","); }
+  /* chữ nhiều dòng: tách dòng trước rồi mới dựng công thức (mã KaTeX có ký tự xuống dòng riêng) */
+  function TD(s) { return String(s == null ? "" : s).split("\n").map(T).join("<br>"); }
   function okUrl(u) { return /^(https?:\/\/|file:\/\/\/)\S+$/i.test(u); }
   function today() { return new Date().toLocaleDateString("vi-VN"); }
 
@@ -66,15 +68,15 @@
   function ansHTML(q) {
     if (q.dang === "tn") return "<b>Đáp án " + esc(q.tn.dap_an) + ".</b> " + T(q.tn.giai_thich || "");
     if (q.dang === "ds") return q.ds.y.map(function (y) { return "<b>" + esc(y.nhan) + ") " + (y.dung ? "Đúng" : "Sai") + ".</b> " + T(String(y.giai_thich || "").replace(/^(Đúng|Sai)\s*[:.]\s*/, "")); }).join("<br>");
-    if (q.dang === "tln") return "<b>Đáp số: " + esc(vn(q.tln.dap_so)) + " " + T(q.tln.don_vi || "") + ".</b> " + T(q.tln.cach_giai || "");
-    return T(q.tl.loi_giai_mau || "");
+    if (q.dang === "tln") return "<b>Đáp số: " + esc(vn(q.tln.dap_so)) + (q.tln.don_vi ? " " + T(q.tln.don_vi) : "") + ".</b> " + T(q.tln.cach_giai || "");
+    return TD(q.tl.loi_giai_mau || "");
   }
   function qHTML(q, n, showAns, tags) {
     var h = '<div class="card">';
     if (tags) h += '<div><span class="tag">' + DANG[q.dang] + '</span>' + (q.muc ? '<span class="tag m">' + (MUC[q.muc] || esc(q.muc)) + "</span>" : "") + (q.nguon ? '<span class="tag m">' + esc(q.nguon) + "</span>" : "") + "</div>";
-    h += "<b>Câu " + n + ".</b> " + T(q.dang === "ds" ? (q.ds.dan || q.de) : q.de);
+    h += "<b>Câu " + n + ".</b> " + TD(q.dang === "ds" ? (q.ds.dan || q.de) : q.de);
     if ((q.hinh || []).length) h += ' <span class="muted">(có hình ' + esc(q.hinh.join(", ")) + ": xem trong bài giảng)</span>";
-    if (q.anh && anhSrc(q.anh)) h += '<div class="qimg"><img loading="lazy" alt="Hình của câu ' + n + '" src="' + anhSrc(q.anh) + '"></div>';
+    if (q.anh && anhSrc(q.anh)) h += '<div class="qimg' + (q.anh_rong ? " rong" : "") + '"><img loading="lazy" alt="Hình của câu ' + n + '" src="' + anhSrc(q.anh) + '"></div>';
     if (q.dang === "tn") h += '<div class="opts">' + q.tn.phuong_an.map(function (p, k) { return "<div><b>" + "ABCD"[k] + ".</b> " + T(p) + "</div>"; }).join("") + "</div>";
     if (q.dang === "ds") h += '<ol class="ys" type="a">' + q.ds.y.map(function (y) { return "<li>" + T(y.noi_dung) + "</li>"; }).join("") + "</ol>";
     if (showAns) h += '<div class="ans">' + ansHTML(q) + "</div>";
@@ -157,7 +159,17 @@
       sel("fm", V.fm, [["", "Mọi mức độ"]].concat(Object.keys(MUC).map(function (k) { return [k, MUC[k]]; }))) +
       '<label><input type="checkbox" data-c="ans"' + (V.ans ? " checked" : "") + "> Hiện đáp án</label><span class=\"sp\"></span><button data-a=\"print\">In phiếu bài tập</button></div>";
     h += '<p class="muted">' + qs.length + " / " + b.cau_hoi.length + " câu</p>";
-    return h + qs.map(function (q, i) { return qHTML(q, i + 1, V.ans, true); }).join("");
+    return h + dsCau(qs, V.ans);
+  }
+  /* câu trong tài liệu in của trường (trường w = phần I…IV) đứng trước, đánh số theo từng phần như trong tài liệu; câu thêm, mở rộng xếp sau */
+  var PHAN = { I: "Phần I. Trắc nghiệm nhiều phương án", II: "Phần II. Đúng sai", III: "Phần III. Trả lời ngắn", IV: "Phần IV. Tự luận" };
+  function dsCau(qs, ans) {
+    var goc = qs.filter(function (q) { return q.w; }), them = qs.filter(function (q) { return !q.w; });
+    var ve = function (l) { return l.map(function (q, i) { return qHTML(q, i + 1, ans, true); }).join(""); };
+    if (!goc.length) return ve(them);
+    var h = "<h3>Bài tập trong tài liệu Vật lí 10 HK I (" + goc.length + " câu)</h3>";
+    Object.keys(PHAN).forEach(function (p) { var l = goc.filter(function (q) { return q.w === p; }); if (l.length) h += "<h4>" + PHAN[p] + "</h4>" + ve(l); });
+    return h + (them.length ? "<h3>Bài thêm, mở rộng (" + them.length + " câu)</h3>" + ve(them) : "");
   }
   function otList(b) {
     var ch = curCh(), n = b.ma.slice(1), l = [], ng = (ch.onTapNgay || {})[b.ma];

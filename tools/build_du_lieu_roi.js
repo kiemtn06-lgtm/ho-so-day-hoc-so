@@ -77,3 +77,4 @@ fs.mkdirSync(path.join(root, 'data'), { recursive: true });
 const f = path.join(root, 'data', 'k' + cfg.ma + '.js');
 fs.writeFileSync(f, 'window.HSDH_DATA=window.HSDH_DATA||{};window.HSDH_DATA[' + JSON.stringify(cfg.ma) + ']=' + JSON.stringify(out) + ';\n');
 console.log('Đã ghi', path.relative(path.join(__dirname, '..'), f), (fs.statSync(f).size / 1024).toFixed(0) + ' KB');
+if (cfg.ma === '10-3') require('./gop_cau_word.js'); // câu tài liệu HK I đứng đầu mục Bài tập
