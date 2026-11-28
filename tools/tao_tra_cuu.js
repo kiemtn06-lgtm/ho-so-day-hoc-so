@@ -55,9 +55,9 @@ function tao() {
           return { t: TEN_CT[x.latex] || '', l: x.latex, dk: mot(x.dieu_kien), vd: mot(x.vi_du_so) };
         }),
         db: (b.dang_bai || []).map(x => {
-          const id = (String(x.vi_du || '').match(/B\d+-(?:TLN|TN|TL|DS)\d+/g) || []).find(i => cau[i] && !coHinh(cau[i]));
+          const id = (String(x.vi_du || '').match(/B\d+-(?:W-)?(?:TLN|TN|TL|DS)\d+/g) || []).find(i => cau[i] && !coHinh(cau[i]));
           return { t: mot(x.dang), nb: mot(x.nhan_biet), cl: mot(x.cach_lam),
-            vd: id ? { de: deCau(cau[id]), pa: cau[id].tn ? cau[id].tn.phuong_an : null, gi: loiGiai(cau[id]) } : /B\d+-[A-Z]+\d+|^SGK|^Mục|^Hình/.test(x.vi_du || '') ? null : { de: mot(x.vi_du) } };
+            vd: id ? { de: deCau(cau[id]), pa: cau[id].tn ? cau[id].tn.phuong_an : null, gi: loiGiai(cau[id]) } : /B\d+-(?:W-)?[A-Z]+\d+|^SGK|^Mục|^Hình/.test(x.vi_du || '') ? null : { de: mot(x.vi_du) } };
         }),
         loi: (b.loi_hay_mac || []).map(x => mot(x.y)),
         the: (b.the || []).map(x => [mot(x.mat_truoc), mot(x.mat_sau)]),

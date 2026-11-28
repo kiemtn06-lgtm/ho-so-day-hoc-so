@@ -4,11 +4,15 @@
 const fs = require('fs'), path = require('path');
 const f = path.join(__dirname, '..', 'nguon', 'data', 'k10-3.js');
 const them = JSON.parse(fs.readFileSync(path.join(__dirname, 'cau_word_k10_c3.json'), 'utf8'));
+/* câu cũ trùng nội dung (cô bảo xóa 28/11/2026): { mã câu bỏ: mã câu giữ thay nó } */
+const trung = JSON.parse(fs.readFileSync(path.join(__dirname, 'cau_trung_k10_c3.json'), 'utf8'));
 const s = fs.readFileSync(f, 'utf8'), dau = 'window.HSDH_DATA["10-3"]=', i = s.indexOf(dau) + dau.length;
 const d = JSON.parse(s.slice(i).trim().replace(/;$/, ''));
 d.bai.forEach(b => {
-  const cu = b.cau_hoi.filter(q => !q.w), moi = them.bai[b.ma] || [];
+  const cu = b.cau_hoi.filter(q => !q.w && !trung[q.id]), moi = them.bai[b.ma] || [];
   b.cau_hoi = moi.concat(cu);
+  /* ví dụ của dạng bài đang trỏ tới câu đã bỏ thì trỏ sang câu giữ lại */
+  (b.dang_bai || []).forEach(x => { x.vi_du = String(x.vi_du || '').replace(/B\d+-[A-Z]+\d+/g, id => trung[id] || id); });
   console.log(b.ma + ':', moi.length, 'câu tài liệu HK I +', cu.length, 'câu thêm');
 });
 Object.keys(d.anh).forEach(k => { if (k.startsWith('HK1/')) delete d.anh[k]; });

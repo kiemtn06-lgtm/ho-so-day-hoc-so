@@ -109,7 +109,7 @@
     return h;
   }
   function viDu(b, t) {
-    var m = String(t).match(/B\d+(?:-B\d+)?-[A-Z]+\d+/), q = m && b.cau_hoi.filter(function (x) { return x.id === m[0]; })[0];
+    var m = String(t).match(/B\d+(?:-B\d+)?(?:-W)?-[A-Z]+\d+/), q = m && b.cau_hoi.filter(function (x) { return x.id === m[0]; })[0];
     return q ? T(q.dang === "ds" ? (q.ds.dan || q.de) : q.de) : T(t);
   }
   function ed(b, f, def) {
