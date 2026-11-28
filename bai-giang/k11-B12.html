@@ -521,7 +521,7 @@ window.MPve = {
       goiY: p.trang ? "Vân trung tâm màu trắng, hai bên là các dải màu (tím gần vân trung tâm, đỏ xa). Đổi a, D để xem dải màu rộng ra hay hẹp lại."
         : "Kéo a, D và λ (tím → đỏ) để xem khoảng vân i. Chọn vân rồi gõ số (vân sáng: k; vân tối: thứ mấy) để đưa điểm M trên màn tới đó.",
       tao: function (ui) {
-        var lam = p.lam, a = p.a, D = p.D, RONG = 12, hienK = true, hienI = true, st = { y: null, dich: null, lan: 0 }, kM = null, ghi = "", oL = null, oK = null;   // λ (nm), a (mm), D (m), vùng màn (mm)
+        var lam = p.lam, a = p.a, D = p.D, RONG = 12, hienK = true, hienI = true, st = { y: null, dich: null, lan: 0 }, kM = null, ghi = "", oL = null, oK = null, giu = false;   // giu: M đứng yên khi đổi λ, a, D; λ (nm), a (mm), D (m), vùng màn (mm)
         if (!p.trang) ui.truot("Bước sóng λ (tím → đỏ)", 380, 760, 10, lam, "nm", function (x) { lam = x; theo() });
         ui.truot("Khoảng cách hai khe a", 0.1, 2, 0.05, a, "mm", function (x) { a = x; theo() });
         ui.truot("Khoảng cách hai khe – màn D", 0.5, 3, 0.1, D, "m", function (x) { D = x; theo() });
@@ -530,6 +530,7 @@ window.MPve = {
         if (!p.trang) {
           oL = ui.ds("Điểm M tại", [["s", "vân sáng"], ["tt", "vân tối phía trên"], ["td", "vân tối phía dưới"]], "s", function () { nhanO(oK, oL.value === "s"); datM(true) });
           oK = ui.so("k =", 1, function () { datM(true) });
+          ui.chon("Giữ M cố định (đổi a, D, λ thì M đứng yên)", giu, function (x) { giu = x; if (!giu) datM(true) });   // bỏ giữ: M chạy về vân đang chọn
         }
         function iMM(l) { return (l || (p.trang ? 550 : lam)) * 1e-3 * D / a }
         function datM(chay) {   // chay: M chạy tới; không chạy (đổi λ, a, D): M theo vân luôn
@@ -543,7 +544,14 @@ window.MPve = {
           ghi = "";
           if (chay && st.y !== null) st.dich = x; else { st.y = x; st.dich = null }
         }
-        function theo() { if (kM) datM(false) }
+        function theo() { if (kM && !(giu && st.y !== null)) datM(false) }
+        function taiM(x) {   // M đang giữ cố định ở x (mm): tại đó là vân gì với i hiện tại
+          var q = x / iMM(), nua = Math.round(Math.abs(q) * 2), phia = q > 0 ? " phía trên" : " phía dưới", sang = function (n) { return "vân sáng k = " + soN(q < 0 ? -n : n) }, toi = function (n) { return "vân tối thứ " + n + phia };
+          var dau = "M giữ ở *x = " + so(x, 3) + " mm* → *x/i = " + so(q, 2) + "*";
+          if (Math.abs(Math.abs(q) * 2 - nua) < 0.01) return [dau, "Tại M: *" + (nua % 2 ? toi((nua + 1) / 2) : sang(nua / 2)) + "*"];
+          var t = Math.floor(Math.abs(q) * 2), nS = Math.ceil(t / 2), nT = Math.floor(t / 2) + 1;   // khoảng (t/2; (t+1)/2) của |x/i|
+          return [dau, "Tại M: giữa " + sang(nS) + " và " + toi(nT)];
+        }
         if (!p.trang) datM(false);
         return {
           ve: function (ctx, W, H) {
@@ -631,7 +639,8 @@ window.MPve = {
             var dong = p.trang ? ["Vân trung tâm (k = 0): *mọi màu cùng sáng → trắng*", "Vân bậc 1: tím (λ nhỏ, i nhỏ) gần tâm, đỏ (λ lớn, i lớn) xa tâm", "Nhãn k và i tính cho λ = 550 nm (lục)"]
               : ["*i = λD/a = " + so(lam * 1e-3, 2) + " μm × " + so(D, 1) + " m / " + so(a, 2) + " mm = " + so(i, 3) + " mm*",
                  "λ = " + lam + " nm: ánh sáng " + tenMau(lam) + " · vân thưa ra khi tăng λ, tăng D hoặc giảm a"];
-            if (kM && !ghi) dong.push("M: vân " + kM.ten + " → *x = " + kM.ct + " = " + so(kM.he * i, 3) + " mm*");
+            if (giu && st.y !== null && st.dich === null) dong.push.apply(dong, taiM(st.y));
+            else if (kM && !ghi) dong.push("M: vân " + kM.ten + " → *x = " + kM.ct + " = " + so(kM.he * i, 3) + " mm*");
             if (ghi) dong.push("*" + ghi + "*");
             if (p.chuoi) dong.push("N vân sáng liên tiếp có (N − 1) khoảng vân");
             V.hop(ctx, 12, H - dong.length * 14 * 1.45 - 22, dong, { co: 14 });
