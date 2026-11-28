@@ -330,7 +330,7 @@
             ctx.fillStyle = "#0b1220"; ctx.fillRect(0, 0, W, H);
             var i = iMM(), rgb = rgbLam(p.trang ? 550 : lam), mau = p.trang ? "rgba(255,255,255,1)" : rgbCss(rgb),
               cy = H * .43, yT = H * .05, yB = H * .81, mmPx = (yB - yT) / RONG, rs = 22,
-              xN = W * .05, xF = W * .13, xK = W * .23, xM = xK + W * (.1 + .13 * D), aPx = 14 + a * 40, yS1 = cy - aPx / 2, yS2 = cy + aPx / 2;
+              xM = W * .72, xK = xM - W * (.1 + .13 * D), xF = xK - W * .1, xN = xK - W * .18,   /* màn E đứng yên (M trên màn không bị dời); đổi D thì hai khe, khe F, nguồn dịch */ aPx = 14 + a * 40, yS1 = cy - aPx / 2, yS2 = cy + aPx / 2;
             var I = function (ymm, l) { var q = Math.cos(Math.PI * ymm / iMM(l)); return q * q };
             // chùm sáng (mờ): nguồn → khe F → hai khe → màn
             ctx.save(); ctx.fillStyle = p.trang ? "rgba(255,255,255,.1)" : rgbCss(rgb, .14);

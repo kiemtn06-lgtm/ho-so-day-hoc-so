@@ -371,7 +371,7 @@
           if (!trung && thay < tq.length) return;
           if (thay / tq.length < .7) return;   // "định luật Ôm": chữ "ôm" không có ở đâu cả, không lấy các định luật khác
           d = d / (2 * tq.length);
-          if (cau.length > 4 && bo(bc[0] + " " + bc[1]).indexOf(cau) >= 0) d += .4;
+          if (cau.length > 4) d += bo(bc[0]).indexOf(cau) >= 0 ? .4 : bo(bc[1]).indexOf(cau) >= 0 ? .25 : 0;   // trùng cả cụm: ở tên mục chắc hơn ở lời giải thích
           if (nc.b === b) d += .15; else if (nc.c === c) d += .08; else if (lop && c.lop === lop) d += .04;
           d -= i * .002;   // cùng điểm: mục đứng trước (thường là ý chính) lên trước
           if (d >= .45) kq.push({ kieu: x.kieu, m: x.m, c: c, b: b, d: d });
